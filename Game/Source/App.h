@@ -45,6 +45,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	// L02: TODO 1: Create methods to request Load / Save
+
 private:
 
 	// Load config file
@@ -52,6 +54,7 @@ private:
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
+
 
 	// Call modules before each loop iteration
 	void FinishUpdate();
@@ -65,6 +68,8 @@ private:
 	// Call modules after each loop iteration
 	bool PostUpdate();
 
+	// L02: TODO 5: Declare methods to load/save game
+
 public:
 
 	// Modules
@@ -75,6 +80,18 @@ public:
 	Audio* audio;
 	Scene* scene;
 
+	bool Load();
+	bool Save();
+
+	void RequestSave() {
+		requestSave = true;
+	}
+
+	void RequestLoad() {
+		requestLoad = true;
+
+	}
+
 private:
 
 	int argc;
@@ -82,17 +99,33 @@ private:
 	SString title;
 	SString organization;
 
-	List<Module *> modules;
+	List<Module*> modules;
 
-	// TODO 2: Create two new variables from pugui namespace:
-	// a xml_document to store the config file and
-	// two xml_node to read specific branches of the xml
+	// L01: DONE 2: Create new variables from pugui namespace:
+	// xml_document to store the config file and
+	// xml_node(s) to read specific branches of the xml
 	pugi::xml_document configFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
-
+	pugi::xml_document save;
 	uint frames;
 	float dt;
+
+	// L02: TODO 1: Create required variables to request load / save and 
+	// the filename for save / load
+	pugi::xml_document saveGame;
+	pugi::xml_node save_state;
+	pugi::xml_node rend;//variable que carga las cosas en renderer
+	pugi::xml_node inp;//carga en input
+	pugi::xml_node sce;//carga en scene
+	pugi::xml_node wi;//carga en window
+	pugi::xml_node au;//carga en audio
+
+
+	//PREGUNTASELO A RAMÓN
+	bool requestLoad = false;
+	bool requestSave = false;
+
 };
 
 extern App* app;
