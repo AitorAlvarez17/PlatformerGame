@@ -3,9 +3,10 @@
   Audio.cpp
   Input.cpp
   Main.cpp
+  Map.cpp
   Render.cpp
   Scene.cpp
   Textures.cpp
   Window.cpp
   Generando código...
-  Game.vcxproj -> D:\Github\PlatformerGame\Build\Debug\Game.exe
+  Game.vcxproj -> E:\Dev\PlatformerGame\Build\Debug\Game.exe
