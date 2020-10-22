@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Map.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,6 +33,7 @@ bool Scene::Start()
 {
 	img = app->tex->Load("Assets/textures/test.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->map->Load("hello2.xml");
 	return true;
 }
 
@@ -68,7 +70,14 @@ bool Scene::Update(float dt)
 		LOG("SAVE REQUESTED");
 	}
 
-	app->render->DrawTexture(img, 380, 100);
+	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+
+	//Draw Map
+	app->map->Draw();
+
+	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d", app->map->data.width, app->map->data.height, app->map->data.tileWidth, app->map->data.tileHeight, app->map->data.tilesets.count());
+
+	app->win->SetTitle(title.GetString());
 
 	return true;
 }
