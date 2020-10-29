@@ -133,7 +133,7 @@ void Map::Draw()
 
 
                 int u = L->data->Get(x, y);
-                LOG("%u", u);
+                //LOG("%u", u);
                 SDL_Rect n = data.tilesets.start->data->GetTileRect(u);
                 iPoint pos = MapToWorld(x, y);
                 app->render->DrawTexture(data.tilesets.start->data->texture, pos.x, pos.y, &n);
@@ -196,12 +196,49 @@ iPoint Map::MapToWorld(int x, int y) const
     return ret;
 }
 
+TileSet* Map::GetTilesetFromTileId(int id) const
+{
+    ListItem<TileSet*>* item = data.tilesets.start;
+    TileSet* set = item->data;
+
+    while (id > set->firstgid)
+    {
+        item = item->next;
+        set = item->data;
+        while (id <= set->firstgid)
+        {
+            if (id == set->firstgid)
+            {
+                return set;
+            }
+            else if (id < set->firstgid)
+            {
+                item = item->prev;
+                set = item->data;
+                return set;
+            }
+
+
+        }
+
+    }
+
+
+
+
+
+
+    //...
+
+    return set;
+}
+
 // Get relative Tile rectangle
 SDL_Rect TileSet::GetTileRect(int id) const
 {
     SDL_Rect rect = { 0 };
-    /*int x = id % this->numTilesWidth * this->tile_width + id % this->numTilesWidth * this->spacing;
-    int y = id / this->numTilesWidth * this->tile_height + id / this->numTilesWidth * this->spacing;
+    /*int x = id % this->numTilesWidth * this->tile_width;
+    int y = id / this->numTilesWidth * this->tile_height;
 
     rect.x = x;
     rect.y = y;
@@ -301,14 +338,24 @@ bool Map::Load(const char* filename)
 		
 	}
 	// L04: TODO 4: Iterate all layers and load each of them
-	for (layers = mapFile.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
+	/*for (layers = mapFile.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
 	{
 		MapLayer* set = new MapLayer();
 
 		if (ret == true) ret = LoadLayer(layers, set);
 
 		data.layers.add(set);
-	}
+	}*/
+    pugi::xml_node layer;
+    for (layer = mapFile.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
+    {
+        MapLayer* lay = new MapLayer();
+
+        ret = LoadLayer(layer, lay);
+
+        if (ret == true)
+            data.layers.add(lay);
+    }
 
     if(ret == true)
     {

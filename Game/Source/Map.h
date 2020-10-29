@@ -58,7 +58,7 @@ struct MapLayer
     uint* data;
 
     int tileNumber;
-    int gids[750];
+    int gids[10000];
 
     MapLayer() : data(NULL){}
 
@@ -85,7 +85,23 @@ enum MapTypes
     MAPTYPE_STAGGERED
 };
 
+struct Properties
+{
+    struct Property
+    {
+        //...
+    };
 
+    ~Properties()
+    {
+        //...
+    }
+
+    // L06: TODO 7: Method to ask for the value of a custom property
+    int GetProperty(const char* name, int default_value = 0) const;
+
+    List<Property*> list;
+};
 // L03: TODO 1: Create a struct needed to hold the information to Map node
 struct MapData {
  /*   const char* orientation;
@@ -163,7 +179,9 @@ private:
     pugi::xml_node tileNode;
     pugi::xml_node imageNode;
     
-    
+    bool LoadProperties(pugi::xml_node& node, Properties& properties);
+
+    TileSet* GetTilesetFromTileId(int id) const;
     
 
     SString folder;
