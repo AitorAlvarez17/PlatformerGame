@@ -9,6 +9,14 @@
 
 // L03: TODO 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
+
+struct Tile {
+
+    int id;
+    int terrain[4];
+
+};
+
 struct TileSet {
     //int firstGid;
     //const char* name;
@@ -35,7 +43,9 @@ struct TileSet {
         int	numTilesHeight;
         int	offsetX;
         int	offsetY;
+        Tile tId[45];
 
+        SDL_Rect GetTileRect(int id) const;
         
     
 };
@@ -47,14 +57,23 @@ struct MapLayer
     int height;
     uint* data;
 
-    MapLayer() : data(NULL)
-    {}
+    int tileNumber;
+    int gids[750];
+
+    MapLayer() : data(NULL){}
 
     ~MapLayer()
     {
         RELEASE(data);
     }
 
+    // L04: TODO 6: Short function to get the value of x,y
+    uint Get(int x, int y) const
+    {
+
+        uint result = data[(y * width) + x];
+        return result;
+    }
  
 };
 
@@ -90,6 +109,11 @@ struct MapData {
     MapTypes type;
     List<TileSet*> tilesets;
 
+    List<MapLayer*> layers;
+
+    int maxLayers = 0;
+    int maxTilesets = 0;
+
         
   
    
@@ -116,17 +140,22 @@ public:
     // Load new map
     bool Load(const char* path);
 
+    bool StoreId(pugi::xml_node& node, MapLayer* layer, int index);
+
+    iPoint MapToWorld(int x, int y) const;
+
 
     // L03: TODO 1: Add your struct for map info as public for now
     MapData data;
 
 
 private:
-
+    bool LoadMap();
     bool LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts);
     bool LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* ts);
-    bool LoadMap();
-
+   
+    bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
+    bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
     TileSet tSet;
     pugi::xml_document mapFile;

@@ -31,11 +31,13 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	img = app->tex->Load("Assets/textures/test.png");
+	// L03: DONE: Load map
+	app->map->Load("hello2.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->map->Load("hello2.xml");
+
 	return true;
 }
+
 
 // Called each loop iteration
 bool Scene::PreUpdate()
