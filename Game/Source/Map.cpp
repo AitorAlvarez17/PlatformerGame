@@ -125,6 +125,7 @@ void Map::Draw()
 
     ListItem<MapLayer*>* L = data.layers.start;
     ListItem<TileSet*>* T = data.tilesets.start;
+    TileSet* tileSet = data.tilesets.start->data;
     while (L != nullptr) {
 
         MapLayer* layer = L->data;
@@ -132,11 +133,13 @@ void Map::Draw()
             for (int x = 0; x < layer->width; x++) {
 
 
-                int u = L->data->Get(x, y);
+                int u = layer->Get(x, y);
                 //LOG("%u", u);
-                SDL_Rect n = data.tilesets.start->data->GetTileRect(u);
+                /*SDL_Rect n = data.tilesets.start->data->GetTileRect(u);*/
                 iPoint pos = MapToWorld(x, y);
-                app->render->DrawTexture(data.tilesets.start->data->texture, pos.x, pos.y, &n);
+                tileSet = GetTilesetFromTileId(u);
+                SDL_Rect n = tileSet->GetTileRect(u);
+                app->render->DrawTexture(tileSet->texture, pos.x, pos.y, &n);
 
 
             }
@@ -203,16 +206,24 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 
     while (id > set->firstgid)
     {
+       /* LOG("%d", id);
+        LOG("%d", set->firstgid);*/
         item = item->next;
         set = item->data;
-        while (id <= set->firstgid)
+
+        if (id <= set->firstgid)
         {
             if (id == set->firstgid)
             {
+                /*LOG("%d", id);
+                LOG("%d", set->firstgid);*/
                 return set;
             }
             else if (id < set->firstgid)
             {
+                /*LOG("%d", id);
+                LOG("%d", set->firstgid);*/
+
                 item = item->prev;
                 set = item->data;
                 return set;
