@@ -5,6 +5,8 @@
 #include "List.h"
 #include "Point.h"
 
+#include "Log.h"
+
 #include "PugiXml\src\pugixml.hpp"
 
 // L03: TODO 2: Create a struct to hold information for a TileSet
@@ -28,26 +30,68 @@ struct TileSet {
     //const char* source;
     //int imageWidth;
     //int imageHeight;
-    
-        SString	name;
-        int	firstgid;
-        int margin;
-        int	spacing;
-        int	tile_width;
-        int	tile_height;
 
-        SDL_Texture* texture;
-        int	texWidth;
-        int	texHeight;
-        int	numTilesWidth;
-        int	numTilesHeight;
-        int	offsetX;
-        int	offsetY;
-        Tile tId[45];
+    SString	name;
+    int	firstgid;
+    int margin;
+    int	spacing;
+    int	tile_width;
+    int	tile_height;
 
-        SDL_Rect GetTileRect(int id) const;
-        
-    
+    SDL_Texture* texture;
+    int	texWidth;
+    int	texHeight;
+    int	numTilesWidth;
+    int	numTilesHeight;
+    int	offsetX;
+    int	offsetY;
+    Tile tId[45];
+
+    SDL_Rect GetTileRect(int id) const;
+
+
+};
+
+struct Properties
+{
+
+    struct Property
+    {
+        //...
+        SString name;
+        SString type;
+        int value;
+    };
+
+
+    ~Properties()
+    {
+        //...
+    }
+    List<Property*> list;
+
+    // L06: TODO 7: Method to ask for the value of a custom property
+    int GetProperty(const char* name, int default_value = 0) const {
+        int x = 0;
+        for (int i = 0; i < list.count(); i++) {
+
+            ListItem<Property*> props = list.start->data;
+
+            if (props.data->name == name) {
+                int x = list.start->data->value;
+
+                return x;
+            }
+            else if (props.data->name == "Not Found") {
+                return x;
+            }
+            else {
+                LOG("No property loading");
+            }
+
+            props = props.next->data;
+        }
+    }
 };
 
 struct MapLayer
@@ -57,12 +101,12 @@ struct MapLayer
     int height;
     uint* data;
 
-    /*Properties properties;*/
+    Properties prop;
 
     int tileNumber;
     int gids[10000];
 
-    MapLayer() : data(NULL){}
+    MapLayer() : data(NULL) {}
 
     ~MapLayer()
     {
@@ -76,7 +120,7 @@ struct MapLayer
         uint result = data[(y * width) + x];
         return result;
     }
- 
+
 };
 
 enum MapTypes
@@ -87,43 +131,21 @@ enum MapTypes
     MAPTYPE_STAGGERED
 };
 
-struct Properties
-{
-    
-    struct Property
-    {
-        //...
-        int Draw;
-        int Navigation;
-    };
-
-
-
-    ~Properties()
-    {
-        //...
-    }
-
-    // L06: TODO 7: Method to ask for the value of a custom property
-    int GetProperty(const char* name, int default_value = 0) const;
-
-    List<Property*> list;
-};
 
 
 // L03: TODO 1: Create a struct needed to hold the information to Map node
 struct MapData {
- /*   const char* orientation;
-    const char* renderorder;
-    int width;
-    int height;
-    int tileWidth;
-    int tileheight;
-    
+    /*   const char* orientation;
+       const char* renderorder;
+       int width;
+       int height;
+       int tileWidth;
+       int tileheight;
 
-    List<TileSet*> tilesets;*/
 
-   
+       List<TileSet*> tilesets;*/
+
+
     int width;
     int	height;
     int	tileWidth;
@@ -139,9 +161,9 @@ struct MapData {
     int maxLayers = 0;
     int maxTilesets = 0;
 
-        
-  
-   
+
+
+
 };
 
 class Map : public Module
@@ -178,7 +200,7 @@ private:
     bool LoadMap();
     bool LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts);
     bool LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* ts);
-   
+
     bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
     bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
@@ -187,11 +209,11 @@ private:
     pugi::xml_node mapNode;
     pugi::xml_node tileNode;
     pugi::xml_node imageNode;
-    
+
     bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
     TileSet* GetTilesetFromTileId(int id) const;
-    
+
 
     SString folder;
     bool mapLoaded = false;
