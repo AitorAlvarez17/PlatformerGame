@@ -540,6 +540,19 @@ bool Map::StoreId(pugi::xml_node& node, MapLayer* layer, int index)
     return ret;
 }
 
+//bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+//{
+//    bool ret = false;
+//    pugi::xml_node prop =node.child("map").child("layer").child("properties").child("property");
+//
+//    properties.list.start->data->Draw = prop.attribute("value").as_int();
+//    prop = prop.next_sibling();
+//    properties.list.start->data->Navigation = prop.attribute("value").as_int();
+//
+//    //...
+//    return ret;
+//}
+
 
 
 

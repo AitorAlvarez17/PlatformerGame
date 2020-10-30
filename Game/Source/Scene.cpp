@@ -65,6 +65,7 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x -= 100;
 
+
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		app->render->camera.x += 100;
