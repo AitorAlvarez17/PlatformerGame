@@ -144,6 +144,8 @@ void Map::Draw()
                 int K = 0;
                 if (layer->prop.GetProperty("Draw", K) == 1) {
                     app->render->DrawTexture(tileSet->texture, pos.x, pos.y, &n);
+
+                    
                 }
             }
         }
