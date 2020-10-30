@@ -1,11 +1,10 @@
-
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
 
 #include "Defs.h"
-#include "Log.h"
+
 
 #include <math.h>
 
@@ -70,9 +69,9 @@ bool Map::LoadMap()
         else {
             data.type = MAPTYPE_UNKNOWN;
         }
-        
 
-        
+
+
     }
 
     return true;
@@ -139,9 +138,13 @@ void Map::Draw()
                 iPoint pos = MapToWorld(x, y);
                 tileSet = GetTilesetFromTileId(u);
                 SDL_Rect n = tileSet->GetTileRect(u);
-                app->render->DrawTexture(tileSet->texture, pos.x, pos.y, &n);
 
+                ListItem<Properties::Property*>* props = layer->prop.list.start;
 
+                int K = 0;
+                if (layer->prop.GetProperty("Draw", K) == 1) {
+                    app->render->DrawTexture(tileSet->texture, pos.x, pos.y, &n);
+                }
             }
         }
 
@@ -206,8 +209,8 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 
     while (id > set->firstgid)
     {
-       /* LOG("%d", id);
-        LOG("%d", set->firstgid);*/
+        /* LOG("%d", id);
+         LOG("%d", set->firstgid);*/
         item = item->next;
         set = item->data;
 
@@ -320,43 +323,43 @@ bool Map::Load(const char* filename)
 
     pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
 
-    if(result == NULL)
+    if (result == NULL)
     {
         LOG("Could not load map xml file %s. pugi error: %s", filename, result.description());
         ret = false;
     }
 
-    if(ret == true)
+    if (ret == true)
     {
         // L03: DONE 3: Create and call a private function to load and fill all your map data
-		ret = LoadMap();
-	}
+        ret = LoadMap();
+    }
 
     // L03: DONE 4: Create and call a private function to load a tileset
     // remember to support more any number of tilesets!
-	pugi::xml_node tileset;
-	pugi::xml_node layers;
-	for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
-	{
-		TileSet* set = new TileSet();
+    pugi::xml_node tileset;
+    pugi::xml_node layers;
+    for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
+    {
+        TileSet* set = new TileSet();
 
-		if (ret == true) ret = LoadTileset(tileset, set);
+        if (ret == true) ret = LoadTileset(tileset, set);
 
-		if (ret == true) ret = LoadTilesetImage(tileset, set);
+        if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-		data.tilesets.add(set);
-		
-		
-	}
-	// L04: TODO 4: Iterate all layers and load each of them
-	/*for (layers = mapFile.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
-	{
-		MapLayer* set = new MapLayer();
+        data.tilesets.add(set);
 
-		if (ret == true) ret = LoadLayer(layers, set);
 
-		data.layers.add(set);
-	}*/
+    }
+    // L04: TODO 4: Iterate all layers and load each of them
+    /*for (layers = mapFile.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
+    {
+        MapLayer* set = new MapLayer();
+
+        if (ret == true) ret = LoadLayer(layers, set);
+
+        data.layers.add(set);
+    }*/
     pugi::xml_node layer;
     for (layer = mapFile.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
     {
@@ -368,39 +371,39 @@ bool Map::Load(const char* filename)
             data.layers.add(lay);
     }
 
-    if(ret == true)
+    if (ret == true)
     {
         // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
-		LOG("Successfully parsed map XML file : %s", filename);
-		LOG("width %d", data.width, " height %d", data.height);
-		LOG("tile_width %d", data.tileWidth, " tile_height", "%d", data.tileHeight);
-		LOG("Tileset----");
-		/*for (int i = 1; data.tilesets[i] != nullptr; i++) {
+        LOG("Successfully parsed map XML file : %s", filename);
+        LOG("width %d", data.width, " height %d", data.height);
+        LOG("tile_width %d", data.tileWidth, " tile_height", "%d", data.tileHeight);
+        LOG("Tileset----");
+        /*for (int i = 1; data.tilesets[i] != nullptr; i++) {
 
-			LOG("name : %s : %i", data.tilesets[i]->name,data.tilesets[i]->firstgid);
-			LOG("tile_width %d", data.tilesets[i]->tile_width, " tile_height %d", data.tilesets[i]->tile_height);
-			LOG("spacing : %d", data.tilesets[i]->spacing, " margin :%d", data.tilesets[i]->margin);
-		}*/
+            LOG("name : %s : %i", data.tilesets[i]->name,data.tilesets[i]->firstgid);
+            LOG("tile_width %d", data.tilesets[i]->tile_width, " tile_height %d", data.tilesets[i]->tile_height);
+            LOG("spacing : %d", data.tilesets[i]->spacing, " margin :%d", data.tilesets[i]->margin);
+        }*/
 
-		// L04: TODO 4: LOG the info for each loaded layer
-		ListItem<MapLayer*>* layerList = data.layers.start;
-		while (layerList != nullptr) {
+        // L04: TODO 4: LOG the info for each loaded layer
+        ListItem<MapLayer*>* layerList = data.layers.start;
+        while (layerList != nullptr) {
 
-			LOG("name : %s", layerList->data->name);
-			LOG("width %d", layerList->data->width); 
-			LOG("height %d", layerList->data->height);
-			//max value tiene que ser implementado 
-			for (int i = 0; i < layerList->data->tileNumber; i++)
-			{
-				if (layerList->data->gids == NULL)
-				{
-					LOG("Gids %d missing", i);
+            LOG("name : %s", layerList->data->name);
+            LOG("width %d", layerList->data->width);
+            LOG("height %d", layerList->data->height);
+            //max value tiene que ser implementado 
+            for (int i = 0; i < layerList->data->tileNumber; i++)
+            {
+                if (layerList->data->gids == NULL)
+                {
+                    LOG("Gids %d missing", i);
 
-				}
-				
-			}
-			layerList = layerList->next;
-		}
+                }
+
+            }
+            layerList = layerList->next;
+        }
 
     }
 
@@ -422,6 +425,8 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
     layer->data = new uint[(data.width * data.height * sizeof(uint))];
     memset(layer->data, 0, size_t(data.width * data.height * sizeof(uint)));
+
+    LoadProperties(node, layer->prop);
 
     pugi::xml_node gidNode;
     int i = 0;
@@ -466,7 +471,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     bool ret = true;
 
 
-    data.maxLayers++;
+    /*data.maxLayers++;*/
 
     return ret;
 }
@@ -525,7 +530,7 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
     //	i++;
     //}
 
-    data.maxTilesets++;
+    /*data.maxTilesets++;*/
 
     return ret;
 }
@@ -540,19 +545,22 @@ bool Map::StoreId(pugi::xml_node& node, MapLayer* layer, int index)
     return ret;
 }
 
-//bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
-//{
-//    bool ret = false;
-//    pugi::xml_node prop =node.child("map").child("layer").child("properties").child("property");
-//
-//    properties.list.start->data->Draw = prop.attribute("value").as_int();
-//    prop = prop.next_sibling();
-//    properties.list.start->data->Navigation = prop.attribute("value").as_int();
-//
-//    //...
-//    return ret;
-//}
+bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+{
+    bool ret = true;
+    pugi::xml_node propNode = node.child("properties").child("property");
 
 
+    for (propNode; propNode && ret; propNode = propNode.next_sibling()) {
 
+        Properties::Property* prop = new Properties::Property();
 
+        prop->name.create(propNode.attribute("name").as_string("Not Found"));
+        prop->type.create(propNode.attribute("type").as_string("Not Found"));
+        prop->value = propNode.attribute("value").as_int(0);
+
+        properties.list.add(prop);
+        //...
+    }
+    return ret;
+}
