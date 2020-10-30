@@ -16,6 +16,10 @@
   <image source="meta.png" trans="ff00ff" width="67" height="34"/>
  </tileset>
  <layer id="4" name="Sky" width="100" height="100">
+  <properties>
+   <property name="Draw" type="int" value="1"/>
+   <property name="Navigation" type="int" value="1"/>
+  </properties>
   <data>
    <tile gid="100"/>
    <tile gid="100"/>
@@ -10020,6 +10024,10 @@
   </data>
  </layer>
  <layer id="5" name="Background3" width="100" height="100">
+  <properties>
+   <property name="Draw" type="int" value="1"/>
+   <property name="Navigation" type="int" value="1"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -20024,6 +20032,10 @@
   </data>
  </layer>
  <layer id="3" name="Background 2" width="100" height="100">
+  <properties>
+   <property name="Draw" type="int" value="1"/>
+   <property name="Navigation" type="int" value="1"/>
+  </properties>
   <data>
    <tile/>
    <tile/>
@@ -30028,6 +30040,10 @@
   </data>
  </layer>
  <layer id="2" name="Background" width="100" height="100">
+  <properties>
+   <property name="Draw" type="int" value="1"/>
+   <property name="Navigation" type="int" value="1"/>
+  </properties>
   <data>
    <tile gid="4"/>
    <tile gid="4"/>

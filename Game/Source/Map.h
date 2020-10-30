@@ -57,6 +57,8 @@ struct MapLayer
     int height;
     uint* data;
 
+    /*Properties properties;*/
+
     int tileNumber;
     int gids[10000];
 
@@ -87,10 +89,15 @@ enum MapTypes
 
 struct Properties
 {
+    
     struct Property
     {
         //...
+        int Draw;
+        int Navigation;
     };
+
+
 
     ~Properties()
     {
@@ -102,6 +109,8 @@ struct Properties
 
     List<Property*> list;
 };
+
+
 // L03: TODO 1: Create a struct needed to hold the information to Map node
 struct MapData {
  /*   const char* orientation;
