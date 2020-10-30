@@ -1,4 +1,4 @@
-# {Project Name}
+# {PlatformerGame}
 
 ## Description
 
@@ -17,9 +17,9 @@
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
+ - {Aitor Àlvarez} - {Programmer}
+ - {Telmo Beroiz} - {Programmer}
+ - {Andrés Sànchez} - {Programmer}
  - {Dev04} - {Role(s)}
  - {Dev05} - {Role(s)}
 
