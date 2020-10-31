@@ -16,15 +16,15 @@ bool Player::Start()
 {
 	bool ret = true;
 
-	position.x = 160;
-	position.y = 966;
+	position.x = 0;
+	position.y = 0;
 
 	LOG("Loading Player textures");
 
-	//texture = app->tex->Load("SpriteSheet.png");
+	texture = app->tex->Load("Assets/textures/Hero.png");
 
 	//texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/Idle (32x32).png");
-	texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png");
+	/*texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png");*/
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
@@ -122,9 +122,9 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
-	//SDL_Rect rect = currentAnim;
+	SDL_Rect rect = {0,0,100,55};
 
-	//app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexture(texture, position.x, position.y, &rect);
 
 	return true;
 }
