@@ -1,5 +1,6 @@
 #include "App.h"
 #include "Render.h"
+#include "Collisions.h"
 #include "Textures.h"
 #include "Map.h"
 
@@ -54,19 +55,23 @@ bool Map::LoadMap()
 
 
         SString orientation = map.attribute("orientation").as_string();
-        if (orientation == "orthogonal") {
+        if (orientation == "orthogonal")
+        {
             data.type = MAPTYPE_ORTHOGONAL;
 
         }
-        else if (orientation == "isometric") {
+        else if (orientation == "isometric")
+        {
             data.type = MAPTYPE_ISOMETRIC;
 
 
         }
-        else if (orientation == "staggered") {
+        else if (orientation == "staggered")
+        {
             data.type = MAPTYPE_STAGGERED;
         }
-        else {
+        else
+        {
             data.type = MAPTYPE_UNKNOWN;
         }
 
@@ -82,83 +87,95 @@ void Map::Draw()
 {
     if (mapLoaded == false) return;
 
+    ListItem<MapLayer*>* L = data.layers.start;
+    ListItem<TileSet*>* T = data.tilesets.start;
+    TileSet* tileSet = data.tilesets.start->data;
+    while (L != nullptr)
+    {
+        MapLayer* layer = L->data;
+        if (layer->prop.GetProperty("Draw", 1) == 0)
+        {
+            
 
-    // L04: TODO 5: Prepare the loop to draw all tilesets + DrawTexture()
-    /*for (int i = 0; i < data.maxTilesets; i++) {
-        int posx = 0;
-        int posy = 0;
-        int posIx = 0;
-        int posIy = 0;
-        for (int j = 0; j < data.maxLayers; j++) {
-            for (int x = 0; data.layers[j]->gids[x] != NULL; x++) {
-                int mCol = data.tilesets[i]->texWidth / data.tileWidth;
-                int mRow = data.tilesets[i]->texHeight / data.tileHeight;
+            L = L->next;
+            continue;
+            
 
-                int gidId = data.layers[j]->gids[x];
-
-                int row = gidId / mCol;
-                int col =  (gidId % mCol);
-
-                posIx = data.tileWidth * col;
-                posIy = data.tileHeight * row;
-
-                SDL_Rect drawedTile;
-                drawedTile.x = posIx;
-                drawedTile.y = posIy;
-
-                app->render->DrawTexture(data.tilesets[i]->texture, posx, posy, &drawedTile);
+        }
+       
+        for (int y = 0; y < layer->height; y++)
+        {
+            for (int x = 0; x < layer->width; x++)
+            {
 
 
-                if (posx < data.tileWidth * data.width) {
-                    posx += 32;
-                }
-                else {
-                    posy += 32;
-                }
+                int u = layer->Get(x, y);
+                iPoint pos = MapToWorld(x, y);
+                tileSet = GetTilesetFromTileId(u);
+                SDL_Rect n = tileSet->GetTileRect(u);
 
+                
+
+                app->render->DrawTexture(tileSet->texture, pos.x, pos.y, &n);
+                
             }
         }
-    }*/
 
+
+        L = L->next;
+    }
+}
+
+
+
+
+void Map::LoadColliders()
+{
+    if (mapLoaded == false) return;
 
 
     ListItem<MapLayer*>* L = data.layers.start;
     ListItem<TileSet*>* T = data.tilesets.start;
     TileSet* tileSet = data.tilesets.start->data;
-    while (L != nullptr) {
-
+    while (L != nullptr)
+    {
         MapLayer* layer = L->data;
-        for (int y = 0; y < layer->height; y++) {
-            for (int x = 0; x < layer->width; x++) {
+        if (layer->prop.GetProperty("Colliders", 1) == 0)
+        {
+
+            L = L->next;
+            continue;
+
+
+        }
+
+        for (int y = 0; y < layer->height; y++)
+        {
+            for (int x = 0; x < layer->width; x++)
+            {
 
 
                 int u = layer->Get(x, y);
-                //LOG("%u", u);
-                /*SDL_Rect n = data.tilesets.start->data->GetTileRect(u);*/
                 iPoint pos = MapToWorld(x, y);
                 tileSet = GetTilesetFromTileId(u);
                 SDL_Rect n = tileSet->GetTileRect(u);
+           
 
-                ListItem<Properties::Property*>* props = layer->prop.list.start;
-
-                int K = 0;
-                if (layer->prop.GetProperty("Draw", K) == 1) {
-                    app->render->DrawTexture(tileSet->texture, pos.x, pos.y, &n);
-
-                    
+                if (layer->prop.GetProperty("Collisions", 1) == 1) 
+                {
+                    app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
                 }
+                if (layer->prop.GetProperty("Collisions", 1) == 2)
+                {
+                    app->collisions->AddCollider(n, Collider::Type::DEATH, this);
+                }
+                
             }
         }
-
         L = L->next;
     }
-
-
-    // L04: TODO 9: Complete the draw function
-    //a/*pp->render->DrawTexture(data.tilesets[0]->texture, 0, 0);*/
 }
 
-// Called before quitting
 
 
 bool Map::LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* ts)
@@ -253,15 +270,7 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
     SDL_Rect rect = { 0 };
-    /*int x = id % this->numTilesWidth * this->tile_width;
-    int y = id / this->numTilesWidth * this->tile_height;
-
-    rect.x = x;
-    rect.y = y;
-    rect.w = this->tile_width;
-    rect.h = this->tile_height;
-
-    return rect;*/
+    
     // L04: TODO 7: Get relative Tile rectangle
     iPoint p = { 0,this->margin };
     int targetId = firstgid;
@@ -341,6 +350,7 @@ bool Map::Load(const char* filename)
     // remember to support more any number of tilesets!
     pugi::xml_node tileset;
     pugi::xml_node layers;
+
     for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
     {
         TileSet* set = new TileSet();
@@ -354,20 +364,14 @@ bool Map::Load(const char* filename)
 
     }
     // L04: TODO 4: Iterate all layers and load each of them
-    /*for (layers = mapFile.child("map").child("layer"); layers && ret; layers = layers.next_sibling("layer"))
-    {
-        MapLayer* set = new MapLayer();
-
-        if (ret == true) ret = LoadLayer(layers, set);
-
-        data.layers.add(set);
-    }*/
+    
     pugi::xml_node layer;
     for (layer = mapFile.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
     {
         MapLayer* lay = new MapLayer();
 
         ret = LoadLayer(layer, lay);
+
 
         if (ret == true)
             data.layers.add(lay);
@@ -380,12 +384,7 @@ bool Map::Load(const char* filename)
         LOG("width %d", data.width, " height %d", data.height);
         LOG("tile_width %d", data.tileWidth, " tile_height", "%d", data.tileHeight);
         LOG("Tileset----");
-        /*for (int i = 1; data.tilesets[i] != nullptr; i++) {
-
-            LOG("name : %s : %i", data.tilesets[i]->name,data.tilesets[i]->firstgid);
-            LOG("tile_width %d", data.tilesets[i]->tile_width, " tile_height %d", data.tilesets[i]->tile_height);
-            LOG("spacing : %d", data.tilesets[i]->spacing, " margin :%d", data.tilesets[i]->margin);
-        }*/
+        
 
         // L04: TODO 4: LOG the info for each loaded layer
         ListItem<MapLayer*>* layerList = data.layers.start;
@@ -566,3 +565,34 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     }
     return ret;
 }
+
+
+int Properties::GetProperty(const char* name, int defaultValue ) const {
+    int x = 0;
+    ListItem<Property*>* props = list.start;
+    /*while () {
+
+        if (props.data->name == name) {
+            int x = props.data->value;
+
+            return x;
+        }
+        else if (props.data->name == "Not Found") {
+            return x;
+        }
+        else {
+            LOG("No property loading");
+        }
+
+        props = props.next->data;
+    }*/
+    while (props != NULL)
+    {
+        if (props->data->name == name)
+            return props->data->value;
+        props = props->next;
+    }
+    return defaultValue;
+}
+
+

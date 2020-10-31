@@ -1,7 +1,7 @@
 #ifndef __COLLISIONS_H__
 #define __COLLISIONS_H__
 
-#define MAX_COLLIDERS 150
+#define MAX_COLLIDERS 1000
 
 #include "Module.h"
 #include "Collider.h"
@@ -37,6 +37,7 @@ public:
 
 	// Draws all existing colliders with some transparency
 	void DebugDraw();
+	void DebugRequest();
 
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];
 
