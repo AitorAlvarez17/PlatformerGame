@@ -140,7 +140,7 @@ void Map::LoadColliders()
     while (L != nullptr)
     {
         MapLayer* layer = L->data;
-        if (layer->prop.GetProperty("Colliders", 1) == 0)
+        if (layer->prop.GetProperty("Collisions", 1) == 0)
         {
 
             L = L->next;
@@ -153,21 +153,24 @@ void Map::LoadColliders()
         {
             for (int x = 0; x < layer->width; x++)
             {
-
+               
 
                 int u = layer->Get(x, y);
                 iPoint pos = MapToWorld(x, y);
                 tileSet = GetTilesetFromTileId(u);
-                SDL_Rect n = tileSet->GetTileRect(u);
-           
+                SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight };
 
-                if (layer->prop.GetProperty("Collisions", 1) == 1) 
+               
+                if (u != 0)
                 {
-                    app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
-                }
-                if (layer->prop.GetProperty("Collisions", 1) == 2)
-                {
-                    app->collisions->AddCollider(n, Collider::Type::DEATH, this);
+                    if (layer->prop.GetProperty("Collisions", 1) == 1)
+                    {
+                        app->collisions->AddCollider(n, Collider::Type::FLOOR, this);
+                    }
+                    if (layer->prop.GetProperty("Collisions", 1) == 2)
+                    {
+                        app->collisions->AddCollider(n, Collider::Type::DEATH, this);
+                    }
                 }
                 
             }
@@ -446,15 +449,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
     pugi::xml_node& layerData = node.child("data");
 
-    //int i = 0;
-    //while (gid.attribute("gid").as_int() != NULL)
-    //{
-    //	//Storage
-    //	layer->gids[i] = gid.attribute("gid").as_int();
-    //	//siguiente gid
-    //	gid.next_sibling();
-    //	i++;
-    //}
+   
     int j = 0;
     for (pugi::xml_node& tilegid = layerData.first_child(); tilegid; tilegid = tilegid.next_sibling())
     {
@@ -570,22 +565,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 int Properties::GetProperty(const char* name, int defaultValue ) const {
     int x = 0;
     ListItem<Property*>* props = list.start;
-    /*while () {
 
-        if (props.data->name == name) {
-            int x = props.data->value;
-
-            return x;
-        }
-        else if (props.data->name == "Not Found") {
-            return x;
-        }
-        else {
-            LOG("No property loading");
-        }
-
-        props = props.next->data;
-    }*/
     while (props != NULL)
     {
         if (props->data->name == name)

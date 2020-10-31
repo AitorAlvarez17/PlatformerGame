@@ -87,7 +87,7 @@ bool Scene::Update(float dt)
 		LOG("SAVE REQUESTED");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		app->collisions->DebugRequest();
 		LOG("Debug Mode");
 	}
@@ -108,7 +108,7 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-
+	
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
