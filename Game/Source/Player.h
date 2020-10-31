@@ -2,7 +2,7 @@
 #define __PLAYER_H__
 
 #include "Module.h"
-//#include "Animation.h"
+#include "Animation.h"
 #include "Point.h"
 
 struct Animation;
@@ -24,6 +24,7 @@ class Player : public Module
 private:
 	PlayerState playerState = PlayerState::IDLE;
 	SDL_Texture* texture = nullptr;
+	
 	Animation* currentAnim = nullptr;
 
 	bool isGoingRight = false;
@@ -39,17 +40,22 @@ public:
 	void UpdateLogic();
 	void ChangeState(PlayerState previous, PlayerState next);
 
-	/*Animation idleRightAnim;
-	Animation idleLeftAnim;
+	Animation idleAnimR;
+	Animation idleAnimL;
+
 	Animation runRightAnim;
 	Animation runLeftAnim;
+
 	Animation jumpRightAnim;
 	Animation jumpLeftAnim;
+
 	Animation fallRightAnim;
 	Animation fallLeftAnim;
+
 	Animation appearAnim;
-	Animation disappearRightAnim;
-	Animation disappearLeftAnim;*/
+
+	Animation deadAnim;
+	Animation deadAnim;
 
 	Point<int> position;
 

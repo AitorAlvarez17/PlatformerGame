@@ -2,7 +2,7 @@
 
 #include "App.h"
 #include "Input.h"
-//#include "Animation.h"
+#include "Animation.h"
 #include "Textures.h"
 #include "Render.h"
 #include "Collisions.h"
@@ -15,100 +15,71 @@
 bool Player::Start()
 {
 	bool ret = true;
-
+	int pixels = 32;
 	position.x = 0;
 	position.y = 0;
 
 	LOG("Loading Player textures");
 
-	texture = app->tex->Load("Assets/textures/Hero.png");
-
+	texture = app->tex->Load("Assets\textures\FinnSprite");
+	
 	//texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/Idle (32x32).png");
 	/*texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png");*/
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
 
-	//currentAnim = &idleRightAnim;
+	currentAnim;
 	//cambiar això
 	//collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 
-	/*idleRightAnim.loop = idleLeftAnim.loop = runRightAnim.loop = runLeftAnim.loop = true;
-	idleRightAnim.speed = idleLeftAnim.speed = 0.6f;
+	idleAnimR.loop = idleAnimL.loop = runRightAnim.loop = runLeftAnim.loop = true;
+	idleAnimR.speed = idleAnimL.speed = 0.6f;
 	runRightAnim.speed = runLeftAnim.speed = 0.7f;
 
-	idleRightAnim.PushBack({ 0,0,22,26 });
-	idleRightAnim.PushBack({ 32,0,22,26 });
-	idleRightAnim.PushBack({ 64,0,22,26 });
-	idleRightAnim.PushBack({ 96,0,22,26 });
-	idleRightAnim.PushBack({ 128,0,22,26 });
-	idleRightAnim.PushBack({ 160,0,22,26 });
-	idleRightAnim.PushBack({ 192,0,22,26 });
-	idleRightAnim.PushBack({ 224,0,22,26 });
-	idleRightAnim.PushBack({ 256,0,22,26 });
-	idleRightAnim.PushBack({ 288,0,22,26 });
-	idleRightAnim.PushBack({ 320,0,22,26 });
-
-	idleLeftAnim.PushBack({ 0,26,22,26 });
-	idleLeftAnim.PushBack({ 32,26,22,26 });
-	idleLeftAnim.PushBack({ 64,26,22,26 });
-	idleLeftAnim.PushBack({ 96,26,22,26 });
-	idleLeftAnim.PushBack({ 128,26,22,26 });
-	idleLeftAnim.PushBack({ 160,26,26,26 });
-	idleLeftAnim.PushBack({ 192,26,27,26 });
-	idleLeftAnim.PushBack({ 224,26,27,26 });
-	idleLeftAnim.PushBack({ 256,26,28,26 });
-	idleLeftAnim.PushBack({ 288,26,28,26 });
-	idleLeftAnim.PushBack({ 320,26,28,26 });
-
-	runRightAnim.PushBack({ 0,62,24,28 });
-	runRightAnim.PushBack({ 32,62,24,28 });
-	runRightAnim.PushBack({ 64,62,24,28 });
-	runRightAnim.PushBack({ 96,62,24,28 });
-	runRightAnim.PushBack({ 128,62,24,28 });
-	runRightAnim.PushBack({ 160,62,24,28 });
-	runRightAnim.PushBack({ 192,62,24,28 });
-	runRightAnim.PushBack({ 224,62,24,28 });
-	runRightAnim.PushBack({ 256,62,24,28 });
-	runRightAnim.PushBack({ 288,62,24,28 });
-	runRightAnim.PushBack({ 320,62,24,28 });
-	runRightAnim.PushBack({ 352,62,24,28 });
-
-	runLeftAnim.PushBack({ 0,90,24,28 });
-	runLeftAnim.PushBack({ 32,90,24,28 });
-	runLeftAnim.PushBack({ 64,90,24,28 });
-	runLeftAnim.PushBack({ 96,90,24,28 });
-	runLeftAnim.PushBack({ 128,90,24,28 });
-	runLeftAnim.PushBack({ 160,90,24,28 });
-	runLeftAnim.PushBack({ 192,90,24,28 });
-	runLeftAnim.PushBack({ 224,90,24,28 });
-	runLeftAnim.PushBack({ 256,90,24,28 });
-	runLeftAnim.PushBack({ 288,90,24,28 });
-	runLeftAnim.PushBack({ 320,90,24,28 });
-	runLeftAnim.PushBack({ 352,90,24,28 });
-
-	jumpRightAnim.PushBack({ 0,188,22,28 });
-
-	jumpLeftAnim.PushBack({ 68,188,22,28 });
-
-	fallRightAnim.PushBack({ 22,188,23,28 });
-
-	fallLeftAnim.PushBack({ 45,188,23,28 });
-
-	appearAnim.loop = disappearLeftAnim.loop = disappearRightAnim.loop = false;
-
-	for (int i = 0; i < 390; i += 55)
+	//right
+	for (int i = 0; i < 27; i ++)// 0 to 9
 	{
-		appearAnim.PushBack({ i,227,55,55 });
+		if (0 <= i < 9)//FIRST ANIM IDLE
+		{
+			idleAnimR.PushBack({ i*32,0,32,32 });
+		}
+		if (27 > i >= 18)// FIRST ANIM IDLE
+		{
+			idleAnimL.PushBack({ i * 32, 32,32,32 });
+		}
+		if(9 <= i < 15)// RUN
+		{
+			runRightAnim.PushBack({ i*32,0,32,32 });
+		}
+		if (13 > i >= 18)// RUN LEFT
+		{
+			runLeftAnim.PushBack({ i*32, 32,32,32 });
+		}
+		if (i == 15 ) // JUMP R 
+		{
+			jumpRightAnim.PushBack({ i*32,0,32,32 });
+		}
+		if (i == 12) // JUMP L
+		{
+			jumpLeftAnim.PushBack({ i*32,32,32,32 });
+		}
+		if (20 <= i < 23) // DEAD RIGHT
+		{
+			deadAnim.PushBack({ i*32,0,32,32 });
+		}
+		if (7 > i >= 5) //DEAD LEFT
+		{
+			deadAnim.PushBack({ i*32,32,32,32 });
+		}
 	}
+	//left
+	
 
-	for (int i = 0; i < 390; i += 55)
-	{
-		disappearLeftAnim.PushBack({ i,282,55,55 });
-	}
+	//appearAnim.loop = disappearLeftAnim.loop = disappearRightAnim.loop = false;
 
-	return ret;
-	*/
+
+	
 	return ret;
 }
 
