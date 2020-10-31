@@ -5,6 +5,7 @@
 #include "List.h"
 #include "Point.h"
 
+
 #include "Log.h"
 
 #include "PugiXml\src\pugixml.hpp"
@@ -71,27 +72,8 @@ struct Properties
     List<Property*> list;
 
     // L06: TODO 7: Method to ask for the value of a custom property
-    int GetProperty(const char* name, int default_value = 0) const {
-        int x = 0;
-        for (int i = 0; i < list.count(); i++) {
-
-            ListItem<Property*> props = list.start->data;
-
-            if (props.data->name == name) {
-                int x = list.start->data->value;
-
-                return x;
-            }
-            else if (props.data->name == "Not Found") {
-                return x;
-            }
-            else {
-                LOG("No property loading");
-            }
-
-            props = props.next->data;
-        }
-    }
+    int GetProperty(const char* name, int defaultValue = 0) const;
+       
 };
 
 struct MapLayer
@@ -190,6 +172,7 @@ public:
     bool StoreId(pugi::xml_node& node, MapLayer* layer, int index);
 
     iPoint MapToWorld(int x, int y) const;
+    void LoadColliders();
 
 
     // L03: TODO 1: Add your struct for map info as public for now
@@ -203,6 +186,8 @@ private:
 
     bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
     bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+    
+    
 
     TileSet tSet;
     pugi::xml_document mapFile;

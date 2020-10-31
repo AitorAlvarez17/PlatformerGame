@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,7 +33,10 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
+	
 	app->map->Load("GAME.tmx");
+	app->map->LoadColliders();
+	
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
 	return true;
@@ -81,6 +85,11 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		app->RequestSave();
 		LOG("SAVE REQUESTED");
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_REPEAT) {
+		app->collisions->DebugRequest();
+		LOG("Debug Mode");
 	}
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
