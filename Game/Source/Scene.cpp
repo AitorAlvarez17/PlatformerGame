@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Collisions.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -38,6 +39,8 @@ bool Scene::Start()
 	app->map->LoadColliders();
 	
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+
+	
 
 	return true;
 }

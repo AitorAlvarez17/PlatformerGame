@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Collisions.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -27,6 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	map = new Map();
 	collisions = new Collisions();
+	player = new Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -38,9 +40,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	
 
 	// Render last to swap buffer
-	AddModule(render);
+	
 	AddModule(map);
 	AddModule(collisions);
+	AddModule(player);
+	AddModule(render);
 	
 }
 
