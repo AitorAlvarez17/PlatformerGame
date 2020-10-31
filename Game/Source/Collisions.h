@@ -50,7 +50,7 @@ private:
 
 
 	// Simple debugging flag to draw all colliders
-	bool debug = false;
+	bool debug = true;
 };
 
 #endif // __COLLISIONS_H__

@@ -35,11 +35,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
-	AddModule(collisions);
+	
 
 	// Render last to swap buffer
 	AddModule(render);
 	AddModule(map);
+	AddModule(collisions);
 	
 }
 

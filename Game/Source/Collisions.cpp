@@ -26,7 +26,7 @@ bool Collisions::Start()
 // Called each loop iteration
 bool Collisions::PreUpdate() 
 {
-
+	
 	
 	return true;
 }
@@ -40,9 +40,9 @@ bool Collisions::Update(float dt)
 
 bool Collisions::PostUpdate() 
 {
-	
 	if (debug)
 		DebugDraw();
+	
 	
 	return true;
 }
