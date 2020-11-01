@@ -21,7 +21,8 @@ bool Player::Start()
 
 	LOG("Loading Player textures");
 
-	texture = app->tex->Load("Assets\textures\FinnSprite");
+	texture = app->tex->Load("Assets/textures/FinnSprite.png");
+	
 	
 	//texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/Idle (32x32).png");
 	/*texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png");*/
@@ -29,55 +30,88 @@ bool Player::Start()
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
 
-	currentAnim;
+
 	//cambiar això
-	//collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
+	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::PLAYER, this);
 
 	idleAnimR.loop = idleAnimL.loop = runRightAnim.loop = runLeftAnim.loop = true;
-	idleAnimR.speed = idleAnimL.speed = 0.6f;
-	runRightAnim.speed = runLeftAnim.speed = 0.7f;
+	idleAnimR.speed = idleAnimL.speed = 0.2f;
+	runRightAnim.speed = runLeftAnim.speed = 0.3f;
 
 	//right
 	for (int i = 0; i < 27; i ++)// 0 to 9
 	{
 		if (0 <= i < 9)//FIRST ANIM IDLE
 		{
-			idleAnimR.PushBack({ i*32,0,32,32 });
-		}
-		if (27 > i >= 18)// FIRST ANIM IDLE
-		{
-			idleAnimL.PushBack({ i * 32, 32,32,32 });
+			idleAnimR.PushBack({ i*pixels,0,32,32 });
+			if (i == 8) 
+			{
+				break;
+			}
 		}
 		if(9 <= i < 15)// RUN
 		{
-			runRightAnim.PushBack({ i*32,0,32,32 });
-		}
-		if (13 > i >= 18)// RUN LEFT
-		{
-			runLeftAnim.PushBack({ i*32, 32,32,32 });
-		}
+			runRightAnim.PushBack({ i* pixels,0,32,32 });
+			if (i == 14) 
+			{
+				break;
+			}
+		}		
 		if (i == 15 ) // JUMP R 
 		{
-			jumpRightAnim.PushBack({ i*32,0,32,32 });
-		}
-		if (i == 12) // JUMP L
-		{
-			jumpLeftAnim.PushBack({ i*32,32,32,32 });
+			jumpRightAnim.PushBack({ i* pixels,0,32,32 });
+			if (i == 15) 
+			{
+				break;
+			}
 		}
 		if (20 <= i < 23) // DEAD RIGHT
 		{
-			deadAnim.PushBack({ i*32,0,32,32 });
+			deadAnim.PushBack({ i* pixels,0,32,32 });
+			if (i == 22) 
+			{
+				break;
+			}
 		}
-		if (7 > i >= 5) //DEAD LEFT
+		
+	}
+	for (int i = 27; i >= 0; i--)
+	{
+		if (27 >= i > 18)// FIRST ANIM IDLE
 		{
-			deadAnim.PushBack({ i*32,32,32,32 });
+			idleAnimL.PushBack({ i * pixels, pixels,32,32 });
+			if (i == 19) 
+			{
+				break;
+			}
+		}
+		if (18 >= i > 13)// RUN LEFT
+		{
+			runLeftAnim.PushBack({ i * pixels, pixels,32,32 });
+			if (i == 14)
+			{
+				break;
+			}
+		}
+		if (i == 12) // JUMP L
+		{
+			jumpLeftAnim.PushBack({ i * pixels,pixels,32,32 });
+			if (i == 12)
+			{
+				break;
+			}
+		}
+		if (8 >= i > 4) //DEAD LEFT
+		{
+			deadAnim.PushBack({ i * pixels,pixels,32,32 });
+			if (i == 5)
+			{
+				break;
+			}
 		}
 	}
 	//left
-	
-
-	//appearAnim.loop = disappearLeftAnim.loop = disappearRightAnim.loop = false;
-
+	currentAnim = &idleAnimR;
 
 	
 	return ret;
@@ -93,42 +127,23 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
-	SDL_Rect rect = {0,0,100,55};
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexturePlayer(texture, position.x, position.y, &rect);
 
 	return true;
 }
 
 void Player::OnCollision(Collider* a, Collider* b) {
-
-	int diffPosX = a->rect.x + a->rect.w - b->rect.x;
-	int diffNegX = a->rect.x - (b->rect.x + b->rect.w);
-	int diffPosY = b->rect.y + b->rect.h - a->rect.y;
-	int diffNegY = b->rect.y - (a->rect.y + a->rect.h);
-
-	if (std::min(std::abs(diffPosX), std::abs(diffNegX)) < std::min(std::abs(diffPosY), std::abs(diffNegY)))
+	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR) 
 	{
-		if (std::abs(diffPosX) < std::abs(diffNegX))
-		{
-			position.x -= diffPosX;
-		}
-		else
-		{
-			position.x -= diffNegX;
-		}
+		position.y = b->rect.y;
 	}
-	else
+	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 	{
-		if (std::abs(diffPosY) < std::abs(diffNegY))
-		{
-			position.y -= diffPosY;
-		}
-		else
-		{
-			position.y -= diffNegY;
-		}
+		isDead = true;
 	}
+	
 }
 
 
@@ -163,7 +178,6 @@ void Player::UpdateState()
 	case RUNNING:
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-
 		{
 
 
@@ -240,15 +254,18 @@ void Player::UpdateLogic()
 
 	}
 	position.y -= jumpForce;
-}
-	/*switch (playerState)
+
+	switch (playerState)
 	{
 	case(IDLE):
 	{
 		if (isGoingRight == true)
-			currentAnim = &idleRightAnim;
+		{
+			currentAnim = &idleAnimR;
+			position.y += gravityForce;
+		}
 		else
-			currentAnim = &idleLeftAnim;
+			currentAnim = &idleAnimL;
 
 		break;
 	}
@@ -310,7 +327,6 @@ void Player::UpdateLogic()
 
 		ChangeState(FALLING, IDLE);
 	}
-
 	case(DOUBLE_JUMPING):
 	{
 		jumpForce = jumpForceValue;
@@ -332,9 +348,9 @@ void Player::UpdateLogic()
 	case(DYING):
 	{
 		if (isGoingRight == true)
-			currentAnim = &disappearRightAnim;
+			currentAnim = &deadAnim;
 		else
-			currentAnim = &disappearLeftAnim;
+			currentAnim = &deadAnim;
 
 		break;
 
@@ -344,9 +360,9 @@ void Player::UpdateLogic()
 
 	collider->SetPos(position.x, position.y);
 
-	//currentAnim->Update();
+	currentAnim->Update();
 }
-*/
+
 void Player::ChangeState(PlayerState previousState, PlayerState newState)
 {
 
@@ -354,18 +370,17 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	{
 	case(IDLE):
 	{
-		//currentAnimation = &(goingRight == false ? idleLeftAnim : idleRightAnim);
+		currentAnim = &(canMoveRight == false ? idleAnimL : idleAnimR);
 		break;
 	}
 	case(RUNNING):
 	{
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT
-			)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
-		//currentAnimation = &(goingRight == false ? leftAnim : rightAnim);
+		currentAnim= &(canMoveRight == false ? runLeftAnim : runRightAnim);
 		break;
 	}
 	case(JUMPING):
@@ -374,7 +389,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
-		//currentAnimation = &climbAnim;
+		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);
 		break;
 	}
 	case(DOUBLE_JUMPING):
@@ -384,12 +399,14 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
+		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);
 
 		break;
 	}
 	case(DYING):
 	{
 		break;
+		currentAnim = &deadAnim;
 	}
 	}
 

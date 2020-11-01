@@ -157,7 +157,6 @@ void Map::LoadColliders()
 
                 int u = layer->Get(x, y);
                 iPoint pos = MapToWorld(x, y);
-                tileSet = GetTilesetFromTileId(u);
                 SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight };
 
                
