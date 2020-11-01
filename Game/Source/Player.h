@@ -82,6 +82,7 @@ private:
 	int jumps = 2;
 
 	int winWidth;
+	int winHeigh;
 };
 
 

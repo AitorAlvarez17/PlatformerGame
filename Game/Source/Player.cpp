@@ -149,7 +149,6 @@ bool Player::Update(float dt)
 	if (app->render->camera.x >= -704)
 	{
 		app->render->camera.x = -704;
-		LOG("X LIMIT LEFT");
 	}
 	if (app->render->camera.x < -6018)
 	{
@@ -160,7 +159,7 @@ bool Player::Update(float dt)
 		app->render->camera.y = -5400;
 	}
 
-	LOG("x: %d y: %d", app->render->camera.x, app->render->camera.y);
+	//LOG("x: %d y: %d", app->render->camera.x, app->render->camera.y);
 
 	return true;
 }
