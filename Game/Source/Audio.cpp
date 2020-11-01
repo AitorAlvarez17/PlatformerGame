@@ -25,6 +25,7 @@ Audio::~Audio()
 // Called before render is available
 bool Audio::Awake(pugi::xml_node& config)
 {
+
 	LOG("Loading Audio Mixer");
 	bool ret = true;
 	SDL_Init(0);
@@ -54,6 +55,8 @@ bool Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
+
+	app->audio->LoadFx("Assets/audio/fx/Jump.wav");//1
 
 	return ret;
 }
