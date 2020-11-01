@@ -86,7 +86,7 @@ struct MapLayer
     Properties prop;
 
     int tileNumber;
-    int gids[10000];
+    int gids[13000];
 
     MapLayer() : data(NULL) {}
 
