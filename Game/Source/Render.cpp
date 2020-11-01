@@ -90,13 +90,15 @@ bool Render::CleanUp()
 
 // L02: TODO 6: Implement a method to load the state
 // for now load camera's x and y
-bool Render::Load(pugi::xml_node& savedRender) {
+bool Render::Load(pugi::xml_node& savedRender) 
+{
 	camera.x = savedRender.attribute("x").as_int();
 	camera.y = savedRender.attribute("y").as_int();
 	return true;
 }
 
-bool Render::Save(pugi::xml_node& savedGame) {
+bool Render::Save(pugi::xml_node& savedGame)
+{
 
 	pugi::xml_node camara = savedGame.append_child("camara");
 
