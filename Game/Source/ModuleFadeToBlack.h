@@ -9,7 +9,6 @@ class ModuleFadeToBlack : public Module
 {
 public:
 	//Constructor
-	ModuleFadeToBlack();
 	ModuleFadeToBlack(bool startEnabled, pugi::xml_node& config);
 
 	//Destructor
