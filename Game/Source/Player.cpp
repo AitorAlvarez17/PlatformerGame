@@ -1,5 +1,5 @@
 #include "Player.h"
-
+#include "Debug.h"
 #include "App.h"
 #include "Input.h"
 #include "Animation.h"
@@ -130,8 +130,12 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	position.y -= vy;
-	vy -= gravityForce * 0.5;
+	if (app->debug->godMode == false)
+	{
+		position.y -= vy;
+		vy -= gravityForce * 0.5;
+	}
+	
 	
 
 	return true;
@@ -139,9 +143,31 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	app->player->UpdateState();
-	app->player->UpdateLogic();
-	
+	if (app->debug->godMode == false)
+	{
+		app->player->UpdateState();
+		app->player->UpdateLogic();
+
+	}
+	else
+	{
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT )
+		{
+			position.x -= speed;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			position.y -= speed;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			position.y += speed;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			position.x += speed;
+		}
+	}
 
 	
 	app->render->camera.x = (-position.x + (winWidth / 4)) * 2;
@@ -189,42 +215,45 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(Collider* a, Collider* b) {
 
-	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR) 
+	if (app->debug->godMode == false)
 	{
-		int compY = a->rect.y - b->rect.y;
-		int compX = a->rect.x - b->rect.x;
-	
-
-		if (std::abs(compY) < std::abs(compX))
+		if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
 		{
-			if (compX > 0) {
-				position.x += b->rect.x + b->rect.w - a->rect.x;
+			int compY = a->rect.y - b->rect.y;
+			int compX = a->rect.x - b->rect.x;
+
+
+			if (std::abs(compY) < std::abs(compX))
+			{
+				if (compX > 0) {
+					position.x += b->rect.x + b->rect.w - a->rect.x;
+				}
+				else
+				{
+					position.x -= a->rect.x + a->rect.w - b->rect.x;
+				}
 			}
 			else
 			{
-				position.x -= a->rect.x + a->rect.w - b->rect.x;
+				if (compY > 0)
+				{
+					position.y += b->rect.y + b->rect.h - a->rect.y;
+				}
+				else
+				{
+					position.y -= a->rect.y + a->rect.h - b->rect.y;
+					vy = 0;
+				}
 			}
+
+			collider->SetPos(position.x, position.y);
+			jumps = 1;
+
 		}
-		else
+		if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 		{
-			if (compY > 0)
-			{
-				position.y += b->rect.y + b->rect.h - a->rect.y;
-			}
-			else
-			{
-				position.y -= a->rect.y + a->rect.h - b->rect.y;
-				vy = 0;
-			}
+			isDead = true;
 		}
-
-		collider->SetPos(position.x, position.y);
-		jumps = 2;
-
-	}
-	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
-	{
-		isDead = true;
 	}
 	
 }
@@ -371,13 +400,13 @@ void Player::UpdateLogic()
 	}
 	case(RUNNING):
 	{
+
 		if (isGoingRight == true)
 		{
 	
 			position.x += speed;
 			
 		}
-
 		else
 		{
 			
