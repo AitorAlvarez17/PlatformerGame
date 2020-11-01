@@ -1,4 +1,4 @@
-# {PlatformerGame}
+# {THE TEMPLE}
 
 ## Description
 
@@ -6,12 +6,6 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
 
 ## Key Features
 
- - F1/F2 Start from the first/second level.
- - F3 Start from the beginning of the current level.
- - F5 Save the current game state.
- - F6 Load the previous state (even across levels).
- - F9 View colliders / logic.
- - F10 God Mode (fly around, cannot be killed).
  - Load/Save game state using XML file
  - Tiled TMX map loading and drawing (orthographic)
  - Map collisions detection (platforms)
@@ -24,7 +18,14 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
  
 ## Controls
 
- - {ControlsScheme}
+ - WASD for movement.
+ - SPACE for jumping
+ - F1/F2 Start from the first/second level.
+ - F3 Start from the beginning of the current level.
+ - F5 Save the current game state.
+ - F6 Load the previous state (even across levels).
+ - F9 View colliders / logic.
+ - F10 God Mode (fly around, cannot be killed).
 
 ## Developers
 
