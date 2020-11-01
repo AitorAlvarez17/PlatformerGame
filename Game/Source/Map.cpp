@@ -88,8 +88,8 @@ void Map::Draw()
     if (mapLoaded == false) return;
 
     ListItem<MapLayer*>* L = data.layers.start;
-    ListItem<TileSet*>* T = data.tilesets.start;
-    TileSet* tileSet = data.tilesets.start->data;
+    ListItem<TileSet*>* T = data.tileSets.start;
+    TileSet* tileSet = data.tileSets.start->data;
     while (L != nullptr)
     {
         MapLayer* layer = L->data;
@@ -135,8 +135,8 @@ void Map::LoadColliders()
 
 
     ListItem<MapLayer*>* L = data.layers.start;
-    ListItem<TileSet*>* T = data.tilesets.start;
-    TileSet* tileSet = data.tilesets.start->data;
+    ListItem<TileSet*>* T = data.tileSets.start;
+    TileSet* tileSet = data.tileSets.start->data;
     while (L != nullptr)
     {
         MapLayer* layer = L->data;
@@ -180,7 +180,7 @@ void Map::LoadColliders()
 
 
 
-bool Map::LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* ts)
+bool Map::LoadTileSetImage(pugi::xml_node& tilesetNode, TileSet* ts)
 {
     bool ret = true;
     /*  SString tmp("%s%s", folder.GetString(), tilesetNode);*/
@@ -193,7 +193,8 @@ bool Map::LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* ts)
         ret = false;
     }
 
-    if (ret == true) {
+    if (ret == true) 
+    {
 
         SString path("%s%s", folder.GetString(), imageNode.attribute("source").as_string());
 
@@ -225,7 +226,7 @@ iPoint Map::MapToWorld(int x, int y) const
 
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
-    ListItem<TileSet*>* item = data.tilesets.start;
+    ListItem<TileSet*>* item = data.tileSets.start;
     TileSet* set = item->data;
 
     while (id > set->firstgid)
@@ -282,11 +283,11 @@ SDL_Rect TileSet::GetTileRect(int id) const
         for (int j = 0; j < this->numTilesWidth; ++j)
         {
             if (id == targetId)
-                return SDL_Rect({ p.x,p.y,this->tile_width,tile_height });
-            p.x += this->tile_width + this->spacing;
+                return SDL_Rect({ p.x,p.y,this->tileWidth,tileHeight });
+            p.x += this->tileWidth + this->spacing;
             ++targetId;
         }
-        p.y += this->tile_height + this->spacing;
+        p.y += this->tileHeight + this->spacing;
     }
 
     return rect;
@@ -300,14 +301,14 @@ bool Map::CleanUp()
     // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     // Remove all tilesets
     ListItem<TileSet*>* item;
-    item = data.tilesets.start;
+    item = data.tileSets.start;
 
     while (item != NULL)
     {
         RELEASE(item->data);
         item = item->next;
     }
-    data.tilesets.clear();
+    data.tileSets.clear();
 
     ListItem<MapLayer*>* layersP;
     layersP = data.layers.start;
@@ -357,11 +358,11 @@ bool Map::Load(const char* filename)
     {
         TileSet* set = new TileSet();
 
-        if (ret == true) ret = LoadTileset(tileset, set);
+        if (ret == true) ret = LoadTileSet(tileset, set);
 
-        if (ret == true) ret = LoadTilesetImage(tileset, set);
+        if (ret == true) ret = LoadTileSetImage(tileset, set);
 
-        data.tilesets.add(set);
+        data.tileSets.add(set);
 
 
     }
@@ -390,7 +391,8 @@ bool Map::Load(const char* filename)
 
         // L04: TODO 4: LOG the info for each loaded layer
         ListItem<MapLayer*>* layerList = data.layers.start;
-        while (layerList != nullptr) {
+        while (layerList != nullptr) 
+        {
 
             LOG("name : %s", layerList->data->name);
             LOG("width %d", layerList->data->width);
@@ -470,7 +472,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
     return ret;
 }
-bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
+bool Map::LoadTileSet(pugi::xml_node& tilesetNode, TileSet* ts)
 {
 
     bool ret = true;
@@ -487,8 +489,8 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
 
         ts->firstgid = tilesetNode.attribute("firstgid").as_int();
         ts->name = tilesetNode.attribute("name").as_string();
-        ts->tile_width = tilesetNode.attribute("tilewidth").as_int();
-        ts->tile_height = tilesetNode.attribute("tileheight").as_int();
+        ts->tileWidth = tilesetNode.attribute("tilewidth").as_int();
+        ts->tileHeight = tilesetNode.attribute("tileheight").as_int();
         ts->spacing = tilesetNode.attribute("spacing").as_int();
         ts->margin = tilesetNode.attribute("margin").as_int();
         ts->numTilesWidth = tilesetNode.attribute("columns").as_int();
@@ -546,7 +548,8 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     pugi::xml_node propNode = node.child("properties").child("property");
 
 
-    for (propNode; propNode && ret; propNode = propNode.next_sibling()) {
+    for (propNode; propNode && ret; propNode = propNode.next_sibling()) 
+    {
 
         Properties::Property* prop = new Properties::Property();
 
@@ -561,7 +564,8 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 }
 
 
-int Properties::GetProperty(const char* name, int defaultValue ) const {
+int Properties::GetProperty(const char* name, int defaultValue ) const 
+{
     int x = 0;
     ListItem<Property*>* props = list.start;
 
