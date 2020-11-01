@@ -8,7 +8,7 @@
 #include "Render.h"
 //#include "Audio.h"
 #include "Input.h"
-#include "FadeToBlack.h"
+#include "ModuleFadeToBlack.h"
 
 Menu::Menu(bool startEnabled) : Module(startEnabled)
 {
