@@ -16,8 +16,9 @@ bool Player::Start()
 {
 	bool ret = true;
 	int pixels = 32;
-	position.x = 0;
-	position.y = 0;
+	position.x = 256;
+	position.y = 2816;
+	
 
 	LOG("Loading Player textures");
 
@@ -29,10 +30,10 @@ bool Player::Start()
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
-
+	SDL_Rect coll = { position.x, position.y, pixels-4,pixels+2 };
 
 	//cambiar això
-	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::PLAYER, this);
+	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
 
 	idleAnimR.loop = idleAnimL.loop = runRightAnim.loop = runLeftAnim.loop = true;
 	idleAnimR.speed = idleAnimL.speed = 0.2f;
@@ -129,15 +130,19 @@ bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
-	app->render->DrawTexturePlayer(texture, position.x, position.y, &rect);
+	app->render->DrawTexturePlayer(texture, position.x - 12, position.y - 30, &rect);
+
+	
 
 	return true;
 }
 
+
+
 void Player::OnCollision(Collider* a, Collider* b) {
 	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR) 
 	{
-		position.y = b->rect.y;
+		flat = true;
 	}
 	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 	{
@@ -262,10 +267,25 @@ void Player::UpdateLogic()
 		if (isGoingRight == true)
 		{
 			currentAnim = &idleAnimR;
+			if (flat == true) 
+			{
+				position.y = position.y;
+				break;
+			}
+			position.y += gravityForce;
+			
+		}
+
+		else
+		{
+			currentAnim = &idleAnimL;
+			if (flat == true) 
+			{
+				position.y = position.y;
+				break;
+			}
 			position.y += gravityForce;
 		}
-		else
-			currentAnim = &idleAnimL;
 
 		break;
 	}

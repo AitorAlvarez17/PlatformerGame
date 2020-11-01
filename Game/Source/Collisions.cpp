@@ -9,6 +9,38 @@ Collisions::Collisions() : Module()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
+
+	matrix[Collider::Type::WALL_A][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::WALL_A][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::DEATH] = false;
+
+	matrix[Collider::Type::PLAYER][Collider::Type::WALL_A] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::FLOOR] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::WALL_D] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
+
+	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::FLOOR][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::DEATH] = false;
+
+	matrix[Collider::Type::WALL_D][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::WALL_D][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::DEATH] = false;
+
+
+	matrix[Collider::Type::DEATH][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::DEATH][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::DEATH] = false;
+
 }
 
 // Called before render is available
@@ -33,7 +65,47 @@ bool Collisions::PreUpdate()
 
 bool Collisions::Update(float dt) 
 {
-	
+	// Remove all colliders scheduled for deletion
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] != nullptr && colliders[i]->pendingToDelete == true)
+		{
+			delete colliders[i];
+			colliders[i] = nullptr;
+		}
+	}
+
+	Collider* c1;
+	Collider* c2;
+
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		// skip empty colliders
+		if (colliders[i] == nullptr)
+			continue;
+
+		c1 = colliders[i];
+
+		// avoid checking collisions already checked
+		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
+		{
+			// skip empty colliders
+			if (colliders[k] == nullptr)
+				continue;
+
+			c2 = colliders[k];
+
+			if (matrix[c1->type][c2->type] && c1->Intersects(c2->rect))
+			{
+				for (uint i = 0; i < MAX_LISTENERS; ++i)
+					if (c1->listeners[i] != nullptr) c1->listeners[i]->OnCollision(c1, c2);
+
+				for (uint i = 0; i < MAX_LISTENERS; ++i)
+					if (c2->listeners[i] != nullptr) c2->listeners[i]->OnCollision(c2, c1);
+			}
+
+		}
+	}
 
 	return true;
 }
