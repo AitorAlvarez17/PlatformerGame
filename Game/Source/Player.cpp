@@ -8,7 +8,7 @@
 #include "Render.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
-
+#include "Audio.h"
 #include "../Defs.h"
 #include "../Log.h"
 #include <math.h>
@@ -39,7 +39,7 @@ bool Player::Start()
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
-	SDL_Rect coll = { position.x, position.y, pixels-4,pixels+2 };
+	coll = { position.x, position.y, pixels-4,pixels+2 };
 
 	//cambiar això
 	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
@@ -133,6 +133,11 @@ bool Player::Update(float dt)
 	app->player->UpdateLogic();
 
 	
+	
+	position.y -= vy;
+	vy += gravityForce;
+	
+
 	app->render->camera.x = (- position.x + winWidth) * 2;
 	//app->render->camera.x = - (position.x - 284) * 2;
 	app->render->camera.y = - (position.y * 1.8);
@@ -154,9 +159,11 @@ bool Player::PostUpdate()
 
 
 void Player::OnCollision(Collider* a, Collider* b) {
+
 	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR) 
 	{
-		flat = true;
+		vy = 0;
+		position.y = b->rect.y - coll.h;
 	}
 	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 	{
@@ -188,6 +195,7 @@ void Player::UpdateState()
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
+			app->audio->PlayFx(1, 0);
 			ChangeState(playerState, JUMPING);
 			LOG("JUMPING");
 
@@ -228,6 +236,7 @@ void Player::UpdateState()
 		// or simply add the falling sprite on jumping animations
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
+			
 			ChangeState(playerState, DOUBLE_JUMPING);
 
 		}
@@ -275,40 +284,20 @@ void Player::UpdateState()
 void Player::UpdateLogic()
 {
 	//change to collider
-	if (position.y < 130)
-	{
-		position.y += gravityForce;
-		//jumpForce = 0;
+	//if (position.y < 130)
+	//{
+	//	position.y += gravityForce;
+	//	//jumpForce = 0;
 
-	}
-	position.y -= jumpForce;
+	//}
+
+	//position.y -= jumpForce;
 
 	switch (playerState)
 	{
 	case(IDLE):
 	{
-		if (isGoingRight == true)
-		{
-			/*currentAnim = &idleAnimR;*/
-			if (flat == true) 
-			{
-				position.y = position.y;
-				break;
-			}
-			position.y += gravityForce;
-			
-		}
-
-		else
-		{
-			/*currentAnim = &idleAnimL;*/
-			if (flat == true) 
-			{
-				position.y = position.y;
-				break;
-			}
-			position.y += gravityForce;
-		}
+		
 
 		break;
 	}
@@ -344,9 +333,12 @@ void Player::UpdateLogic()
 	}
 	case(JUMPING):
 	{
+	
+		vy = jumpForceValue;
+		
+		
 
-		jumpForce = jumpForceValue;
-		jumpsLeft--;
+
 
 		/*if (isGoingRight == true)
 			currentAnim = &jumpRightAnim;
@@ -464,10 +456,12 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 		if (isGoingRight == true)
 		{
 			currentAnim = &jumpRightAnim;
+			isJumping = true;
 		}
 		else
 		{
 			currentAnim = &jumpLeftAnim;
+			isJumping = true;
 		}
 
 		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)

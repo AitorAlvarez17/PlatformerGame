@@ -37,7 +37,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
-
+	SDL_Rect coll;
 	void UpdateState();
 	void UpdateLogic();
 	void ChangeState(PlayerState previous, PlayerState next);
@@ -60,22 +60,24 @@ public:
 	
 
 	Point<int> position;
+	int vy = 0;
+
 
 private:
 	unsigned int speed = 3;
-	unsigned int jumpForce = 0;
-	unsigned int jumpForceValue = 45;
-
-	unsigned int gravityForce = 11;
-	unsigned int gravityForceValue = 11;
+	int jumpForce = 0;
+	int jumpForceValue = 50;
+	
+	unsigned int gravityForce = -4;
+	unsigned int gravityForceValue = 2;
 
 	Collider* collider;
 
+	bool isJumping;
 	bool canMoveRight = true;
 	bool canMoveLeft = true;
 	bool canMoveUp = true;
 	bool canMoveDown = true;
-	bool flat = false;
 	bool push = false;
 
 	int winWidth;
