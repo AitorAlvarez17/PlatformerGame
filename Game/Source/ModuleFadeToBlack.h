@@ -50,8 +50,7 @@ private:
 	Uint32 frameCount = 0;
 	Uint32 maxFadeFrames = 0;
 
-	struct WinSize 
-	{
+	struct WinSize {
 		uint width;
 		uint height;
 	};

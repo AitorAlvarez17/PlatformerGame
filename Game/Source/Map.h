@@ -36,8 +36,8 @@ struct TileSet {
     int	firstgid;
     int margin;
     int	spacing;
-    int	tileWidth;
-    int	tileHeight;
+    int	tile_width;
+    int	tile_height;
 
     SDL_Texture* texture;
     int	texWidth;
@@ -136,7 +136,7 @@ struct MapData {
     int nextLayerId;
     SDL_Color backgroundColor;
     MapTypes type;
-    List<TileSet*> tileSets;
+    List<TileSet*> tilesets;
 
     List<MapLayer*> layers;
 
@@ -181,9 +181,10 @@ public:
 
 private:
     bool LoadMap();
-    bool LoadTileSet(pugi::xml_node& tilesetNode, TileSet* tileSet);
-    bool LoadTileSetImage(pugi::xml_node& tilesetNode, TileSet* tileSet);
-    bool LoadTileSetDetails(pugi::xml_node& tilesetNode, TileSet* set);
+    bool LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts);
+    bool LoadTilesetImage(pugi::xml_node& tilesetNode, TileSet* ts);
+
+    bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
     bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
     
     
