@@ -8,7 +8,7 @@
 #include "Render.h"
 //#include "Audio.h"
 #include "Input.h"
-#include "ModuleFadeToBlack.h"
+//#include "ModuleFadeToBlack.h"
 
 Menu::Menu(bool startEnabled) : Module(startEnabled)
 {
@@ -40,7 +40,7 @@ bool Menu::Update()
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		app->fade->FadeToBlack(this, (Module*)app->render, 90);
+		//app->fade->FadeToBlack(this, (Module*)app->render, 90);
 	}
 
 	return true;
