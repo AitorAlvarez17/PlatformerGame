@@ -79,12 +79,29 @@ public:
 		return true;
 	}
 
+	void Module::Enable()
+	{
+		if (!isEnabled)
+		{
+			isEnabled = true;
+			Start();
+		}
+	}
 
+	void Module::Disable()
+	{
+		if (isEnabled)
+		{
+			isEnabled = false;
+			CleanUp();
+		}
+	}
 
 public:
 
 	SString name;
 	bool active;
+	bool isEnabled = true;
 
 };
 
