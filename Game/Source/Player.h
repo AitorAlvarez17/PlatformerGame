@@ -78,7 +78,7 @@ private:
 	bool flat = false;
 	bool push = false;
 
-
+	int winWidth;
 };
 
 

@@ -26,6 +26,7 @@ bool Player::Start()
 	position.x = 256;
 	position.y = 2816;
 
+	winWidth = app->win->GetWidth() / 4;
 	
 
 	LOG("Loading Player textures");
@@ -131,8 +132,8 @@ bool Player::Update(float dt)
 	app->player->UpdateState();
 	app->player->UpdateLogic();
 
-	int halfWidth = app->win->GetWidth() / 4;
-	app->render->camera.x = (- position.x + halfWidth) * 2;
+	
+	app->render->camera.x = (- position.x + winWidth) * 2;
 	//app->render->camera.x = - (position.x - 284) * 2;
 	app->render->camera.y = - (position.y * 1.8);
 
