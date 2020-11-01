@@ -2,14 +2,25 @@
 
 ## Description
 
-{project description}
+We are Nirvana team and this is our 2D platformer video game developement. It is developed in c++ on visual studio using SDL.  ¡Hope you enjoy it!
 
 ## Key Features
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - F1/F2 Start from the first/second level.
+ - F3 Start from the beginning of the current level.
+ - F5 Save the current game state.
+ - F6 Load the previous state (even across levels).
+ - F9 View colliders / logic.
+ - F10 God Mode (fly around, cannot be killed).
+ - Load/Save game state using XML file
+ - Tiled TMX map loading and drawing (orthographic)
+ - Map collisions detection (platforms)
+ - Map navigation: player movement and jumping
+ - Ending screen (on dying)
+ - Title screen (press ENTER to start)
+ - Player walk/jump/die animations
+ - Ending screen (on dying)
+ - Logo screen
  
 ## Controls
 
