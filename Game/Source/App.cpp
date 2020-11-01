@@ -9,6 +9,7 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "ModuleFadeToBlack.h"
+#include "Menu.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -31,6 +32,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new Collisions(false);
 	player = new Player(false);
 	fade = new ModuleFadeToBlack(true);
+	menu = new Menu(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(player);
 	AddModule(fade);
+	AddModule(menu);
 	AddModule(render);
 	
 }
