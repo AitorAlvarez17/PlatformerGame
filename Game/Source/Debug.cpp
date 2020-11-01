@@ -18,7 +18,7 @@ Debug::~Debug()
 bool Debug::Start()
 {
 	bool ret = true;
-	LOG("TONTO");
+	LOG("Debug Start");
 	return ret;
 }
 
@@ -104,7 +104,6 @@ bool Debug::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		app->render->camera.x += 100;
-		LOG("RIGHT");
 	}
 
 

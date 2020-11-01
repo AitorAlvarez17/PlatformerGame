@@ -361,7 +361,7 @@ bool Map::Load(const char* filename)
 
         if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-        data.tilesets.add(set);
+        data.tilesets.Add(set);
 
 
     }
@@ -376,7 +376,7 @@ bool Map::Load(const char* filename)
 
 
         if (ret == true)
-            data.layers.add(lay);
+            data.layers.Add(lay);
     }
 
     if (ret == true)
@@ -554,7 +554,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
         prop->type.create(propNode.attribute("type").as_string("Not Found"));
         prop->value = propNode.attribute("value").as_int(0);
 
-        properties.list.add(prop);
+        properties.list.Add(prop);
         //...
     }
     return ret;
