@@ -391,8 +391,11 @@ void Player::UpdateLogic()
 	}
 	case(JUMPING):
 	{
-	
-		vy = jumpForceValue;
+		if (jumps > 0)
+		{
+			vy = jumpForceValue;
+		}
+		
 		
 		
 
