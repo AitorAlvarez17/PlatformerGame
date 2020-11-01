@@ -6,10 +6,7 @@
 //#include "ModulePlayer.h"
 
 #include "SDL/include/SDL_render.h"
-ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled, pugi::xml_node& config) : Module()
-{
 
-}
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled, pugi::xml_node& config) : Module()
 {
 	width = config.child("resolution").attribute("width").as_int(640);
@@ -45,6 +42,8 @@ bool ModuleFadeToBlack::Update()
 		if (frameCount > maxFadeFrames)
 		{
 			fadePause = 0;
+			moduleToDisable->Disable();
+			moduleToEnable->Enable();
 		//	if (!app->player->stayInLevel)
 		//	{
 		//		moduleToDisable->Disable();
