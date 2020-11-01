@@ -35,9 +35,8 @@ bool Scene::Start()
 {
 	// L03: DONE: Load map
 	
-	app->map->Load("GAME.tmx");
-	app->map->LoadColliders();
 	
+	app->map->Load("GAME.tmx");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
 	
@@ -98,7 +97,11 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 
 	//Draw Map
+	
+	
 	app->map->Draw();
+	
+	app->map->LoadColliders();
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d", app->map->data.width, app->map->data.height, app->map->data.tileWidth, app->map->data.tileHeight, app->map->data.tilesets.count());
 

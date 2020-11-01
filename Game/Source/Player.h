@@ -54,7 +54,8 @@ public:
 	Animation fallRightAnim;
 	Animation fallLeftAnim;
 
-	Animation deadAnim;
+	Animation deadAnimR;
+	Animation deadAnimL;
 	
 
 	Point<int> position;
@@ -74,6 +75,7 @@ private:
 	bool canMoveUp = true;
 	bool canMoveDown = true;
 	bool flat = false;
+	bool push = false;
 
 
 };
