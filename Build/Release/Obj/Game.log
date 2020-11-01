@@ -4,15 +4,11 @@ D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicial
 D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
 D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
-  Audio.cpp
-  Collisions.cpp
   Debug.cpp
 D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
 D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
-  Input.cpp
-  Main.cpp
   Map.cpp
   Menu.cpp
 D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
@@ -43,11 +39,10 @@ D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicial
 D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
 D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
-  Textures.cpp
   Window.cpp
   Generando código
-  0 of 491 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  13 of 491 functions ( 2.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   Game.vcxproj -> D:\Github\PlatformerGame\Build\Release\Game.exe

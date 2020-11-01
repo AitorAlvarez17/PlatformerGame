@@ -282,11 +282,11 @@ SDL_Rect TileSet::GetTileRect(int id) const
         for (int j = 0; j < this->numTilesWidth; ++j)
         {
             if (id == targetId)
-                return SDL_Rect({ p.x,p.y,this->tile_width,tile_height });
-            p.x += this->tile_width + this->spacing;
+                return SDL_Rect({ p.x,p.y,this->tileWidth,tileHeight });
+            p.x += this->tileWidth + this->spacing;
             ++targetId;
         }
-        p.y += this->tile_height + this->spacing;
+        p.y += this->tileHeight + this->spacing;
     }
 
     return rect;
@@ -487,8 +487,8 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
 
         ts->firstgid = tilesetNode.attribute("firstgid").as_int();
         ts->name = tilesetNode.attribute("name").as_string();
-        ts->tile_width = tilesetNode.attribute("tilewidth").as_int();
-        ts->tile_height = tilesetNode.attribute("tileheight").as_int();
+        ts->tileWidth = tilesetNode.attribute("tilewidth").as_int();
+        ts->tileHeight = tilesetNode.attribute("tileheight").as_int();
         ts->spacing = tilesetNode.attribute("spacing").as_int();
         ts->margin = tilesetNode.attribute("margin").as_int();
         ts->numTilesWidth = tilesetNode.attribute("columns").as_int();
