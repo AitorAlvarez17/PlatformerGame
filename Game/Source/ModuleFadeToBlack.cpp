@@ -7,6 +7,10 @@
 
 #include "SDL/include/SDL_render.h"
 
+ModuleFadeToBlack::ModuleFadeToBlack()
+{
+}
+
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled, pugi::xml_node& config) : Module()
 {
 	width = config.child("resolution").attribute("width").as_int(640);
