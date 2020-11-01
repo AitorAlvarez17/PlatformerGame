@@ -32,8 +32,6 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
  - {Aitor Àlvarez} - {Programmer}
  - {Telmo Beroiz} - {Programmer}
  - {Andrés Sànchez} - {Programmer}
- - {Dev04} - {Role(s)}
- - {Dev05} - {Role(s)}
 
 ## License
 
