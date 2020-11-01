@@ -112,6 +112,7 @@ bool Collisions::Update(float dt)
 
 bool Collisions::PostUpdate() 
 {
+
 	if (debug)
 		DebugDraw();
 	

@@ -127,17 +127,22 @@ bool Player::Start()
 	return ret;
 }
 
+bool Player::PreUpdate()
+{
+	position.y -= vy;
+	vy -= gravityForce * 0.5;
+	
+
+	return true;
+}
+
 bool Player::Update(float dt)
 {
 	app->player->UpdateState();
 	app->player->UpdateLogic();
-
 	
 	
-	position.y -= vy;
-	vy += gravityForce;
 	
-
 	app->render->camera.x = (- position.x + winWidth) * 2;
 	//app->render->camera.x = - (position.x - 284) * 2;
 	app->render->camera.y = - (position.y * 1.8);
@@ -149,8 +154,18 @@ bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
-	app->render->DrawTexturePlayer(texture, position.x - 12, position.y - 30, &rect);
 
+	if (isGoingRight = true)
+	{
+		app->render->DrawTexturePlayer(texture, position.x - 12, position.y - 30, &rect);
+	}
+	else
+	{
+		app->render->DrawTexturePlayer(texture, position.x - 100 ,position.y - 30, &rect);
+		
+	
+	}
+	
 	
 
 	return true;
@@ -162,8 +177,36 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 	if (a->type == Collider::PLAYER && b->type == Collider::FLOOR) 
 	{
-		vy = 0;
-		position.y = b->rect.y - coll.h;
+		int compY = a->rect.y - b->rect.y;
+		int compX = a->rect.x - b->rect.x;
+	
+
+		if (std::abs(compY) < std::abs(compX))
+		{
+			if (compX > 0) {
+				position.x += b->rect.x + b->rect.w - a->rect.x;
+			}
+			else
+			{
+				position.x -= a->rect.x + a->rect.w - b->rect.x;
+			}
+		}
+		else
+		{
+			if (compY > 0)
+			{
+				position.y += b->rect.y + b->rect.h - a->rect.y;
+			}
+			else
+			{
+				position.y -= a->rect.y + a->rect.h - b->rect.y;
+				vy = 0;
+			}
+		}
+
+		collider->SetPos(position.x, position.y);
+		jumps = 2;
+
 	}
 	if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 	{
@@ -195,11 +238,16 @@ void Player::UpdateState()
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			app->audio->PlayFx(1, 0);
-			ChangeState(playerState, JUMPING);
-			LOG("JUMPING");
+			if (jumps > 0) {
+				app->audio->PlayFx(1, 0);
+				ChangeState(playerState, JUMPING);
+				LOG("JUMPING");
+				jumps--;
+			}
 
 		}
+		
+
 
 		if (isDead == true) 
 		{
@@ -215,12 +263,27 @@ void Player::UpdateState()
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 
+			
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+		{
+			if (jumps > 0) 
+			{
+						app->audio->PlayFx(1, 0);
+						ChangeState(playerState, JUMPING);
+						LOG("JUMPING");
+						jumps--;
+			}
+		}
+
+			
+			
+
 
 		}
 		else
 			ChangeState(playerState, IDLE);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 		{
 			ChangeState(playerState, JUMPING);
 		}
@@ -240,7 +303,7 @@ void Player::UpdateState()
 			ChangeState(playerState, DOUBLE_JUMPING);
 
 		}
-
+		
 
 
 		break;
@@ -260,9 +323,9 @@ void Player::UpdateState()
 	{
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			if (jumpsLeft == 2)
+			if (jumps == 2)
 				ChangeState(FALLING, JUMPING);
-			else if (jumpsLeft == 1)
+			else if (jumps == 1)
 				ChangeState(FALLING, DOUBLE_JUMPING);
 		}
 
@@ -283,15 +346,6 @@ void Player::UpdateState()
 
 void Player::UpdateLogic()
 {
-	//change to collider
-	//if (position.y < 130)
-	//{
-	//	position.y += gravityForce;
-	//	//jumpForce = 0;
-
-	//}
-
-	//position.y -= jumpForce;
 
 	switch (playerState)
 	{
@@ -305,26 +359,16 @@ void Player::UpdateLogic()
 	{
 		if (isGoingRight == true)
 		{
-			/*currentAnim = &runRightAnim;*/
+	
 			position.x += speed;
-			/*if (flat == true)
-			{
-				position.y = position.y;
-				break;
-			}
-			position.y += gravityForce;*/
+			
 		}
 
 		else
 		{
-			//currentAnim = &runLeftAnim;
+			
 			position.x -= speed;
-			/*if (flat == true)
-			{
-				position.y = position.y;
-				break;
-			}
-			position.y += gravityForce;*/
+	
 		}
 
 
@@ -352,7 +396,6 @@ void Player::UpdateLogic()
 
 	case(FALLING):
 	{
-		jumpForce = 0;
 
 		/*if (isGoingRight == true)
 			currentAnim = &fallRightAnim;
