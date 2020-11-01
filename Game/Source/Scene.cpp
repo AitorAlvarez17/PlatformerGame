@@ -90,7 +90,7 @@ bool Scene::Update(float dt)
 		LOG("SAVE REQUESTED");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
 		app->collisions->DebugRequest();
 		LOG("Debug Mode");
 	}
