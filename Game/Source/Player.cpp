@@ -45,80 +45,80 @@ bool Player::Start()
 	idleAnimR.speed = idleAnimL.speed = 0.2f;
 	runRightAnim.speed = runLeftAnim.speed = 0.3f;
 
-	//right
-	for (int i = 0; i < 27; i ++)// 0 to 9
+	//
+	if (push == false)
 	{
-		if (0 <= i < 9)//FIRST ANIM IDLE
+		for (int i = 0; i < 27; i++)// 0 to 9
 		{
-			idleAnimR.PushBack({ i*pixels,0,32,32 });
-			if (i == 8) 
+			if (i >= 0 && i < 9)//FIRST ANIM IDLE
 			{
-				break;
+				idleAnimR.PushBack({ i * pixels,0,32,32 });
+				/*if (i == 8)
+				{
+					break;
+				}*/
 			}
+			if (i >= 0 && i < 9)//FIRST ANIM IDLE
+			{
+				idleAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
+				/*if (i == 8)
+				{
+					break;
+				}*/
+			}
+			if (i >= 9 && i < 15)// RUN
+			{
+				runRightAnim.PushBack({ i * pixels,0,32,32 });
+				/*if (i == 14)
+				{
+					break;
+				}*/
+			}
+			if (i >= 9 && i < 15)// RUN
+			{
+				runLeftAnim.PushBack({ (27 - i) * pixels,32,32,32 });
+				/*if (i == 14)
+				{
+					break;
+				}*/
+			}
+			if (i == 15) // JUMP R 
+			{
+				jumpRightAnim.PushBack({ i * pixels,0,32,32 });
+				jumpLeftAnim.PushBack({ (27 - i) * pixels,32,32,32 });
+				/*if (i == 15)
+				{
+					break;
+				}*/
+			}
+			if (i >= 20 && i < 23) // DEAD RIGHT
+			{
+				deadAnimR.PushBack({ i * pixels,0,32,32 });
+				/*if (i == 22)
+				{
+					break;
+				}*/
+			}
+			if (i >= 20 && i < 23) // DEAD RIGHT
+			{
+				deadAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
+				/*if (i == 22)
+				{
+					break;
+				}*/
+			}
+			push = true;
+
 		}
-		if(9 <= i < 15)// RUN
-		{
-			runRightAnim.PushBack({ i* pixels,0,32,32 });
-			if (i == 14) 
-			{
-				break;
-			}
-		}		
-		if (i == 15 ) // JUMP R 
-		{
-			jumpRightAnim.PushBack({ i* pixels,0,32,32 });
-			if (i == 15) 
-			{
-				break;
-			}
-		}
-		if (20 <= i < 23) // DEAD RIGHT
-		{
-			deadAnim.PushBack({ i* pixels,0,32,32 });
-			if (i == 22) 
-			{
-				break;
-			}
-		}
-		
+
 	}
-	for (int i = 27; i >= 0; i--)
-	{
-		if (27 >= i > 18)// FIRST ANIM IDLE
-		{
-			idleAnimL.PushBack({ i * pixels, pixels,32,32 });
-			if (i == 19) 
-			{
-				break;
-			}
-		}
-		if (18 >= i > 13)// RUN LEFT
-		{
-			runLeftAnim.PushBack({ i * pixels, pixels,32,32 });
-			if (i == 14)
-			{
-				break;
-			}
-		}
-		if (i == 12) // JUMP L
-		{
-			jumpLeftAnim.PushBack({ i * pixels,pixels,32,32 });
-			if (i == 12)
-			{
-				break;
-			}
-		}
-		if (8 >= i > 4) //DEAD LEFT
-		{
-			deadAnim.PushBack({ i * pixels,pixels,32,32 });
-			if (i == 5)
-			{
-				break;
-			}
-		}
-	}
+	
 	//left
-	currentAnim = &idleAnimR;
+	if (currentAnim == nullptr) 
+	{
+		currentAnim = &idleAnimR;
+	}
+	
 
 	
 	return ret;
@@ -172,16 +172,24 @@ void Player::UpdateState()
 
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
-			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
 			ChangeState(playerState, RUNNING);
+			LOG("RUNNIG");
+		}
+			
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			ChangeState(playerState, JUMPING);
+			LOG("JUMPING");
 
 		}
 
-		if (isDead == true) ChangeState(playerState, DYING);
+		if (isDead == true) 
+		{
+			ChangeState(playerState, DYING);
+			LOG("DYING");
+		}
 
 		break;
 	}
@@ -272,7 +280,7 @@ void Player::UpdateLogic()
 	{
 		if (isGoingRight == true)
 		{
-			currentAnim = &idleAnimR;
+			/*currentAnim = &idleAnimR;*/
 			if (flat == true) 
 			{
 				position.y = position.y;
@@ -284,7 +292,7 @@ void Player::UpdateLogic()
 
 		else
 		{
-			currentAnim = &idleAnimL;
+			/*currentAnim = &idleAnimL;*/
 			if (flat == true) 
 			{
 				position.y = position.y;
@@ -299,14 +307,26 @@ void Player::UpdateLogic()
 	{
 		if (isGoingRight == true)
 		{
-			currentAnim = &runRightAnim;
+			/*currentAnim = &runRightAnim;*/
 			position.x += speed;
+			/*if (flat == true)
+			{
+				position.y = position.y;
+				break;
+			}
+			position.y += gravityForce;*/
 		}
 
 		else
 		{
-			currentAnim = &runLeftAnim;
+			//currentAnim = &runLeftAnim;
 			position.x -= speed;
+			/*if (flat == true)
+			{
+				position.y = position.y;
+				break;
+			}
+			position.y += gravityForce;*/
 		}
 
 
@@ -319,10 +339,10 @@ void Player::UpdateLogic()
 		jumpForce = jumpForceValue;
 		jumpsLeft--;
 
-		if (isGoingRight == true)
+		/*if (isGoingRight == true)
 			currentAnim = &jumpRightAnim;
 		else
-			currentAnim = &jumpLeftAnim;
+			currentAnim = &jumpLeftAnim;*/
 
 		ChangeState(JUMPING, FALLING);
 
@@ -333,10 +353,10 @@ void Player::UpdateLogic()
 	{
 		jumpForce = 0;
 
-		if (isGoingRight == true)
+		/*if (isGoingRight == true)
 			currentAnim = &fallRightAnim;
 		else
-			currentAnim = &fallLeftAnim;
+			currentAnim = &fallLeftAnim;*/
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
@@ -373,10 +393,10 @@ void Player::UpdateLogic()
 	}
 	case(DYING):
 	{
-		if (isGoingRight == true)
-			currentAnim = &deadAnim;
+		/*if (isGoingRight == true)
+			currentAnim = &deadAnimR;
 		else
-			currentAnim = &deadAnim;
+			currentAnim = &deadAnimL;*/
 
 		break;
 
@@ -396,43 +416,90 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	{
 	case(IDLE):
 	{
-		currentAnim = &(canMoveRight == false ? idleAnimL : idleAnimR);
+		if(isGoingRight == true)
+		{
+			currentAnim = &idleAnimR;
+		}
+		else
+		{
+			currentAnim = &idleAnimL;
+		}
+
+		
 		break;
 	}
 	case(RUNNING):
 	{
+		if (isGoingRight == true)
+		{
+			currentAnim = &runRightAnim;
+			LOG("CHANGE to RUN");
+		}
+		else
+		{
+			currentAnim = &runLeftAnim;
+		}
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+
+
+
+		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
-		currentAnim= &(canMoveRight == false ? runLeftAnim : runRightAnim);
+		currentAnim= &(canMoveRight == false ? runLeftAnim : runRightAnim);*/
 		break;
 	}
 	case(JUMPING):
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (isGoingRight == true)
+		{
+			currentAnim = &jumpRightAnim;
+		}
+		else
+		{
+			currentAnim = &jumpLeftAnim;
+		}
+
+		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
-		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);
+		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);*/
 		break;
 	}
 	case(DOUBLE_JUMPING):
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (isGoingRight == true)
+		{
+			currentAnim = &jumpRightAnim;
+		}
+		else
+		{
+			currentAnim = &jumpLeftAnim;
+		}
+		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 
 			isGoingRight = false;
 		else
 			isGoingRight = true;
-		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);
+		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);*/
 
 		break;
 	}
 	case(DYING):
 	{
+		if (isGoingRight == true)
+		{
+			currentAnim = &deadAnimR;
+		}
+		else
+		{
+			currentAnim = &deadAnimL;
+		}
+
+		
 		break;
-		currentAnim = &deadAnim;
 	}
 	}
 

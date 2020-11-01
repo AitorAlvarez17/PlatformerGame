@@ -27,7 +27,7 @@ bool Menu::Start()
 
 	bool ret = true;
 
-	bgTexture = app->tex->Load("Assets/textures/Menu.png");
+	bgTexture = app->tex->Load("Assets/maps/Menu.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
