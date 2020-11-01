@@ -109,7 +109,7 @@ bool Scene::Update(float dt)
 	
 	app->map->LoadColliders();
 
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d", app->map->data.width, app->map->data.height, app->map->data.tileWidth, app->map->data.tileHeight, app->map->data.tilesets.count());
+	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d", app->map->data.width, app->map->data.height, app->map->data.tileWidth, app->map->data.tileHeight, app->map->data.tileSets.count());
 
 	app->win->SetTitle(title.GetString());
 
