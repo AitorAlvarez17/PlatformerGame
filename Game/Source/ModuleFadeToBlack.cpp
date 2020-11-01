@@ -12,9 +12,9 @@
 
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module(startEnabled)
 {
-	winSize = app->win->GetWindowSize(winSize.x, winSize.y);
-	//screenRect = {0, 0,  * scale, height * scale};
-	//firstScreenRect = { 0, 0, width * scale, height * scale };
+	
+	
+	
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
@@ -25,6 +25,11 @@ ModuleFadeToBlack::~ModuleFadeToBlack()
 bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
+
+	win.width = app->win->GetWidth();
+	win.height = app->win->GetHeight();
+	scale = app->win->GetScale();
+	screenRect = { 0, 0,  static_cast<int>(win.width * scale), static_cast<int> (win.height * scale) };
 
 	// Enable blending mode for transparency
 	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
@@ -41,41 +46,23 @@ bool ModuleFadeToBlack::Update()
 		++frameCount;
 		if (frameCount > maxFadeFrames)
 		{
-			fadePause = 0;
+			
 			moduleToDisable->Disable();
 			moduleToEnable->Enable();
-		//	if (!app->player->stayInLevel)
-		//	{
-		//		moduleToDisable->Disable();
-		//		moduleToEnable->Enable();
-		//	}
 
 			currentStep = Fade_Step::FROM_BLACK;
 		}
 	}
-	//else
-	//{
-	//	/*if (app->player->stayInLevel)
-	//	{*/
-	//		if (fadePause != 30) fadePause++;
-
-	//		if (fadePause == 30)
-	//		{
-	//			--frameCount;
-	//			if (frameCount <= 0)
-	//			{
-	//				currentStep = Fade_Step::NONE;
-	//			}
-	//		/*}*/
-		/*} */else{
-			--frameCount;
-			if (frameCount <= 0)
-			{
-				currentStep = Fade_Step::NONE;
-			}
+	else
+	{
+		--frameCount;
+		if (frameCount <= 0)
+		{
+			currentStep = Fade_Step::NONE;
 		}
+	}
 		
-	/*}*/
+	
 
 	return true;
 }
@@ -88,8 +75,7 @@ bool ModuleFadeToBlack::PostUpdate()
 	float fadeRatio = (float)frameCount / ((float)maxFadeFrames);
 
 	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(255.0f));
-	screenRect.h = firstScreenRect.h * fadeRatio;
+	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
 	SDL_RenderFillRect(app->render->renderer, &screenRect);
 
 
