@@ -5,7 +5,7 @@
 #include "Log.h"
 #include "Render.h"
 
-Collisions::Collisions() : Module()
+Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;

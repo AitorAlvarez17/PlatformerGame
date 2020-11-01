@@ -9,8 +9,7 @@ class ModuleFadeToBlack : public Module
 {
 public:
 	//Constructor
-	ModuleFadeToBlack();
-	ModuleFadeToBlack(bool startEnabled, pugi::xml_node& config);
+	ModuleFadeToBlack(bool startEnabled);
 
 	//Destructor
 	~ModuleFadeToBlack();
@@ -48,8 +47,7 @@ private:
 	// A frame count system to handle the fade time and ratio
 	Uint32 frameCount = 0;
 	Uint32 maxFadeFrames = 0;
-	int width;
-	int height;
+	iPoint winSize;
 	int scale;
 
 	// The rectangle of the screen, used to render the black rectangle

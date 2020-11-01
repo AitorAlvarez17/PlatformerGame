@@ -21,16 +21,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
-	input = new Input();
-	win = new Window();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	scene = new Scene();
-	map = new Map();
-	collisions = new Collisions();
-	player = new Player();
-	fade = new ModuleFadeToBlack();
+	input = new Input(true);
+	win = new Window(true);
+	render = new Render(true);
+	tex = new Textures(true);
+	audio = new Audio(true);
+	scene = new Scene(false);
+	map = new Map(false);
+	collisions = new Collisions(false);
+	player = new Player(false);
+	fade = new ModuleFadeToBlack(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp

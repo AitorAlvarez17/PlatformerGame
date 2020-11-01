@@ -2,23 +2,19 @@
 
 #include "App.h"
 #include "Render.h"
+#include "Window.h"
 #include "Log.h"
 //#include "ModulePlayer.h"
 
 #include "SDL/include/SDL_render.h"
 
-ModuleFadeToBlack::ModuleFadeToBlack()
-{
-}
 
-ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled, pugi::xml_node& config) : Module()
-{
-	width = config.child("resolution").attribute("width").as_int(640);
-	height = config.child("resolution").attribute("height").as_int(480);
-	scale = config.child("resolution").attribute("scale").as_int(1);
 
-	screenRect = {0, 0, width * scale, height * scale};
-	firstScreenRect = { 0, 0, width * scale, height * scale };
+ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module(startEnabled)
+{
+	winSize = app->win->GetWindowSize(winSize.x, winSize.y);
+	//screenRect = {0, 0,  * scale, height * scale};
+	//firstScreenRect = { 0, 0, width * scale, height * scale };
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
