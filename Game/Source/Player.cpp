@@ -25,8 +25,8 @@ bool Player::Start()
 	int pixels = 32;
 
 	
-	position.x = 600;
-	position.y = 2816;
+		position.x = 600;
+		position.y = 2816;
 
 
 	winWidth = app->win->GetWidth();
@@ -283,8 +283,7 @@ void Player::UpdateState()
 
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
-			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) 
-		{
+			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
 			ChangeState(playerState, RUNNING);
 			LOG("RUNNIG");
 		}
@@ -319,17 +318,17 @@ void Player::UpdateState()
 		{
 
 			
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+		{
+			if (jumps > 0) 
 			{
-				if (jumps > 0) 
-				{
 						
-					app->audio->PlayFx(1, 0);
-					ChangeState(playerState, JUMPING);
-					LOG("JUMPING");
-					jumps--;
-				}
+						app->audio->PlayFx(1, 0);
+						ChangeState(playerState, JUMPING);
+						LOG("JUMPING");
+						jumps--;
 			}
+		}
 
 			
 			
@@ -408,31 +407,31 @@ void Player::UpdateLogic()
 
 	switch (playerState)
 	{
-		case(IDLE):
-		{
+	case(IDLE):
+	{
 		
 
-			break;
-		}
-		case(RUNNING):
+		break;
+	}
+	case(RUNNING):
+	{
+
+		if (isGoingRight == true)
 		{
-
-			if (isGoingRight == true)
-			{
 	
-				position.x += speed;
+			position.x += speed;
 			
-			}
-			else
-			{
+		}
+		else
+		{
 			
-				position.x -= speed;
+			position.x -= speed;
 	
-			}
+		}
 
 
 
-			break;
+		break;
 	}
 	case(JUMPING):
 	{
