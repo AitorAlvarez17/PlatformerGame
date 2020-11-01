@@ -39,6 +39,7 @@ public:
 	void UpdateState();
 	void UpdateLogic();
 	void ChangeState(PlayerState previous, PlayerState next);
+	
 
 	Animation idleAnimR;
 	Animation idleAnimL;
@@ -71,6 +72,8 @@ private:
 	bool canMoveLeft = true;
 	bool canMoveUp = true;
 	bool canMoveDown = true;
+	bool flat = false;
+
 
 };
 

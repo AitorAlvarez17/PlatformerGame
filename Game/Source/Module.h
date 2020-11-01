@@ -6,6 +6,7 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
+struct Collider;
 
 class Module
 {
@@ -77,6 +78,11 @@ public:
 	virtual bool RequestSave()
 	{
 		return true;
+	}
+
+	virtual void OnCollision(Collider* c1, Collider* c2) 
+	{
+	
 	}
 
 
