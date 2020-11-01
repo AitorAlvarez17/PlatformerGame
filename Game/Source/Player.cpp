@@ -12,6 +12,12 @@
 #include "../Log.h"
 #include <math.h>
 
+
+Player::Player(bool startEnabled) : Module(startEnabled)
+{
+
+}
+
 bool Player::Start()
 {
 	bool ret = true;

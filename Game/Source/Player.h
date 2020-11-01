@@ -31,6 +31,7 @@ private:
 	unsigned int jumpsLeft = 2;
 	bool isDead;
 public:
+	Player(bool startEnabled);
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
