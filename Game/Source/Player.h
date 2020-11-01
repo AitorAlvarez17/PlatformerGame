@@ -65,7 +65,7 @@ public:
 
 
 private:
-	unsigned int speed = 3;
+	unsigned int speed = 5;
 	int jumpForce = 0;
 	int jumpForceValue = 12;
 	
