@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Animation.h"
 #include "Textures.h"
+#include "Window.h"
 #include "Render.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
@@ -24,6 +25,7 @@ bool Player::Start()
 	int pixels = 32;
 	position.x = 256;
 	position.y = 2816;
+
 	
 
 	LOG("Loading Player textures");
@@ -128,6 +130,11 @@ bool Player::Update(float dt)
 {
 	app->player->UpdateState();
 	app->player->UpdateLogic();
+
+	int halfWidth = app->win->GetWidth() / 4;
+	app->render->camera.x = (- position.x + halfWidth) * 2;
+	//app->render->camera.x = - (position.x - 284) * 2;
+	app->render->camera.y = - (position.y * 1.8);
 
 	return true;
 }
@@ -237,6 +244,7 @@ void Player::UpdateState()
 
 		break;
 	}
+
 
 	case FALLING:
 	{
