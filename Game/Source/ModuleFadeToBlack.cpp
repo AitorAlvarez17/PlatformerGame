@@ -12,7 +12,7 @@
 
 ModuleFadeToBlack::ModuleFadeToBlack(bool startEnabled) : Module(startEnabled)
 {
-	winSize = app->win->GetWindowSize(winSize.x, winSize.y);
+	//winSize = app->win->GetWindowSize(winSize.x, winSize.y);
 	//screenRect = {0, 0,  * scale, height * scale};
 	//firstScreenRect = { 0, 0, width * scale, height * scale };
 }
