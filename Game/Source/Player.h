@@ -14,6 +14,7 @@ enum PlayerState {
 	IDLE,
 	RUNNING,
 	JUMPING,
+	ATTACK,
 	DOUBLE_JUMPING,
 	FALLING,
 	DYING

@@ -77,7 +77,8 @@ bool Scene::Update(float dt)
 		app->render->camera.x += 100;
 		LOG("RIGHT");
 	}
-		
+
+			
 
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
 		app->RequestLoad();
