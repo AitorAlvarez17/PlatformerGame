@@ -54,8 +54,8 @@ public:
 	Animation fallRightAnim;
 	Animation fallLeftAnim;
 
-	Animation deadAnim;
-	
+	Animation deadAnimRight;
+	Animation deadAnimLeft;
 
 	Point<int> position;
 
