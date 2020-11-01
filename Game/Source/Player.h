@@ -34,6 +34,7 @@ private:
 public:
 	Player(bool startEnabled);
 	bool Start();
+	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
@@ -60,16 +61,15 @@ public:
 	
 
 	Point<int> position;
-	int vy = 0;
+	float vy = 0.0f;
 
 
 private:
 	unsigned int speed = 3;
 	int jumpForce = 0;
-	int jumpForceValue = 50;
+	int jumpForceValue = 12;
 	
-	unsigned int gravityForce = -4;
-	unsigned int gravityForceValue = 2;
+	float gravityForce = 1.0f;
 
 	Collider* collider;
 
@@ -79,6 +79,7 @@ private:
 	bool canMoveUp = true;
 	bool canMoveDown = true;
 	bool push = false;
+	int jumps = 2;
 
 	int winWidth;
 };
