@@ -12,20 +12,9 @@ public:
 	// Destructor
 	~Debug();
 
-	//Called at the beginning of the application execution
-	bool Init();
-
-	//Called when the module is activated
-	//By now we will consider all modules to be permanently active
 	bool Start();
-
-	//Called at the beginning of each application loop
 	bool PreUpdate();
-
-	//Called at the middle of each application loop
-	bool Update();
-
-	//Called at the end of each application loop
+	bool Update(float dt);
 	bool PostUpdate();
 
 	//Called at the end of the application
@@ -40,13 +29,12 @@ public:
 	inline bool IsEnabled() const { return isEnabled; }
 
 
-	bool GMODE = 0;
-	bool DEBUG_MODE = 0;
-	bool memory = false;
-
+	
+	bool godMode = false;
 	//int levelChoose = 0;
 
 private:
+	
 	bool isEnabled = true;
 };
 #endif // __DEBUG_H__

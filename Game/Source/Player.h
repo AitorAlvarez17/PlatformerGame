@@ -62,10 +62,11 @@ public:
 
 	Point<int> position;
 	float vy = 0.0f;
-
+	unsigned int speed = 5;
+	int jumps = 2;
 
 private:
-	unsigned int speed = 5;
+	
 	int jumpForce = 0;
 	int jumpForceValue = 12;
 	
@@ -79,7 +80,7 @@ private:
 	bool canMoveUp = true;
 	bool canMoveDown = true;
 	bool push = false;
-	int jumps = 2;
+	
 
 	int winWidth;
 	int winHeigh;
