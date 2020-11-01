@@ -23,10 +23,11 @@ bool Player::Start()
 {
 	bool ret = true;
 	int pixels = 32;
-	position.x = 256;
+	position.x = 600;
 	position.y = 2816;
 
-	winWidth = app->win->GetWidth() / 4;
+	winWidth = app->win->GetWidth();
+	winHeigh = app->win->GetHeight();
 	
 
 	LOG("Loading Player textures");
@@ -141,11 +142,25 @@ bool Player::Update(float dt)
 	app->player->UpdateState();
 	app->player->UpdateLogic();
 	
+
 	
-	
-	app->render->camera.x = (- position.x + winWidth) * 2;
-	//app->render->camera.x = - (position.x - 284) * 2;
-	app->render->camera.y = - (position.y * 1.8);
+	app->render->camera.x = (-position.x + (winWidth / 4)) * 2;
+	app->render->camera.y = -(position.y * 1.95);
+	if (app->render->camera.x >= -704)
+	{
+		app->render->camera.x = -704;
+		LOG("X LIMIT LEFT");
+	}
+	if (app->render->camera.x < -6018)
+	{
+		app->render->camera.x = -6018;
+	}
+	if (app->render->camera.y < -5400)
+	{
+		app->render->camera.y = -5400;
+	}
+
+	LOG("x: %d y: %d", app->render->camera.x, app->render->camera.y);
 
 	return true;
 }
