@@ -1,0 +1,55 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: El directorio Output no termina con una barra diagonal final. Esta instancia de compilación agregará la barra diagonal porque es necesaria para que se pueda evaluar correctamente el directorio Output.
+  Collider.cpp
+  Collisions.cpp
+  Debug.cpp
+D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
+  Main.cpp
+  App.cpp
+D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
+  Audio.cpp
+  Input.cpp
+  Map.cpp
+  Menu.cpp
+D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
+  ModuleFadeToBlack.cpp
+  Player.cpp
+D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
+Source\Player.cpp(138,19): warning C4244: '-=': conversión de 'float' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
+Source\Player.cpp(139,27): warning C4244: '-=': conversión de 'double' a 'float'; posible pérdida de datos
+Source\Player.cpp(181,27): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+Source\Player.cpp(440,9): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+  Scene.cpp
+D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
+  Render.cpp
+D:\Github\PlatformerGame\Game\Source\Animation.h(55,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Animation.h(57,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\Github\PlatformerGame\Game\Source\Player.h(8,17): warning C4099: 'Animation': nombre de tipo visto anteriormente usando 'class' ahora se ve usando 'struct'
+D:\Github\PlatformerGame\Game\Source\Animation.h(7): message : vea la declaración de 'Animation'
+  Textures.cpp
+  Window.cpp
+  Log.cpp
+  pugixml.cpp
+  Generando código
+  Previous IPDB not found, fall back to full compilation.
+  All 491 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Generación de código finalizada
+  Game.vcxproj -> D:\Github\PlatformerGame\Build\Release\Game.exe
