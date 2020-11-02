@@ -18,7 +18,7 @@ Debug::~Debug()
 bool Debug::Start()
 {
 	bool ret = true;
-	LOG("TONTO");
+	LOG("Debug Start");
 	return ret;
 }
 
@@ -30,7 +30,7 @@ bool Debug::PreUpdate()
 
 bool Debug::Update(float dt)
 {
-	LOG("A");
+	
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
@@ -45,24 +45,33 @@ bool Debug::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-
+		//only one level yet.
 
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-
+		app->player->position.x = 600;
+		app->player->position.y = 2816;
+		app->player->vy = 0;
+		app->player->jumps = 0;
+		app->render->camera.x = app->player->position.x;
+		app->render->camera.y = app->player->position.y;
 
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-
+	{ 
+		app->RequestSave();
+		LOG("SAVE REQUESTED");
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
-
+		
+		app->RequestLoad();
+		LOG("LOAD REQUESTED");
+		
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
@@ -95,20 +104,8 @@ bool Debug::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		app->render->camera.x += 100;
-		LOG("RIGHT");
 	}
 
-
-
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
-		app->RequestLoad();
-		LOG("LOAD REQUESTED");
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		app->RequestSave();
-		LOG("SAVE REQUESTED");
-	}
 
 	
 	return ret;

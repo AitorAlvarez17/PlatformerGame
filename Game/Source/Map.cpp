@@ -282,11 +282,11 @@ SDL_Rect TileSet::GetTileRect(int id) const
         for (int j = 0; j < this->numTilesWidth; ++j)
         {
             if (id == targetId)
-                return SDL_Rect({ p.x,p.y,this->tile_width,tile_height });
-            p.x += this->tile_width + this->spacing;
+                return SDL_Rect({ p.x,p.y,this->tileWidth,tileHeight });
+            p.x += this->tileWidth + this->spacing;
             ++targetId;
         }
-        p.y += this->tile_height + this->spacing;
+        p.y += this->tileHeight + this->spacing;
     }
 
     return rect;
@@ -361,7 +361,7 @@ bool Map::Load(const char* filename)
 
         if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-        data.tilesets.add(set);
+        data.tilesets.Add(set);
 
 
     }
@@ -376,7 +376,7 @@ bool Map::Load(const char* filename)
 
 
         if (ret == true)
-            data.layers.add(lay);
+            data.layers.Add(lay);
     }
 
     if (ret == true)
@@ -487,8 +487,8 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
 
         ts->firstgid = tilesetNode.attribute("firstgid").as_int();
         ts->name = tilesetNode.attribute("name").as_string();
-        ts->tile_width = tilesetNode.attribute("tilewidth").as_int();
-        ts->tile_height = tilesetNode.attribute("tileheight").as_int();
+        ts->tileWidth = tilesetNode.attribute("tilewidth").as_int();
+        ts->tileHeight = tilesetNode.attribute("tileheight").as_int();
         ts->spacing = tilesetNode.attribute("spacing").as_int();
         ts->margin = tilesetNode.attribute("margin").as_int();
         ts->numTilesWidth = tilesetNode.attribute("columns").as_int();
@@ -554,7 +554,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
         prop->type.create(propNode.attribute("type").as_string("Not Found"));
         prop->value = propNode.attribute("value").as_int(0);
 
-        properties.list.add(prop);
+        properties.list.Add(prop);
         //...
     }
     return ret;

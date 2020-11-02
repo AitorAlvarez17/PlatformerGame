@@ -30,7 +30,7 @@ private:
 
 	bool isGoingRight = false;
 	unsigned int jumpsLeft = 2;
-	bool isDead;
+	
 public:
 	Player(bool startEnabled);
 	bool Start();
@@ -64,6 +64,9 @@ public:
 	float vy = 0.0f;
 	unsigned int speed = 5;
 	int jumps = 2;
+	bool lvl1 = false;
+	bool isDead = false;
+	
 
 private:
 	
