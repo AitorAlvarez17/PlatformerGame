@@ -20,7 +20,8 @@ Audio::Audio(bool startEnabled) : Module(startEnabled)
 
 // Destructor
 Audio::~Audio()
-{}
+{
+}
 
 // Called before render is available
 bool Audio::Awake(pugi::xml_node& config)
@@ -157,7 +158,7 @@ unsigned int Audio::LoadFx(const char* path)
 	}
 	else
 	{
-		fx.add(chunk);
+		fx.Add(chunk);
 		ret = fx.count();
 	}
 
