@@ -2,7 +2,7 @@
 
 ## Description
 
-We are Nirvana team and this is our 2D platformer video game developement. It is developed in c++ on visual studio using SDL libraries. Hope you enjoy it!
+We are Nirvana team and this is our 2D platformer video game developement. It is developed in c++ on visual studio using SDL. Hope you enjoy it!
 
 ## Key Features
 
