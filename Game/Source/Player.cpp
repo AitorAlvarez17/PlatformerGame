@@ -23,11 +23,8 @@ bool Player::Start()
 {
 	bool ret = true;
 	int pixels = 32;
-
-	
-		position.x = 600;
-		position.y = 2816;
-
+	position.x = 600;
+	position.y = 2816;
 
 	winWidth = app->win->GetWidth();
 	winHeigh = app->win->GetHeight();
@@ -172,28 +169,21 @@ bool Player::Update(float dt)
 		}
 	}
 
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
-
-	if (lvl1 == true)
-	{
-		app->render->camera.x = (-position.x + (winWidth / 4)) * 2;
-		app->render->camera.y = -(position.y * 1.95);
-		if (app->render->camera.x >= -704)
-		{
-			app->render->camera.x = -704;
-		}
-		if (app->render->camera.x < -6018)
-		{
-			app->render->camera.x = -6018;
-		}
-		if (app->render->camera.y < -5400)
-		{
-			app->render->camera.y = -5400;
-		}
-		
-	}
 	
+	app->render->camera.x = (-position.x + (winWidth / 4)) * 2;
+	app->render->camera.y = -(position.y * 1.95);
+	if (app->render->camera.x >= -704)
+	{
+		app->render->camera.x = -704;
+	}
+	if (app->render->camera.x < -6018)
+	{
+		app->render->camera.x = -6018;
+	}
+	if (app->render->camera.y < -5400)
+	{
+		app->render->camera.y = -5400;
+	}
 
 	//LOG("x: %d y: %d", app->render->camera.x, app->render->camera.y);
 
@@ -251,7 +241,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 				}
 				else
 				{
-					position.y -= a->rect.y + a->rect.h - b->rect.y ;
+					position.y -= a->rect.y + a->rect.h - b->rect.y;
 					vy = 0;
 				}
 			}
@@ -292,7 +282,6 @@ void Player::UpdateState()
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			if (jumps > 0) {
-				
 				app->audio->PlayFx(1, 0);
 				ChangeState(playerState, JUMPING);
 				LOG("JUMPING");
@@ -322,7 +311,6 @@ void Player::UpdateState()
 		{
 			if (jumps > 0) 
 			{
-						
 						app->audio->PlayFx(1, 0);
 						ChangeState(playerState, JUMPING);
 						LOG("JUMPING");
@@ -390,10 +378,7 @@ void Player::UpdateState()
 	}
 	case DYING:
 	{
-		if (isDead == false)
-		{
-			ChangeState(DYING, IDLE);
-		}
+
 
 		break;
 	}
@@ -498,7 +483,10 @@ void Player::UpdateLogic()
 	}
 	case(DYING):
 	{
-		
+		/*if (isGoingRight == true)
+			currentAnim = &deadAnimR;
+		else
+			currentAnim = &deadAnimL;*/
 
 		break;
 
@@ -596,7 +584,6 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 		if (isGoingRight == true)
 		{
 			currentAnim = &deadAnimR;
-			
 		}
 		else
 		{
