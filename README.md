@@ -1,4 +1,4 @@
-# THE TEMPLE
+# {THE TEMPLE}
 
 ## Description
 
@@ -29,9 +29,9 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
 
 ## Developers
 
- - Aitor Àlvarez - Programmer
- - Telmo Beroiz - Programmer
- - Andrés Sànchez - Programmer
+ - {Aitor Àlvarez} - {Programmer}
+ - {Telmo Beroiz} - {Programmer}
+ - {Andrés Sànchez} - {Programmer}
 
 ## License
 
