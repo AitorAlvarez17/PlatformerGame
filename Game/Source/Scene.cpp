@@ -37,8 +37,6 @@ bool Scene::Start()
 	
 	
 	app->map->Load("GAME.tmx");
-	bgTexture = app->tex->Load("Assets/maps/MenuFinal.png");
-	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
 	
@@ -72,40 +70,6 @@ bool Scene::Update(float dt)
 	
 	
 	app->map->Draw();
-
-	app->render->DrawTexture(bgTexture, 0, 0);
-	app->render->DrawTexture(bgTexture2, 641, 0);
-
-	if (app->player->lvl1 == false) 
-	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			app->player->position.x = 600;
-			app->player->position.y = 2816;
-			app->player->vy = 0;
-			app->player->jumps = 0;
-			app->render->camera.x = app->player->position.x;
-			app->render->camera.y = app->player->position.y;
-			app->player->lvl1 = true;
-		}
-	}
-	if (app->player->isDead == true) 
-	{
-		app->player->position.x = 961;
-		app->player->position.y = 80;
-		if(app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			app->player->isDead = false;
-			app->player->position.x = 600;
-			app->player->position.y = 2816;
-			app->player->vy = 0;
-			app->player->jumps = 0;
-			app->render->camera.x = app->player->position.x;
-			app->render->camera.y = app->player->position.y;
-			app->player->lvl1 = true;
-		}
-
-	}
 	
 	app->map->LoadColliders();
 

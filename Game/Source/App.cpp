@@ -76,7 +76,7 @@ App::~App()
 void App::AddModule(Module* module)
 {
 	module->Init();
-	modules.Add(module);
+	modules.add(module);
 }
 
 // Called before render is available
@@ -180,13 +180,11 @@ void App::PrepareUpdate()
 void App::FinishUpdate()
 {
 	// L02: TODO 1: This is a good place to call Load / Save methods
-	if (requestLoad == true) 
-	{
+	if (requestLoad == true) {
 		Load();
 	}
 
-	if (requestSave == true) 
-	{
+	if (requestSave == true) {
 		Save();
 	}
 
@@ -205,8 +203,7 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) 
-		{
+		if (pModule->active == false) {
 			continue;
 		}
 
@@ -228,8 +225,7 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) 
-		{
+		if (pModule->active == false) {
 			continue;
 		}
 
@@ -250,8 +246,7 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) 
-		{
+		if (pModule->active == false) {
 			continue;
 		}
 
@@ -307,8 +302,7 @@ const char* App::GetOrganization() const
 // L02: TODO 5: Create a method to actually load an xml file
 // then call all the modules to load themselves
 
-bool App::Load() 
-{
+bool App::Load() {
 
 	bool ret = true;
 
@@ -321,44 +315,38 @@ bool App::Load()
 	}
 	else
 	{
-		saveState = saveGame.child("save_state");
-		if (saveState == NULL) 
-		{
+		save_state = saveGame.child("save_state");
+		if (save_state == NULL) {
 			LOG("save_state not loading");
 		}
 
 		//renderer
-		rend = saveState.child("renderer");
-		if (rend == NULL) 
-		{
+		rend = save_state.child("renderer");
+		if (rend == NULL) {
 			LOG("Renderer not loading");
 		}
 
 		//input
-		inp = saveState.child("input");
-		if (inp == NULL) 
-		{
+		inp = save_state.child("input");
+		if (inp == NULL) {
 			LOG("Input not loading");
 		}
 
 		//audio
-		au = saveState.child("audio");
-		if (au == NULL) 
-		{
+		au = save_state.child("audio");
+		if (au == NULL) {
 			LOG("Audio not loading");
 		}
 
 		//scene
-		sce = saveState.child("scene");
-		if (sce == NULL) 
-		{
+		sce = save_state.child("scene");
+		if (sce == NULL) {
 			LOG("Scene not loading");
 		}
 
 		//window
-		wi = saveState.child("window");
-		if (wi == NULL) 
-		{
+		wi = save_state.child("window");
+		if (wi == NULL) {
 			LOG("window not loading");
 		}
 
@@ -380,8 +368,7 @@ bool App::Load()
 
 // L02: TODO 7: Implement the xml save method for current state
 
-bool App::Save() 
-{
+bool App::Save() {
 
 	bool ret = true;
 	requestSave = false;

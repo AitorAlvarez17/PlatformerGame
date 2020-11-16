@@ -94,13 +94,11 @@ public:
 	bool Load();
 	bool Save();
 
-	void RequestSave() 
-	{
+	void RequestSave() {
 		requestSave = true;
 	}
 
-	void RequestLoad() 
-	{
+	void RequestLoad() {
 		requestLoad = true;
 
 	}
@@ -127,7 +125,7 @@ private:
 	// L02: TODO 1: Create required variables to request load / save and 
 	// the filename for save / load
 	pugi::xml_document saveGame;
-	pugi::xml_node saveState;
+	pugi::xml_node save_state;
 	pugi::xml_node rend;//variable que carga las cosas en renderer
 	pugi::xml_node inp;//carga en input
 	pugi::xml_node sce;//carga en scene

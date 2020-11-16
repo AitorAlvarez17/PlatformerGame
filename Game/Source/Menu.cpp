@@ -27,8 +27,7 @@ bool Menu::Start()
 
 	bool ret = true;
 
-	bgTexture = app->tex->Load("Assets/maps/MenuF.png");
-	
+	bgTexture = app->tex->Load("Assets/maps/Menu.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -41,7 +40,7 @@ bool Menu::Update()
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		
+		//app->fade->FadeToBlack(this, (Module*)app->render, 90);
 	}
 
 	return true;

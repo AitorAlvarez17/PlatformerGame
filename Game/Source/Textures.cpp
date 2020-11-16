@@ -108,7 +108,7 @@ SDL_Texture* const Textures::LoadSurface(SDL_Surface* surface)
 	}
 	else
 	{
-		textures.Add(texture);
+		textures.add(texture);
 	}
 
 	return texture;
