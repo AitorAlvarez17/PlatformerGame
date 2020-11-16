@@ -57,7 +57,7 @@ public:
 	}
 
 	// Add new item
-	ListItem<tdata>* add(const tdata& item)
+	ListItem<tdata>* Add(const tdata& item)
 	{
 		ListItem<tdata>* dataItem;
 		dataItem = new ListItem<tdata>(item);
