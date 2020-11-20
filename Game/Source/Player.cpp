@@ -291,13 +291,13 @@ void Player::UpdateState()
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			if (jumps > 0) {
+	
 				
-				app->audio->PlayFx(1, 0);
-				ChangeState(playerState, JUMPING);
-				LOG("JUMPING");
-				jumps--;
-			}
+			app->audio->PlayFx(1, 0);
+			ChangeState(playerState, JUMPING);
+			LOG("JUMPING");
+			jumps--;
+		
 
 		}
 		
@@ -318,27 +318,21 @@ void Player::UpdateState()
 		{
 
 			
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
-		{
-			if (jumps > 0) 
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 			{
-						
-						app->audio->PlayFx(1, 0);
-						ChangeState(playerState, JUMPING);
-						LOG("JUMPING");
-						jumps--;
+					
+				app->audio->PlayFx(1, 0);
+				ChangeState(playerState, JUMPING);
+				LOG("JUMPING");
+				jumps--;
+			
 			}
-		}
-
-			
-			
-
 
 		}
 		else
 			ChangeState(playerState, IDLE);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			ChangeState(playerState, JUMPING);
 		}
@@ -378,16 +372,17 @@ void Player::UpdateState()
 	{
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			if (jumps == 2)
+		/*	if (jumps == 2)
 				ChangeState(FALLING, JUMPING);
 			else if (jumps == 1)
-				ChangeState(FALLING, DOUBLE_JUMPING);
+				ChangeState(FALLING, DOUBLE_JUMPING);*/
 		}
 
 
 
 		break;
 	}
+
 	case DYING:
 	{
 		if (isDead == false)
@@ -435,15 +430,8 @@ void Player::UpdateLogic()
 	}
 	case(JUMPING):
 	{
-		if (jumps > 0)
-		{
-			vy = jumpForceValue;
-		}
-		
-		
-		
-
-
+	
+		vy = jumpForceValue;
 
 		/*if (isGoingRight == true)
 			currentAnim = &jumpRightAnim;
