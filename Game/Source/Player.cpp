@@ -231,7 +231,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			int compY = a->rect.y - b->rect.y;
 			int compX = a->rect.x - b->rect.x;
-
+			jumps = 3;
 
 			if (std::abs(compY) < std::abs(compX))
 			{
@@ -257,7 +257,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			}
 
 			collider->SetPos(position.x, position.y);
-			jumps = 1;
+			
 
 		}
 		if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
@@ -272,9 +272,16 @@ void Player::OnCollision(Collider* a, Collider* b) {
 void Player::UpdateState()
 {
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
 		isGoingRight = false;
+		lastKeyPressed = 1;
+	}	
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
 		isGoingRight = true;
+		lastKeyPressed = 0;
+	}
+		
 
 	switch (playerState)
 	{
@@ -291,14 +298,14 @@ void Player::UpdateState()
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-	
-				
+			
+			jumps--;
 			app->audio->PlayFx(1, 0);
 			ChangeState(playerState, JUMPING);
-			LOG("JUMPING");
-			jumps--;
-		
-
+			LOG("JUMPING %d", jumps);
+			
+			
+			
 		}
 		
 
@@ -317,20 +324,23 @@ void Player::UpdateState()
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 
-			
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 			{
-					
+				jumps--;
 				app->audio->PlayFx(1, 0);
 				ChangeState(playerState, JUMPING);
-				LOG("JUMPING");
-				jumps--;
+				LOG("JUMPING %d", jumps);
+				
 			
 			}
 
 		}
 		else
 			ChangeState(playerState, IDLE);
+
+
+
+
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
@@ -372,10 +382,7 @@ void Player::UpdateState()
 	{
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-		/*	if (jumps == 2)
-				ChangeState(FALLING, JUMPING);
-			else if (jumps == 1)
-				ChangeState(FALLING, DOUBLE_JUMPING);*/
+		
 		}
 
 
@@ -430,8 +437,11 @@ void Player::UpdateLogic()
 	}
 	case(JUMPING):
 	{
-	
-		vy = jumpForceValue;
+		if (jumps > 0)
+		{
+			vy = jumpForceValue;
+		}
+		//vy = jumpForceValue;
 
 		/*if (isGoingRight == true)
 			currentAnim = &jumpRightAnim;
@@ -468,7 +478,7 @@ void Player::UpdateLogic()
 	}
 	case(DOUBLE_JUMPING):
 	{
-		jumpForce = jumpForceValue;
+		//jumpForce = jumpForceValue;
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{

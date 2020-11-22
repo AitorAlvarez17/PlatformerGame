@@ -62,18 +62,18 @@ public:
 
 	Point<int> position;
 	float vy = 0.0f;
-	unsigned int speed = 5;
+	unsigned int speed = 7;
 	int jumps = 2;
 	bool lvl1 = false;
 	bool isDead = false;
-	
+	bool lastKeyPressed;
 
 private:
 	
 	int jumpForce = 0;
-	int jumpForceValue = 12;
+	int jumpForceValue = 10;
 	
-	float gravityForce = 1.0f;
+	float gravityForce = 3.0f;
 
 	Collider* collider;
 
