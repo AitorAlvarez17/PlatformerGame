@@ -66,7 +66,6 @@ public:
 	int jumps = 2;
 	bool lvl1 = false;
 	bool isDead = false;
-	bool lastKeyPressed;
 
 	int winWidth;
 	int winHeigh;
