@@ -48,7 +48,6 @@ bool Player::Start()
 	idleAnimR.speed = idleAnimL.speed = 0.2f;
 	runRightAnim.speed = runLeftAnim.speed = 0.3f;
 
-	//
 	if (push == false)
 	{
 		for (int i = 0; i < 27; i++)// 0 to 9
@@ -139,30 +138,6 @@ bool Player::Update(float dt)
 			position.x += speed;
 		}
 	}
-
-	//app->render->camera.x = 0;
-	//app->render->camera.y = 0;
-
-	if (lvl1 == true)
-	{
-		app->render->camera.x = (-position.x + (winWidth / 4)) * 2;
-		app->render->camera.y = -(position.y * 1.95);
-
-		if (app->render->camera.x >= -704)
-		{
-			app->render->camera.x = -704;
-		}
-		if (app->render->camera.x < -6018)
-		{
-			app->render->camera.x = -6018;
-		}
-		if (app->render->camera.y < -5400)
-		{
-			app->render->camera.y = -5400;
-		}
-
-	}
-	
 	
 
 	return true;
@@ -171,10 +146,6 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-
-	
-
-
 
 	if (isGoingRight == true)
 	{
@@ -185,7 +156,6 @@ bool Player::PostUpdate()
 		app->render->DrawTexturePlayer(texture, position.x -24 ,position.y - 30, &rect);
 	}
 
-	
 
 	return true;
 }
