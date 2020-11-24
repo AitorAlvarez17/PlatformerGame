@@ -36,10 +36,6 @@ bool Player::Start()
 	LOG("Loading Player textures");
 
 	texture = app->tex->Load("Assets/textures/FinnSprite.png");
-	
-	
-	//texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/Idle (32x32).png");
-	/*texture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png");*/
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
@@ -57,62 +53,41 @@ bool Player::Start()
 	{
 		for (int i = 0; i < 27; i++)// 0 to 9
 		{
-			if (i >= 0 && i < 9)//FIRST ANIM IDLE
+			if (i >= 0 && i < 9)//RIGHT ANIM IDLE
 			{
 				idleAnimR.PushBack({ i * pixels,0,32,32 });
-				/*if (i == 8)
-				{
-					break;
-				}*/
+				
 			}
-			if (i >= 0 && i < 9)//FIRST ANIM IDLE
+			if (i >= 0 && i < 9)//LEFT ANIM IDLE
 			{
-				idleAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
-				/*if (i == 8)
-				{
-					break;
-				}*/
+				idleAnimL.PushBack({ (27 - i) * pixels + 5,32,32,32 });
+			
 			}
-			if (i >= 9 && i < 15)// RUN
+			if (i >= 9 && i < 15)// RIGHT
 			{
 				runRightAnim.PushBack({ i * pixels,0,32,32 });
-				/*if (i == 14)
-				{
-					break;
-				}*/
+				
 			}
-			if (i >= 9 && i < 15)// RUN
+			if (i >= 9 && i < 15)// LEFT
 			{
-				runLeftAnim.PushBack({ (27 - i) * pixels,32,32,32 });
-				/*if (i == 14)
-				{
-					break;
-				}*/
+				runLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
+				
 			}
-			if (i == 15) // JUMP R 
+			if (i == 15) // JUMP R & L
 			{
 				jumpRightAnim.PushBack({ i * pixels,0,32,32 });
-				jumpLeftAnim.PushBack({ (27 - i) * pixels,32,32,32 });
-				/*if (i == 15)
-				{
-					break;
-				}*/
+				jumpLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
+				
 			}
 			if (i >= 20 && i < 23) // DEAD RIGHT
 			{
 				deadAnimR.PushBack({ i * pixels,0,32,32 });
-				/*if (i == 22)
-				{
-					break;
-				}*/
+				
 			}
 			if (i >= 20 && i < 23) // DEAD RIGHT
 			{
 				deadAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
-				/*if (i == 22)
-				{
-					break;
-				}*/
+			
 			}
 			push = true;
 
@@ -139,7 +114,7 @@ bool Player::PreUpdate()
 		vy -= gravityForce * 0.5;
 	}
 	
-	
+
 
 	return true;
 }
@@ -152,19 +127,12 @@ bool Player::Update(float dt)
 		app->player->UpdateLogic();
 
 	}
+
 	else
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT )
 		{
 			position.x -= speed;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		{
-			position.y -= speed;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			position.y += speed;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
@@ -195,8 +163,6 @@ bool Player::Update(float dt)
 	}
 	
 
-	//LOG("x: %d y: %d", app->render->camera.x, app->render->camera.y);
-
 	return true;
 }
 
@@ -205,15 +171,13 @@ bool Player::PostUpdate()
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 
-	if (isGoingRight = true)
+	if (isGoingRight == true)
 	{
 		app->render->DrawTexturePlayer(texture, position.x - 12, position.y - 30, &rect);
 	}
 	else
 	{
-		app->render->DrawTexturePlayer(texture, position.x - 100 ,position.y - 30, &rect);
-		
-	
+		app->render->DrawTexturePlayer(texture, position.x -24 ,position.y - 30, &rect);
 	}
 	
 	

@@ -50,6 +50,7 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+	
 	return true;
 }
 
@@ -71,10 +72,9 @@ bool Scene::Update(float dt)
 	//Draw Map
 	
 	
-	app->map->Draw();
+	
 
-	app->render->DrawTexture(bgTexture, 0, 0);
-	app->render->DrawTexture(bgTexture2, 641, 0);
+	
 
 	if (app->player->lvl1 == false) 
 	{
@@ -123,6 +123,9 @@ bool Scene::PostUpdate()
 	
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+	app->map->Draw();
+	app->render->DrawTexture(bgTexture, 0, 0);
+	app->render->DrawTexture(bgTexture2, 641, 0);
 
 	return ret;
 }
