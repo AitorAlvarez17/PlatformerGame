@@ -68,6 +68,9 @@ public:
 	bool isDead = false;
 	bool lastKeyPressed;
 
+	int winWidth;
+	int winHeigh;
+
 private:
 	
 	int jumpForce = 0;
@@ -85,8 +88,7 @@ private:
 	bool push = false;
 	
 
-	int winWidth;
-	int winHeigh;
+	
 };
 
 

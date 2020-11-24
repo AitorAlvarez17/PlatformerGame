@@ -84,8 +84,8 @@ bool Scene::Update(float dt)
 			app->player->position.y = 2816;
 			app->player->vy = 0;
 			app->player->jumps = 0;
-			app->render->camera.x = app->player->position.x;
-			app->render->camera.y = app->player->position.y;
+	/*		app->render->camera.x = app->player->position.x;
+			app->render->camera.y = app->player->position.y;*/
 			app->player->lvl1 = true;
 		}
 	}
@@ -100,11 +100,15 @@ bool Scene::Update(float dt)
 			app->player->position.y = 2816;
 			app->player->vy = 0;
 			app->player->jumps = 0;
-			app->render->camera.x = app->player->position.x;
-			app->render->camera.y = app->player->position.y;
+		/*	app->render->camera.x = app->player->position.x;
+			app->render->camera.y = app->player->position.y;*/
 			app->player->lvl1 = true;
 		}
 
+	}
+	if (app->player->lvl1 == true)
+	{
+		
 	}
 	
 	app->map->LoadColliders();
