@@ -140,13 +140,14 @@ bool Player::Update(float dt)
 		}
 	}
 
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
+	//app->render->camera.x = 0;
+	//app->render->camera.y = 0;
 
 	if (lvl1 == true)
 	{
 		app->render->camera.x = (-position.x + (winWidth / 4)) * 2;
 		app->render->camera.y = -(position.y * 1.95);
+
 		if (app->render->camera.x >= -704)
 		{
 			app->render->camera.x = -704;
@@ -159,8 +160,9 @@ bool Player::Update(float dt)
 		{
 			app->render->camera.y = -5400;
 		}
-		
+
 	}
+	
 	
 
 	return true;
@@ -169,6 +171,9 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
+
+	
+
 
 
 	if (isGoingRight == true)
@@ -179,7 +184,7 @@ bool Player::PostUpdate()
 	{
 		app->render->DrawTexturePlayer(texture, position.x -24 ,position.y - 30, &rect);
 	}
-	
+
 	
 
 	return true;

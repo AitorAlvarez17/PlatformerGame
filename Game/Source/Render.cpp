@@ -70,6 +70,26 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
+
+	if (app->player->lvl1 == true)
+	{
+		app->render->camera.x = (-app->player->position.x + (app->player->winWidth / 4)) * 2;
+		app->render->camera.y = -(app->player->position.y * 1.95);
+
+		if (app->render->camera.x >= -704)
+		{
+			app->render->camera.x = -704;
+		}
+		if (app->render->camera.x < -6018)
+		{
+			app->render->camera.x = -6018;
+		}
+		if (app->render->camera.y < -5400)
+		{
+			app->render->camera.y = -5400;
+		}
+
+	}
 	return true;
 }
 
