@@ -73,9 +73,11 @@ bool Render::Update(float dt)
 
 	if (app->player->lvl1 == true)
 	{
+		//Update player Camera
 		app->render->camera.x = (-app->player->position.x + (app->player->winWidth / 4)) * 2;
-		app->render->camera.y = -(app->player->position.y * 1.95);
+		app->render->camera.y = -(app->player->position.y * 1.85);
 
+		//Camera Limits
 		if (app->render->camera.x >= -704)
 		{
 			app->render->camera.x = -704;

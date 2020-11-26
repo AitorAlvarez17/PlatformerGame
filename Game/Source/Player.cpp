@@ -25,8 +25,8 @@ bool Player::Start()
 	int pixels = 32;
 
 	
-		position.x = 600;
-		position.y = 2816;
+	position.x = 600;
+	position.y = 2816;
 
 
 	winWidth = app->win->GetWidth();
