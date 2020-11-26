@@ -20,7 +20,7 @@ public:
 
 	// Called at the middle of the application loop
 	// Updates the fade logic
-	bool Update();
+	bool Update(float dt);
 
 	// Called at the end of the application loop
 	// Performs the render call of a black rectangle with transparency
@@ -56,12 +56,13 @@ private:
 	};
 
 	int scale;
+	int fadeStep;
 	WinSize win =  { 0,0 };
-
+public:
 	// The rectangle of the screen, used to render the black rectangle
 	SDL_Rect screenRect;
 	SDL_Rect firstScreenRect;
-
+private:
 	// The modules that should be switched after the first step
 	Module* moduleToEnable = nullptr;
 	Module* moduleToDisable = nullptr;

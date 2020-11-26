@@ -1,5 +1,5 @@
 #include "ModuleFadeToBlack.h"
-
+#include "Input.h"
 #include "App.h"
 #include "Render.h"
 #include "Window.h"
@@ -36,10 +36,19 @@ bool ModuleFadeToBlack::Start()
 	return true;
 }
 
-bool ModuleFadeToBlack::Update()
+bool ModuleFadeToBlack::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		fadeStep = 1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+	{
+		fadeStep = 0;
+	}
+
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return true;
+	/*if (currentStep == Fade_Step::NONE) return true;
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
@@ -62,15 +71,19 @@ bool ModuleFadeToBlack::Update()
 		}
 	}
 		
-	
-
+	*/
+	if (fadeStep == 1)
+	{
+		SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(255.0f));
+		SDL_RenderFillRect(app->render->renderer, &screenRect);
+	}
 	return true;
 }
 
 bool ModuleFadeToBlack::PostUpdate()
 {
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return true;
+	//if (currentStep == Fade_Step::NONE) return true;
 
 	float fadeRatio = (float)frameCount / ((float)maxFadeFrames);
 

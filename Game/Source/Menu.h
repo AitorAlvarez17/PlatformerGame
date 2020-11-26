@@ -18,7 +18,7 @@ public:
 
 	// Called at the middle of the application loop
 	// Updates the scene's background animations
-	bool Update();
+	bool Update(float dt);
 
 	// Called at the end of the application loop.
 	// Performs the render call of all the parts of the scene's background
@@ -29,5 +29,6 @@ public:
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
-	
+	SDL_Texture* bgTexture2 = nullptr;
+	SDL_Rect screenRect;
 };
