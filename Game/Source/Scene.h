@@ -9,6 +9,13 @@ class Scene : public Module
 {
 public:
 
+	enum GameplayState
+		{
+			TITLE_SCREEN,
+			PLAYING,
+			GAME_OVER_SCREEN
+		};
+
 	Scene(bool startEnabled);
 
 	// Destructor
@@ -32,10 +39,25 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void ChangeGameplayState(GameplayState newState);
+	void FadeToNewState(GameplayState newState);
+
+public:
+
+	bool gameStarted = false;
+	bool gameOver = false;
+	SString currentLevel;
+	GameplayState gameplayState = TITLE_SCREEN;
+
 private:
+
 	SDL_Texture* img;
 	SDL_Texture* bgTexture;
 	SDL_Texture* bgTexture2;
+	float currentFade = 0.0f;
+	bool fading = false;
+	GameplayState targetState = gameplayState;
+	SDL_Rect fullScreenRect;
 };
 
 #endif // __SCENE_H__
