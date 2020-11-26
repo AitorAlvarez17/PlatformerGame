@@ -1,11 +1,12 @@
 #include "Menu.h"
-
+#include "Window.h"
 #include "Log.h"
 #include "App.h"
 #include "Map.h"
 #include "Player.h"
 #include "Textures.h"
 #include "Render.h"
+#include "ModuleFadeToBlack.h"
 //#include "Audio.h"
 #include "Input.h"
 //#include "ModuleFadeToBlack.h"
@@ -24,7 +25,8 @@ Menu::~Menu()
 bool Menu::Start()
 {
 	LOG("Loading background assets");
-
+	screenRect.y = app->win->GetHeight();
+	screenRect.x = app->win->GetWidth();
 	bool ret = true;
 
 	bgTexture = app->tex->Load("Assets/maps/MenuF.png");
@@ -36,12 +38,21 @@ bool Menu::Start()
 	return ret;
 }
 
-bool Menu::Update()
+bool Menu::Update(float dt)
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (app->player->lvl1 == false)
 	{
-		
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			app->player->position.x = 600;
+			app->player->position.y = 2816;
+			app->player->vy = 0;
+			app->player->jumps = 0;
+			/*		app->render->camera.x = app->player->position.x;
+					app->render->camera.y = app->player->position.y;*/
+			app->player->lvl1 = true;
+		}
 	}
 
 	return true;
@@ -52,6 +63,7 @@ bool Menu::PostUpdate()
 {
 	// Draw everything --------------------------------------
 	app->render->DrawTexture(bgTexture, 0, 0, NULL);
+
 
 	return true;
 }

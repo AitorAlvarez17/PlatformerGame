@@ -76,19 +76,6 @@ bool Scene::Update(float dt)
 
 	
 
-	if (app->player->lvl1 == false) 
-	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			app->player->position.x = 600;
-			app->player->position.y = 2816;
-			app->player->vy = 0;
-			app->player->jumps = 0;
-	/*		app->render->camera.x = app->player->position.x;
-			app->render->camera.y = app->player->position.y;*/
-			app->player->lvl1 = true;
-		}
-	}
 	if (app->player->isDead == true) 
 	{
 		app->player->position.x = 961;
@@ -128,7 +115,7 @@ bool Scene::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 	app->map->Draw();
-	app->render->DrawTexture(bgTexture, 0, 0);
+	//app->render->DrawTexture(bgTexture, 0, 0);
 	app->render->DrawTexture(bgTexture2, 641, 0);
 
 	return ret;
