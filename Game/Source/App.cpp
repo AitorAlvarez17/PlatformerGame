@@ -9,7 +9,6 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "ModuleFadeToBlack.h"
-#include "Menu.h"
 #include "Debug.h"
 #include "Defs.h"
 #include "Log.h"
@@ -32,7 +31,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new Collisions(false);
 	player = new Player(false);
 	fade = new ModuleFadeToBlack(true);
-	menu = new Menu(true);
 	debug = new Debug(true);
 
 	// Ordered for awake / Start / Update
@@ -50,7 +48,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
-	AddModule(menu);
 	AddModule(debug);
 	AddModule(render);
 	
@@ -75,6 +72,7 @@ App::~App()
 
 void App::AddModule(Module* module)
 {
+	//if(module == player)
 	module->Init();
 	modules.Add(module);
 }

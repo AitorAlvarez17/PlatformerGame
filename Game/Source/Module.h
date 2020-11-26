@@ -20,6 +20,11 @@ public:
 		active = true;
 	}
 
+	void Disable()
+	{
+		active = false;
+	}
+
 	// Called before render is available
 	// L01: DONE 5: Sending config file to all modules
 	virtual bool Awake(pugi::xml_node&)
@@ -85,24 +90,7 @@ public:
 	
 	}
 
-	void Module::Enable()
-	{
-		if (!isEnabled)
-		{
-			isEnabled = true;
-			Start();
-		}
-	}
-
-	void Module::Disable()
-	{
-		if (isEnabled)
-		{
-			isEnabled = false;
-			CleanUp();
-		}
-	}
-
+	
 public:
 
 	SString name;

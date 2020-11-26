@@ -20,7 +20,6 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
-    <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +60,6 @@
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
-    <ClInclude Include="Source\Menu.h" />
     <ClInclude Include="Source\Debug.h" />
   </ItemGroup>
   <ItemGroup>

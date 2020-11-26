@@ -32,6 +32,7 @@ private:
 	unsigned int jumpsLeft = 2;
 	
 public:
+
 	Player(bool startEnabled);
 	bool Start();
 	bool PreUpdate();
@@ -42,7 +43,7 @@ public:
 	void UpdateState();
 	void UpdateLogic();
 	void ChangeState(PlayerState previous, PlayerState next);
-	
+	void Reload();
 
 	Animation idleAnimR;
 	Animation idleAnimL;

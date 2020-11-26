@@ -17,7 +17,7 @@ class Map;
 class Collisions;
 class Player;
 class ModuleFadeToBlack;
-class Menu;
+class Intro;
 class Debug;
 class App
 {
@@ -88,7 +88,7 @@ public:
 	Collisions* collisions;
 	Player* player;
 	ModuleFadeToBlack* fade;
-	Menu* menu;
+	Intro* menu;
 	Debug* debug;
 
 	bool Load();
