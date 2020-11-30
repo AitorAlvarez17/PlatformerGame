@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "List.h"
+#include "PerfTimer.h"
+#include "Timer.h"
+
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -122,7 +125,7 @@ private:
 	pugi::xml_node configApp;
 	pugi::xml_document save;
 	uint frames;
-	float dt;
+
 
 	// L02: TODO 1: Create required variables to request load / save and 
 	// the filename for save / load
@@ -139,6 +142,21 @@ private:
 	bool requestLoad = false;
 	bool requestSave = false;
 
+
+	PerfTimer ptimer;
+	uint64 frameCount = 0;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+
+	uint32 lastSecFrameCount = 0;
+	uint32 prevLastSecFrameCount = 0;
+
+	int cap;
+	
+	float dt = 0.0f;
+	float frameDelay = 0;
 };
 
 extern App* app;
