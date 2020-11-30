@@ -1,5 +1,5 @@
 <!-- Config file for the game -->
-<!-- L01: DONE 1: Create configuration file-->
+
 <config>
   <app>
     <title>Game Development Testbed</title>
@@ -12,7 +12,7 @@
   </renderer>
 
   <window>
-    <resolution width="1280" height="720" scale="2"/>
+    <resolution width="1280" height="694" scale="2"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
