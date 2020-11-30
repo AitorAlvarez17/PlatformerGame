@@ -3,9 +3,10 @@
 	<input />
 	<audio />
 	<render>
-		<camara x="-704" y="-5400" />
+		<camara x="-704" y="-5165" />
 	</render>
 	<scene />
 	<textures />
 	<window />
+	<player x="397" y="2792" jumpsRemaining="1" verticalVelocity="-9.5" />
 </saveState>

@@ -123,7 +123,7 @@ private:
 	pugi::xml_document configFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
-	pugi::xml_document save;
+	//pugi::xml_document save;
 	uint frames;
 
 
@@ -136,6 +136,7 @@ private:
 	pugi::xml_node sce;//carga en scene
 	pugi::xml_node wi;//carga en window
 	pugi::xml_node au;//carga en audio
+	pugi::xml_node pl;//carga en player
 
 
 	//PREGUNTASELO A RAMÓN

@@ -46,6 +46,9 @@ public:
 	void ChangeState(PlayerState previous, PlayerState next);
 	void Reload();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
+
 	Animation idleAnimR;
 	Animation idleAnimL;
 
