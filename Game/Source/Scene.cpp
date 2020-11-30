@@ -38,7 +38,7 @@ bool Scene::Start()
 	//pushbacks for anims
 
 	app->map->Load("GAME.tmx");
-	bgTexture = app->tex->Load("Assets/maps/MenuF.png");
+	bgTexture = app->tex->Load("Assets/maps/MenuF.png");//por esto ramon descuenta !!!!!
 	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 
@@ -111,14 +111,14 @@ bool Scene::Update(float dt)
 		app->player->position.y = 80;
 		if(app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			app->player->isDead = false;
+			/*app->player->isDead = false;
 			app->player->position.x = 600;
 			app->player->position.y = 2816;
 			app->player->vy = 0;
 			app->player->jumps = 0;
-		/*	app->render->camera.x = app->player->position.x;
-			app->render->camera.y = app->player->position.y;*/
-			app->player->lvl1 = true;
+			app->render->camera.x = app->player->position.x;
+			app->render->camera.y = app->player->position.y;
+			app->player->lvl1 = true;*/
 		}
 
 	}
@@ -193,11 +193,11 @@ void Scene::ChangeGameplayState(GameplayState newState)
 	{
 	case PLAYING:
 		//screenDisplayAnim = &turnOffAnim;
-		app->player->Init();
-		app->map->Init();
+		//app->player->Init();
+		//app->map->Init();
 		gameplayState = PLAYING;
 		//currentLevel.Create("level1.tmx");
-		app->map->Load("GAME.tmx");
+		//app->map->Load("GAME.tmx");
 		app->tex->UnLoad(bgTexture);
 		//PLAYER
 		app->player->position.x = 600;
@@ -219,6 +219,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 		//screenDisplayAnim = &gameOverAnim;
 		gameplayState = GAME_OVER_SCREEN;
 		app->map->CleanUp();
+		
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 		break;
