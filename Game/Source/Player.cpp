@@ -164,6 +164,8 @@ bool Player::PostUpdate()
 {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
+
+
 	if (isGoingRight == true)
 	{
 		if (currentAnim == &runLeftAnim) { currentAnim = &runRightAnim; }
@@ -233,6 +235,7 @@ void Player::UpdateState()
 	{
 		isGoingRight = false;
 	}
+
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		isGoingRight = true;
@@ -272,6 +275,18 @@ void Player::UpdateState()
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
+
+			/*if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
+				{
+					isGoingRight = true;
+					if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+						isGoingRight = false;
+
+				}
+
+			}*/
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
