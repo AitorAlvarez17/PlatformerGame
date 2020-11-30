@@ -20,11 +20,15 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
+	<ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\PerfTimer.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Textures.h" />
+	<ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\Module.h" />
@@ -59,12 +63,17 @@
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\SString.h" />
+<<<<<<< HEAD
     <ClInclude Include="Source\External\Optick\include\optick.h">
       <Filter>External\Optick</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\Optick\include\optick.config.h">
       <Filter>External\Optick</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Timer.h" />
+>>>>>>> adf825a312472b1b22267c82cad2dc10d8329dc8
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
