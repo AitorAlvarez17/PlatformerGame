@@ -16,9 +16,31 @@
 
 Player::Player(bool startEnabled) : Module(startEnabled)
 {
-
+	name.create("player");
 }
 
+bool Player::Awake(pugi::xml_node& config)
+{
+	LOG("Loading player config");
+	bool ret = true;
+
+	texturePath = config.child("texture").child_value();
+
+
+	pugi::xml_node move = config.child("move");
+
+
+	jumpForceValue = move.attribute("jumpForceValue").as_int();
+	speed = move.attribute("speed").as_int();
+	jumps = move.attribute("maxJumps").as_int();
+
+
+	pugi::xml_node audio = config.child("audio");
+
+	jumpFxPath = audio.attribute("jump").as_string();
+
+	return ret;
+}
 bool Player::Start()
 {
 	bool ret = true;
