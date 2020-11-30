@@ -1,40 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Window.cpp" />
-    <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Collider.cpp" />
+    <ClCompile Include="Source\Collisions.cpp" />
+    <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\App.cpp" />
+    <ClCompile Include="Source\Audio.cpp" />
+    <ClCompile Include="Source\Input.cpp" />
+    <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
+    <ClCompile Include="Source\PerfTimer.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Input.cpp" />
-    <ClCompile Include="Source\Audio.cpp" />
-    <ClCompile Include="Source\App.cpp" />
+    <ClCompile Include="Source\Textures.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
-      <Filter>External\PuguiXml</Filter>
+      <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\Collisions.cpp" />
-    <ClCompile Include="Source\Collider.cpp" />
-    <ClCompile Include="Source\Player.cpp" />
-    <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
-	<ClCompile Include="Source\PerfTimer.cpp" />
-    <ClCompile Include="Source\Debug.cpp" />
-    <ClCompile Include="Source\PerfTimer.cpp" />
-    <ClCompile Include="Source\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Window.h" />
-    <ClInclude Include="Source\Textures.h" />
-	<ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Collider.h" />
+    <ClInclude Include="Source\Collisions.h" />
+    <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\ModuleFadeToBlack.h" />
+    <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\Render.h" />
-    <ClInclude Include="Source\Module.h" />
-    <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\Audio.h" />
+    <ClInclude Include="Source\Input.h" />
     <ClInclude Include="Source\App.h" />
+    <ClInclude Include="Source\Module.h" />
+    <ClInclude Include="Source\Render.h" />
+    <ClInclude Include="Source\Textures.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -50,43 +56,34 @@
     <ClInclude Include="Source\Point.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SString.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
-      <Filter>External\PuguiXml</Filter>
+      <Filter>External\PugiXml</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
-      <Filter>External\PuguiXml</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Map.h" />
-    <ClInclude Include="Source\Collider.h" />
-    <ClInclude Include="Source\Collisions.h" />
-    <ClInclude Include="Source\Player.h" />
-    <ClInclude Include="Source\ModuleFadeToBlack.h" />
-    <ClInclude Include="Source\Debug.h" />
-    <ClInclude Include="Source\SString.h" />
-<<<<<<< HEAD
-    <ClInclude Include="Source\External\Optick\include\optick.h">
-      <Filter>External\Optick</Filter>
+      <Filter>External\PugiXml</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\Optick\include\optick.config.h">
       <Filter>External\Optick</Filter>
     </ClInclude>
-=======
-    <ClInclude Include="Source\PerfTimer.h" />
-    <ClInclude Include="Source\Timer.h" />
->>>>>>> adf825a312472b1b22267c82cad2dc10d8329dc8
+    <ClInclude Include="Source\External\Optick\include\optick.h">
+      <Filter>External\Optick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
-      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
+      <UniqueIdentifier>{61c3a974-bd6e-4cf3-bf64-a5b7c81fe667}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
-      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
+      <UniqueIdentifier>{08a9e566-9f89-4104-b227-300d8a00f85a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External\PuguiXml">
-      <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
+    <Filter Include="External\PugiXml">
+      <UniqueIdentifier>{256ac86d-3df4-47d8-b1c2-5e0eaefba60c}</UniqueIdentifier>
     </Filter>
     <Filter Include="External\Optick">
-      <UniqueIdentifier>{e33f80f5-835d-44d4-972d-a42e9e72231a}</UniqueIdentifier>
+      <UniqueIdentifier>{2092a102-32f4-4da8-865f-eed4c3b09f81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
