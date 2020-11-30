@@ -80,17 +80,22 @@ void App::AddModule(Module* module)
 // Called before render is available
 bool App::Awake()
 {
-	// L01: DONE 3: Load config from XML
+	// Load config from XML
 	bool ret = LoadConfig();
 
 	if (ret == true)
 	{
-		// L01: DONE 4: Read the title from the config file
+		// Read the title from the config file
 		title.create(configApp.child("title").child_value());
 		win->SetTitle(title.GetString());
 
 		ListItem<Module*>* item;
 		item = modules.start;
+
+		cap = configApp.attribute("framerate_cap").as_int();
+
+		//frame delay
+		if (cap > 0) { frameDelay = static_cast<float>(1000) / cap; }
 
 		while (item != NULL && ret == true)
 		{
@@ -149,10 +154,8 @@ bool App::LoadConfig()
 {
 	bool ret = true;
 
-	// L01: DONE 3: Load config.xml file using load_file() method from the xml_document class
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 
-	// L01: DONE 3: Check result for loading errors
 	if (result == NULL)
 	{
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
@@ -171,13 +174,20 @@ bool App::LoadConfig()
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	frameCount++;
+	lastSecFrameCount++;
+
+	dt = frameTime.ReadSec();
+	frameTime.Start();
+
+
 
 }
 
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	// L02: TODO 1: This is a good place to call Load / Save methods
+
 	if (requestLoad == true) 
 	{
 		Load();
@@ -188,6 +198,47 @@ void App::FinishUpdate()
 		Save();
 	}
 
+	if (lastSecFrameTime.Read() > 1000)
+	{
+		lastSecFrameTime.Start();
+		prevLastSecFrameCount = lastSecFrameCount;
+		lastSecFrameCount = 0;
+	}
+    
+	float averageFps = 0.0f;
+	float secondsSinceStartup = 0.0f;
+
+	// Amount of frames since startup
+	frameCount = startupTime.Read();
+
+	// Amount of time since game start (use a low resolution timer)
+	secondsSinceStartup = startupTime.ReadSec();
+
+	// Average FPS for the whole game life
+	averageFps = (float)frameCount / startupTime.ReadSec();
+
+	uint32 lastFrameMs = 0;
+	uint32 framesOnLastUpdate = 0;
+
+	lastFrameMs = frameTime.Read();
+	framesOnLastUpdate = prevLastSecFrameCount;
+
+	// Amount of ms took the last update
+//	lastFrameMs = startupTime.Read() - updateCount;
+
+	// Amount of frames during the last second
+	framesOnLastUpdate = SDL_GetPerformanceFrequency();
+
+	static char title[256];
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+			  averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+
+	app->win->SetTitle(title);
+
+	//if ((frameDelay > 0) && (lastFrameMs < frameDelay))
+	//{
+	//	SDL_Delay(frameDelay - lastFrameMs);
+	//}
 
 }
 
