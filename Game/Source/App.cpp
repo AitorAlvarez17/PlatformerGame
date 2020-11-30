@@ -361,7 +361,7 @@ bool App::Load()
 
 	bool ret = true;
 
-	pugi::xml_parse_result result = saveGame.load_file("savegame.xml");
+	pugi::xml_parse_result result = saveGame.load_file("save.xml");
 
 	if (result == NULL)
 	{
@@ -370,14 +370,14 @@ bool App::Load()
 	}
 	else
 	{
-		saveState = saveGame.child("save_state");
+		saveState = saveGame.child("saveState");
 		if (saveState == NULL) 
 		{
 			LOG("save_state not loading");
 		}
 
 		//renderer
-		rend = saveState.child("renderer");
+		rend = saveState.child("render");
 		if (rend == NULL) 
 		{
 			LOG("Renderer not loading");
@@ -411,6 +411,12 @@ bool App::Load()
 			LOG("window not loading");
 		}
 
+		pl = saveState.child("player");
+		if (pl == NULL)
+		{
+			LOG("player not loading");
+		}
+
 
 	}
 
@@ -419,6 +425,7 @@ bool App::Load()
 	app->render->Load(rend);
 	app->scene->Load(sce);
 	app->win->Load(wi);
+	app->player->Load(pl);
 
 	requestLoad = false;
 
@@ -429,7 +436,7 @@ bool App::Load()
 
 // L02: TODO 7: Implement the xml save method for current state
 
-bool App::Save() 
+bool App::Save()
 {
 
 	bool ret = true;
@@ -443,16 +450,25 @@ bool App::Save()
 	else
 	{
 		pugi::xml_node node = save.append_child("saveState");
+
 		pugi::xml_node i = node.append_child("input");
+
 		pugi::xml_node a = node.append_child("audio");
+
 		pugi::xml_node r = node.append_child("render");
+		render->Save(r);
 		pugi::xml_node s = node.append_child("scene");
+
 		pugi::xml_node t = node.append_child("textures");
+
 		pugi::xml_node w = node.append_child("window");
 
+		pugi::xml_node p = node.append_child("player");
+		player->Save(p);
 
 
-		render->Save(r);
+
+		
 
 
 
