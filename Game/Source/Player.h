@@ -34,6 +34,7 @@ private:
 public:
 
 	Player(bool startEnabled);
+	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
@@ -76,6 +77,8 @@ private:
 	int jumpForce = 0;
 	int jumpForceValue = 10;
 	
+	const char* jumpFxPath;
+
 	float gravityForce = 3.0f;
 
 	Collider* collider;
@@ -87,6 +90,7 @@ private:
 	bool canMoveDown = true;
 	bool push = false;
 	
+	const char* texturePath;
 
 	
 };

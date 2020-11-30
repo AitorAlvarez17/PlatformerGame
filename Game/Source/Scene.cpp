@@ -60,12 +60,18 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// L02: TODO 3: Request Load / Save when pressing L/S
-
-	/*if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadGameRequest();
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		app->SaveGameRequest();*/
+	/*if (gameplayState == PLAYING)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		{ 
+			//app->LoadGameRequest();
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F5 == KEY_DOWN)
+		{ 
+			//app->SaveGameRequest();
+		}
+	}*/
+	
 
 	
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more

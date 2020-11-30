@@ -4,10 +4,11 @@
   <app>
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
+    <savefile path="save.xml"/>
   </app>
 
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -18,12 +19,20 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <player>
+  	<texture>Assets/textures/FinnSprite.png</texture>
+  	<move gravity="1800" jumpForceValue="10" speed="7" maxJumps="2"/>
+    <audio jump="Assets/audio/fx/Jump.wav" />
+  </player>
+
+  <scene>
+    <music path="Assets/audio/music/music_spy.ogg"/>
+  </scene>
+
   <!-- L03: Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>
   </map>
 
-  <variables>
-    <var gravity="10" startPosx="0" startPosy="0" speed="5" pixels="32" jumpForce="0"/>
-  </variables>
+  
 </config>
