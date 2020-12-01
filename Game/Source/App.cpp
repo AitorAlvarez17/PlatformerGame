@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
+#include "Pathfinding.h"
 #include "ModuleFadeToBlack.h"
 #include "Debug.h"
 #include "Defs.h"
@@ -27,6 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(true);
 	audio = new Audio(true);
 	scene = new Scene(false);
+	pathfinding = new PathFinding;
 	map = new Map(false);
 	collisions = new Collisions(false);
 	player = new Player(false);
@@ -40,7 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
-	
+	AddModule(pathfinding);
 
 	// Render last to swap buffer
 	
