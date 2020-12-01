@@ -27,5 +27,6 @@ uint32 Timer::Read() const
 
 float Timer::ReadSec() const
 {
+	//Está en ms no secs.
 	return float(SDL_GetTicks() - startTime) / 1000.0f;
 }
