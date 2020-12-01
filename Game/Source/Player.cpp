@@ -130,6 +130,7 @@ bool Player::PreUpdate()
 	{
 		position.y -= vy;
 		vy -= gravityForce * 0.5;
+		app->player->UpdateState();
 	}
 
 	return true;
@@ -139,7 +140,7 @@ bool Player::Update(float dt)
 {
 	if (app->debug->godMode == false)
 	{
-		app->player->UpdateState();
+		
 		app->player->UpdateLogic();
 
 	}
@@ -155,6 +156,16 @@ bool Player::Update(float dt)
 		{
 			position.x += speed;
 		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			position.y += speed;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			position.y -= speed;
+		}
+
+
 	}
 
 	return true;
@@ -379,6 +390,10 @@ void Player::UpdateLogic()
 		if (jumps > 0)
 		{
 			vy = jumpForceValue;
+		}
+		if (jumps == 2) {
+			//jump fix. Do not delete this before asking 
+			position.y -= 2;
 		}
 		//vy = jumpForceValue;
 
