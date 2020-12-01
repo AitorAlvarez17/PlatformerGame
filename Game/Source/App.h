@@ -88,6 +88,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	PathFinding* pathfinding;
 	Collisions* collisions;
 	Player* player;
 	ModuleFadeToBlack* fade;
