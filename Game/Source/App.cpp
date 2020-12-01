@@ -45,14 +45,14 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 
 	// Render last to swap buffer
-	
+
 	AddModule(player);
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
 	AddModule(debug);
 	AddModule(render);
-	
+
 }
 
 // Destructor
@@ -94,10 +94,11 @@ bool App::Awake()
 		ListItem<Module*>* item;
 		item = modules.start;
 
-		cap = configApp.attribute("framerate_cap").as_int();
+		int cap = configApp.attribute("framerate_cap").as_int();
 
 		//frame delay
 		if (cap > 0) { frameDelay = static_cast<float>(1000) / cap; }
+		//if (cap > 0) cappedMs = 1000 / cap;
 
 		while (item != NULL && ret == true)
 		{
@@ -176,12 +177,17 @@ bool App::LoadConfig()
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	// Amount of frames since startup
 	frameCount++;
-	lastSecFrameCount++;
+
+	lastFrame++;
 
 	dt = frameTime.ReadSec();
+	////start time
 	frameTime.Start();
+	//startupTime.Start();
 
+	//lastFrameTime.Start();
 
 
 }
@@ -190,57 +196,56 @@ void App::PrepareUpdate()
 void App::FinishUpdate()
 {
 
-	if (requestLoad == true) 
+	if (requestLoad == true)
 	{
 		Load();
 	}
 
-	if (requestSave == true) 
+	if (requestSave == true)
 	{
 		Save();
 	}
 
-	if (lastSecFrameTime.Read() > 1000)
+	if (lastFrameTime.Read() > 1000)
 	{
-		lastSecFrameTime.Start();
-		prevLastSecFrameCount = lastSecFrameCount;
-		lastSecFrameCount = 0;
+		lastFrameTime.Start();
+		prevFrame = lastFrame;
+		lastFrame = 0;
 	}
-    
-	float averageFps = 0.0f;
+
 	float secondsSinceStartup = 0.0f;
-
-	// Amount of frames since startup
-	frameCount = startupTime.Read();
-
-	// Amount of time since game start (use a low resolution timer)
-	secondsSinceStartup = startupTime.ReadSec();
-
-	// Average FPS for the whole game life
-	averageFps = (float)frameCount / startupTime.ReadSec();
+	float averageFps = 0.0f;
 
 	uint32 lastFrameMs = 0;
 	uint32 framesOnLastUpdate = 0;
 
-	lastFrameMs = frameTime.Read();
-	framesOnLastUpdate = prevLastSecFrameCount;
+	//// Amount of time since game start (use a low resolution timer)
+	secondsSinceStartup = startupTime.ReadSec();
 
-	// Amount of ms took the last update
-//	lastFrameMs = startupTime.Read() - updateCount;
+	//// Average FPS for the whole game life
+	averageFps = float(frameCount) / startupTime.ReadSec();
 
-	// Amount of frames during the last second
-	framesOnLastUpdate = SDL_GetPerformanceFrequency();
+	//// Amount of ms took the last update
+	lastFrameMs = lastFrameTime.ReadSec();
+
+	//// Amount of frames during the last second
+	framesOnLastUpdate = prevFrame;
+	//framesOnLastUpdate = SDL_GetPerformanceFrequency();
+
+
 
 	static char title[256];
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-			  averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);
 
-	//if ((frameDelay > 0) && (lastFrameMs < frameDelay))
-	//{
-	//	SDL_Delay(frameDelay - lastFrameMs);
-	//}
+	if ((frameDelay > 0) && (lastFrameMs < frameDelay))
+	{
+		SDL_Delay(frameDelay - lastFrameMs);
+	}
+
+
 
 }
 
@@ -256,7 +261,7 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) 
+		if (pModule->active == false)
 		{
 			continue;
 		}
@@ -279,7 +284,7 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) 
+		if (pModule->active == false)
 		{
 			continue;
 		}
@@ -301,7 +306,7 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) 
+		if (pModule->active == false)
 		{
 			continue;
 		}
@@ -358,7 +363,7 @@ const char* App::GetOrganization() const
 // L02: TODO 5: Create a method to actually load an xml file
 // then call all the modules to load themselves
 
-bool App::Load() 
+bool App::Load()
 {
 
 	bool ret = true;
@@ -373,42 +378,42 @@ bool App::Load()
 	else
 	{
 		saveState = saveGame.child("saveState");
-		if (saveState == NULL) 
+		if (saveState == NULL)
 		{
 			LOG("save_state not loading");
 		}
 
 		//renderer
 		rend = saveState.child("render");
-		if (rend == NULL) 
+		if (rend == NULL)
 		{
 			LOG("Renderer not loading");
 		}
 
 		//input
 		inp = saveState.child("input");
-		if (inp == NULL) 
+		if (inp == NULL)
 		{
 			LOG("Input not loading");
 		}
 
 		//audio
 		au = saveState.child("audio");
-		if (au == NULL) 
+		if (au == NULL)
 		{
 			LOG("Audio not loading");
 		}
 
 		//scene
 		sce = saveState.child("scene");
-		if (sce == NULL) 
+		if (sce == NULL)
 		{
 			LOG("Scene not loading");
 		}
 
 		//window
 		wi = saveState.child("window");
-		if (wi == NULL) 
+		if (wi == NULL)
 		{
 			LOG("window not loading");
 		}
@@ -470,7 +475,7 @@ bool App::Save()
 
 
 
-		
+
 
 
 

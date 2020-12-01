@@ -151,15 +151,14 @@ private:
 
 	Timer startupTime;
 	Timer frameTime;
-	Timer lastSecFrameTime;
+	Timer lastFrameTime;
 
-	uint32 lastSecFrameCount = 0;
-	uint32 prevLastSecFrameCount = 0;
-
-	int cap;
+	uint32 lastFrame = 0;
+	uint32 prevFrame = 0;
 	
 	float dt = 0.0f;
-	float frameDelay = 0;
+	float frameDelay = -1;
+
 };
 
 extern App* app;
