@@ -10,8 +10,6 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
-// L03: TODO 2: Create a struct to hold information for a TileSet
-// Ignore Terrain Types and Tile Types for now, but we want the image!
 
 struct Tile {
 
@@ -21,16 +19,6 @@ struct Tile {
 };
 
 struct TileSet {
-    //int firstGid;
-    //const char* name;
-    //int tileWidth;
-    //int tileHeight;
-    //int spacing;
-    //int margin;
-    //SDL_Texture* image;
-    //const char* source;
-    //int imageWidth;
-    //int imageHeight;
 
     SString	name;
     int	firstgid;
@@ -71,7 +59,6 @@ struct Properties
     }
     List<Property*> list;
 
-    // L06: TODO 7: Method to ask for the value of a custom property
     int GetProperty(const char* name, int defaultValue = 0) const;
        
 };
@@ -95,7 +82,6 @@ struct MapLayer
         RELEASE(data);
     }
 
-    // L04: TODO 6: Short function to get the value of x,y
     uint Get(int x, int y) const
     {
 
@@ -115,17 +101,8 @@ enum MapTypes
 
 
 
-// L03: TODO 1: Create a struct needed to hold the information to Map node
 struct MapData {
-    /*   const char* orientation;
-       const char* renderorder;
-       int width;
-       int height;
-       int tileWidth;
-       int tileheight;
 
-
-       List<TileSet*> tilesets;*/
 
 
     int width;

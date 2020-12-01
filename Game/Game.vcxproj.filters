@@ -24,6 +24,9 @@
       <Filter>External\PugiXml</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\Coins.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -73,6 +76,9 @@
       <Filter>External\Optick</Filter>
     </ClInclude>
     <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\Coins.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -86,6 +92,9 @@
     </Filter>
     <Filter Include="External\Optick">
       <UniqueIdentifier>{2092a102-32f4-4da8-865f-eed4c3b09f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{c6a038f7-46d4-4de3-a0ac-8c8714d4865d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

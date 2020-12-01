@@ -235,16 +235,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			isDead = true;
 		}
-		/*if (a->type == Collider::PLAYER && b->type == Collider::TP)
-		{
-			tpFunction();
-		}*/
-		/*if (a->type == Collider::PLAYER && b->type == Collider::SAVER)
-		{
-			RequestSave();
-		}*/
-		//tp 
-		//autosave
+		
 	}
 
 }
@@ -271,7 +262,7 @@ void Player::UpdateState()
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
 			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
 			ChangeState(playerState, RUNNING);
-			LOG("RUNNIG");
+		
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -279,14 +270,15 @@ void Player::UpdateState()
 			jumps--;
 			app->audio->PlayFx(1, 0);
 			ChangeState(playerState, JUMPING);
-			LOG("JUMPING %d", jumps);
+			
 
 		}
 
 		if (isDead == true)
 		{
 			ChangeState(playerState, DYING);
-			LOG("DYING");
+		
+
 		}
 
 		break;
@@ -297,17 +289,7 @@ void Player::UpdateState()
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
 
-			/*if(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) 
-				{
-					isGoingRight = true;
-					if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-						isGoingRight = false;
-
-				}
-
-			}*/
+		
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
@@ -317,7 +299,7 @@ void Player::UpdateState()
 					app->audio->PlayFx(1, 0);
 
 				ChangeState(playerState, JUMPING);
-				LOG("JUMPING %d", jumps);
+
 
 			}
 
@@ -405,12 +387,7 @@ void Player::UpdateLogic()
 			//jump fix. Do not delete this before asking 
 			position.y -= 2;
 		}
-		//vy = jumpForceValue;
-
-		/*if (isGoingRight == true)
-			currentAnim = &jumpRightAnim;
-		else
-			currentAnim = &jumpLeftAnim;*/
+	
 
 		ChangeState(JUMPING, FALLING);
 
@@ -474,22 +451,18 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 				currentAnim = &runRightAnim;
 
 
-			LOG("CHANGE to RUN RIGHT");
+		
 		}
 		else
 		{
 
 				currentAnim = &runLeftAnim;
 
-			LOG("CHANGE to RUN LEFT");
+			
 
 		}
 
-		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			isGoingRight = false;
-		else
-			isGoingRight = true;
-		currentAnim= &(canMoveRight == false ? runLeftAnim : runRightAnim);*/
+		
 		break;
 	}
 	case(JUMPING):
@@ -505,11 +478,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 			isJumping = true;
 		}
 
-		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			isGoingRight = false;
-		else
-			isGoingRight = true;
-		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);*/
+		
 		break;
 	}
 	case(DOUBLE_JUMPING):
@@ -522,12 +491,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 		{
 			currentAnim = &jumpLeftAnim;
 		}
-		/*if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-
-			isGoingRight = false;
-		else
-			isGoingRight = true;
-		currentAnim = &(canMoveRight == false ? jumpLeftAnim : jumpRightAnim);*/
+		
 
 		break;
 	}

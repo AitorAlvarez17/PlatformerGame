@@ -47,31 +47,6 @@ bool ModuleFadeToBlack::Update(float dt)
 		fadeStep = 0;
 	}
 
-	// Exit this function if we are not performing a fade
-	/*if (currentStep == Fade_Step::NONE) return true;
-
-	if (currentStep == Fade_Step::TO_BLACK)
-	{
-		++frameCount;
-		if (frameCount > maxFadeFrames)
-		{
-			
-			moduleToDisable->Disable();
-			moduleToEnable->Enable();
-
-			currentStep = Fade_Step::FROM_BLACK;
-		}
-	}
-	else
-	{
-		--frameCount;
-		if (frameCount <= 0)
-		{
-			currentStep = Fade_Step::NONE;
-		}
-	}
-		
-	*/
 	if (fadeStep == 1)
 	{
 		SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(255.0f));

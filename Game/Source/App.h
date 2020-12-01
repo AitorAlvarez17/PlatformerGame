@@ -19,10 +19,12 @@ class Scene;
 class Map;
 class Collisions;
 class Player;
+class Coins;
 class ModuleFadeToBlack;
 class Intro;
 class PathFinding;
 class Debug;
+
 class App
 {
 public:
@@ -95,6 +97,7 @@ public:
 	ModuleFadeToBlack* fade;
 	Intro* menu;
 	Debug* debug;
+	Coins* coin;
 
 	bool Load();
 	bool Save();

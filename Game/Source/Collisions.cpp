@@ -11,35 +11,46 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 		colliders[i] = nullptr;
 
 	matrix[Collider::Type::WALL_A][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::WALL_A][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::WALL_A][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::WALL_A][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::WALL_A][Collider::Type::DEATH] = false;
-
-	matrix[Collider::Type::PLAYER][Collider::Type::WALL_A] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
-	matrix[Collider::Type::PLAYER][Collider::Type::FLOOR] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::WALL_D] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
-
-	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
-	matrix[Collider::Type::FLOOR][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::FLOOR][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
-	matrix[Collider::Type::FLOOR][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::COIN] = false;
 
 	matrix[Collider::Type::WALL_D][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::WALL_D][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::WALL_D][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::COIN] = false;
 
+	matrix[Collider::Type::PLAYER][Collider::Type::WALL_A] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::WALL_D] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::PLAYER][Collider::Type::FLOOR] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::COIN] = true;
+
+	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::FLOOR][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::COIN] = false;
 
 	matrix[Collider::Type::DEATH][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
 	matrix[Collider::Type::DEATH][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::DEATH][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::COIN] = false;
+
+	matrix[Collider::Type::COIN][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::COIN][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::COIN][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::COIN][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::COIN][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::COIN][Collider::Type::COIN] = false;
 
 }
 
@@ -187,6 +198,10 @@ void Collisions::DebugDraw()
 		case Collider::Type::DEATH:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
+		case Collider::Type::COIN:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 207, 64, alpha);
+			break;
+
 		}
 	}
 
