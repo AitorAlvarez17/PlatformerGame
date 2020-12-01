@@ -145,9 +145,7 @@ private:
 	bool requestLoad = false;
 	bool requestSave = false;
 
-
 	PerfTimer ptimer;
-	uint64 frameCount = 0;
 
 	Timer startupTime;
 	Timer frameTime;
@@ -155,7 +153,9 @@ private:
 
 	uint32 lastFrame = 0;
 	uint32 prevFrame = 0;
-	
+
+	uint64 frameCount = 0;
+
 	float dt = 0.0f;
 	float frameDelay = -1;
 
