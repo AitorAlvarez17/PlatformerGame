@@ -97,8 +97,8 @@ bool App::Awake()
 		int cap = configApp.attribute("framerate_cap").as_int();
 
 		//frame delay
-		if (cap > 0) { frameDelay = static_cast<float>(1000) / cap; }
-		//if (cap > 0) cappedMs = 1000 / cap;
+		//if (cap > 0) { frameDelay = static_cast<float>(1000) / cap; }
+		if (cap > 0) frameDelay = 1000 / cap;
 
 		while (item != NULL && ret == true)
 		{
@@ -126,7 +126,8 @@ bool App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
-
+	// Initialize timer
+	startupTime.Start();
 	return ret;
 }
 
@@ -179,16 +180,12 @@ void App::PrepareUpdate()
 {
 	// Amount of frames since startup
 	frameCount++;
-
 	lastFrame++;
-
 	dt = frameTime.ReadSec();
-	////start time
+	//start time
 	frameTime.Start();
-	//startupTime.Start();
 
 	//lastFrameTime.Start();
-
 
 }
 
@@ -226,7 +223,7 @@ void App::FinishUpdate()
 	averageFps = float(frameCount) / startupTime.ReadSec();
 
 	//// Amount of ms took the last update
-	lastFrameMs = lastFrameTime.ReadSec();
+	lastFrameMs = frameTime.ReadSec();
 
 	//// Amount of frames during the last second
 	framesOnLastUpdate = prevFrame;
@@ -240,9 +237,9 @@ void App::FinishUpdate()
 
 	app->win->SetTitle(title);
 
-	if ((frameDelay > 0) && (lastFrameMs < frameDelay))
+	if (lastFrameMs < frameDelay)
 	{
-		SDL_Delay(frameDelay - lastFrameMs);
+		SDL_Delay((uint32)frameDelay - lastFrameMs);
 	}
 
 
