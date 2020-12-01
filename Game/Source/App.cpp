@@ -28,7 +28,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(true);
 	audio = new Audio(true);
 	scene = new Scene(false);
-	pathfinding = new PathFinding;
+	pathfinding = new PathFinding(false);
 	map = new Map(false);
 	collisions = new Collisions(false);
 	player = new Player(false);

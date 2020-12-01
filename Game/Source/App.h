@@ -21,6 +21,7 @@ class Collisions;
 class Player;
 class ModuleFadeToBlack;
 class Intro;
+class PathFinding;
 class Debug;
 class App
 {

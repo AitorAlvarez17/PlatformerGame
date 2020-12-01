@@ -23,6 +23,7 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
+    <ClCompile Include="D:\CARPETANDRES\UPC\Segon UPC\Desarrollo\PLATAFORMER\L12b_Pathfinding_AStar_Pro.Handout\Game\Source\Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="Source\External\Optick\include\optick.h">
       <Filter>External\Optick</Filter>
     </ClInclude>
+    <ClInclude Include="D:\CARPETANDRES\UPC\Segon UPC\Desarrollo\PLATAFORMER\L12b_Pathfinding_AStar_Pro.Handout\Game\Source\Pathfinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
