@@ -17,6 +17,7 @@ struct Collider
 		FLOOR,
 		PLAYER,
 		DEATH,
+		COIN,
 		
 
 		MAX

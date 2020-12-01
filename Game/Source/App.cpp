@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
+#include "Coins.h"
 #include "Pathfinding.h"
 #include "ModuleFadeToBlack.h"
 #include "Debug.h"
@@ -32,6 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(false);
 	collisions = new Collisions(false);
 	player = new Player(false);
+	coin = new Coins(true);
 	fade = new ModuleFadeToBlack(true);
 	debug = new Debug(true);
 
@@ -47,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Render last to swap buffer
 
 	AddModule(player);
+	AddModule(coin);
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
@@ -102,10 +105,6 @@ bool App::Awake()
 
 		while (item != NULL && ret == true)
 		{
-			// L01: DONE 5: Add a new argument to the Awake method to receive a pointer to an xml node.
-			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
-			// that can be used to read all variables for that module.
-			// Send nullptr if the node does not exist in config.xml
 			ret = item->data->Awake(config.child(item->data->name.GetString()));
 			item = item->next;
 		}
@@ -357,8 +356,7 @@ const char* App::GetOrganization() const
 	return organization.GetString();
 }
 
-// L02: TODO 5: Create a method to actually load an xml file
-// then call all the modules to load themselves
+
 
 bool App::Load()
 {
@@ -437,8 +435,6 @@ bool App::Load()
 }
 
 
-
-// L02: TODO 7: Implement the xml save method for current state
 
 bool App::Save()
 {

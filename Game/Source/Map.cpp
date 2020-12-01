@@ -158,6 +158,7 @@ void Map::LoadColliders()
                 int u = layer->Get(x, y);
                 iPoint pos = MapToWorld(x, y);
                 SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight };
+                SDL_Rect coin = { pos.x + 4, pos.y + 4, 24, 24 };
 
                
                 if (u != 0)
@@ -169,6 +170,11 @@ void Map::LoadColliders()
                     if (layer->prop.GetProperty("Collisions", 1) == 2)
                     {
                         app->collisions->AddCollider(n, Collider::Type::DEATH, this);
+                    }
+                    if (layer->prop.GetProperty("Collisions", 1) == 3)
+                    {
+                        app->collisions->AddCollider(coin, Collider::Type::COIN, this);
+
                     }
                 }
                 
@@ -452,14 +458,10 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     int j = 0;
     for (pugi::xml_node& tilegid = layerData.first_child(); tilegid; tilegid = tilegid.next_sibling())
     {
-
-
         //Storage
         layer->gids[j] = tilegid.attribute("gid").as_int();
 
         //siguiente gid
-
-
         j++;
     }
 
@@ -483,7 +485,8 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
         ret = false;
     }
 
-    if (ret == true) {
+    if (ret == true) 
+    {
 
         ts->firstgid = tilesetNode.attribute("firstgid").as_int();
         ts->name = tilesetNode.attribute("name").as_string();
@@ -499,33 +502,16 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
 
     int i = 0;
     LOG("HI");
-    for (pugi::xml_node& TileId = mapFile.child("map").child("tileset").child("tile"); TileId && ret; TileId = TileId.next_sibling("tile")) {
-
-
-
+    for (pugi::xml_node& TileId = mapFile.child("map").child("tileset").child("tile"); TileId && ret; TileId = TileId.next_sibling("tile")) 
+    {
 
         ts->tId[i].id = TileId.attribute("id").as_int();
         LOG("ID: %d", ts->tId[i].id);
         i++;
 
-
-
     }
 
-    //for (pugi::xml_node& tile = layerData.first_child(); tile; tile = tile.next_sibling())
-    //{
 
-
-    //	//Storage
-    //	layer->gids[i] = tile.attribute("gid").as_int();
-
-    //	//siguiente gid
-
-
-    //	i++;
-    //}
-
-    /*data.maxTilesets++;*/
 
     return ret;
 }
