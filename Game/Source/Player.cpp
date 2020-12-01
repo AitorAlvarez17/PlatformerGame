@@ -235,6 +235,16 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			isDead = true;
 		}
+		/*if (a->type == Collider::PLAYER && b->type == Collider::TP)
+		{
+			tpFunction();
+		}*/
+		/*if (a->type == Collider::PLAYER && b->type == Collider::SAVER)
+		{
+			RequestSave();
+		}*/
+		//tp 
+		//autosave
 	}
 
 }
