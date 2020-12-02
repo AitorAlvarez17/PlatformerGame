@@ -9,6 +9,7 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "Coins.h"
+#include "CheckPoints.h"
 #include "Pathfinding.h"
 #include "ModuleFadeToBlack.h"
 #include "Debug.h"
@@ -29,6 +30,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(true);
 	audio = new Audio(true);
 	scene = new Scene(false);
+	checkpoints = new CheckPoints(true);
 	pathfinding = new PathFinding(false);
 	map = new Map(false);
 	collisions = new Collisions(false);
@@ -45,6 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(pathfinding);
+	AddModule(checkpoints);
 
 	// Render last to swap buffer
 
@@ -199,6 +202,7 @@ void App::FinishUpdate()
 
 	if (requestSave == true)
 	{
+		LOG("saving....");
 		Save();
 	}
 

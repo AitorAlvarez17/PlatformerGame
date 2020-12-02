@@ -20,6 +20,7 @@ class Map;
 class Collisions;
 class Player;
 class Coins;
+class CheckPoints;
 class ModuleFadeToBlack;
 class Intro;
 class PathFinding;
@@ -91,6 +92,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	CheckPoints* checkpoints;
 	PathFinding* pathfinding;
 	Collisions* collisions;
 	Player* player;
