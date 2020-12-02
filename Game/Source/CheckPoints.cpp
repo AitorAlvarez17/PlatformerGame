@@ -71,7 +71,7 @@ bool CheckPoints::Start()
 	collidertp2 = app->collisions->AddCollider(tpColl2, Collider::Type::TP, this);
 	collidertp3 = app->collisions->AddCollider(tpColl3, Collider::Type::TP, this);
 
-	texRect = { 480, 2846, 640, 480};
+	texRect = { 0, 0, 640, 480};
 
 
 	return ret;
@@ -154,11 +154,10 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 			switch (tpCounter)
 			{
 				case 1:
-					app->render->DrawTexture(tp1To2, position.x, position.y, &texRect);
-
+					app->render->DrawTexture(tp1To2, 640, 480, &texRect);
 					break;
 				case 2:
-					app->render->DrawTexture(tp1To3, position.x, position.y, &texRect);
+					app->render->DrawTexture(tp1To3, 640, 480, &texRect);
 					break;
 			}
 
