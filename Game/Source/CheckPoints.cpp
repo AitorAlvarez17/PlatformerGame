@@ -128,11 +128,27 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	}
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
+			
+			app->player->position.x = tp1.x;
+			app->player->position.y = tp1.y;
+			
+		}
+	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			
 			app->player->position.x = tp2.x;
 			app->player->position.y = tp2.y;
+			
 		}
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		
+		app->player->position.x = tp3.x;
+		app->player->position.y = tp3.y;
+		
+	}
 	}
 	
 
