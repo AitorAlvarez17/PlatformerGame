@@ -33,7 +33,7 @@ bool CheckPoints::Start()
 {
 	bool ret = true;
 	int pixels = 24;
-
+	
 
 	position.x = 2040;
 	position.y = 2654-200;
@@ -49,6 +49,17 @@ bool CheckPoints::Start()
 
 	LOG("Loading Coin textures");
 
+	tp1IDLE = app->tex->Load("Assets/maps/TP1/tp1_to0");
+	tp1To2 = app->tex->Load("Assets/maps/TP1/tp1_to2");
+	tp1To3 = app->tex->Load("Assets/maps/TP1/tp1_to3");
+
+	tp2IDLE = app->tex->Load("Assets/maps/TP2/tp2_to_0");
+	tp2To1 = app->tex->Load("Assets/maps/TP2/tp2_to_1");
+	tp2To3 = app->tex->Load("Assets/maps/TP2/tp2_to3");
+
+	tp3IDLE = app->tex->Load("Assets/maps/TP3/tp3_to_0");
+	tp3To1 = app->tex->Load("Assets/maps/TP3/tp3_to_1");
+	tp3To2 = app->tex->Load("Assets/maps/TP3/tp3_to2");
 
 	coll = { position.x, position.y, pixels ,pixels*10 };
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
@@ -59,6 +70,8 @@ bool CheckPoints::Start()
 	collidertp1 = app->collisions->AddCollider(tpColl, Collider::Type::TP, this);
 	collidertp2 = app->collisions->AddCollider(tpColl2, Collider::Type::TP, this);
 	collidertp3 = app->collisions->AddCollider(tpColl3, Collider::Type::TP, this);
+
+	texRect = { 480, 2846, 640, 480};
 
 
 	return ret;
@@ -72,30 +85,38 @@ bool CheckPoints::PreUpdate()
 
 bool CheckPoints::Update(float dt)
 {
-	/*if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		if (tpcounter == 1)
+		if (mapOpen == true)
 		{
-			app->player->position.x = tp1.x;
-			app->player->position.y = tp1.y;
+			mapOpen = false;
+			LOG("%d", mapOpen);
+		}
+		else 
+		{
+			mapOpen = true;
+			LOG("%d", mapOpen);
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
-		if (tpcounter == 2)
+		tpCounter--;
+		if (tpCounter == 0)
 		{
-			app->player->position.x = tp2.x;
-			app->player->position.y = tp2.y;
+			tpCounter = 2;
 		}
+		LOG("%d", tpCounter);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
-		if (tpcounter == 3)
+		tpCounter++;
+		if (tpCounter == 3)
 		{
-			app->player->position.x = tp3.x;
-			app->player->position.y = tp3.y;
+			tpCounter = 1;
 		}
-	}*/
+		LOG("%d", tpCounter);
+	}
+	
 	return true;
 }
 
@@ -128,27 +149,65 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	}
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		if (a->rect.x == tp1.x && mapOpen == true)
 		{
-			
-			app->player->position.x = tp1.x;
-			app->player->position.y = tp1.y;
-			
+			switch (tpCounter)
+			{
+				case 1:
+					app->render->DrawTexture(tp1To2, position.x, position.y, &texRect);
+
+					break;
+				case 2:
+					app->render->DrawTexture(tp1To3, position.x, position.y, &texRect);
+					break;
+			}
+
 		}
-	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		if (a->rect.x == tp2.x && mapOpen == true)
 		{
-			
-			app->player->position.x = tp2.x;
-			app->player->position.y = tp2.y;
-			
+			switch (tpCounter)
+			{
+			case 1:
+
+
+				break;
+			case 2:
+
+
+				break;
+			}
+
 		}
-	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
+		if (a->rect.x == tp3.x && mapOpen == true)
+		{
+			switch (tpCounter)
+			{
+			case 1:
+
+
+				break;
+			case 2:
+
+
+				break;
+			}
+
+		}
+		//app->player->position.x = tp1.x;
+		//app->player->position.y = tp1.y;
+			
 		
-		app->player->position.x = tp3.x;
-		app->player->position.y = tp3.y;
 		
-	}
+			
+		//app->player->position.x = tp2.x;
+		//app->player->position.y = tp2.y;
+			
+		
+		
+		//app->player->position.x = tp3.x;
+		//app->player->position.y = tp3.y;
+		
+		
 	}
 	
 
