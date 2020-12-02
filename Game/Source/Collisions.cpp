@@ -16,6 +16,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL_A][Collider::Type::FLOOR] = false;
 	matrix[Collider::Type::WALL_A][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::WALL_A][Collider::Type::COIN] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::TP] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::SAVEPOINT] = false;
 
 	matrix[Collider::Type::WALL_D][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::WALL_D] = false;
@@ -23,6 +25,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL_D][Collider::Type::FLOOR] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::COIN] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::TP] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::SAVEPOINT] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL_A] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL_D] = true;
@@ -30,6 +34,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::FLOOR] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::DEATH] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::COIN] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::TP] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::SAVEPOINT] = true;
 
 	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
@@ -37,6 +43,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::FLOOR][Collider::Type::FLOOR] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::COIN] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::TP] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::SAVEPOINT] = false;
 
 	matrix[Collider::Type::DEATH][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::WALL_D] = false;
@@ -44,6 +52,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::DEATH][Collider::Type::FLOOR] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::COIN] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::TP] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::SAVEPOINT] = false;
 
 	matrix[Collider::Type::COIN][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::COIN][Collider::Type::WALL_D] = false;
@@ -51,6 +61,26 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::COIN][Collider::Type::FLOOR] = false;
 	matrix[Collider::Type::COIN][Collider::Type::DEATH] = false;
 	matrix[Collider::Type::COIN][Collider::Type::COIN] = false;
+	matrix[Collider::Type::COIN][Collider::Type::TP] = false;
+	matrix[Collider::Type::COIN][Collider::Type::SAVEPOINT] = false;
+
+	matrix[Collider::Type::TP][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::TP][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::TP][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::TP][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::TP][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::TP][Collider::Type::COIN] = false;
+	matrix[Collider::Type::TP][Collider::Type::TP] = false;
+	matrix[Collider::Type::TP][Collider::Type::SAVEPOINT] = false;
+
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::COIN] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::TP] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::SAVEPOINT] = false;
 
 }
 
@@ -201,8 +231,17 @@ void Collisions::DebugDraw()
 		case Collider::Type::COIN:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 207, 64, alpha);
 			break;
+		case Collider::Type::TP:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			break;
+		case Collider::Type::SAVEPOINT:
+			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
+			break;
+
 
 		}
+
+
 	}
 
 }

@@ -18,6 +18,8 @@ struct Collider
 		PLAYER,
 		DEATH,
 		COIN,
+		TP,
+		SAVEPOINT,
 		
 
 		MAX

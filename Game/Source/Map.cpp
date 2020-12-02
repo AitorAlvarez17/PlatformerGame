@@ -159,6 +159,7 @@ void Map::LoadColliders()
                 iPoint pos = MapToWorld(x, y);
                 SDL_Rect n = { pos.x, pos.y, data.tileWidth, data.tileHeight };
                 SDL_Rect coin = { pos.x + 4, pos.y + 4, 24, 24 };
+                SDL_Rect savepoint = { pos.x + 4, pos.y + 4, 24, 24 };
 
                
                 if (u != 0)
@@ -174,6 +175,11 @@ void Map::LoadColliders()
                     if (layer->prop.GetProperty("Collisions", 1) == 3)
                     {
                         app->collisions->AddCollider(coin, Collider::Type::COIN, this);
+
+                    }
+                    if (layer->prop.GetProperty("Collisions", 1) == 4)
+                    {
+                        app->collisions->AddCollider(savepoint, Collider::Type::SAVEPOINT, this);
 
                     }
                 }

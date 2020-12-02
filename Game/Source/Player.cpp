@@ -235,7 +235,6 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			isDead = true;
 		}
-		
 	}
 
 }

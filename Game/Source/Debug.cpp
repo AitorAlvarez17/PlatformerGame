@@ -105,7 +105,11 @@ bool Debug::Update(float dt)
 	{
 		app->render->camera.x += 100;
 	}
-
+	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	{
+		LOG("%d", app->player->position.x);
+		LOG("%d", app->player->position.y);
+	}
 
 	
 	return ret;
