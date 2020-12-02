@@ -17,11 +17,11 @@ struct Collider
 		FLOOR,
 		PLAYER,
 		DEATH,
+		HEART,
 		COIN,
 		TP,
 		SAVEPOINT,
 		
-
 		MAX
 	};
 

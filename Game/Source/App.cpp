@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
+#include "ObjectManager.h"
 #include "Coins.h"
 #include "CheckPoints.h"
 #include "Pathfinding.h"
@@ -38,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	coin = new Coins(true);
 	fade = new ModuleFadeToBlack(true);
 	debug = new Debug(true);
+	oManager = new ObjectManager(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(pathfinding);
 	AddModule(checkpoints);
+	AddModule(oManager);
 
 	// Render last to swap buffer
 

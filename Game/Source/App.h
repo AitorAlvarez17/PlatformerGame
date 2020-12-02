@@ -25,6 +25,7 @@ class ModuleFadeToBlack;
 class Intro;
 class PathFinding;
 class Debug;
+class ObjectManager;
 
 class App
 {
@@ -100,6 +101,7 @@ public:
 	Intro* menu;
 	Debug* debug;
 	Coins* coin;
+	ObjectManager* oManager;
 
 	bool Load();
 	bool Save();
