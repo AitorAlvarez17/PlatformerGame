@@ -26,6 +26,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
+	SDL_Rect texRect;
 	SDL_Rect coll;
 	SDL_Rect tpColl;
 	SDL_Rect tpColl2;
@@ -53,8 +54,21 @@ private:
 	Collider* collidertp2;
 	Collider* collidertp3;
 
+	SDL_Texture* tp1IDLE;
+	SDL_Texture* tp1To2;
+	SDL_Texture* tp1To3;
+
+	SDL_Texture* tp2IDLE;
+	SDL_Texture* tp2To1;
+	SDL_Texture* tp2To3;
+
+	SDL_Texture* tp3IDLE;
+	SDL_Texture* tp3To1;
+	SDL_Texture* tp3To2;
+
 	bool push = false;
-	int tpcounter = 3;
+	bool mapOpen = true;
+	int tpCounter = 1;
 	const char* texturePath;
 
 
