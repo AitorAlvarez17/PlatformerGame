@@ -8,5 +8,5 @@
 	<scene />
 	<textures />
 	<window />
-	<player x="500" y="2846" jumpsRemaining="3" verticalVelocity="0" />
+	<player x="600" y="2846" jumpsRemaining="3" verticalVelocity="-1.5" />
 </saveState>
