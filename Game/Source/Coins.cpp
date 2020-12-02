@@ -14,9 +14,16 @@
 #include <math.h>
 
 
-Coins::Coins(bool startEnabled) : Module(startEnabled)
+Coins::Coins(/*int x, int y,*/bool startEnabled) : Module(startEnabled)
 {
-	name.create("Coins");
+	int pixels = 24;
+
+	position.x = 700;
+	position.y = 2825;
+
+	coll = { position.x, position.y, pixels ,pixels };
+	
+
 }
 
 bool Coins::Awake(pugi::xml_node& config)
@@ -32,11 +39,8 @@ bool Coins::Start()
 	int pixels = 24;
 
 
-	position.x = 700;
-	position.y = 2816;
 
-
-
+	collider = app->collisions->AddCollider(coll, Collider::Type::COIN, this);
 	LOG("Loading Coin textures");
 
 	texture = app->tex->Load("Assets/textures/coinAnim.png");

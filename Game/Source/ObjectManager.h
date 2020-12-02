@@ -8,15 +8,14 @@
 #define MAX_OBJECTS 100
 
 
-struct BallSpawnpoint
+struct ObjSpawnpoint
 {
 	//BALL_TYPE type = BALL_TYPE::NO_TYPE;
 	int x, y;
 	bool right = true;
 };
 
-class Ball;
-struct SDL_Texture;
+
 
 class ObjectManager : public Module
 {
@@ -58,9 +57,6 @@ public:
 	void HandleBallsDespawn();
 
 	//spawns new balls after destroyed ones
-	void DivideBalls();
-
-	void ExplodeAll();
 
 	//checks if all balls have been destroyed
 	bool checkRemainingBalls();
@@ -78,19 +74,21 @@ public:
 
 private:
 	// Spawns a new enemy using the data from the queue
-	void SpawnBall(const BallSpawnpoint& info);
+	void SpawnObj(const ObjSpawnpoint& info);
 
 
 
 private:
 	// A queue with all spawn points information
-	BallSpawnpoint spawnQueue[MAX_OBJECTS];
+	ObjSpawnpoint spawnQueue[MAX_OBJECTS];
 
 	// All spawned enemies in the scene
 
 
 	// The enemies sprite sheet
-	SDL_Texture* texture = nullptr;
+	SDL_Texture* coinTex = nullptr;
+	SDL_Texture* heartTex = nullptr;
+
 
 	// The audio fx for destroying an enemy
 	int ballDestroyedFx = 0;

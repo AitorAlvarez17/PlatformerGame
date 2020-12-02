@@ -20,7 +20,7 @@ private:
 
 public:
 
-	Coins(bool startEnabled);
+	Coins(/*int x, int y,*/bool startEnabled);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();

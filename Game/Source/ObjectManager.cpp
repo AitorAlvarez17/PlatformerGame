@@ -46,6 +46,9 @@ bool ObjectManager::Start()
 	//}
 	////texture = App->textures->Load("Assets/balls.png");
 	//ballDestroyedFx = App->audio->LoadFx("Assets/[FX]-Ballon pop.wav");
+	
+	coinTex = app->tex->Load("Assets/textures/coinAnim.png");
+	heartTex = app->tex->Load("Assets/textures/heartAnim.png");
 
 	return true;
 }
@@ -153,7 +156,7 @@ void ObjectManager::HandleBallsDespawn()
 	}
 }
 
-void ObjectManager::SpawnBall(const BallSpawnpoint& info)
+void ObjectManager::SpawnObj(const ObjSpawnpoint& info)
 {
 	// Find an empty slot in the enemies array
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
@@ -273,102 +276,7 @@ int ObjectManager::GetTilePosy(int y) {
 }
 
 
-void ObjectManager::DivideBalls()
-{
-	//This function divide and plays the explosion animation
-	//And also, the function Random, ads a drop when the ball explodes
-	for (uint i = 0; i < MAX_OBJECTS; ++i) {
-		//Big=1, Medium=2,Small=3,Tiny=4
 
-		/*if (Balls[i] != nullptr && Balls[i]->div == true && Balls[i]->type == BALL_TYPE::BIG) {
-
-			App->particles->bigExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0;
-
-			App->balls->AddBall(BALL_TYPE::MEDIUM, Balls[i]->position.x + Xoffset, Balls[i]->position.y + Yoffset, true);
-			App->balls->AddBall(BALL_TYPE::MEDIUM, Balls[i]->position.x - Xoffset, Balls[i]->position.y + Yoffset, false);
-
-			App->particles->AddParticle(App->particles->bigExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0, PARTICLE_TYPE::EXPLOSION);
-
-			App->interfaceElements->RandomDrop(Balls[i]->position.x, Balls[i]->position.y);
-			App->interfaceElements->AddDrop(App->interfaceElements->score400, Balls[i]->position.x, Balls[i]->position.y, DROP_TYPE::SCORE);
-
-			App->audio->PlayFx(ballDestroyedFx);
-
-			App->player->playerScore += 400;
-			ballsLeft--;
-
-			Balls[i]->div = false;
-			Balls[i]->SetToDelete();
-			break;
-		}
-
-		else if (Balls[i] != nullptr && Balls[i]->div == true && Balls[i]->type == BALL_TYPE::MEDIUM) {
-
-			App->particles->mediumExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0;
-
-			App->balls->AddBall(BALL_TYPE::SMALL, Balls[i]->position.x + Xoffset, Balls[i]->position.y + Yoffset, true);
-			App->balls->AddBall(BALL_TYPE::SMALL, Balls[i]->position.x - Xoffset, Balls[i]->position.y + Yoffset, false);
-
-			App->particles->AddParticle(App->particles->mediumExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0, PARTICLE_TYPE::EXPLOSION);
-
-			App->interfaceElements->RandomDrop(Balls[i]->position.x, Balls[i]->position.y);
-			App->interfaceElements->AddDrop(App->interfaceElements->score800, Balls[i]->position.x, Balls[i]->position.y, DROP_TYPE::SCORE);
-
-			App->audio->PlayFx(ballDestroyedFx);
-
-			App->player->playerScore += 800;
-			ballsLeft--;
-
-			Balls[i]->div = false;
-			Balls[i]->SetToDelete();
-			break;
-		}
-
-		else if (Balls[i] != nullptr && Balls[i]->div == true && Balls[i]->type == BALL_TYPE::SMALL) {
-
-			App->particles->smallExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0;
-
-			App->balls->AddBall(BALL_TYPE::TINY, Balls[i]->position.x + Xoffset, Balls[i]->position.y + Yoffset, true);
-			App->balls->AddBall(BALL_TYPE::TINY, Balls[i]->position.x - Xoffset, Balls[i]->position.y + Yoffset, false);
-
-			App->particles->AddParticle(App->particles->smallExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0, PARTICLE_TYPE::EXPLOSION);
-
-			App->interfaceElements->RandomDrop(Balls[i]->position.x, Balls[i]->position.y);
-			App->interfaceElements->AddDrop(App->interfaceElements->score1600, Balls[i]->position.x, Balls[i]->position.y, DROP_TYPE::SCORE);
-
-			App->audio->PlayFx(ballDestroyedFx);
-
-			App->player->playerScore += 800;
-			ballsLeft--;
-
-			Balls[i]->div = false;
-			Balls[i]->SetToDelete();
-			break;
-		}
-
-		else if (Balls[i] != nullptr && Balls[i]->div == true && Balls[i]->type == BALL_TYPE::TINY) {
-			App->particles->AddParticle(App->particles->smallExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0, PARTICLE_TYPE::EXPLOSION);
-
-			App->interfaceElements->RandomDrop(Balls[i]->position.x, Balls[i]->position.y);
-
-			App->particles->AddParticle(App->particles->smallExplosion, Balls[i]->position.x, Balls[i]->position.y, Collider::Type::NONE, 0, PARTICLE_TYPE::EXPLOSION);
-
-			App->audio->PlayFx(ballDestroyedFx);
-
-			App->player->playerScore += 1600;
-			ballsLeft--;
-
-			Balls[i]->div = false;
-			Balls[i]->SetToDelete();
-			break;
-		}
-
-		else if (Balls[i] != nullptr && Balls[i]->div == true && Balls[i]->type == BALL_TYPE::NO_TYPE) {
-			LOG("No type ball");
-		}*/
-
-	}
-}
 
 
 bool ObjectManager::checkRemainingBalls()
@@ -397,42 +305,3 @@ bool ObjectManager::checkRemainingBalls()
 	return true;
 }
 
-void ObjectManager::ExplodeAll()
-{
-	LOG("Balls exploded");
-	//This function divide and plays the explosion animation
-	//And also, the function Random, ads a drop when the ball explodes
-	for (uint i = 0; i < MAX_OBJECTS; ++i) {
-		//Big=1, Medium=2,Small=3,Tiny=4
-		if (coins[i] != nullptr)
-		{
-			
-
-			//if (Balls[i] != nullptr && Balls[i]->type == BALL_TYPE::BIG)
-			//{
-			//	Balls[i]->div = true;
-			//	App->balls->DivideBalls();
-
-			//}
-
-			//if (Balls[i] != nullptr && Balls[i]->type == BALL_TYPE::MEDIUM)
-			//{
-			//	Balls[i]->div = true;
-			//	App->balls->DivideBalls();
-
-			//}
-
-			///*if (Balls[i] != nullptr && Balls[i]->type == BALL_TYPE::SMALL)
-			//{
-			//	Balls[i]->div = true;
-			//	App->balls->DivideBalls();
-
-			//}*/
-
-
-
-		}
-
-
-	}
-}
