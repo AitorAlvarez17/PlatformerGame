@@ -49,17 +49,17 @@ bool CheckPoints::Start()
 
 	LOG("Loading Coin textures");
 
-	tp1IDLE = app->tex->Load("Assets/maps/TP1/tp1_to0");
-	tp1To2 = app->tex->Load("Assets/maps/TP1/tp1_to2");
-	tp1To3 = app->tex->Load("Assets/maps/TP1/tp1_to3");
+	tp1IDLE = app->tex->Load("Assets/maps/TP1/tp1_to0.png");
+	tp1To2 = app->tex->Load("Assets/maps/TP1/tp1_to2.png");
+	tp1To3 = app->tex->Load("Assets/maps/TP1/tp1_to3.png");
 
-	tp2IDLE = app->tex->Load("Assets/maps/TP2/tp2_to_0");
-	tp2To1 = app->tex->Load("Assets/maps/TP2/tp2_to_1");
-	tp2To3 = app->tex->Load("Assets/maps/TP2/tp2_to3");
+	tp2IDLE = app->tex->Load("Assets/maps/TP2/tp2_to0.png");
+	tp2To1 = app->tex->Load("Assets/maps/TP2/tp2_to1.png");
+	tp2To3 = app->tex->Load("Assets/maps/TP2/tp2_to3.png");
 
-	tp3IDLE = app->tex->Load("Assets/maps/TP3/tp3_to_0");
-	tp3To1 = app->tex->Load("Assets/maps/TP3/tp3_to_1");
-	tp3To2 = app->tex->Load("Assets/maps/TP3/tp3_to2");
+	tp3IDLE = app->tex->Load("Assets/maps/TP3/tp3_to_0.png");
+	tp3To1 = app->tex->Load("Assets/maps/TP3/tp3_to_1.png");
+	tp3To2 = app->tex->Load("Assets/maps/TP3/tp3_to_2.png");
 
 	coll = { position.x, position.y, pixels ,pixels*10 };
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
@@ -73,7 +73,7 @@ bool CheckPoints::Start()
 
 	texRect = { 0, 0, 640, 480};
 
-
+	
 	return ret;
 }
 
@@ -85,19 +85,10 @@ bool CheckPoints::PreUpdate()
 
 bool CheckPoints::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	/*if (onArea1 == false || onArea2 == false || onArea3 == false)
 	{
-		if (mapOpen == true)
-		{
-			mapOpen = false;
-			LOG("%d", mapOpen);
-		}
-		else 
-		{
-			mapOpen = true;
-			LOG("%d", mapOpen);
-		}
-	}
+		renderedOption = NULL;
+	}*/
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		tpCounter--;
@@ -122,7 +113,10 @@ bool CheckPoints::Update(float dt)
 
 bool CheckPoints::PostUpdate()
 {
-
+	if(mapOpen)
+	{
+		app->render->DrawTexture(renderedOption, -(app->render->camera.x) / 2, (-(app->render->camera.y) / 2)-58);
+	}
 	if (active == true)
 	{
 		
@@ -142,69 +136,133 @@ bool CheckPoints::PostUpdate()
 
 void CheckPoints::OnCollision(Collider* a, Collider* b) {
 
+	if (a->rect.x == tp1.x)
+	{
+		onArea1 = true;
+	}
+	else
+	{
+		onArea1 = false;
+	}
+	if (a->rect.x == tp2.x)
+	{
+		onArea2 = true;
+	}
+	else
+	{
+		onArea2 = false;
+	}
+	if (a->rect.x == tp3.x)
+	{
+		onArea3 = true;
+	}
+	else
+	{
+		onArea3 = false;
+	}
 
 	if (a->type == Collider::SAVEPOINT && b->type == Collider::PLAYER)
 	{
 		active = false;
 	}
+
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
-		if (a->rect.x == tp1.x && mapOpen == true)
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		{
+			if (mapOpen == true)
+			{
+				mapOpen = false;
+				LOG("%d", mapOpen);
+			}
+			else
+			{
+				mapOpen = true;
+				LOG("%d", mapOpen);
+			}
+		}
+		if (onArea1 && mapOpen == true)
 		{
 			switch (tpCounter)
 			{
 				case 1:
-					app->render->DrawTexture(tp1To2, 640, 480, &texRect);
+					renderedOption = tp1To2;
+					if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+					{
+						app->player->position.x = tp2.x;
+						app->player->position.y = tp2.y;
+
+						mapOpen = false;
+					}
 					break;
 				case 2:
-					app->render->DrawTexture(tp1To3, 640, 480, &texRect);
+					renderedOption = tp1To3;
+					if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+					{
+						app->player->position.x = tp3.x;
+						app->player->position.y = tp3.y;
+
+						mapOpen = false;
+					}
 					break;
 			}
 
 		}
-		if (a->rect.x == tp2.x && mapOpen == true)
+		if (onArea2 && mapOpen == true)
 		{
 			switch (tpCounter)
 			{
 			case 1:
+				renderedOption = tp2To1;
+				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					app->player->position.x = tp1.x;
+					app->player->position.y = tp1.y;
 
+					mapOpen = false;
+				}
 
 				break;
 			case 2:
+				renderedOption = tp2To3;
+				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					app->player->position.x = tp3.x;
+					app->player->position.y = tp3.y;
 
-
+					mapOpen = false;
+				}
 				break;
 			}
 
 		}
-		if (a->rect.x == tp3.x && mapOpen == true)
+		if (onArea3 && mapOpen == true)
 		{
 			switch (tpCounter)
 			{
 			case 1:
+				renderedOption = tp3To1;
+				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					app->player->position.x = tp1.x;
+					app->player->position.y = tp1.y;
 
-
+					mapOpen = false;
+				}
 				break;
 			case 2:
+				renderedOption = tp3To2;
+				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					app->player->position.x = tp2.x;
+					app->player->position.y = tp2.y;
 
-
+					mapOpen = false;
+				}
 				break;
 			}
 
 		}
-		//app->player->position.x = tp1.x;
-		//app->player->position.y = tp1.y;
-			
-		
-		
-			
-		//app->player->position.x = tp2.x;
-		//app->player->position.y = tp2.y;
-			
-		
-		
-		//app->player->position.x = tp3.x;
-		//app->player->position.y = tp3.y;
 		
 		
 	}

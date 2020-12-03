@@ -32,6 +32,7 @@ public:
 	SDL_Rect tpColl2;
 	SDL_Rect tpColl3;
 
+	
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
 
@@ -54,6 +55,8 @@ private:
 	Collider* collidertp2;
 	Collider* collidertp3;
 
+	SDL_Texture* renderedOption;
+
 	SDL_Texture* tp1IDLE;
 	SDL_Texture* tp1To2;
 	SDL_Texture* tp1To3;
@@ -66,8 +69,11 @@ private:
 	SDL_Texture* tp3To1;
 	SDL_Texture* tp3To2;
 
+	bool onArea1;
+	bool onArea2;
+	bool onArea3;
 	bool push = false;
-	bool mapOpen = true;
+	bool mapOpen = false;
 	int tpCounter = 1;
 	const char* texturePath;
 
