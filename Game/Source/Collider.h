@@ -21,6 +21,7 @@ struct Collider
 		COIN,
 		TP,
 		SAVEPOINT,
+		ENEMY,
 		
 		MAX
 	};
