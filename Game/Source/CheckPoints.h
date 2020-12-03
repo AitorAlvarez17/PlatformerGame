@@ -45,9 +45,11 @@ public:
 	bool active = true;
 	bool regulator = true;
 	bool onTp = true;
+	bool mapOpen = false;
 
 	int winWidth;
 	int winHeigh;
+
 
 private:
 
@@ -78,7 +80,6 @@ private:
 	bool onArea3;
 	bool outArea;
 	bool push = false;
-	bool mapOpen = false;
 	int tpCounter = 1;
 	const char* texturePath;
 

@@ -91,7 +91,7 @@ bool CheckPoints::Update(float dt)
 	CheckOut();
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		LOG("%d", outArea);
+		
 	}
 	/*if (onArea1 == false || onArea2 == false || onArea3 == false)
 	{
@@ -104,7 +104,7 @@ bool CheckPoints::Update(float dt)
 		{
 			tpCounter = 2;
 		}
-		LOG("%d", tpCounter);
+		//LOG("%d", tpCounter);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
@@ -113,7 +113,7 @@ bool CheckPoints::Update(float dt)
 		{
 			tpCounter = 1;
 		}
-		LOG("%d", tpCounter);
+		//LOG("%d", tpCounter);
 	}
 	
 	return true;
@@ -155,11 +155,11 @@ void CheckPoints::CheckOut()
 {
 	if (app->player->coll.x != tp1.x)
 	{
-		LOG("out");
+		//LOG("out");
 	}
 	else if (app->player->coll.x == tp1.x)
 	{
-		LOG("in");
+		//LOG("in");
 	}
 
 }
@@ -205,11 +205,13 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 		{
 			if (mapOpen == true)
 			{
+				LOG("%d", mapOpen);
 				mapOpen = false;
 				
 			}
 			else
 			{
+				LOG("%d", mapOpen);
 				mapOpen = true;
 				
 			}
