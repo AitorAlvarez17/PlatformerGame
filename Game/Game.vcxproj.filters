@@ -32,6 +32,7 @@
     <ClCompile Include="Source\Hearts.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Source\Hearts.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
