@@ -61,6 +61,9 @@ bool CheckPoints::Start()
 	tp3To1 = app->tex->Load("Assets/maps/TP3/tp3_to_1.png");
 	tp3To2 = app->tex->Load("Assets/maps/TP3/tp3_to_2.png");
 
+	OpenPhrase = app->tex->Load("Assets/maps/DialogueArt/OpenMenu.png");
+	TeleportPhrase = app->tex->Load("Assets/maps/DialogueArt/TeleportMenu.png");
+
 	coll = { position.x, position.y, pixels ,pixels*10 };
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
@@ -85,6 +88,11 @@ bool CheckPoints::PreUpdate()
 
 bool CheckPoints::Update(float dt)
 {
+	CheckOut();
+	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+	{
+		LOG("%d", outArea);
+	}
 	/*if (onArea1 == false || onArea2 == false || onArea3 == false)
 	{
 		renderedOption = NULL;
@@ -113,10 +121,21 @@ bool CheckPoints::Update(float dt)
 
 bool CheckPoints::PostUpdate()
 {
-	if(mapOpen)
+	//CheckOut(collidertp2);
+	//CheckOut(collidertp3);
+	if (onArea1 || onArea2 || onArea3)
 	{
-		app->render->DrawTexture(renderedOption, -(app->render->camera.x) / 2, (-(app->render->camera.y) / 2)-58);
+		app->render->DrawTexture(OpenPhrase, app->player->position.x-42, (app->player->position.y) - 35);
+		if (mapOpen)
+		{
+			int camaraPosx = -(app->render->camera.x) / 2;
+			int camaraPosy = (-(app->render->camera.y) / 2);
+			app->render->DrawTexture(renderedOption, camaraPosx, camaraPosy - 58);
+			app->render->DrawTexture(TeleportPhrase, camaraPosx + ((app->render->camera.w)/5), camaraPosy);
+			
+		}
 	}
+	
 	if (active == true)
 	{
 		
@@ -132,13 +151,25 @@ bool CheckPoints::PostUpdate()
 	return true;
 }
 
+void CheckPoints::CheckOut()
+{
+	if (app->player->coll.x != tp1.x)
+	{
+		LOG("out");
+	}
+	else if (app->player->coll.x == tp1.x)
+	{
+		LOG("in");
+	}
 
+}
 
 void CheckPoints::OnCollision(Collider* a, Collider* b) {
 
 	if (a->rect.x == tp1.x)
 	{
 		onArea1 = true;
+		outArea = false;
 	}
 	else
 	{
@@ -147,6 +178,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	if (a->rect.x == tp2.x)
 	{
 		onArea2 = true;
+		outArea = false;
 	}
 	else
 	{
@@ -155,6 +187,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	if (a->rect.x == tp3.x)
 	{
 		onArea3 = true;
+		outArea = false;
 	}
 	else
 	{
@@ -173,12 +206,12 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 			if (mapOpen == true)
 			{
 				mapOpen = false;
-				LOG("%d", mapOpen);
+				
 			}
 			else
 			{
 				mapOpen = true;
-				LOG("%d", mapOpen);
+				
 			}
 		}
 		if (onArea1 && mapOpen == true)
