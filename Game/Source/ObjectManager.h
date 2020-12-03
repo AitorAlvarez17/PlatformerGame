@@ -8,12 +8,23 @@
 #define MAX_OBJECTS 100
 
 
+enum ObjType
+{
+	NONE = -1,
+	COIN,
+	HEART,
+	WEAPON,
+
+	MAX
+};
+
+
 struct ObjSpawnpoint
 {
-	//BALL_TYPE type = BALL_TYPE::NO_TYPE;
 	int x, y;
-	bool right = true;
+	ObjType type;
 };
+
 
 
 
@@ -46,6 +57,7 @@ public:
 
 	int GetTilePosx(int x);
 	int GetTilePosy(int y);
+	bool AddObject(ObjType type, int x, int y);
 
 	// Add an enemy into the queue to be spawned later
 	/*bool AddBall(BALL_TYPE type, int x, int y, bool right);*/

@@ -9,6 +9,7 @@
 #include "SDL/include/SDL.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Coins.h"
 #include "Log.h"
 
 
@@ -23,29 +24,6 @@ ObjectManager::ObjectManager(bool startEnabled) : Module(startEnabled)
 
 bool ObjectManager::Start()
 {
-	//switch (App->scene->levelSelection) //depending on the level set cursos to its pertinent position
-	//{
-	//case(1):
-	//	texture = App->textures->Load("Assets/balls.png");
-	//	break;
-	//case(2):
-	//	texture = App->textures->Load("Assets/balls_blue.png");
-	//	break;
-	//case(3):
-	//	texture = App->textures->Load("Assets/balls_green.png");
-	//	break;
-	//case(4):
-	//	texture = App->textures->Load("Assets/balls.png");
-	//	break;
-	//case(5):
-	//	texture = App->textures->Load("Assets/balls_blue.png");
-	//	break;
-	//case(6):
-	//	texture = App->textures->Load("Assets/balls_green.png");
-	//	break;
-	//}
-	////texture = App->textures->Load("Assets/balls.png");
-	//ballDestroyedFx = App->audio->LoadFx("Assets/[FX]-Ballon pop.wav");
 	
 	coinTex = app->tex->Load("Assets/textures/coinAnim.png");
 	heartTex = app->tex->Load("Assets/textures/heartAnim.png");
@@ -72,15 +50,11 @@ bool ObjectManager::Update(float dt)
 {
 
 	HandleBallsSpawn();
-	/*TileColision();*/
 
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		/*TileColision();*/
-
-	/*	if (coins[i] != nullptr)
-			coins[i]->Update();*/
-
+		if (coins[i] != nullptr)
+			coins[i]->Update(dt);
 	}
 
 	HandleBallsDespawn();
@@ -92,11 +66,11 @@ bool ObjectManager::Update(float dt)
 bool ObjectManager::PostUpdate()
 {
 
-	/*for (uint i = 0; i < MAX_OBJECTS; ++i)
+	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
 		if (coins[i] != nullptr)
 			coins[i]->Draw();
-	}*/
+	}
 
 	return true;
 }
@@ -119,22 +93,43 @@ bool ObjectManager::CleanUp()
 	return true;
 }
 
+bool ObjectManager::AddObject(ObjType type, int x, int y)
+{
+	bool ret = false;
+
+	for (uint i = 0; i < MAX_OBJECTS; ++i)
+	{
+		if (spawnQueue[i].type == ObjType::NONE)
+		{
+			spawnQueue[i].type = type;
+			spawnQueue[i].x = x;
+			spawnQueue[i].y = y;
+
+			ret = true;
+			break;
+		}
+	}
+
+	return ret;
+}
+
+
 void ObjectManager::HandleBallsSpawn()
 {
 	// Iterate all the enemies queue
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		//if (spawnQueue[i].type != BALL_TYPE::NO_TYPE)
-		//{
-		//	// Spawn a new enemy if the screen has reached a spawn position
-		//	if (spawnQueue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
-		//	{
-		//		LOG("Spawning Ball at %d", spawnQueue[i].x * SCREEN_SIZE);
+		if (spawnQueue[i].type != ObjType::NONE)
+		{
+			// Spawn a new enemy if the screen has reached a spawn position
+			//if (spawnQueue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
+			//{
+			//	LOG("Spawning Ball at %d", spawnQueue[i].x * SCREEN_SIZE);
 
-		//		SpawnBall(spawnQueue[i]);
-		//		spawnQueue[i].type = BALL_TYPE::NO_TYPE; // Removing the newly spawned enemy from the queue
-		//	}
-		//}
+			//	SpawnBall(spawnQueue[i]);
+			//	spawnQueue[i].type = BALL_TYPE::NO_TYPE; // Removing the newly spawned enemy from the queue
+			//}
+		}
 	}
 }
 
