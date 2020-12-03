@@ -1,5 +1,5 @@
-#ifndef __COINS_H__
-#define __COINS_H__
+#ifndef __HEARTS_H__
+#define __HEARTS_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -10,7 +10,7 @@ struct Collider;
 struct SDL_Texture;
 
 
-class Coins : public Module
+class Hearts : public Module
 {
 private:
 	SDL_Texture* texture = nullptr;
@@ -20,7 +20,7 @@ private:
 
 public:
 
-	Coins(/*int x, int y,*/bool startEnabled);
+	Hearts(/*int x, int y,*/bool startEnabled);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
@@ -28,15 +28,14 @@ public:
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
 	void SetToDelete();
-	void Draw();
 	SDL_Rect coll;
 	SDL_Rect rect;
-	
+
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
 
-	Animation coinMovement;
+	Animation heartMovement;
 
 
 	Point<int> position;
@@ -60,4 +59,5 @@ private:
 
 
 #endif
+
 

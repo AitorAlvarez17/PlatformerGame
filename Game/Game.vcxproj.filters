@@ -29,6 +29,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\ObjectManager.cpp" />
+    <ClCompile Include="Source\Hearts.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -83,6 +86,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\ObjectManager.h" />
+    <ClInclude Include="Source\Hearts.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
