@@ -1,4 +1,4 @@
-#include "Coins.h"
+#include "Object.h"
 #include "Debug.h"
 #include "App.h"
 #include "Input.h"
@@ -14,7 +14,7 @@
 #include <math.h>
 
 
-Coins::Coins(/*int x, int y,*/bool startEnabled) : Module(startEnabled)
+Object::Object(/*int x, int y,*/bool startEnabled) : Module(startEnabled)
 {
 	int pixels = 24;
 
@@ -26,14 +26,14 @@ Coins::Coins(/*int x, int y,*/bool startEnabled) : Module(startEnabled)
 
 }
 
-bool Coins::Awake(pugi::xml_node& config)
+bool Object::Awake(pugi::xml_node& config)
 {
 	texturePath = config.child("texture").child_value();
 
 	return true;
 }
 
-bool Coins::Start()
+bool Object::Start()
 {
 	bool ret = true;
 	int pixels = 24;
@@ -72,7 +72,7 @@ bool Coins::Start()
 }
 
 
-bool Coins::PreUpdate()
+bool Object::PreUpdate()
 {
 	if (active == false)
 	{
@@ -81,19 +81,19 @@ bool Coins::PreUpdate()
 	return true;
 }
 
-bool Coins::Update(float dt)
+bool Object::Update(float dt)
 {
 	currentAnim->Update();
 	return true;
 }
 
-bool Coins::PostUpdate()
+bool Object::PostUpdate()
 {
 	
 	return true;
 }
 
-void Coins::Draw()
+void Object::Draw()
 {
 	rect = currentAnim->GetCurrentFrame();
 
@@ -106,7 +106,7 @@ void Coins::Draw()
 
 
 
-void Coins::OnCollision(Collider* a, Collider* b) {
+void Object::OnCollision(Collider* a, Collider* b) {
 
 
 	if (a->type == Collider::COIN && b->type == Collider::PLAYER)
@@ -118,14 +118,14 @@ void Coins::OnCollision(Collider* a, Collider* b) {
 
 }
 
-void Coins::SetToDelete()
+void Object::SetToDelete()
 {
 	pendingToDelete = true;
 	if (collider != nullptr)
 		collider->pendingToDelete = true;
 }
 
-bool Coins::Save(pugi::xml_node& savedGame)
+bool Object::Save(pugi::xml_node& savedGame)
 {
 
 
@@ -134,7 +134,7 @@ bool Coins::Save(pugi::xml_node& savedGame)
 	return true;
 }
 
-bool Coins::Load(pugi::xml_node& savedPlayer)
+bool Object::Load(pugi::xml_node& savedPlayer)
 {
 	
 	return true;
