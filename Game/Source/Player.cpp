@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "Window.h"
 #include "Render.h"
+#include "CheckPoints.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
 #include "Audio.h"
@@ -146,13 +147,12 @@ bool Player::Update(float dt)
 		app->player->UpdateLogic();
 
 	}
-
 	else
 	{
+		
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			position.x -= speed;
-		
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
@@ -166,8 +166,7 @@ bool Player::Update(float dt)
 		{
 			position.y -= speed;
 		}
-
-
+		
 	}
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
 	{
@@ -361,19 +360,25 @@ void Player::UpdateLogic()
 	}
 	case(RUNNING):
 	{
-
-		if (isGoingRight == true)
+		if (app->checkpoints->mapOpen == 0)
 		{
+			if (isGoingRight == true)
+			{
 
-			position.x += speed;
+				position.x += speed;
 
+			}
+			else
+			{
+
+				position.x -= speed;
+
+			}
 		}
-		else
-		{
+		
+		
 
-			position.x -= speed;
-
-		}
+		
 
 
 
