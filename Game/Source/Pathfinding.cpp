@@ -4,6 +4,7 @@
 #include "Defs.h"
 #include "Log.h"
 
+
 PathFinding::PathFinding(bool startEnabled) : Module(startEnabled), map(NULL), lastPath(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.create("pathfinding");
@@ -33,15 +34,15 @@ void PathFinding::SetMap(uint width, uint height, uchar* data)
 	this->height = height;
 
 	RELEASE_ARRAY(map);
-	map = new uchar[width*height];
-	memcpy(map, data, width*height);
+	map = new uchar[width * height];
+	memcpy(map, data, width * height);
 }
 
 // Utility: return true if pos is inside the map boundaries
 bool PathFinding::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
-			pos.y >= 0 && pos.y <= (int)height);
+		pos.y >= 0 && pos.y <= (int)height);
 }
 
 // Utility: returns true is the tile is walkable
@@ -54,8 +55,8 @@ bool PathFinding::IsWalkable(const iPoint& pos) const
 // Utility: return the walkability value of a tile
 uchar PathFinding::GetTileAt(const iPoint& pos) const
 {
-	if(CheckBoundaries(pos))
-		return map[(pos.y*width) + pos.x];
+	if (CheckBoundaries(pos))
+		return map[(pos.y * width) + pos.x];
 
 	return INVALID_WALK_CODE;
 }
@@ -72,9 +73,9 @@ const DynArray<iPoint>* PathFinding::GetLastPath() const
 const ListItem<PathNode>* PathList::Find(const iPoint& point) const
 {
 	ListItem<PathNode>* item = list.start;
-	while(item)
+	while (item)
 	{
-		if(item->data.pos == point)
+		if (item->data.pos == point)
 			return item;
 		item = item->next;
 	}
@@ -90,9 +91,9 @@ ListItem<PathNode>* PathList::GetNodeLowestScore() const
 	int min = 65535;
 
 	ListItem<PathNode>* item = list.end;
-	while(item)
+	while (item)
 	{
-		if(item->data.Score() < min)
+		if (item->data.Score() < min)
 		{
 			min = item->data.Score();
 			ret = item;
@@ -124,22 +125,22 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill) const
 
 	// north
 	cell.create(pos.x, pos.y + 1);
-	if(app->pathfinding->IsWalkable(cell))
+	if (app->pathfinding->IsWalkable(cell))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y - 1);
-	if(app->pathfinding->IsWalkable(cell))
+	if (app->pathfinding->IsWalkable(cell))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if(app->pathfinding->IsWalkable(cell))
+	if (app->pathfinding->IsWalkable(cell))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if(app->pathfinding->IsWalkable(cell))
+	if (app->pathfinding->IsWalkable(cell))
 		listToFill.list.Add(PathNode(-1, -1, cell, this));
 
 	return listToFill.list.count();
@@ -167,28 +168,94 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, int maxLength, int maxNodes)
 {
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
+	if (app->pathfinding->IsWalkable(origin) || app->pathfinding->IsWalkable(destination))return -1;
 
 	// L12b: TODO 2: Create two lists: open, close
+	PathList open;
+	PathList close;
 	// Add the origin tile to open
+	PathNode _origin(-1, -1, origin, NULL);/* = new PathNode(-1, -1, origin, NULL);*/
+	open.list.Add(_origin);
 	// Iterate while we have tile in the open list
+	int _nodes = 0;
+	while (open.list.count() > 0)
+	{
+		// L12b: TODO 3: Move the lowest score cell from open list to the closed list
+		ListItem<PathNode>* lowestScore = open.GetNodeLowestScore();
 
-	// L12b: TODO 3: Move the lowest score cell from open list to the closed list
-	
-	// L12b: TODO 4: If we just added the destination, we are done!
-	// Backtrack to create the final path
-	// Use the Pathnode::parent and Flip() the path when you are finish
+		if (lowestScore->data.g > maxLength)
+		{
+			open.list.del(lowestScore);
+			continue;
+		}
+		close.list.Add(lowestScore->data);
+		open.list.del(lowestScore);
 
-	// L12b: TODO 5: Fill a list of all adjancent nodes
+		// L12b: TODO 4: If we just added the destination, we are done!
+		// Backtrack to create the final path
+		// Use the Pathnode::parent and Flip() the path when you are finish
 
-	// L12b: TODO 6: Iterate adjancent nodes:
-	// ignore nodes in the closed list
-	// If it is NOT found, calculate its F and add it to the open list
-	// If it is already in the open list, check if it is a better path (compare G)
-	// If it is a better path, Update the parent
+		if (lowestScore->data.pos == destination)
+		{
+			lastPath.PushBack(close.list[close.list.count() - 1].pos);//-1 for placing it in front of the player.
+			PathNode _parent = *close.list[close.list.count() - 1].parent;
+			lastPath.PushBack(_parent.pos);
 
-	return -1;
+			while (_parent.pos != origin) 
+			{
+				_parent = *_parent.parent;
+				lastPath.PushBack(_parent.pos);
+			}
+			lastPath.Flip();
+			break;
+		}
+		_nodes++;
+		if (_nodes == maxNodes)break;
+
+		// L12b: TODO 5: Fill a list of all adjancent nodes
+		PathList adjacents;
+		close.list[close.list.count() - 1].FindWalkableAdjacents(adjacents);
+
+		//Da error de compilacion en la funcion de find en list.h el codigo de abajo ns porque
+		for (int i = 0; i < adjacents.list.count(); i++)
+		{
+			// ignore nodes in the closed list
+			/*if (close.list.find(adjacents.list[i]) != -1)
+			{
+				continue;
+			}
+
+			// If it is NOT found, calculate its F and add it to the open list
+			PathNode adjacentNode = adjacents.list[i];
+			adjacentNode.CalculateF(destination);
+
+			int index = open.list.find(adjacentNode);
+			if (index != -1)
+			{
+				// If it is already in the open list, check if it is a better path (compare G)
+				if (open.list[index].g > adjacentNode.g)
+				{
+					// If it is a better path, Update the parent
+					open.list[index].parent = adjacentNode.parent;
+					open.list[index].g = adjacentNode.g;
+				}
+			}
+			else
+			{
+				open.list.Add(adjacentNode);
+			}*/
+		}
+	}
+
+	if (lastPath.Count() == 0)
+	{
+		return -1;
+	}
+
+	return lastPath.Count();
+
 }
 
