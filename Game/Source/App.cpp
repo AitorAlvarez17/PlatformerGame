@@ -49,7 +49,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(pathfinding);
-	AddModule(checkpoints);
 	AddModule(oManager);
 
 	// Render last to swap buffer
@@ -59,6 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
+	AddModule(checkpoints);
 	AddModule(debug);
 	AddModule(render);
 
