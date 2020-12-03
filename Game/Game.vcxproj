@@ -94,6 +94,7 @@
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Hearts.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\External\Optick\include\optick.config.h" />
     <ClInclude Include="Source\External\Optick\include\optick.h" />
     <ClInclude Include="Source\Hearts.h" />
