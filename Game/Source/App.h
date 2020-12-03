@@ -19,6 +19,7 @@ class Scene;
 class Map;
 class Collisions;
 class Player;
+class Enemy;
 class Coins;
 class CheckPoints;
 class ModuleFadeToBlack;
@@ -97,6 +98,7 @@ public:
 	PathFinding* pathfinding;
 	Collisions* collisions;
 	Player* player;
+	Enemy* enemy;
 	ModuleFadeToBlack* fade;
 	Intro* menu;
 	Debug* debug;

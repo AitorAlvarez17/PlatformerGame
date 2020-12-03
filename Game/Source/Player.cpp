@@ -41,6 +41,7 @@ bool Player::Awake(pugi::xml_node& config)
 
 	return ret;
 }
+
 bool Player::Start()
 {
 	bool ret = true;
@@ -60,6 +61,7 @@ bool Player::Start()
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
+
 	coll = { position.x, position.y, pixels - 4,pixels + 2 };
 
 	//cambiar això
@@ -181,7 +183,6 @@ bool Player::PostUpdate()
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 
-
 	if (isGoingRight == true)
 	{
 		if (currentAnim == &runLeftAnim) { currentAnim = &runRightAnim; }
@@ -196,8 +197,6 @@ bool Player::PostUpdate()
 
 	return true;
 }
-
-
 
 void Player::OnCollision(Collider* a, Collider* b) {
 
@@ -243,7 +242,6 @@ void Player::OnCollision(Collider* a, Collider* b) {
 	}
 
 }
-
 
 void Player::UpdateState()
 {

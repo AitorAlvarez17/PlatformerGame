@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "ObjectManager.h"
 #include "Coins.h"
 #include "CheckPoints.h"
@@ -36,6 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(false);
 	collisions = new Collisions(false);
 	player = new Player(false);
+	enemy = new Enemy(false);
 	coin = new Coins(true);
 	fade = new ModuleFadeToBlack(true);
 	debug = new Debug(true);
@@ -54,6 +56,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Render last to swap buffer
 
 	AddModule(player);
+	AddModule(enemy);
 	AddModule(coin);
 	AddModule(collisions);
 	AddModule(map);
