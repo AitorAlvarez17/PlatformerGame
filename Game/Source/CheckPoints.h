@@ -26,6 +26,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
+	void CheckOut();
 	SDL_Rect texRect;
 	SDL_Rect coll;
 	SDL_Rect tpColl;
@@ -69,9 +70,13 @@ private:
 	SDL_Texture* tp3To1;
 	SDL_Texture* tp3To2;
 
+	SDL_Texture* OpenPhrase;
+	SDL_Texture* TeleportPhrase;
+
 	bool onArea1;
 	bool onArea2;
 	bool onArea3;
+	bool outArea;
 	bool push = false;
 	bool mapOpen = false;
 	int tpCounter = 1;
