@@ -9,7 +9,7 @@
 #include "SDL/include/SDL.h"
 #include "Scene.h"
 #include "Player.h"
-#include "Coins.h"
+#include "Object.h"
 #include "Log.h"
 
 
@@ -19,7 +19,7 @@
 ObjectManager::ObjectManager(bool startEnabled) : Module(startEnabled)
 {
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
-		coins[i] = nullptr;
+		objects[i] = nullptr;
 }
 
 bool ObjectManager::Start()
@@ -34,14 +34,14 @@ bool ObjectManager::Start()
 bool ObjectManager::PreUpdate()
 {
 	// Remove all enemies scheduled for deletion
-	/*for (uint i = 0; i < MAX_OBJECTS; ++i)
+	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		if (coins[i] != nullptr && coins[i]->pendingToDelete)
+		if (objects[i] != nullptr && objects[i]->pendingToDelete)
 		{
-			delete coins[i];
-			coins[i] = nullptr;
+			delete objects[i];
+			objects[i] = nullptr;
 		}
-	}*/
+	}
 
 	return true;
 }
@@ -53,8 +53,8 @@ bool ObjectManager::Update(float dt)
 
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		if (coins[i] != nullptr)
-			coins[i]->Update(dt);
+		if (objects[i] != nullptr)
+			objects[i]->Update(dt);
 	}
 
 	HandleBallsDespawn();
@@ -68,8 +68,8 @@ bool ObjectManager::PostUpdate()
 
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		if (coins[i] != nullptr)
-			coins[i]->Draw();
+		if (objects[i] != nullptr)
+			objects[i]->Draw();
 	}
 
 	return true;
@@ -82,10 +82,10 @@ bool ObjectManager::CleanUp()
 
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		if (coins[i] != nullptr)
+		if (objects[i] != nullptr)
 		{
-			delete coins[i];
-			coins[i] = nullptr;
+			delete objects[i];
+			objects[i] = nullptr;
 		}
 
 	}
@@ -138,7 +138,7 @@ void ObjectManager::HandleBallsDespawn()
 	// Iterate existing enemies
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		if (coins[i] != nullptr)
+		if (objects[i] != nullptr)
 		{
 			//// Delete the enemy when it has reached the end of the screen
 			//if (coins[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)
@@ -156,7 +156,7 @@ void ObjectManager::SpawnObj(const ObjSpawnpoint& info)
 	// Find an empty slot in the enemies array
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
-		if (coins[i] == nullptr)
+		if (objects[i] == nullptr)
 		{
 			//Needs the correspondant spawn for each type of ball
 			/*switch (info.type)

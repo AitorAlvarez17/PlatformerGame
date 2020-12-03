@@ -3,26 +3,16 @@
 
 #include "App.h"
 #include "Module.h"
-#include "Coins.h"
+#include "Object.h"
 
 #define MAX_OBJECTS 100
 
 
-enum ObjType
-{
-	NONE = -1,
-	COIN,
-	HEART,
-	WEAPON,
-
-	MAX
-};
-
 
 struct ObjSpawnpoint
 {
+	ObjType type = ObjType::NONE;
 	int x, y;
-	ObjType type;
 };
 
 
@@ -78,7 +68,7 @@ public:
 	int Yoffset = 0;
 
 
-	Coins* coins[MAX_OBJECTS] = { nullptr };
+	Object* objects[MAX_OBJECTS] = { nullptr };
 
 	uint ballsLeft = 15;
 
