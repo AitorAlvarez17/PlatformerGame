@@ -38,7 +38,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new Collisions(false);
 	player = new Player(false);
 	enemy = new Enemy(false);
-	object = new Object(true);
 	fade = new ModuleFadeToBlack(true);
 	debug = new Debug(true);
 	oManager = new ObjectManager(true);
@@ -57,7 +56,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(player);
 	AddModule(enemy);
-	AddModule(object);
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);

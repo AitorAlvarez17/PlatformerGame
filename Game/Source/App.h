@@ -20,7 +20,6 @@ class Map;
 class Collisions;
 class Player;
 class Enemy;
-class Object;
 class CheckPoints;
 class ModuleFadeToBlack;
 class Intro;
@@ -102,7 +101,6 @@ public:
 	ModuleFadeToBlack* fade;
 	Intro* menu;
 	Debug* debug;
-	Object* object;
 	ObjectManager* oManager;
 
 	bool Load();
