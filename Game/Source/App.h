@@ -95,13 +95,13 @@ public:
 	Scene* scene;
 	Map* map;
 	CheckPoints* checkpoints;
-	PathFinding* pathfinding;
 	Collisions* collisions;
 	Player* player;
 	ModuleUI* UI;
 	Enemy* enemy;
 	ModuleFadeToBlack* fade;
 	Intro* menu;
+	PathFinding* pathfinding;
 	Debug* debug;
 	ObjectManager* oManager;
 

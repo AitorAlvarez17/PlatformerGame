@@ -4,20 +4,17 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Point.h"
+#include "DynArray.h"
 
 struct Animation;
-//struct Collider;
+struct Collider;
 struct SDL_Texture;
-//enum EnemyState {
-//
-//	IDLE,
-//	RUNNING,
-//	JUMPING,
-//	ATTACK,
-//	DOUBLE_JUMPING,
-//	FALLING,
-//	DYING
-//};
+
+enum EnemyType {
+	GROUND,
+	FLYING,
+
+};
 
 class Enemy : public Module
 {
@@ -36,23 +33,31 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
+	void OnCollision(Collider* a, Collider* b);
 
-
+	//Transform
 	Point<int> position;
 
-	int speed = 3;
+	//Physics
+	int speed = 5;
 	float gravityForce = 3.0f;
 
-	bool isMoving = false;
+	//true = Right, false = left
+	bool isMoving= false;
+	bool isMovingRight = true;
 
 	Animation idleAnim;
 	Animation leftAnim;
 	//Animation rightAnim;
 
+	Collider* enemyCollider;
+	Collider* rightWall;
+	Collider* leftWall;
+
 private:
 
-	//const char path;
 
+	//bool canFly = false;
 
 
 };
