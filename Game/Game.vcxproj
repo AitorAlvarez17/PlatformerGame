@@ -90,11 +90,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\CheckPoints.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
-    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -111,11 +111,11 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\CheckPoints.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Object.h" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\Debug.h" />
-    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\External\Optick\include\optick.config.h" />
     <ClInclude Include="Source\External\Optick\include\optick.h" />
     <ClInclude Include="Source\Map.h" />
