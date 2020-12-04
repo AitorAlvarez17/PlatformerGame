@@ -5,6 +5,10 @@
 #include "Input.h"
 #include "Animation.h"
 #include "Textures.h"
+#include "PathFinding.h"
+#include "Player.h"
+#include "Map.h"
+
 #include "Window.h"
 #include "Render.h"
 #include "Collisions.h"
@@ -38,16 +42,26 @@ bool Enemy::Start()
 	texture = app->tex->Load("Assets/textures/Rock.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
-	leftAnim.loop =  true;
-	leftAnim.speed  = 0.2f;
-	
-	idleAnim.PushBack(SDL_Rect({ 0, 32, 32, 32 }));
+	leftAnim.loop = true;
+	leftAnim.speed = 0.5f;
+	//SDL_Rect animRect = { 0,0,32,32 };
 
-	leftAnim.PushBack(SDL_Rect({ 0,32,32,32 }));
-	leftAnim.PushBack(SDL_Rect({ 0,64,32,32 }));
-	leftAnim.PushBack(SDL_Rect({ 0,96,32,32 }));
-	leftAnim.PushBack(SDL_Rect({ 0,128,32,32 }));
-	leftAnim.PushBack(SDL_Rect({ 0,168,32,32 }));
+	idleAnim.PushBack(SDL_Rect({ 32, 0, 32, 32 }));
+
+	leftAnim.PushBack({ 0,0,32,32 });
+	leftAnim.PushBack({ 32,0,32,32 });
+	leftAnim.PushBack({ 64,0,32,32 });
+	leftAnim.PushBack({ 96,0,32,32 });
+	leftAnim.PushBack({ 128,0,32,32 });
+
+	//currentAnim = &leftAnim;
+
+	//Colliders
+	enemyCollider = app->collisions->AddCollider(SDL_Rect({ position.x,position.y,pixels,pixels }), Collider::Type::ENEMY, this);
+
+	leftWall = app->collisions->AddCollider(SDL_Rect({ position.x - 100,position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	rightWall = app->collisions->AddCollider(SDL_Rect({ position.x + 100,position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	
 
 	return true;
 }
@@ -62,17 +76,32 @@ bool Enemy::PreUpdate()
 
 bool Enemy::Update(float dt)
 {
-	if ((position.x - app->player->position.x) < 30)
+	//if (!isMoving && ((position.x - app->player->position.x) < 30))
+	//{
+	//	isMoving = true;
+	//}
+	//
+	if ((position.x - app->player->position.x) < 50) { isMoving = true; }
+	if (isMoving)
 	{
-		isMoving = true;
+		if (isMovingRight) {
+		
+			position.x += speed;
+			currentAnim = &leftAnim;
+
+		}
+		else
+		{
+			position.x -= speed;
+			currentAnim = &leftAnim;
+
+		}
+
+		enemyCollider->SetPos(position.x, position.y);
 	}
 	else { currentAnim = &idleAnim; }
-	if (isMoving) {
 
-		position.x -= speed;
-		currentAnim = &leftAnim;
-	}
-
+	currentAnim->Update();
 	return true;
 }
 
@@ -80,10 +109,30 @@ bool Enemy::PostUpdate()
 {
 	//SDL_Rect enemyRect = currentanim;
 	//app->render->DrawTexture(texture, position.x, position.y, &enemyRect);
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, &rect);
 
-		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
-	
 
 
 	return true;
 }
+void Enemy::OnCollision(Collider* a, Collider* b) {
+
+	if (app->debug->godMode == false)
+	{
+		if (a->type == Collider::ENEMY && b->type == Collider::ENEMYWALL)
+		{
+			
+			if (isMovingRight)
+			{
+				isMovingRight = false;
+			}
+			else
+			{
+				isMovingRight = true;
+			}
+		}
+	}
+
+}
+

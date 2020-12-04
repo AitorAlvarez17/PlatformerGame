@@ -34,12 +34,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio(true);
 	scene = new Scene(false);
 	checkpoints = new CheckPoints(true);
-	pathfinding = new PathFinding(false);
 	map = new Map(false);
 	collisions = new Collisions(false);
 	player = new Player(false);
 	enemy = new Enemy(false);
 	fade = new ModuleFadeToBlack(true);
+	pathfinding = new PathFinding(false);
 	debug = new Debug(true);
 	oManager = new ObjectManager(true);
 	UI = new ModuleUI(true);
@@ -51,7 +51,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
-	AddModule(pathfinding);
 	AddModule(oManager);
 
 	// Render last to swap buffer
@@ -63,8 +62,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fade);
 	AddModule(UI);
 	AddModule(checkpoints);
+	AddModule(pathfinding);
 	AddModule(debug);
 	AddModule(render);
+
 
 }
 

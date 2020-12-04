@@ -100,6 +100,29 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::TP] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::SAVEPOINT] = false;
 
+	matrix[Collider::Type::ENEMY][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMY][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::HEART] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::COIN] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::TP] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::SAVEPOINT] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::ENEMYWALL] = true;
+
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::HEART] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::COIN] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::TP] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::SAVEPOINT] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENEMY] = true;
+
+
 }
 
 // Called before render is available
@@ -258,6 +281,13 @@ void Collisions::DebugDraw()
 		case Collider::Type::SAVEPOINT:
 			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
 			break;
+		case Collider::Type::ENEMY:
+			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
+			break;
+		case Collider::Type::ENEMYWALL:
+			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
+			break;
+
 
 
 		}
