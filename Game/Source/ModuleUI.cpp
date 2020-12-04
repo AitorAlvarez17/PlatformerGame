@@ -51,19 +51,24 @@ bool ModuleUI::Start()
 
 bool ModuleUI::PreUpdate()
 {
-	//app->render->DrawTexture(healthTitle, app->player->position.x - 42, (app->player->position.y) - 35);
+	
 	return true;
 }
 
 bool ModuleUI::Update(float dt)
 {
-	app->render->DrawTexture(healthTitle, app->player->position.x - 42, (app->player->position.y) - 35);
+	
+	write = true;
 	return true;
 }
 
 bool ModuleUI::PostUpdate()
 {
+	
+	app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
+	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);
 
+	
 
 	return true;
 }
