@@ -88,6 +88,7 @@ bool CheckPoints::PreUpdate()
 
 bool CheckPoints::Update(float dt)
 {
+
 	CheckOut();
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{

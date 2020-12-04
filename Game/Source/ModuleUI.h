@@ -32,6 +32,7 @@ public:
 	bool onTp = true;
 	bool mapOpen = false;
 	bool onColl = false;
+	bool write = false;
 
 	int winWidth;
 	int winHeigh;
