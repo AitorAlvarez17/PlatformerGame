@@ -46,6 +46,7 @@ public:
 	bool regulator = true;
 	bool onTp = true;
 	bool mapOpen = false;
+	bool onColl = false;
 
 	int winWidth;
 	int winHeigh;
