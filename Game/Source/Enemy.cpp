@@ -23,152 +23,66 @@ Enemy::Enemy(bool startEnabled) : Module(startEnabled)
 
 bool Enemy::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Enemy");
-	bool ret = true;
 
-	texturePath = config.child("texture").child_value();
-
-	pugi::xml_node move = config.child("move");
-
-	speed = move.attribute("speed").as_int();
-
-	pugi::xml_node audio = config.child("audio");
-
-	//jumpFxPath = audio.attribute("jump").as_string();
-
-	return ret;
+	return true;
 }
 
 bool Enemy::Start()
 {
-	bool ret = true;
 	int pixels = 32;
 
-
 	position.x = 700;
-	position.y = 2816;
+	position.y = 2850;
 
-	winWidth = app->win->GetWidth();
-	winHeigh = app->win->GetHeight();
+	//load texture
+	texture = app->tex->Load("Assets/textures/Rock.png");
+	if (texture == nullptr)LOG("Invalid enemy Texture");
 
+	leftAnim.loop =  true;
+	leftAnim.speed  = 0.2f;
+	
+	idleAnim.PushBack(SDL_Rect({ 0, 32, 32, 32 }));
 
-	LOG("Loading Enemy textures");
+	leftAnim.PushBack(SDL_Rect({ 0,32,32,32 }));
+	leftAnim.PushBack(SDL_Rect({ 0,64,32,32 }));
+	leftAnim.PushBack(SDL_Rect({ 0,96,32,32 }));
+	leftAnim.PushBack(SDL_Rect({ 0,128,32,32 }));
+	leftAnim.PushBack(SDL_Rect({ 0,168,32,32 }));
 
-	texture = app->tex->Load("Assets/textures/FinnSprite.png");
-
-	if (texture == nullptr)
-		LOG("Couldn't load player texture");
-
-	coll = { position.x, position.y, pixels - 4,pixels + 2 };
-
-	//cambiar això
-	collider = app->collisions->AddCollider(coll, Collider::Type::ENEMY, this);
-
-	idleAnimR.loop = idleAnimL.loop = runRightAnim.loop = runLeftAnim.loop = true;
-	idleAnimR.speed = idleAnimL.speed = 0.2f;
-	runRightAnim.speed = runLeftAnim.speed = 0.3f;
-
-	if (push == false)
-	{
-		for (int i = 0; i < 27; i++)// 0 to 9
-		{
-			if (i >= 0 && i < 9)//RIGHT ANIM IDLE
-			{
-				idleAnimR.PushBack({ i * pixels,0,32,32 });
-
-			}
-			if (i >= 0 && i < 9)//LEFT ANIM IDLE
-			{
-				idleAnimL.PushBack({ (27 - i) * pixels + 5,32,32,32 });
-
-			}
-			if (i >= 9 && i < 15)// RIGHT
-			{
-				runRightAnim.PushBack({ i * pixels,0,32,32 });
-
-			}
-			if (i >= 9 && i < 15)// LEFT
-			{
-				runLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
-
-			}
-			if (i == 15) // JUMP R & L
-			{
-				jumpRightAnim.PushBack({ i * pixels,0,32,32 });
-				jumpLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
-
-			}
-			if (i >= 20 && i < 23) // DEAD RIGHT
-			{
-				deadAnimR.PushBack({ i * pixels,0,32,32 });
-
-			}
-			if (i >= 20 && i < 23) // DEAD RIGHT
-			{
-				deadAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
-
-			}
-			push = true;
-
-		}
-
-	}
-
-	//left
-	if (currentAnim == nullptr)
-	{
-		currentAnim = &idleAnimR;
-	}
-
-	return ret;
+	return true;
 }
+
 
 bool Enemy::PreUpdate()
 {
-	if (app->debug->godMode == false)
-	{
-	//	position.y -= vy;
-		//vy -= gravityForce * 0.5;
-		//app->player->UpdateState();
-	}
+
 
 	return true;
 }
 
 bool Enemy::Update(float dt)
 {
-	if (app->debug->godMode == false)
+	if ((position.x - app->player->position.x) < 30)
 	{
-
+		isMoving = true;
 	}
+	else { currentAnim = &idleAnim; }
+	if (isMoving) {
 
-	if (isMovingRight)
-	{
-		position.x += speed;
-	}
-	else
-	{
 		position.x -= speed;
+		currentAnim = &leftAnim;
 	}
 
-return true;
+	return true;
 }
 
 bool Enemy::PostUpdate()
 {
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	//SDL_Rect enemyRect = currentanim;
+	//app->render->DrawTexture(texture, position.x, position.y, &enemyRect);
 
-	// Recordatorio para optimizar codigo - No eliminar(Telmo)
-	if (isMovingRight == true)
-	{
-		if (currentAnim == &runLeftAnim) { currentAnim = &runRightAnim; }
-		app->render->DrawTexturePlayer(texture, position.x - 12, position.y - 30, &rect);
-	}
-	else
-	{
-		if (currentAnim == &runRightAnim) { currentAnim = &runLeftAnim; }
-		app->render->DrawTexturePlayer(texture, position.x - 24, position.y - 30, &rect);
-	}
+		app->render->DrawTexture(texture, position.x, position.y, &currentAnim->GetCurrentFrame());
+	
 
 
 	return true;

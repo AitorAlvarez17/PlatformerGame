@@ -6,7 +6,7 @@
 #include "Point.h"
 
 struct Animation;
-struct Collider;
+//struct Collider;
 struct SDL_Texture;
 //enum EnemyState {
 //
@@ -37,48 +37,22 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 
-	SDL_Rect coll;
-	SDL_Rect rect;
-
-	Animation idleAnimR;
-	Animation idleAnimL;
-
-	Animation runRightAnim;
-	Animation runLeftAnim;
-
-	Animation jumpRightAnim;
-	Animation jumpLeftAnim;
-
-	Animation fallRightAnim;
-	Animation fallLeftAnim;
-
-	Animation deadAnimR;
-	Animation deadAnimL;
-
 
 	Point<int> position;
 
-	bool active = true;
-	bool pendingToDelete = false;
-	bool isDead = false;
+	int speed = 3;
+	float gravityForce = 3.0f;
 
-	unsigned int speed = 7;
-	int winWidth;
-	int winHeigh;
+	bool isMoving = false;
+
+	Animation idleAnim;
+	Animation leftAnim;
+	//Animation rightAnim;
 
 private:
 
-	Collider* collider;
-	Collider* leftWall;
-	Collider* RightWall;
+	//const char path;
 
-	bool isMovingRight = true;
-
-	bool push = false;
-
-	const char* texturePath;
-
-	float gravityForce = 3.0f;
 
 
 };

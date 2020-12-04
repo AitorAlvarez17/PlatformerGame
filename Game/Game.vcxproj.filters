@@ -26,10 +26,10 @@
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\CheckPoints.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
-    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\Object.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -81,10 +81,10 @@
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\CheckPoints.h" />
     <ClInclude Include="Source\ObjectManager.h" />
-    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Object.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
