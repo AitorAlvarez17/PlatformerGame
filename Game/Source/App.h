@@ -12,6 +12,7 @@
 // Modules
 class Window;
 class Input;
+class ModuleUI;
 class Render;
 class Textures;
 class Audio;
@@ -97,6 +98,7 @@ public:
 	PathFinding* pathfinding;
 	Collisions* collisions;
 	Player* player;
+	ModuleUI* UI;
 	Enemy* enemy;
 	ModuleFadeToBlack* fade;
 	Intro* menu;

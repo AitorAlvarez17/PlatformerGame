@@ -14,6 +14,7 @@
 #include "CheckPoints.h"
 #include "Pathfinding.h"
 #include "ModuleFadeToBlack.h"
+#include "ModuleUI.h"
 #include "Debug.h"
 #include "Defs.h"
 #include "Log.h"
@@ -41,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new ModuleFadeToBlack(true);
 	debug = new Debug(true);
 	oManager = new ObjectManager(true);
+	UI = new ModuleUI(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -59,6 +61,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
+	AddModule(UI);
 	AddModule(checkpoints);
 	AddModule(debug);
 	AddModule(render);
