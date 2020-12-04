@@ -236,7 +236,20 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		}
 		if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
 		{
-			isDead = true;
+			if (lifes > 0)
+			{
+				position.x = 600;
+				position.y = 2830;
+				this->lifes--;
+			}
+			if (lifes <= 0)
+			{
+				isDead = true;
+			}
+		}
+		if (a->type == Collider::PLAYER && b->type == Collider::HEART)
+		{
+			lifes++;
 		}
 	}
 
