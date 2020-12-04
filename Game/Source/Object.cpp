@@ -92,10 +92,6 @@ bool Object::Start()
 
 bool Object::PreUpdate()
 {
-	if (active == false)
-	{
-		SetToDelete();
-	}
 	return true;
 }
 
@@ -129,10 +125,22 @@ void Object::OnCollision(Collider* a, Collider* b) {
 
 	if (a->type == Collider::COIN && b->type == Collider::PLAYER)
 	{
-		active = false;
+		SetToDelete();
+	}
+	if (a->type == Collider::PLAYER && b->type == Collider::COIN)
+	{
+		SetToDelete();
 	}
 
-	
+
+	if (a->type == Collider::HEART && b->type == Collider::PLAYER)
+	{
+		SetToDelete();
+	}
+	if (a->type == Collider::PLAYER && b->type == Collider::HEART)
+	{
+		SetToDelete();
+	}
 
 }
 

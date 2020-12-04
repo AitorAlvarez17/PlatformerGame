@@ -71,6 +71,7 @@ public:
 	int jumps = 2;
 	bool lvl1 = false;
 	bool isDead = false;
+	int lifes = 3;
 
 	int winWidth;
 	int winHeigh;
