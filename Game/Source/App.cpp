@@ -217,7 +217,7 @@ void App::FinishUpdate()
 	if (lastFrameTime.Read() > 1000)
 	{
 		lastFrameTime.Start();
-		prevFrame = lastFrame;
+		prevFrame = lastFrame; //last second frame count
 		lastFrame = 0;
 	}
 
@@ -234,7 +234,7 @@ void App::FinishUpdate()
 	averageFps = float(frameCount) / startupTime.ReadSec();
 
 	//// Amount of ms took the last update
-	lastFrameMs = frameTime.ReadSec();
+	lastFrameMs = frameTime.Read(); //last second frame count
 
 	//// Amount of frames during the last second
 	framesOnLastUpdate = prevFrame;
