@@ -1,4 +1,5 @@
 #include "App.h"
+#include "Animation.h"
 #include "ObjectManager.h"
 #include "Render.h"
 #include "Textures.h"
@@ -122,13 +123,10 @@ void ObjectManager::HandleBallsSpawn()
 		if (spawnQueue[i].type != ObjType::NONE)
 		{
 			// Spawn a new enemy if the screen has reached a spawn position
-			//if (spawnQueue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
-			//{
-			//	LOG("Spawning Ball at %d", spawnQueue[i].x * SCREEN_SIZE);
+			LOG("Spawning object at %d", spawnQueue[i].x);
 
-			//	SpawnBall(spawnQueue[i]);
-			//	spawnQueue[i].type = BALL_TYPE::NO_TYPE; // Removing the newly spawned enemy from the queue
-			//}
+			SpawnObj(spawnQueue[i]);
+			spawnQueue[i].type = ObjType::NONE; // Removing the newly spawned enemy from the queue
 		}
 	}
 }
@@ -140,13 +138,10 @@ void ObjectManager::HandleBallsDespawn()
 	{
 		if (objects[i] != nullptr)
 		{
-			//// Delete the enemy when it has reached the end of the screen
-			//if (coins[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)
-			//{
-			//	LOG("DeSpawning enemy at %d", coins[i]->position.x * SCREEN_SIZE);
-
-			//	coins[i]->SetToDelete();
-			//}
+			if (active == false)
+			{
+				objects[i]->SetToDelete();
+			}
 		}
 	}
 }
@@ -158,36 +153,23 @@ void ObjectManager::SpawnObj(const ObjSpawnpoint& info)
 	{
 		if (objects[i] == nullptr)
 		{
-			//Needs the correspondant spawn for each type of ball
-			/*switch (info.type)
+
+			switch (info.type)
 			{
-			case BALL_TYPE::BIG:
-				coins[i] = new Ball(info.x, info.y, BALL_TYPE::BIG);
-				if (info.right == false)
-					Balls[i]->Ball_vx *= -1;
+			case ObjType::COIN:
+				objects[i] = new Object(info.x, info.y, ObjType::COIN,true);
+				objects[i]->Start();
 				break;
-			case BALL_TYPE::MEDIUM:
-				Balls[i] = new Ball(info.x, info.y, BALL_TYPE::MEDIUM);
-				if (info.right == false)
-					Balls[i]->Ball_vx *= -1;
+			case ObjType::HEART:
+				objects[i] = new Object(info.x, info.y, ObjType::HEART, true);
+				objects[i]->Start();
 				break;
 
-			case BALL_TYPE::SMALL:
-				Balls[i] = new Ball(info.x, info.y, BALL_TYPE::SMALL);
-				if (info.right == false)
-					Balls[i]->Ball_vx *= -1;
-				break;
-
-			case BALL_TYPE::TINY:
-				Balls[i] = new Ball(info.x, info.y, BALL_TYPE::TINY);
-				if (info.right == false)
-					Balls[i]->Ball_vx *= -1;
+			default:
 				break;
 			}
-
-			Balls[i]->texture = texture;
-			Balls[i]->destroyedFx = ballDestroyedFx;
-			break;*/
+			
+			break;
 		}
 	}
 }

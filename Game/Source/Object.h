@@ -24,14 +24,14 @@ enum class ObjType
 
 class Object : public Module
 {
-private:
+public:
 	SDL_Texture* objText = nullptr;
 
 	Animation* currAnim = nullptr;
 
 
 
-public:
+
 
 	Object(int x, int y, ObjType type,bool startEnabled);
 	bool Awake(pugi::xml_node&);
@@ -62,7 +62,7 @@ public:
 	int winHeigh;
 	ObjType type;
 
-private:
+
 
 	Collider* collider;
 
