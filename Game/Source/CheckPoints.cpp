@@ -82,7 +82,7 @@ bool CheckPoints::Start()
 
 bool CheckPoints::PreUpdate()
 {
-
+	onColl = false;
 	return true;
 }
 
@@ -121,20 +121,22 @@ bool CheckPoints::Update(float dt)
 
 bool CheckPoints::PostUpdate()
 {
-	//CheckOut(collidertp2);
-	//CheckOut(collidertp3);
-	if (onArea1 || onArea2 || onArea3)
+	if (onColl == true)
 	{
-		app->render->DrawTexture(OpenPhrase, app->player->position.x-42, (app->player->position.y) - 35);
-		if (mapOpen)
+		if (onArea1 || onArea2 || onArea3)
 		{
-			int camaraPosx = -(app->render->camera.x) / 2;
-			int camaraPosy = (-(app->render->camera.y) / 2);
-			app->render->DrawTexture(renderedOption, camaraPosx, camaraPosy - 58);
-			app->render->DrawTexture(TeleportPhrase, camaraPosx + ((app->render->camera.w)/5), camaraPosy);
+			app->render->DrawTexture(OpenPhrase, app->player->position.x-42, (app->player->position.y) - 35);
+			if (mapOpen)
+			{
+				int camaraPosx = -(app->render->camera.x) / 2;
+				int camaraPosy = (-(app->render->camera.y) / 2);
+				app->render->DrawTexture(renderedOption, camaraPosx, camaraPosy - 58);
+				app->render->DrawTexture(TeleportPhrase, camaraPosx + ((app->render->camera.w)/5), camaraPosy);
 			
+			}
 		}
 	}
+	
 	
 	if (active == true)
 	{
@@ -201,6 +203,8 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
+		onColl = true;
+		app->render->DrawTexture(OpenPhrase, app->player->position.x - 42, (app->player->position.y) - 35);
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
 			if (mapOpen == true)
