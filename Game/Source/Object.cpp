@@ -49,6 +49,8 @@ bool Object::Start()
 		objMov.loop = true;
 		objMov.speed = 0.4f;
 
+		if (objText == nullptr)
+			LOG("Couldn't load coin texture");
 
 		objMov.PushBack({ 0,0,24,24 });
 		objMov.PushBack({ 24,0,24,24 });
@@ -66,8 +68,8 @@ bool Object::Start()
 
 		collider = app->collisions->AddCollider(coll, Collider::Type::HEART, this);
 
-		if (objText == nullptr || objText == nullptr)
-			LOG("Couldn't load player texture");
+		if (objText == nullptr )
+			LOG("Couldn't load heart texture");
 
 		objMov.loop = true;
 		objMov.speed = 0.4f;

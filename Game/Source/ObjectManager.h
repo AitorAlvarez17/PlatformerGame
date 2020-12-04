@@ -4,6 +4,8 @@
 #include "App.h"
 #include "Module.h"
 #include "Object.h"
+#include "Animation.h"
+
 
 #define MAX_OBJECTS 100
 
@@ -74,13 +76,14 @@ public:
 
 	bool ballsStop = false;
 
-private:
-	// Spawns a new enemy using the data from the queue
 	void SpawnObj(const ObjSpawnpoint& info);
 
 
+	// Spawns a new enemy using the data from the queue
+	
 
-private:
+
+
 	// A queue with all spawn points information
 	ObjSpawnpoint spawnQueue[MAX_OBJECTS];
 

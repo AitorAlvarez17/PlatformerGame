@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Defs.h"
 #include "Log.h"
+#include "ObjectManager.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -41,6 +42,8 @@ bool Scene::Start()
 	bgTexture = app->tex->Load("Assets/maps/MenuF.png");//por esto ramon descuenta !!!!!
 	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->oManager->AddObject(ObjType::HEART, 750, 2830);
+	app->oManager->AddObject(ObjType::COIN, 780, 2830);
 
 
 	
