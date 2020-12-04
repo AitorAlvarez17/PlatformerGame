@@ -25,14 +25,15 @@ enum class ObjType
 class Object : public Module
 {
 private:
-	SDL_Texture* texture = nullptr;
+	SDL_Texture* objText = nullptr;
 
-	Animation* currentAnim = nullptr;
+	Animation* currAnim = nullptr;
+
 
 
 public:
 
-	Object(/*int x, int y,*/bool startEnabled);
+	Object(int x, int y, ObjType type,bool startEnabled);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
@@ -42,13 +43,14 @@ public:
 	void SetToDelete();
 	void Draw();
 	SDL_Rect coll;
-	SDL_Rect rect;
+	SDL_Rect objRect;
 	
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
 
-	Animation coinMovement;
+	Animation objMov;
+
 
 
 	Point<int> position;
@@ -58,6 +60,7 @@ public:
 
 	int winWidth;
 	int winHeigh;
+	ObjType type;
 
 private:
 
