@@ -38,7 +38,7 @@ bool Scene::Start()
 	
 	//pushbacks for anims
 
-	app->map->Load("GAME.tmx");
+	//app->map->Load("level1.tmx");
 	bgTexture = app->tex->Load("Assets/maps/MenuF.png");//por esto ramon descuenta !!!!!
 	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -62,22 +62,23 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	// L02: TODO 3: Request Load / Save when pressing L/S
-	/*if (gameplayState == PLAYING)
+	
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		{ 
-			//app->LoadGameRequest();
-		}
-		if (app->input->GetKey(SDL_SCANCODE_F5 == KEY_DOWN)
-		{ 
-			//app->SaveGameRequest();
-		}
-	}*/
-	
+		//app->ui->currentLevel = 1;
+		LoadLevel("level1.tmx");
+	}
 
-	
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		//app->ui->currentLevel = 2;
+		LoadLevel("Level2.tmx");
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		LoadLevel(currentLevel);
+	}
 
 	//Draw Map
 	
@@ -233,4 +234,37 @@ void Scene::ChangeGameplayState(GameplayState newState)
 		app->render->camera.y = 0;
 		break;
 	}
+
+
+}
+
+bool Scene::Load(pugi::xml_node& savedGame)
+{
+
+	FadeToNewState(PLAYING);
+	LoadLevel(savedGame.attribute("currentLevel").as_string("level1.tmx"));
+
+	return true;
+}
+
+bool Scene::Save(pugi::xml_node& savedGame)
+{
+
+	pugi::xml_attribute lvl = savedGame.append_attribute("currentLevel");
+	lvl.set_value(currentLevel.GetString());
+
+	return true;
+}
+
+void Scene::LoadLevel(SString name)
+{
+
+	//app->player->unlockedChekpoint1 = false;
+	//app->player->unlockedChekpoint2 = false;
+	app->player->isDead = false;
+	currentLevel = name;
+	app->map->Load(name.GetString());
+	app->player->Reload();
+
+
 }

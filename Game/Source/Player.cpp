@@ -557,4 +557,19 @@ bool Player::Load(pugi::xml_node& savedPlayer)
 	return true;
 }
 
+void Player::Reload()
+{
+	playerState = PlayerState::IDLE;
+	//verticalVelocity = 0.0f;
+	/*if (health == 0)
+	{
+		health = 3;
+		app->ui->score = 0;
+	}*/
+	/*initialPosition = position;
+	respawnPosition = initialPosition;
+	gravityOn = false;
+	initialWaitCount = 0.0f;*/
+}
+
 
