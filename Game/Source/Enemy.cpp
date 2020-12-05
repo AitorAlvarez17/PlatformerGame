@@ -27,8 +27,20 @@ Enemy::Enemy(bool startEnabled) : Module(startEnabled)
 
 bool Enemy::Awake(pugi::xml_node& config)
 {
+	LOG("Loading player config");
+	bool ret = true;
 
-	return true;
+	texturePath = config.child("texture").child_value();
+
+
+	pugi::xml_node move = config.child("move");
+
+
+	health = move.attribute("health").as_float();
+	speed = move.attribute("speed").as_float();
+	
+
+	return ret;
 }
 
 bool Enemy::Start()
@@ -82,7 +94,7 @@ bool Enemy::Update(float dt)
 {
 	//Proccess
 	ChangeState();
-	
+
 
 	return true;
 }
@@ -107,16 +119,16 @@ bool Enemy::PostUpdate()
 
 void Enemy::OnCollision(Collider* a, Collider* b) {
 
-	
+
 	if (app->debug->godMode == false)
 	{
 		if (a->type == Collider::ENEMY && b->type == Collider::ENEMYWALL)
 		{
-			
+
 			int compX = a->rect.x - b->rect.x;
 
 
-			if (compX > 0) 
+			if (compX > 0)
 			{
 				position.x += b->rect.x + b->rect.w - a->rect.x;
 				speed = speed * -1;
@@ -131,7 +143,7 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 
 
 		}
-		
+
 	}
 
 }
@@ -151,8 +163,8 @@ void Enemy::UpdateMovement()
 
 		case (ENEMYWALKING):
 		{
+			position.x += speed;
 
-				position.x += speed;
 			return;
 		}
 
@@ -177,10 +189,12 @@ void Enemy::UpdateAnim()
 	}
 	case (ENEMYWALKING):
 	{
-		leftAnim.speed = rightAnim.speed = 0.1f;
+		leftAnim.speed = rightAnim.speed = 0.3f;
 
-		if (isWalkingRight) {
+		if (speed > 0)
+		{
 			currentAnim = &rightAnim;
+
 
 		}
 		else
@@ -218,23 +232,23 @@ void Enemy::ChangeState()
 	}
 }
 
-//bool Enemy::Save(pugi::xml_node& savedGame)
-//{
-//
-//	savedGame.append_attribute("x") = position.x;
-//	savedGame.append_attribute("y") = position.y;
-//
-//
-//
-//	return true;
-//}
-//
-//bool Enemy::Load(pugi::xml_node& savedPlayer)
-//{
-//	position.x = savedPlayer.attribute("x").as_int();
-//	position.y = savedPlayer.attribute("y").as_int();
-//	jumps = savedPlayer.attribute("jumpsRemaining").as_int();
-//	vy = savedPlayer.attribute("verticalVelocity").as_int();
-//
-//	return true;
-//}
+bool Enemy::Save(pugi::xml_node& savedGame)
+{
+
+	savedGame.append_attribute("x") = position.x;
+	savedGame.append_attribute("y") = position.y;
+
+
+
+	return true;
+}
+
+bool Enemy::Load(pugi::xml_node& savedPlayer)
+{
+	position.x = savedPlayer.attribute("x").as_int();
+	position.y = savedPlayer.attribute("y").as_int();
+	health = savedPlayer.attribute("jumpsRemaining").as_float();
+	
+
+	return true;
+}
