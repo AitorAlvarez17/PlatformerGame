@@ -35,19 +35,17 @@ bool Enemy::Start()
 {
 	int pixels = 32;
 
+	//Enemy Spawn Position
 	position.x = 650;
 	position.y = 2816;
 
-	//load texture
+	//Load Texture
 	texture = app->tex->Load("Assets/textures/Warrior.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
+	//Animations
 	leftAnim.loop = true;
 	leftAnim.speed = rightAnim.speed = 0.1f;
-	//SDL_Rect animRect = { 0,0,32,32 };
-
-	//idleAnim.PushBack(SDL_Rect({ 32, 0, 32, 32 }));
-	currentAnim = &leftAnim;
 
 	leftAnim.PushBack({ 0,32,32,32 });
 	leftAnim.PushBack({ 32,32,32,32 });
@@ -63,18 +61,14 @@ bool Enemy::Start()
 	rightAnim.PushBack({ 128,0,32,32 });
 	rightAnim.PushBack({ 160,0,32,32 });
 
-	//currentAnim = &leftAnim;
-
 	//Colliders
 	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x,(int)position.y,pixels,pixels }), Collider::Type::ENEMY, this);
-
 	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
-	rightWall = app->collisions->AddCollider(SDL_Rect({(int) position.x + 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
-	
+	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+
 
 	return true;
 }
-
 
 bool Enemy::PreUpdate()
 {
@@ -95,26 +89,27 @@ bool Enemy::Update(float dt)
 
 bool Enemy::PostUpdate()
 {
-	//SDL_Rect enemyRect = currentanim;
-	//app->render->DrawTexture(texture, position.x, position.y, &enemyRect);
+	//Update Animation
 	currentAnim->Update();
 
+	//Draw 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexturePlayer(texture, (int)position.x,(int) position.y, &rect);
+	app->render->DrawTexturePlayer(texture, (int)position.x, (int)position.y, &rect);
 
+	//Update Colliders Position
 	enemyCollider->SetPos((int)position.x, (int)position.y);
-
 
 
 	return true;
 }
+
 void Enemy::OnCollision(Collider* a, Collider* b) {
 
 	if (app->debug->godMode == false)
 	{
 		if (a->type == Collider::ENEMY && b->type == Collider::ENEMYWALL)
 		{
-			
+
 			if (isWalkingRight)
 			{
 				isWalkingRight = false;
