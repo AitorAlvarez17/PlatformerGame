@@ -42,9 +42,10 @@ public:
 	void OnCollision(Collider* a, Collider* b);
 	SDL_Rect coll;
 	void UpdateState();
-	void UpdateLogic();
+	void UpdateLogic(float dt);
 	void ChangeState(PlayerState previous, PlayerState next);
 	void Reload();
+
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
@@ -65,16 +66,10 @@ public:
 	Animation deadAnimL;
 	
 
-<<<<<<< HEAD
 	fPoint position;
 
 	float vy = 0.0f;
 	float speed = 0.0f;
-=======
-	Point<int> position;
-	float vy = 0.0f;
-	unsigned int speed = 7;
->>>>>>> parent of c28a90a... Player Movement dt applied
 	int jumps = 2;
 	bool lvl1 = false;
 	bool isDead = false;
@@ -86,7 +81,7 @@ public:
 private:
 	
 	int jumpForce = 0;
-	int jumpForceValue = 10;
+	float jumpForceValue = 10.0f;
 	
 	const char* jumpFxPath;
 
