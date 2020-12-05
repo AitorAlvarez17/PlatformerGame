@@ -470,7 +470,7 @@ bool App::Save()
 		pugi::xml_node r = node.append_child("render");
 		render->Save(r);
 		pugi::xml_node s = node.append_child("scene");
-		render->Save(s);
+		scene->Save(s);
 		pugi::xml_node t = node.append_child("textures");
 
 		pugi::xml_node w = node.append_child("window");

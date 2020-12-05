@@ -72,12 +72,12 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		//app->ui->currentLevel = 2;
-		LoadLevel("Level2.tmx");
+		LoadLevel("level2.tmx");
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		LoadLevel(currentLevel);
+		//LoadLevel(currentLevel);
 	}
 
 	//Draw Map
@@ -204,10 +204,10 @@ void Scene::ChangeGameplayState(GameplayState newState)
 	case PLAYING:
 		//screenDisplayAnim = &turnOffAnim;
 		//app->player->Init();
-		//app->map->Init();
+		app->map->Init();
 		gameplayState = PLAYING;
-		//currentLevel.Create("level1.tmx");
-		//app->map->Load("GAME.tmx");
+		currentLevel.create("level1.tmx");
+		app->map->Load("level1.tmx");
 		app->tex->UnLoad(bgTexture);
 		//PLAYER
 		app->player->position.x = 600;
@@ -241,7 +241,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 bool Scene::Load(pugi::xml_node& savedGame)
 {
 
-	FadeToNewState(PLAYING);
+	//FadeToNewState(PLAYING);
 	LoadLevel(savedGame.attribute("currentLevel").as_string("level1.tmx"));
 
 	return true;
