@@ -165,12 +165,12 @@ bool Player::Update(float dt)
 		}
 
 	}
-	//if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
-	//{
+	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	{
 		LOG("%d", position.x);
 		LOG("%d", position.y);
 
-	/*}*/
+	}
 	return true;
 }
 
