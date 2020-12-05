@@ -35,7 +35,7 @@ bool Enemy::Start()
 {
 	int pixels = 32;
 
-	position.x = 700;
+	position.x = 650;
 	position.y = 2816;
 
 	//load texture
@@ -43,10 +43,11 @@ bool Enemy::Start()
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	leftAnim.loop = true;
-	leftAnim.speed = rightAnim.speed = 0.5f;
+	leftAnim.speed = rightAnim.speed = 0.1f;
 	//SDL_Rect animRect = { 0,0,32,32 };
 
-	idleAnim.PushBack(SDL_Rect({ 32, 0, 32, 32 }));
+	//idleAnim.PushBack(SDL_Rect({ 32, 0, 32, 32 }));
+	currentAnim = &leftAnim;
 
 	leftAnim.PushBack({ 0,32,32,32 });
 	leftAnim.PushBack({ 32,32,32,32 });
@@ -65,10 +66,10 @@ bool Enemy::Start()
 	//currentAnim = &leftAnim;
 
 	//Colliders
-	enemyCollider = app->collisions->AddCollider(SDL_Rect({ position.x,position.y,pixels,pixels }), Collider::Type::ENEMY, this);
+	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x,(int)position.y,pixels,pixels }), Collider::Type::ENEMY, this);
 
-	leftWall = app->collisions->AddCollider(SDL_Rect({ position.x - 100,position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
-	rightWall = app->collisions->AddCollider(SDL_Rect({ position.x + 100,position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	rightWall = app->collisions->AddCollider(SDL_Rect({(int) position.x + 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 	
 
 	return true;
@@ -84,32 +85,11 @@ bool Enemy::PreUpdate()
 
 bool Enemy::Update(float dt)
 {
-	//if (!isMoving && ((position.x - app->player->position.x) < 30))
-	//{
-	//	isMoving = true;
-	//}
-	//
-	if ((position.x - app->player->position.x) < 50) { isMoving = true; }
-	if (isMoving)
-	{
-		if (isMovingRight) {
-		
-			position.x += speed;
-			currentAnim = &rightAnim;
+	//Proccess
+	ChangeState();
+	UpdateMovement();
+	UpdateAnim();
 
-		}
-		else
-		{
-			position.x -= speed;
-			currentAnim = &leftAnim;
-
-		}
-
-		enemyCollider->SetPos(position.x, position.y);
-	}
-	else { currentAnim = &idleAnim; }
-
-	currentAnim->Update();
 	return true;
 }
 
@@ -117,8 +97,12 @@ bool Enemy::PostUpdate()
 {
 	//SDL_Rect enemyRect = currentanim;
 	//app->render->DrawTexture(texture, position.x, position.y, &enemyRect);
+	currentAnim->Update();
+
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexturePlayer(texture, position.x, position.y, &rect);
+	app->render->DrawTexturePlayer(texture, (int)position.x,(int) position.y, &rect);
+
+	enemyCollider->SetPos((int)position.x, (int)position.y);
 
 
 
@@ -131,17 +115,109 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 		if (a->type == Collider::ENEMY && b->type == Collider::ENEMYWALL)
 		{
 			
-			if (isMovingRight)
+			if (isWalkingRight)
 			{
-				isMovingRight = false;
+				isWalkingRight = false;
 			}
 			else
 			{
-				isMovingRight = true;
+				isWalkingRight = true;
 			}
 		}
 	}
 
+}
+
+void Enemy::UpdateMovement()
+{
+	if (isMoving)
+	{
+
+		switch (eState)
+		{
+
+		case (ENEMYIDLE):
+		{
+			return;
+		}
+
+		case (ENEMYWALKING):
+		{
+
+			if (isWalkingRight) {
+
+				position.x += speed;
+
+			}
+			else
+			{
+				position.x -= speed;
+
+			}
+			return;
+		}
+
+		case (ENEMYRUNNING):
+		{
+			//PATHFINDING
+			return;
+		}
+		}
+
+	}
+}
+
+void Enemy::UpdateAnim()
+{
+	switch (eState)
+	{
+	case (ENEMYIDLE):
+	{
+		currentAnim = &idleAnim;
+		return;
+	}
+	case (ENEMYWALKING):
+	{
+		leftAnim.speed = rightAnim.speed = 0.1f;
+
+		if (isWalkingRight) {
+			currentAnim = &rightAnim;
+
+		}
+		else
+		{
+			currentAnim = &leftAnim;
+
+		}
+		return;
+	}
+	case (ENEMYRUNNING):
+	{
+		leftAnim.speed = rightAnim.speed = 1.0f;
+
+		//PATHFINDING ANIM PART
+
+		return;
+
+
+	}
+
+
+	}
+}
+
+void Enemy::ChangeState()
+{
+	if ((position.x - app->player->position.x) < 60.0f)
+	{
+		eState = EnemyState::ENEMYRUNNING;
+
+	}
+	else
+	{
+		eState = EnemyState::ENEMYWALKING;
+
+	}
 }
 
 //bool Enemy::Save(pugi::xml_node& savedGame)
