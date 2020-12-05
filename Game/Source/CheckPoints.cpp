@@ -1,5 +1,6 @@
 #include "CheckPoints.h"
 #include "Debug.h"
+#include "Map.h"
 #include "App.h"
 #include "Input.h"
 #include "Textures.h"
@@ -7,6 +8,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Log.h"
+#include "Scene.h"
 #include "Animation.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
@@ -47,6 +49,8 @@ bool CheckPoints::Start()
 	tp3.x = 2502;
 	tp3.y = 2046;
 
+	endlevel.x = 384;
+	endlevel.y = 1374;
 	LOG("Loading Coin textures");
 
 	tp1IDLE = app->tex->Load("Assets/maps/TP1/tp1_to0.png");
@@ -68,11 +72,13 @@ bool CheckPoints::Start()
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
 	tpColl3 = { tp3.x, tp3.y, pixels ,pixels };
+	tpEndLevel = { endlevel.x, endlevel.y - 170, pixels ,pixels*10 };
 
 	collider = app->collisions->AddCollider(coll, Collider::Type::SAVEPOINT, this);
 	collidertp1 = app->collisions->AddCollider(tpColl, Collider::Type::TP, this);
 	collidertp2 = app->collisions->AddCollider(tpColl2, Collider::Type::TP, this);
 	collidertp3 = app->collisions->AddCollider(tpColl3, Collider::Type::TP, this);
+	colliderEndLevel = app->collisions->AddCollider(tpEndLevel, Collider::Type::ENDLEVEL, this);
 
 	texRect = { 0, 0, 640, 480};
 
@@ -201,7 +207,6 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	{
 		active = false;
 	}
-
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
 		onColl = true;

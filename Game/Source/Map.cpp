@@ -332,7 +332,7 @@ bool Map::CleanUp()
     // Remove all layers
     data.layers.clear();
 
-
+    app->collisions->CleanUp();
     // Clean up the pugui tree
     mapFile.reset();
 

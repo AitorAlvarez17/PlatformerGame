@@ -23,6 +23,7 @@ struct Collider
 		SAVEPOINT,
 		ENEMY,
 		ENEMYWALL,
+		ENDLEVEL,
 		
 		MAX
 	};

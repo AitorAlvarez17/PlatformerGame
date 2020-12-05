@@ -1,9 +1,11 @@
 #include "Player.h"
 #include "Debug.h"
+#include "Map.h"
 #include "App.h"
 #include "Input.h"
 #include "Animation.h"
 #include "Textures.h"
+#include "Scene.h"
 #include "Window.h"
 #include "Render.h"
 #include "CheckPoints.h"
@@ -49,9 +51,14 @@ bool Player::Start()
 	int pixels = 32;
 
 
-	position.x = 600;
-	position.y = 2816;
+	spawnLevel1.x = 600;
+	spawnLevel1.y = 2816;
 
+	position.x = spawnLevel1.x;
+	position.y = spawnLevel1.y;
+
+	spawnLevel2.x = 3427;
+	spawnLevel2.y = 508;
 
 	winWidth = app->win->GetWidth();
 	winHeigh = app->win->GetHeight();
@@ -242,8 +249,9 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			if (lifes > 0)
 			{
-				position.x = 600.0f;
-				position.y = 2830.0f;
+				//if level 1 or 2
+				position.x = spawnLevel1.x;
+				position.y = spawnLevel1.y;
 				this->lifes--;
 			}
 			if (lifes <= 0)
@@ -255,7 +263,16 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			lifes++;
 		}
+		if (a->type == Collider::PLAYER && b->type == Collider::ENDLEVEL)
+		{
+			//app->scene->currentLevel.create("level2.tmx");
 
+			app->map->CleanUp();
+			app->player->Reload();
+			app->scene->LoadLevel("level2.tmx");
+			app->player->position.x = app->player->spawnLevel2.x;
+			app->player->position.y = app->player->spawnLevel2.y;
+		}
 	}
 
 }
@@ -543,17 +560,18 @@ bool Player::Load(pugi::xml_node& savedPlayer)
 
 void Player::Reload()
 {
-	//playerState = PlayerState::IDLE;
+	playerState = PlayerState::IDLE;
 	//verticalVelocity = 0.0f;
 	/*if (health == 0)
 	{
 		health = 3;
 		app->ui->score = 0;
 	}*/
-	/*initialPosition = position;
-	respawnPosition = initialPosition;
-	gravityOn = false;
-	initialWaitCount = 0.0f;*/
+	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
+	//initialPosition = position;
+	//respawnPosition = initialPosition;
+	//gravityOn = false;
+	//initialWaitCount = 0.0f;*/
 }
 
 
