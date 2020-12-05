@@ -34,6 +34,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
+	//bool Load(pugi::xml_node&);
+	//bool Save(pugi::xml_node&);
 
 	//Transform
 	Point<int> position;
