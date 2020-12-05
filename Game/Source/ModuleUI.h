@@ -15,7 +15,7 @@ class ModuleUI : public Module
 private:
 	SDL_Texture* texture = nullptr;
 
-
+	
 
 public:
 
@@ -27,6 +27,7 @@ public:
 	bool PostUpdate();
 	void Draw();
 
+	void HealthUi(int lifesleft);
 
 	bool active = true;
 	bool regulator = true;
@@ -48,6 +49,16 @@ private:
 
 	SDL_Texture* scoreTitle;
 	SDL_Texture* healthTitle;
+	SDL_Texture* singleHeart;
+	SDL_Texture* healthUi;
+
+	// A ptr to the current animation
+	Animation* currentHealthAnim = nullptr;
+	Animation twoHearts;
+	Animation threeHearts;
+	Animation fourHearts;
+	Animation fiveHearts;
+	Animation sixHearts;
 
 	bool onArea1;
 	bool onArea2;

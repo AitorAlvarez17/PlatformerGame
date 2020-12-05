@@ -42,7 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new PathFinding(false);
 	debug = new Debug(true);
 	oManager = new ObjectManager(true);
-	UI = new ModuleUI(true);
+	ui = new ModuleUI(true);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -63,7 +63,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(checkpoints);
 	AddModule(pathfinding);
 	AddModule(debug);
-	AddModule(UI);
+	AddModule(ui);
 	AddModule(render);
 
 

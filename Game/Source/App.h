@@ -97,7 +97,7 @@ public:
 	CheckPoints* checkpoints;
 	Collisions* collisions;
 	Player* player;
-	ModuleUI* UI;
+	ModuleUI* ui;
 	Enemy* enemy;
 	ModuleFadeToBlack* fade;
 	Intro* menu;
