@@ -50,7 +50,7 @@ public:
 
 	Animation idleAnim;
 	Animation leftAnim;
-	//Animation rightAnim;
+	Animation rightAnim;
 
 	Collider* enemyCollider;
 	Collider* rightWall;
