@@ -47,23 +47,23 @@ bool ModuleUI::Start()
 
 	if (healthUi == nullptr)LOG("TEXTURE NOT FOUNDED");
 
-	twoHearts.GenerateAnimation({ 0,0,48,1 }, 1, 2);
+	twoHearts.GenerateAnimation({ 0,0,24,24 },2);
 	twoHearts.speed = 0.2f;
 	twoHearts.loop = true;
 
-	threeHearts.GenerateAnimation({ 0,0,72,24 }, 1, 3);
+	threeHearts.GenerateAnimation({ 0,0,24,24 }, 3);
 	threeHearts.speed = 0.2f;
 	threeHearts.loop = true;
 
-	fourHearts.GenerateAnimation({ 0,0,96,24 }, 1, 4);
+	fourHearts.GenerateAnimation({ 0,0,24,24 }, 4);
 	fourHearts.speed = 0.2f;
 	fourHearts.loop = true;
 
-	fiveHearts.GenerateAnimation({ 0,0,144,24 }, 1, 5);
+	fiveHearts.GenerateAnimation({ 0,0,24,24 }, 5);
 	fiveHearts.speed = 0.2f;
 	fiveHearts.loop = true;
 
-	sixHearts.GenerateAnimation({ 0,0,168,24 }, 1, 6);
+	sixHearts.GenerateAnimation({ 0,0,24,24 }, 6);
 	sixHearts.speed = 0.2f;
 	sixHearts.loop = true;
 	//texRect = { 0, 0, 640, 480};
@@ -103,14 +103,13 @@ bool ModuleUI::PostUpdate()
 void ModuleUI::Draw()
 {
 
-
-
 	app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3, 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
 
 	currentHealthAnim->Update();
 	SDL_Rect heartRect = currentHealthAnim->GetCurrentFrame();
-	app->render->DrawTexture(healthUi, camaraPosx + 96, camaraPosy + 10, &heartRect);
+	app->render->DrawTexture(healthUi, 600, 2780, &heartRect);
+
 	
 }
 
