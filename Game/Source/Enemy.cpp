@@ -234,20 +234,17 @@ void Enemy::ChangeState()
 
 bool Enemy::Save(pugi::xml_node& savedGame)
 {
-
 	savedGame.append_attribute("x") = position.x;
 	savedGame.append_attribute("y") = position.y;
-
-
 
 	return true;
 }
 
 bool Enemy::Load(pugi::xml_node& savedPlayer)
 {
-	position.x = savedPlayer.attribute("x").as_int();
-	position.y = savedPlayer.attribute("y").as_int();
-	health = savedPlayer.attribute("jumpsRemaining").as_float();
+	position.x = savedPlayer.attribute("x").as_float();
+	position.y = savedPlayer.attribute("y").as_float();
+	health = savedPlayer.attribute("health").as_float();
 	
 
 	return true;
