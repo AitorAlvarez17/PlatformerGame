@@ -265,12 +265,13 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		}
 		if (a->type == Collider::PLAYER && b->type == Collider::ENDLEVEL)
 		{
-
-			//app->scene->currentLevel.create("level2.tmx");
+			
+			app->collisions->RemoveCollider(b);
 			lvl2 = true;
+			app->scene->currentLevel.create("level2.tmx");
 			app->map->CleanUp();
-			app->player->Reload();
 			app->scene->LoadLevel("level2.tmx");
+			app->player->Reload();
 			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
 			app->player->position.x = app->player->spawnLevel2.x;
 			app->player->position.y = app->player->spawnLevel2.y;

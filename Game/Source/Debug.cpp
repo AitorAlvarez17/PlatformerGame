@@ -107,8 +107,8 @@ bool Debug::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 	{
-		LOG("%d", (app->player->position.x)*dt);
-		LOG("%d", (app->player->position.y)*dt);
+		app->player->position.x = 446;
+		app->player->position.y = 1331;
 	}
 
 	
