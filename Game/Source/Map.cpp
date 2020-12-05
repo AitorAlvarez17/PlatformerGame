@@ -436,9 +436,6 @@ bool Map::Load(const char* filename)
         ListItem<MapLayer*>* layerList = data.layers.start;
         while (layerList != nullptr) {
 
-            LOG("name : %s", layerList->data->name);
-            LOG("width %d", layerList->data->width);
-            LOG("height %d", layerList->data->height);
             //max value tiene que ser implementado 
             for (int i = 0; i < layerList->data->tileNumber; i++)
             {
