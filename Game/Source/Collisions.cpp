@@ -143,7 +143,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::COIN] = false;
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::TP] = false;
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::ENEMY] = true;
+	matrix[Collider::Type::ENDLEVEL][Collider::Type::ENEMY] = false;
 
 }
 

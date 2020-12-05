@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_
+#ifndef __WARRIOR_H__
+#define __WARRIOR_
 
 #include "Module.h"
 #include "Animation.h"
@@ -10,16 +10,19 @@ struct Animation;
 struct Collider;
 struct SDL_Texture;
 
-enum EnemyType {
-	GROUND,
-	FLYING,
+enum EnemyState {
+	ENEMYIDLE,
+	ENEMYWALKING,
+	ENEMYRUNNING,
+	ENEMYJUMPING,
+	ENEMYDYING,
 
 };
 
 class Enemy : public Module
 {
 private:
-//	EnemyState enemyState = EnemyState::IDLE;
+	EnemyState eState = EnemyState::ENEMYWALKING;
 
 	SDL_Texture* texture = nullptr;
 
@@ -34,24 +37,29 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
+	void UpdateMovement();
+	void UpdateAnim();
+	void ChangeState();
 	//bool Load(pugi::xml_node&);
 	//bool Save(pugi::xml_node&);
 
 	//Transform
-	Point<int> position;
+	fPoint position;
 
 	//Physics
-	int speed = 2;
+	float speed = 2;
 	float gravityForce = 3.0f;
 
 	//true = Right, false = left
 	bool isMoving= true;
-	bool isMovingRight = true;
+	bool isWalkingRight = true;
 
+	//Animations
 	Animation idleAnim;
 	Animation leftAnim;
 	Animation rightAnim;
 
+	//Colliders
 	Collider* enemyCollider;
 	Collider* rightWall;
 	Collider* leftWall;
@@ -59,7 +67,7 @@ public:
 private:
 
 
-	//bool canFly = false;
+
 
 
 };
