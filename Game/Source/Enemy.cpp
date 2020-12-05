@@ -52,7 +52,7 @@ bool Enemy::Start()
 	position.y = 2816;
 
 	//Load Texture
-	texture = app->tex->Load("Assets/textures/warrior.png");
+	texture = app->tex->Load("Assets/textures/warriorcopia.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	//Animations
@@ -67,9 +67,22 @@ bool Enemy::Start()
 	leftAnim.loop = true;
 	leftAnim.speed = rightAnim.speed = 0.1f;
 
-	leftAnim.GenerateAnimation({ 0,32,32,32 }, 5);
-	leftAnim.loop = true;
-	leftAnim.speed = rightAnim.speed = 0.1f;
+	deadRightAnim.GenerateAnimation({ 96,128,32,32 }, 3);
+	deadRightAnim.loop = true;
+	deadRightAnim.speed = rightAnim.speed = 0.1f;
+
+	deadLeftAnim.GenerateAnimation({ 0,128,32,32 }, 3);
+	deadLeftAnim.loop = true;
+	deadLeftAnim.speed = rightAnim.speed = 0.1f;
+
+	stunRightAnim.GenerateAnimation({ 0,64,32,32 }, 5);
+	stunRightAnim.loop = true;
+	stunRightAnim.speed = rightAnim.speed = 0.1f;
+
+	stunleftAnim.GenerateAnimation({ 0,96,32,32 }, 5);
+	stunleftAnim.loop = true;
+	stunleftAnim.speed = rightAnim.speed = 0.1f;
+
 
 	//Colliders
 	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x ,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMY, this);
@@ -210,6 +223,21 @@ void Enemy::UpdateAnim()
 		return;
 
 	}
+	case (ENEMYDYING):
+	{
+
+		if (speed > 0)
+		{
+			currentAnim = &stunRightAnim;
+
+
+		}
+		else
+		{
+			currentAnim = &stunleftAnim;
+
+		}
+	}
 
 
 	}
@@ -219,7 +247,7 @@ void Enemy::ChangeState()
 {
 	if ((position.x - app->player->position.x) < 60.0f)
 	{
-		eState = EnemyState::ENEMYRUNNING;
+		eState = EnemyState::ENEMYDYING;
 
 	}
 	else
