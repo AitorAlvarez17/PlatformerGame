@@ -559,7 +559,7 @@ bool Player::Load(pugi::xml_node& savedPlayer)
 
 void Player::Reload()
 {
-	playerState = PlayerState::IDLE;
+	//playerState = PlayerState::IDLE;
 	//verticalVelocity = 0.0f;
 	/*if (health == 0)
 	{

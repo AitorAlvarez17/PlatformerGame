@@ -73275,7 +73275,7 @@
  <layer id="7" name="CollisionsDead" width="122" height="100">
   <properties>
    <property name="Collisions" type="int" value="2"/>
-   <property name="Draw" type="int" value="1"/>
+   <property name="Draw" type="int" value="0"/>
    <property name="Navigation" type="int" value="1"/>
   </properties>
   <data>
