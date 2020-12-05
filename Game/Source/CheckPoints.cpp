@@ -343,7 +343,7 @@ void CheckPoints::InitLevel2()
 
 	LOG("helo");
 	
-	coll = { position.x, position.y, pixels ,pixels * 10 };
+	coll = { position.x, position.y - 250, pixels ,pixels * 10 };
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
 	tpColl3 = { tp3.x, tp3.y, pixels ,pixels };

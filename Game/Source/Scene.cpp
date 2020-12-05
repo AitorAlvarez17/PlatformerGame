@@ -66,14 +66,43 @@ bool Scene::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		//app->ui->currentLevel = 1;
+		/*app->map->CleanUp();
+		
+		currentLevel.create("level1.tmx");
 		LoadLevel("level1.tmx");
+
+
+		app->player->collider = app->collisions->AddCollider(app->player->coll, Collider::Type::PLAYER, app->player);
+
+
+		app->player->lvl2 = false;
+
+		app->player->position.x = app->player->spawnLevel1.x;
+		app->player->position.y = app->player->spawnLevel1.y;
+
+		app->player->vy = 0;
+		app->player->jumps = 0;
+
+		app->render->camera.x = app->player->position.x;
+		app->render->camera.y = app->player->position.y;
+		//app->ui->currentLevel = 1;
+		app->map->CleanUpLoad();
+		app->player->Reload();*/
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
+		/*app->player->lvl2 = true;
+		app->map->CleanUp();
+		//app->scene->LoadLevel("level2.tmx");
+		app->player->collider = app->collisions->AddCollider(app->player->coll, Collider::Type::PLAYER, app->player);
+		app->player->position.x = app->player->spawnLevel2.x;
+		app->player->position.y = app->player->spawnLevel2.y;
 		//app->ui->currentLevel = 2;
-		LoadLevel("level2.tmx");
+		app->map->CleanUpLoad();
+		app->player->Reload();
+		LoadLevel("level2.tmx");*/
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
