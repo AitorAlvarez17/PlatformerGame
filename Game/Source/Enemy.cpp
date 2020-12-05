@@ -64,8 +64,8 @@ bool Enemy::Start()
 
 	//Colliders
 	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x,(int)position.y,pixels,pixels }), Collider::Type::ENEMY, this);
-	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
-	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 100,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 150,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 120,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 
 
 	return true;
@@ -82,14 +82,15 @@ bool Enemy::Update(float dt)
 {
 	//Proccess
 	ChangeState();
-	UpdateMovement();
-	UpdateAnim();
+	
 
 	return true;
 }
 
 bool Enemy::PostUpdate()
 {
+	UpdateMovement();
+	UpdateAnim();
 	//Update Animation
 	currentAnim->Update();
 
@@ -106,20 +107,31 @@ bool Enemy::PostUpdate()
 
 void Enemy::OnCollision(Collider* a, Collider* b) {
 
+	
 	if (app->debug->godMode == false)
 	{
 		if (a->type == Collider::ENEMY && b->type == Collider::ENEMYWALL)
 		{
+			
+			int compX = a->rect.x - b->rect.x;
 
-			if (isWalkingRight)
+
+			if (compX > 0) 
 			{
-				isWalkingRight = false;
+				position.x += b->rect.x + b->rect.w - a->rect.x;
+				speed = speed * -1;
 			}
 			else
 			{
-				isWalkingRight = true;
+				position.x -= a->rect.x + a->rect.w - b->rect.x;
+				speed = speed * -1;
 			}
+
+			enemyCollider->SetPos((int)b->rect.x - 1, (int)position.y);
+
+
 		}
+		
 	}
 
 }
@@ -140,16 +152,7 @@ void Enemy::UpdateMovement()
 		case (ENEMYWALKING):
 		{
 
-			if (isWalkingRight) {
-
 				position.x += speed;
-
-			}
-			else
-			{
-				position.x -= speed;
-
-			}
 			return;
 		}
 
