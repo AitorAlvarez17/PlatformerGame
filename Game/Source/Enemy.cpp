@@ -27,7 +27,7 @@ Enemy::Enemy(bool startEnabled) : Module(startEnabled)
 
 bool Enemy::Awake(pugi::xml_node& config)
 {
-	LOG("Loading player config");
+	LOG("Loading Enemy config");
 	bool ret = true;
 
 	texturePath = config.child("texture").child_value();
@@ -75,9 +75,9 @@ bool Enemy::Start()
 	rightAnim.PushBack({ 160,0,32,32 });
 
 	//Colliders
-	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x,(int)position.y,pixels,pixels }), Collider::Type::ENEMY, this);
-	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 150,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
-	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 120,(int)position.y,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x ,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMY, this);
+	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 150,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 120,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 
 
 	return true;
@@ -111,7 +111,7 @@ bool Enemy::PostUpdate()
 	app->render->DrawTexturePlayer(texture, (int)position.x, (int)position.y, &rect);
 
 	//Update Colliders Position
-	enemyCollider->SetPos((int)position.x, (int)position.y);
+	enemyCollider->SetPos((int)position.x + 16, (int)position.y + 32);
 
 
 	return true;
