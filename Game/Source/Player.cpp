@@ -52,6 +52,8 @@ bool Player::Start()
 	position.x = 600;
 	position.y = 2816;
 
+	prevY = position.y;
+
 	winWidth = app->win->GetWidth();
 	winHeigh = app->win->GetHeight();
 
@@ -129,12 +131,7 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	if (app->debug->godMode == false)
-	{
-		position.y -= vy;
-		vy -= gravityForce * 0.5;
-		app->player->UpdateState();
-	}
+
 
 	return true;
 }
@@ -143,13 +140,13 @@ bool Player::Update(float dt)
 {
 	if (app->debug->godMode == false)
 	{
-		
+		app->player->UpdateState(dt);
 		app->player->UpdateLogic(dt);
 
 	}
 	else
 	{
-		
+
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
 			position.x -= speed * dt;
@@ -166,19 +163,20 @@ bool Player::Update(float dt)
 		{
 			position.y -= speed * dt;
 		}
-		
+
 	}
-	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
-	{
+	//if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
+	//{
 		LOG("%d", position.x);
 		LOG("%d", position.y);
 
-	}
+	/*}*/
 	return true;
 }
 
 bool Player::PostUpdate()
 {
+
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 
@@ -193,6 +191,7 @@ bool Player::PostUpdate()
 		app->render->DrawTexturePlayer(texture, position.x - 24, position.y - 30, &rect);
 	}
 
+	prevY = position.y;
 
 	return true;
 }
@@ -203,6 +202,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 	{
 		if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
 		{
+			grounded = true;
 			int compY = a->rect.y - b->rect.y;
 			int compX = a->rect.x - b->rect.x;
 			jumps = 3;
@@ -255,8 +255,13 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 }
 
-void Player::UpdateState()
+void Player::UpdateState(float dt)
 {
+	if (!grounded)
+	{
+		position.y -= vy;
+		vy -= gravityForce * 0.5;
+	}
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		isGoingRight = false;
@@ -267,7 +272,6 @@ void Player::UpdateState()
 		isGoingRight = true;
 	}
 
-
 	switch (playerState)
 	{
 	case IDLE:
@@ -276,7 +280,7 @@ void Player::UpdateState()
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
 			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
 			ChangeState(playerState, RUNNING);
-		
+
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -284,14 +288,13 @@ void Player::UpdateState()
 			jumps--;
 			app->audio->PlayFx(1, 0);
 			ChangeState(playerState, JUMPING);
-			
 
 		}
 
 		if (isDead == true)
 		{
 			ChangeState(playerState, DYING);
-		
+
 
 		}
 
@@ -302,8 +305,6 @@ void Player::UpdateState()
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-
-		
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
@@ -368,7 +369,6 @@ void Player::UpdateLogic(float dt)
 	case(IDLE):
 	{
 
-
 		break;
 	}
 	case(RUNNING):
@@ -401,7 +401,6 @@ void Player::UpdateLogic(float dt)
 			//jump fix. Do not delete this before asking 
 			position.y -= 2;
 		}
-	
 		ChangeState(JUMPING, FALLING);
 
 		break;
@@ -409,7 +408,6 @@ void Player::UpdateLogic(float dt)
 
 	case(FALLING):
 	{
-
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
@@ -458,16 +456,16 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	{
 		if (isGoingRight == true)
 		{
-				currentAnim = &runRightAnim;
+			currentAnim = &runRightAnim;
 
 		}
 		else
 		{
-				currentAnim = &runLeftAnim;
+			currentAnim = &runLeftAnim;
 
 		}
 
-		
+
 		break;
 	}
 	case(JUMPING):
@@ -482,8 +480,8 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 			currentAnim = &jumpLeftAnim;
 			isJumping = true;
 		}
+		grounded = false;
 
-		
 		break;
 	}
 	case(DOUBLE_JUMPING):
@@ -496,7 +494,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 		{
 			currentAnim = &jumpLeftAnim;
 		}
-		
+
 
 		break;
 	}
@@ -520,14 +518,14 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	playerState = newState;
 }
 
-bool Player::Save(pugi::xml_node& savedGame) 
+bool Player::Save(pugi::xml_node& savedGame)
 {
 
 	savedGame.append_attribute("x") = position.x;
 	savedGame.append_attribute("y") = position.y;
 	savedGame.append_attribute("jumpsRemaining") = jumps;
 	savedGame.append_attribute("verticalVelocity") = vy;
-	
+
 
 	return true;
 }
