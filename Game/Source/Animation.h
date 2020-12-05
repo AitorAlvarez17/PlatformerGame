@@ -59,20 +59,30 @@ public:
 		return frames[actualFrame];
 	}
 
-	void GenerateAnimation(const SDL_Rect& rect, int rows, int columns) {
+	void GenerateAnimation(const SDL_Rect& rect, int columns) {
 
-		int frameWidth = rect.w / columns;
-		int frameHeight = rect.h / rows;
+		int frameWidth = rect.w;
+		int frameHeight = rect.h;
 
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
-				SDL_Rect frame;
-				frame.x = rect.x + (j * frameWidth);
-				frame.y = rect.y + (i * frameHeight);
-				frame.w = frameWidth;
-				frame.h = frameHeight;
-				PushBack(frame);
-			}
+		//for (int i = 0; i < rows; i++) {
+		//	for (int j = 0; j < columns; j++) {
+		//		SDL_Rect frame;
+		//		frame.x = rect.x + (j * frameWidth);
+		//		frame.y = rect.y +  frameHeight;
+		//		frame.w = frameWidth;
+		//		frame.h = frameHeight;
+		//		PushBack(frame);
+		//	}
+		//}
+
+		for (int i = 0; i < columns; i++)
+		{
+			SDL_Rect frame;
+			frame.x = rect.x + (i * frameWidth);
+			frame.y = rect.y;
+			frame.w = frameWidth;
+			frame.h = frameHeight;
+			PushBack(frame);
 		}
 	}
 

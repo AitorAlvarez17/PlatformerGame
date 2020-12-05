@@ -52,31 +52,28 @@ bool Enemy::Start()
 	position.y = 2816;
 
 	//Load Texture
-	texture = app->tex->Load("Assets/textures/Warrior.png");
+	texture = app->tex->Load("Assets/textures/warrior.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	//Animations
-	leftAnim.loop = true;
-	leftAnim.speed = rightAnim.speed = 0.1f;
+
 	currentAnim = &rightAnim;
 
-	leftAnim.PushBack({ 0,32,32,32 });
-	leftAnim.PushBack({ 32,32,32,32 });
-	leftAnim.PushBack({ 64,32,32,32 });
-	leftAnim.PushBack({ 96,32,32,32 });
-	leftAnim.PushBack({ 128,32,32,32 });
-	leftAnim.PushBack({ 160,32,32,32 });
+	rightAnim.GenerateAnimation({ 0,0,32,32 }, 5);
+	rightAnim.loop = true;
+	rightAnim.speed = rightAnim.speed = 0.1f;
 
-	rightAnim.PushBack({ 0,0,32,32 });
-	rightAnim.PushBack({ 32,0,32,32 });
-	rightAnim.PushBack({ 64,0,32,32 });
-	rightAnim.PushBack({ 96,0,32,32 });
-	rightAnim.PushBack({ 128,0,32,32 });
-	rightAnim.PushBack({ 160,0,32,32 });
+	leftAnim.GenerateAnimation({ 0,32,32,32 }, 5);
+	leftAnim.loop = true;
+	leftAnim.speed = rightAnim.speed = 0.1f;
+
+	leftAnim.GenerateAnimation({ 0,32,32,32 }, 5);
+	leftAnim.loop = true;
+	leftAnim.speed = rightAnim.speed = 0.1f;
 
 	//Colliders
 	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x ,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMY, this);
-	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 150,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 50,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 120,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 
 
