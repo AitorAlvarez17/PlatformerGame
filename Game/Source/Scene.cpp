@@ -245,8 +245,9 @@ void Scene::ChangeGameplayState(GameplayState newState)
 
 bool Scene::Load(pugi::xml_node& savedGame)
 {
-
-	//FadeToNewState(PLAYING);
+	app->map->CleanUpLoad();
+	app->player->Reload();
+	FadeToNewState(PLAYING);
 	LoadLevel(savedGame.attribute("currentLevel").as_string("level1.tmx"));
 
 	return true;

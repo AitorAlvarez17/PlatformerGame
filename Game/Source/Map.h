@@ -151,6 +151,7 @@ public:
     iPoint MapToWorld(int x, int y) const;
     void LoadColliders();
 
+    bool CleanUpLoad();
 
     // L03: TODO 1: Add your struct for map info as public for now
     MapData data;

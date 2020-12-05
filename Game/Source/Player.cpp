@@ -265,11 +265,13 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		}
 		if (a->type == Collider::PLAYER && b->type == Collider::ENDLEVEL)
 		{
-			//app->scene->currentLevel.create("level2.tmx");
 
+			//app->scene->currentLevel.create("level2.tmx");
+			lvl2 = true;
 			app->map->CleanUp();
 			app->player->Reload();
 			app->scene->LoadLevel("level2.tmx");
+			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
 			app->player->position.x = app->player->spawnLevel2.x;
 			app->player->position.y = app->player->spawnLevel2.y;
 		}
@@ -567,7 +569,6 @@ void Player::Reload()
 		health = 3;
 		app->ui->score = 0;
 	}*/
-	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
 	//initialPosition = position;
 	//respawnPosition = initialPosition;
 	//gravityOn = false;

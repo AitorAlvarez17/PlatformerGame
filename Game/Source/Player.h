@@ -72,12 +72,13 @@ public:
 	float speed = 0.0f;
 	int jumps = 2;
 	bool lvl1 = false;
+	bool lvl2 = false;
 	bool isDead = false;
 	int lifes = 3;
 
 	int winWidth;
 	int winHeigh;
-
+	Collider* collider;
 private:
 
 	Point<int> spawnLevel1;
@@ -89,7 +90,7 @@ private:
 
 	float gravityForce = 3.0f;
 
-	Collider* collider;
+	
 
 	bool isJumping;
 	bool canMoveRight = true;

@@ -339,6 +339,38 @@ bool Map::CleanUp()
     return true;
 }
 
+bool Map::CleanUpLoad()
+{
+    LOG("Unloading map");
+
+    // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
+    // Remove all tilesets
+    ListItem<TileSet*>* item;
+    item = data.tilesets.start;
+
+    while (item != NULL)
+    {
+        RELEASE(item->data);
+        item = item->next;
+    }
+    data.tilesets.clear();
+
+    ListItem<MapLayer*>* layersP;
+    layersP = data.layers.start;
+    // L04: TODO 2: clean up all layer data
+    while (layersP != NULL)
+    {
+        RELEASE(layersP->data);
+        layersP = layersP->next;
+    }
+    // Remove all layers
+    data.layers.clear();
+    // Clean up the pugui tree
+    mapFile.reset();
+
+    return true;
+}
+
 
 // Load new map
 bool Map::Load(const char* filename)
