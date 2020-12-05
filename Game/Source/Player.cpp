@@ -64,7 +64,7 @@ bool Player::Start()
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
 
-	coll = { (int)position.x, (int)position.y, pixels - 4,pixels + 2 };
+	coll = { position.x, position.y, pixels - 4,pixels + 2 };
 
 	//cambiar això
 	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
@@ -144,8 +144,13 @@ bool Player::Update(float dt)
 {
 	if (app->debug->godMode == false)
 	{
+<<<<<<< HEAD
 
 		app->player->UpdateLogic(dt);
+=======
+		
+		app->player->UpdateLogic();
+>>>>>>> parent of c28a90a... Player Movement dt applied
 
 	}
 	else
@@ -153,19 +158,19 @@ bool Player::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x -= speed * dt;
+			position.x -= speed;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed * dt;
+			position.x += speed;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			position.y += speed * dt;
+			position.y += speed;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			position.y -= speed * dt;
+			position.y -= speed;
 		}
 
 	}
@@ -240,8 +245,8 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			if (lifes > 0)
 			{
-				position.x = 600.0f;
-				position.y = 2830.0f;
+				position.x = 600;
+				position.y = 2830;
 				this->lifes--;
 			}
 			if (lifes <= 0)
@@ -360,7 +365,7 @@ void Player::UpdateState()
 
 }
 
-void Player::UpdateLogic(float dt)
+void Player::UpdateLogic()
 {
 
 	switch (playerState)
@@ -377,16 +382,22 @@ void Player::UpdateLogic(float dt)
 			if (isGoingRight == true)
 			{
 
-				position.x += speed * dt;
+				position.x += speed;
 
 			}
 			else
 			{
 
-				position.x -= speed * dt;
+				position.x -= speed;
 
 			}
 		}
+		
+		
+
+		
+
+
 
 		break;
 	}
@@ -400,6 +411,11 @@ void Player::UpdateLogic(float dt)
 			//jump fix. Do not delete this before asking 
 			position.y -= 2;
 		}
+<<<<<<< HEAD
+=======
+	
+
+>>>>>>> parent of c28a90a... Player Movement dt applied
 		ChangeState(JUMPING, FALLING);
 
 		break;
@@ -410,12 +426,12 @@ void Player::UpdateLogic(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed * dt;
+			position.x += speed;
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x -= speed * dt;
+			position.x -= speed;
 
 		}
 
@@ -423,7 +439,9 @@ void Player::UpdateLogic(float dt)
 	}
 	case(DYING):
 	{
+
 		break;
+
 	}
 
 	}
@@ -455,12 +473,26 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	{
 		if (isGoingRight == true)
 		{
+<<<<<<< HEAD
 			currentAnim = &runRightAnim;
+=======
 
+				currentAnim = &runRightAnim;
+>>>>>>> parent of c28a90a... Player Movement dt applied
+
+
+		
 		}
 		else
 		{
+<<<<<<< HEAD
 			currentAnim = &runLeftAnim;
+=======
+
+				currentAnim = &runLeftAnim;
+>>>>>>> parent of c28a90a... Player Movement dt applied
+
+			
 
 		}
 
@@ -553,7 +585,5 @@ void Player::Reload()
 	gravityOn = false;
 	initialWaitCount = 0.0f;*/
 }
-
-
 
 
