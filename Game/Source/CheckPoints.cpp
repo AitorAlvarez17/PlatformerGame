@@ -94,7 +94,19 @@ bool CheckPoints::PreUpdate()
 
 bool CheckPoints::Update(float dt)
 {
+	if (app->player->lvl2 == true && createLevel2 == false)
+	{
+		tp1.x = 3169;
+		tp1.y = 510;
 
+		tp2.x = 547;
+		tp2.y = 1664;
+
+		tp3.x = 1735;
+		tp3.y = 2431;
+		createLevel2 = true;
+		InitLevel2();
+	}
 	CheckOut();
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
@@ -313,6 +325,34 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	}
 	
 
+
+
+}
+
+void CheckPoints::InitLevel2()
+{
+	int pixels = 32;
+	tp1To2 = app->tex->Load("Assets/maps/TP1/LVL2/1to2.png");
+	tp1To3 = app->tex->Load("Assets/maps/TP1/LVL2/1to3.png");
+
+	tp2To1 = app->tex->Load("Assets/maps/TP2/LVL2/2to1.png");
+	tp2To3 = app->tex->Load("Assets/maps/TP2/LVL2/2to3.png");
+
+	tp3To1 = app->tex->Load("Assets/maps/TP3/LVL2/3to1.png");
+	tp3To2 = app->tex->Load("Assets/maps/TP3/LVL2/3to2.png");
+
+	LOG("helo");
+	
+	coll = { position.x, position.y, pixels ,pixels * 10 };
+	tpColl = { tp1.x, tp1.y, pixels ,pixels };
+	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
+	tpColl3 = { tp3.x, tp3.y, pixels ,pixels };
+	tpEndLevel = { endlevel.x, endlevel.y - 170, pixels ,pixels * 10 };
+
+	collider = app->collisions->AddCollider(coll, Collider::Type::SAVEPOINT, this);
+	collidertp1 = app->collisions->AddCollider(tpColl, Collider::Type::TP, this);
+	collidertp2 = app->collisions->AddCollider(tpColl2, Collider::Type::TP, this);
+	collidertp3 = app->collisions->AddCollider(tpColl3, Collider::Type::TP, this);
 
 
 }

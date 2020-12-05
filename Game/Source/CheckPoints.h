@@ -26,7 +26,8 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
-	void CheckOut();
+	void CheckOut(); 
+	void InitLevel2();
 	SDL_Rect texRect;
 	SDL_Rect coll;
 	SDL_Rect tpColl;
@@ -48,7 +49,7 @@ public:
 	bool onTp = true;
 	bool mapOpen = false;
 	bool onColl = false;
-
+	bool createLevel2 = false;
 	int winWidth;
 	int winHeigh;
 
