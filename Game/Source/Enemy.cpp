@@ -43,7 +43,7 @@ bool Enemy::Start()
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	leftAnim.loop = true;
-	leftAnim.speed = 0.5f;
+	leftAnim.speed = rightAnim.speed = 0.5f;
 	//SDL_Rect animRect = { 0,0,32,32 };
 
 	idleAnim.PushBack(SDL_Rect({ 32, 0, 32, 32 }));
