@@ -34,12 +34,12 @@ bool Debug::Update(float dt)
 	bool ret = true;
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		app->player->position.x = 600;
+		/*app->player->position.x = 600;
 		app->player->position.y = 2816;
 		app->player->vy = 0;
 		app->player->jumps = 0;
 		app->render->camera.x = app->player->position.x;
-		app->render->camera.y = app->player->position.y;
+		app->render->camera.y = app->player->position.y;*/
 
 	}
 
@@ -51,12 +51,6 @@ bool Debug::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		app->player->position.x = 600;
-		app->player->position.y = 2816;
-		app->player->vy = 0;
-		app->player->jumps = 0;
-		app->render->camera.x = app->player->position.x;
-		app->render->camera.y = app->player->position.y;
 
 	}
 
@@ -107,8 +101,8 @@ bool Debug::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
 	{
-		LOG("%d", (app->player->position.x)*dt);
-		LOG("%d", (app->player->position.y)*dt);
+		app->player->position.x = 443;
+		app->player->position.y = 1333;
 	}
 
 	

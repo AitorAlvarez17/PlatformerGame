@@ -79,10 +79,11 @@ public:
 	int winWidth;
 	int winHeigh;
 	Collider* collider;
-private:
 
 	Point<int> spawnLevel1;
 	Point<int> spawnLevel2;
+private:
+
 	int jumpForce = 0;
 	float jumpForceValue = 10.0f;
 	

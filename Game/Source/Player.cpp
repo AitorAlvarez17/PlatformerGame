@@ -210,10 +210,32 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 	if (app->debug->godMode == false)
 	{
-		if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
+
+		if (b == collider)
 		{
-			int compY = a->rect.y - b->rect.y;
-			int compX = a->rect.x - b->rect.x;
+			Collider* c = a;
+			a = b;
+			b = c;
+		}
+
+		int compY = a->rect.y - b->rect.y;
+		int compX = a->rect.x - b->rect.x;
+		switch (b->type)
+		{
+		case(Collider::Type::ENDLEVEL):
+
+			lvl2 = true;
+			app->map->CleanUp();
+			app->player->Reload();
+			app->scene->LoadLevel("level2.tmx");
+			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
+			app->player->position.x = app->player->spawnLevel2.x;
+			app->player->position.y = app->player->spawnLevel2.y;
+			return;
+			break;
+
+		case(Collider::Type::FLOOR):
+
 
 			if (std::abs(compY) < std::abs(compX))
 			{
@@ -230,7 +252,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 				if (compY > 0)
 				{
 					position.y += b->rect.y + b->rect.h - a->rect.y;
-					
+
 				}
 				else
 				{
@@ -238,15 +260,16 @@ void Player::OnCollision(Collider* a, Collider* b) {
 					vy = 0;
 					jumps = 3;
 				}
-				
+
 			}
 
 			collider->SetPos(position.x, position.y);
 
 
-		}
-		if (a->type == Collider::PLAYER && b->type == Collider::DEATH)
-		{
+			break;
+
+		case(Collider::Type::DEATH):
+
 			if (lifes > 0)
 			{
 				//if level 1 or 2
@@ -258,23 +281,17 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			{
 				isDead = true;
 			}
-		}
-		if (a->type == Collider::PLAYER && b->type == Collider::HEART)
-		{
-			lifes++;
-		}
-		if (a->type == Collider::PLAYER && b->type == Collider::ENDLEVEL)
-		{
 
-			//app->scene->currentLevel.create("level2.tmx");
-			lvl2 = true;
-			app->map->CleanUp();
-			app->player->Reload();
-			app->scene->LoadLevel("level2.tmx");
-			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
-			app->player->position.x = app->player->spawnLevel2.x;
-			app->player->position.y = app->player->spawnLevel2.y;
+			break;
+
+		case(Collider::Type::HEART):
+
+
+			lifes++;
+
+			break;
 		}
+		
 	}
 
 }
