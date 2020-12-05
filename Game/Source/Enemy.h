@@ -40,19 +40,18 @@ public:
 	void UpdateMovement();
 	void UpdateAnim();
 	void ChangeState();
-	//bool Load(pugi::xml_node&);
-	//bool Save(pugi::xml_node&);
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
 
 	//Transform
 	fPoint position;
 
 	//Physics
-	float speed = 2;
+	float speed = 2.0f;
 	float gravityForce = 3.0f;
-
+	float health = 20.0f;
 	//true = Right, false = left
 	bool isMoving= true;
-	bool isWalkingRight = true;
 
 	//Animations
 	Animation idleAnim;
@@ -66,8 +65,7 @@ public:
 
 private:
 
-
-
+	const char* texturePath;
 
 
 };
