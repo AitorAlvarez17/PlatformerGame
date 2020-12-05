@@ -52,7 +52,6 @@ bool Player::Start()
 	position.x = 600;
 	position.y = 2816;
 
-	prevY = position.y;
 
 	winWidth = app->win->GetWidth();
 	winHeigh = app->win->GetHeight();
@@ -131,7 +130,12 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-
+	if (app->debug->godMode == false)
+	{
+		position.y -= vy;
+		vy -= gravityForce * 0.5;
+		app->player->UpdateState();
+	}
 
 	return true;
 }
@@ -140,7 +144,7 @@ bool Player::Update(float dt)
 {
 	if (app->debug->godMode == false)
 	{
-		app->player->UpdateState(dt);
+
 		app->player->UpdateLogic(dt);
 
 	}
@@ -191,7 +195,6 @@ bool Player::PostUpdate()
 		app->render->DrawTexturePlayer(texture, position.x - 24, position.y - 30, &rect);
 	}
 
-	prevY = position.y;
 
 	return true;
 }
@@ -202,7 +205,6 @@ void Player::OnCollision(Collider* a, Collider* b) {
 	{
 		if (a->type == Collider::PLAYER && b->type == Collider::FLOOR)
 		{
-			grounded = true;
 			int compY = a->rect.y - b->rect.y;
 			int compX = a->rect.x - b->rect.x;
 			jumps = 3;
@@ -251,17 +253,14 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			lifes++;
 		}
+
 	}
 
 }
 
-void Player::UpdateState(float dt)
+void Player::UpdateState()
 {
-	if (!grounded)
-	{
-		position.y -= vy;
-		vy -= gravityForce * 0.5;
-	}
+
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		isGoingRight = false;
@@ -480,7 +479,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 			currentAnim = &jumpLeftAnim;
 			isJumping = true;
 		}
-		grounded = false;
+
 
 		break;
 	}

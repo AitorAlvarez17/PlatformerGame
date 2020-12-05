@@ -41,7 +41,7 @@ public:
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
 	SDL_Rect coll;
-	void UpdateState(float dt);
+	void UpdateState();
 	void UpdateLogic(float dt);
 	void ChangeState(PlayerState previous, PlayerState next);
 	void Reload();
@@ -67,7 +67,7 @@ public:
 	
 
 	fPoint position;
-	float prevY = 0.0f;
+
 	float vy = 0.0f;
 	float speed = 0.0f;
 	int jumps = 2;
@@ -95,7 +95,6 @@ private:
 	bool canMoveUp = true;
 	bool canMoveDown = true;
 	bool push = false;
-	bool grounded = false;
 	
 	const char* texturePath;
 

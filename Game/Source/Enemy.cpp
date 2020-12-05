@@ -136,3 +136,23 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 
 }
 
+//bool Enemy::Save(pugi::xml_node& savedGame)
+//{
+//
+//	savedGame.append_attribute("x") = position.x;
+//	savedGame.append_attribute("y") = position.y;
+//
+//
+//
+//	return true;
+//}
+//
+//bool Enemy::Load(pugi::xml_node& savedPlayer)
+//{
+//	position.x = savedPlayer.attribute("x").as_int();
+//	position.y = savedPlayer.attribute("y").as_int();
+//	jumps = savedPlayer.attribute("jumpsRemaining").as_int();
+//	vy = savedPlayer.attribute("verticalVelocity").as_int();
+//
+//	return true;
+//}
