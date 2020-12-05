@@ -36,10 +36,10 @@ bool Enemy::Start()
 	int pixels = 32;
 
 	position.x = 700;
-	position.y = 2850;
+	position.y = 2816;
 
 	//load texture
-	texture = app->tex->Load("Assets/textures/Rock.png");
+	texture = app->tex->Load("Assets/textures/Warrior.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	leftAnim.loop = true;
@@ -48,11 +48,19 @@ bool Enemy::Start()
 
 	idleAnim.PushBack(SDL_Rect({ 32, 0, 32, 32 }));
 
-	leftAnim.PushBack({ 0,0,32,32 });
-	leftAnim.PushBack({ 32,0,32,32 });
-	leftAnim.PushBack({ 64,0,32,32 });
-	leftAnim.PushBack({ 96,0,32,32 });
-	leftAnim.PushBack({ 128,0,32,32 });
+	leftAnim.PushBack({ 0,32,32,32 });
+	leftAnim.PushBack({ 32,32,32,32 });
+	leftAnim.PushBack({ 64,32,32,32 });
+	leftAnim.PushBack({ 96,32,32,32 });
+	leftAnim.PushBack({ 128,32,32,32 });
+	leftAnim.PushBack({ 160,32,32,32 });
+
+	rightAnim.PushBack({ 0,0,32,32 });
+	rightAnim.PushBack({ 32,0,32,32 });
+	rightAnim.PushBack({ 64,0,32,32 });
+	rightAnim.PushBack({ 96,0,32,32 });
+	rightAnim.PushBack({ 128,0,32,32 });
+	rightAnim.PushBack({ 160,0,32,32 });
 
 	//currentAnim = &leftAnim;
 
@@ -87,7 +95,7 @@ bool Enemy::Update(float dt)
 		if (isMovingRight) {
 		
 			position.x += speed;
-			currentAnim = &leftAnim;
+			currentAnim = &rightAnim;
 
 		}
 		else
@@ -110,7 +118,7 @@ bool Enemy::PostUpdate()
 	//SDL_Rect enemyRect = currentanim;
 	//app->render->DrawTexture(texture, position.x, position.y, &enemyRect);
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexturePlayer(texture, position.x, position.y, &rect);
 
 
 
