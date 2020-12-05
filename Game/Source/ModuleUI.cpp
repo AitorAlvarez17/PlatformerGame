@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Player.h"
+#include "Scene.h"
 #include "Log.h"
 #include "Animation.h"
 #include "Collisions.h"
@@ -52,6 +53,7 @@ bool ModuleUI::Start()
 bool ModuleUI::PreUpdate()
 {
 	
+	
 	return true;
 }
 
@@ -60,17 +62,29 @@ bool ModuleUI::Update(float dt)
 	
 	write = true;
 	return true;
+	
 }
 
 bool ModuleUI::PostUpdate()
 {
 	
-	app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
-	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);
-
-	
+	/*app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
+	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);*/
+	if (app->scene->playing == true)
+	{
+		Draw();
+	}
 
 	return true;
+}
+
+void ModuleUI::Draw()
+{
+
+
+
+	app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3, 0, 0, 0, 0, 0, false);
+	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
 }
 
 

@@ -60,10 +60,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
-	AddModule(UI);
 	AddModule(checkpoints);
 	AddModule(pathfinding);
 	AddModule(debug);
+	AddModule(UI);
 	AddModule(render);
 
 

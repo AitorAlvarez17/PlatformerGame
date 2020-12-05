@@ -55,6 +55,7 @@ public:
 	bool gameOver = false;
 	SString currentLevel;
 	GameplayState gameplayState = TITLE_SCREEN;
+	bool playing = false;
 
 private:
 

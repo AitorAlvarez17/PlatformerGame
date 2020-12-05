@@ -11,6 +11,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "ObjectManager.h"
+#include "ModuleUI.h"
 
 Scene::Scene(bool startEnabled) : Module(startEnabled)
 {
@@ -173,6 +174,7 @@ bool Scene::PostUpdate()
 	int alpha = adjustedFade * 255.0f;
 	
 	app->render->DrawRectangle(fullScreenRect, 0, 0, 0, alpha, true, false);
+	
 
 	
 	return ret;
@@ -215,6 +217,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 		app->player->vy = 0;
 		app->player->jumps = 0;
 		app->player->lvl1 = true;
+		playing = true;
 		//app->player->Reload();
 		break;
 	case TITLE_SCREEN:
@@ -224,6 +227,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 		app->map->Disable();
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
+		playing = false;
 		break;
 	case GAME_OVER_SCREEN:
 		//screenDisplayAnim = &gameOverAnim;
@@ -232,6 +236,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 		
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
+		playing = false;
 		break;
 	}
 
