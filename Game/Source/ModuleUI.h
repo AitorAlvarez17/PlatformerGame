@@ -25,6 +25,7 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
+	void Draw();
 
 
 	bool active = true;
@@ -36,6 +37,9 @@ public:
 
 	int winWidth;
 	int winHeigh;
+
+	int camaraPosx;
+	int camaraPosy;
 
 
 private:
@@ -51,8 +55,7 @@ private:
 	bool outArea;
 	bool push = false;
 	int tpCounter = 1;
-	int camaraPosx;
-	int camaraPosy;
+	
 	const char* texturePath;
 
 
