@@ -539,7 +539,6 @@ bool Map::LoadTileset(pugi::xml_node& tilesetNode, TileSet* ts)
 
 
     int i = 0;
-    LOG("HI");
     for (pugi::xml_node& TileId = mapFile.child("map").child("tileset").child("tile"); TileId && ret; TileId = TileId.next_sibling("tile")) 
     {
 
