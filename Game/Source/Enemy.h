@@ -58,6 +58,12 @@ public:
 	Animation leftAnim;
 	Animation rightAnim;
 
+	Animation stunleftAnim;
+	Animation stunRightAnim;
+
+	Animation deadLeftAnim;
+	Animation deadRightAnim;
+
 	//Colliders
 	Collider* enemyCollider;
 	Collider* rightWall;
