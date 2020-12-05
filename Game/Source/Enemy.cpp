@@ -36,7 +36,7 @@ bool Enemy::Start()
 	int pixels = 32;
 
 	//Enemy Spawn Position
-	position.x = 650;
+	position.x = 700;
 	position.y = 2816;
 
 	//Load Texture
@@ -46,6 +46,7 @@ bool Enemy::Start()
 	//Animations
 	leftAnim.loop = true;
 	leftAnim.speed = rightAnim.speed = 0.1f;
+	currentAnim = &rightAnim;
 
 	leftAnim.PushBack({ 0,32,32,32 });
 	leftAnim.PushBack({ 32,32,32,32 });
@@ -193,7 +194,6 @@ void Enemy::UpdateAnim()
 		//PATHFINDING ANIM PART
 
 		return;
-
 
 	}
 
