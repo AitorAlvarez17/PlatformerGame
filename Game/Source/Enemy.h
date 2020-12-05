@@ -41,11 +41,11 @@ public:
 	Point<int> position;
 
 	//Physics
-	int speed = 5;
+	int speed = 2;
 	float gravityForce = 3.0f;
 
 	//true = Right, false = left
-	bool isMoving= false;
+	bool isMoving= true;
 	bool isMovingRight = true;
 
 	Animation idleAnim;
