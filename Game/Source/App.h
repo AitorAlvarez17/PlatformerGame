@@ -148,6 +148,7 @@ private:
 	pugi::xml_node wi;//carga en window
 	pugi::xml_node au;//carga en audio
 	pugi::xml_node pl;//carga en player
+	pugi::xml_node en;//carga en enemy
 
 
 	//PREGUNTASELO A RAMÓN

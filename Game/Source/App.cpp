@@ -431,6 +431,12 @@ bool App::Load()
 			LOG("player not loading");
 		}
 
+		en = saveState.child("enemy");
+		if (pl == NULL)
+		{
+			LOG("player not loading");
+		}
+
 
 	}
 
@@ -440,6 +446,7 @@ bool App::Load()
 	app->scene->Load(sce);
 	app->win->Load(wi);
 	app->player->Load(pl);
+	app->enemy->Load(en);
 
 	requestLoad = false;
 
@@ -478,7 +485,8 @@ bool App::Save()
 		pugi::xml_node p = node.append_child("player");
 		player->Save(p);
 
-
+		pugi::xml_node e = node.append_child("enemy");
+		enemy->Save(e);
 
 
 

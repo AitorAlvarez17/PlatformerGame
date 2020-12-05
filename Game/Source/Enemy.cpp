@@ -236,6 +236,7 @@ bool Enemy::Save(pugi::xml_node& savedGame)
 {
 	savedGame.append_attribute("x") = position.x;
 	savedGame.append_attribute("y") = position.y;
+	savedGame.append_attribute("health") = health;
 
 	return true;
 }
