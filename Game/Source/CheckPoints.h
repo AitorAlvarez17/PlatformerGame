@@ -32,7 +32,7 @@ public:
 	SDL_Rect tpColl;
 	SDL_Rect tpColl2;
 	SDL_Rect tpColl3;
-
+	SDL_Rect tpEndLevel;
 	
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
@@ -42,6 +42,7 @@ public:
 	Point<int> tp1;
 	Point<int> tp2;
 	Point<int> tp3;
+	Point<int> endlevel;
 	bool active = true;
 	bool regulator = true;
 	bool onTp = true;
@@ -58,6 +59,7 @@ private:
 	Collider* collidertp1;
 	Collider* collidertp2;
 	Collider* collidertp3;
+	Collider* colliderEndLevel;
 
 	SDL_Texture* renderedOption;
 

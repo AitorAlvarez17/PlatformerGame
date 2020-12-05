@@ -79,7 +79,9 @@ public:
 	int winHeigh;
 
 private:
-	
+
+	Point<int> spawnLevel1;
+	Point<int> spawnLevel2;
 	int jumpForce = 0;
 	float jumpForceValue = 10.0f;
 	
