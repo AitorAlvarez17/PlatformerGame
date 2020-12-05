@@ -207,7 +207,6 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			int compY = a->rect.y - b->rect.y;
 			int compX = a->rect.x - b->rect.x;
-			jumps = 3;
 
 			if (std::abs(compY) < std::abs(compX))
 			{
@@ -224,12 +223,15 @@ void Player::OnCollision(Collider* a, Collider* b) {
 				if (compY > 0)
 				{
 					position.y += b->rect.y + b->rect.h - a->rect.y;
+					
 				}
 				else
 				{
 					position.y -= a->rect.y + a->rect.h - b->rect.y;
 					vy = 0;
+					jumps = 3;
 				}
+				
 			}
 
 			collider->SetPos(position.x, position.y);
