@@ -243,8 +243,8 @@ void App::FinishUpdate()
 
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u Pos.x: %.2f,Pos.y:%.2f ",
+		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount,app->player->position.x,app->player->position.y);
 
 	app->win->SetTitle(title);
 
