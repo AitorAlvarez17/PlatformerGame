@@ -21,15 +21,10 @@
 
   <player>
   	<texture>Assets/textures/FinnSprite.png</texture>
-  	<move gravity="1800" jumpForceValue="10" speed="10" maxJumps="2"/>
+  	<move gravity="1800" jumpForceValue="10" speed="150" maxJumps="2"/>
     <audio jump="Assets/audio/fx/Jump.wav" />
   </player>
   
-  <enemy>
-  	<texture>Assets/textures/FinnSprite.png</texture>
-  	<move gravity="1800" jumpForceValue="10" speed="10" health= "100"/>
-    <audio jump="Assets/audio/fx/Jump.wav" attack = "Assets/audio/fx/Attack.wav" />
-  </enemy>
 
   <scene>
     <music path="Assets/audio/music/music_spy.ogg"/>

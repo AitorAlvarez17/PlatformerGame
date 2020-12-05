@@ -63,7 +63,7 @@ bool Player::Start()
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");
 
-	coll = { position.x, position.y, pixels - 4,pixels + 2 };
+	coll = { (int)position.x, (int)position.y, pixels - 4,pixels + 2 };
 
 	//cambiar això
 	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
@@ -144,7 +144,7 @@ bool Player::Update(float dt)
 	if (app->debug->godMode == false)
 	{
 		
-		app->player->UpdateLogic();
+		app->player->UpdateLogic(dt);
 
 	}
 	else
@@ -152,19 +152,19 @@ bool Player::Update(float dt)
 		
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x -= speed;
+			position.x -= speed * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed;
+			position.x += speed * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
-			position.y += speed;
+			position.y += speed * dt;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
-			position.y -= speed;
+			position.y -= speed * dt;
 		}
 		
 	}
@@ -238,8 +238,8 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		{
 			if (lifes > 0)
 			{
-				position.x = 600;
-				position.y = 2830;
+				position.x = 600.0f;
+				position.y = 2830.0f;
 				this->lifes--;
 			}
 			if (lifes <= 0)
@@ -360,7 +360,7 @@ void Player::UpdateState()
 
 }
 
-void Player::UpdateLogic()
+void Player::UpdateLogic(float dt)
 {
 
 	switch (playerState)
@@ -378,22 +378,16 @@ void Player::UpdateLogic()
 			if (isGoingRight == true)
 			{
 
-				position.x += speed;
+				position.x += speed * dt;
 
 			}
 			else
 			{
 
-				position.x -= speed;
+				position.x -= speed * dt;
 
 			}
 		}
-		
-		
-
-		
-
-
 
 		break;
 	}
@@ -408,7 +402,6 @@ void Player::UpdateLogic()
 			position.y -= 2;
 		}
 	
-
 		ChangeState(JUMPING, FALLING);
 
 		break;
@@ -420,12 +413,12 @@ void Player::UpdateLogic()
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed;
+			position.x += speed * dt;
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x -= speed;
+			position.x -= speed * dt;
 
 		}
 
@@ -433,9 +426,7 @@ void Player::UpdateLogic()
 	}
 	case(DYING):
 	{
-
 		break;
-
 	}
 
 	}
@@ -467,18 +458,12 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	{
 		if (isGoingRight == true)
 		{
-
 				currentAnim = &runRightAnim;
 
-
-		
 		}
 		else
 		{
-
 				currentAnim = &runLeftAnim;
-
-			
 
 		}
 
@@ -571,5 +556,7 @@ void Player::Reload()
 	gravityOn = false;
 	initialWaitCount = 0.0f;*/
 }
+
+
 
 
