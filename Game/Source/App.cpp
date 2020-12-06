@@ -10,6 +10,7 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Fireball.h"
 #include "ObjectManager.h"
 #include "Object.h"
 #include "CheckPoints.h"
@@ -39,6 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new Collisions(false);
 	player = new Player(false);
 	enemy = new Enemy(false);
+	fireball = new Fireball(false);
 	fade = new ModuleFadeToBlack(true);
 	pathfinding = new PathFinding(false);
 	debug = new Debug(true);
@@ -59,6 +61,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(player);
 	AddModule(enemy);
+	AddModule(fireball);
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
@@ -245,8 +248,8 @@ void App::FinishUpdate()
 
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u Pos.x: %.2f,Pos.y:%.2f,Cooldown: %.2f ",
-		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount,app->player->position.x,app->player->position.y, app->player->cooldown);
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u Pos.x: %.2f,Pos.y:%.2f,Cooldown: %.2f,PosEnemy.x: %.2f ",
+	averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount,app->player->position.x,app->player->position.y, app->player->cooldown,(app->enemy->position.x - app->player->position.y));
 
 	app->win->SetTitle(title);
 

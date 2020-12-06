@@ -20,6 +20,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL_A][Collider::Type::TP] = false;
 	matrix[Collider::Type::WALL_A][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::WALL_A][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::WALL_A][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::WALL_D][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::WALL_D] = false;
@@ -31,6 +32,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::WALL_D][Collider::Type::TP] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::WALL_D][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::WALL_D][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL_A] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::WALL_D] = true;
@@ -42,6 +44,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::TP] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::SAVEPOINT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENDLEVEL] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::FIREBALL] = true;
 
 	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
@@ -53,6 +56,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::FLOOR][Collider::Type::TP] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::FLOOR][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::DEATH][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::WALL_D] = false;
@@ -64,6 +68,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::DEATH][Collider::Type::TP] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::ENDLEVEL] = SDL_FillRect;
+	matrix[Collider::Type::DEATH][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::HEART][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::HEART][Collider::Type::WALL_D] = false;
@@ -75,6 +81,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::HEART][Collider::Type::TP] = false;
 	matrix[Collider::Type::HEART][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::HEART][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::HEART][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::COIN][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::COIN][Collider::Type::WALL_D] = false;
@@ -86,6 +93,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::COIN][Collider::Type::TP] = false;
 	matrix[Collider::Type::COIN][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::COIN][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::COIN][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::TP][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::TP][Collider::Type::WALL_D] = false;
@@ -97,6 +105,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::TP][Collider::Type::TP] = false;
 	matrix[Collider::Type::TP][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::TP][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::TP][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::WALL_D] = false;
@@ -108,6 +117,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::TP] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL_D] = false;
@@ -120,6 +130,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMYWALL] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::FIREBALL] = true;
 
 
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::WALL_A] = false;
@@ -133,6 +144,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENEMY] = true;
 	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::ENEMYWALL][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::WALL_D] = false;
@@ -144,6 +156,19 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::TP] = false;
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::ENDLEVEL][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::ENDLEVEL][Collider::Type::FIREBALL] = false;
+
+
+	matrix[Collider::Type::FIREBALL][Collider::Type::WALL_A] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::WALL_D] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::PLAYER] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::FLOOR] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::HEART] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::COIN] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::TP] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::SAVEPOINT] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::ENEMY] = true;
 
 }
 
@@ -312,7 +337,9 @@ void Collisions::DebugDraw()
 		case Collider::Type::ENDLEVEL:
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
 			break;
-
+		case Collider::Type::FIREBALL:
+			app->render->DrawRectangle(colliders[i]->rect, 255, 127, 80, alpha);
+			break;
 
 		}
 

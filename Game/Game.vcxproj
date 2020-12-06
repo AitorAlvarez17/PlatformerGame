@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="Source\CheckPoints.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\Fireball.cpp" />
     <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\Collider.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\CheckPoints.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Fireball.h" />
     <ClInclude Include="Source\ModuleUI.h" />
     <ClInclude Include="Source\Object.h" />
     <ClInclude Include="Source\Collider.h" />

@@ -38,7 +38,7 @@ bool Enemy::Awake(pugi::xml_node& config)
 
 	health = move.attribute("health").as_float();
 	speed = move.attribute("speed").as_float();
-	
+
 
 	return ret;
 }
@@ -52,7 +52,7 @@ bool Enemy::Start()
 	position.y = 2816;
 
 	//Load Texture
-	texture = app->tex->Load("Assets/textures/warriorcopia.png");
+	texture = app->tex->Load("Assets/textures/warrior.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	//Animations
@@ -61,32 +61,32 @@ bool Enemy::Start()
 
 	rightAnim.GenerateAnimation({ 0,0,32,32 }, 5);
 	rightAnim.loop = true;
-	rightAnim.speed = rightAnim.speed = 0.1f;
+	rightAnim.speed = 0.1f;
 
 	leftAnim.GenerateAnimation({ 0,32,32,32 }, 5);
 	leftAnim.loop = true;
-	leftAnim.speed = rightAnim.speed = 0.1f;
+	leftAnim.speed = 0.1f;
 
 	deadRightAnim.GenerateAnimation({ 96,128,32,32 }, 3);
 	deadRightAnim.loop = true;
-	deadRightAnim.speed = rightAnim.speed = 0.1f;
+	deadRightAnim.speed = 0.1f;
 
 	deadLeftAnim.GenerateAnimation({ 0,128,32,32 }, 3);
 	deadLeftAnim.loop = true;
-	deadLeftAnim.speed = rightAnim.speed = 0.1f;
+	deadLeftAnim.speed = 0.1f;
 
 	stunRightAnim.GenerateAnimation({ 0,64,32,32 }, 5);
 	stunRightAnim.loop = true;
-	stunRightAnim.speed = rightAnim.speed = 0.1f;
+	stunRightAnim.speed = 0.1f;
 
-	stunleftAnim.GenerateAnimation({ 0,96,32,32 }, 5);
-	stunleftAnim.loop = true;
-	stunleftAnim.speed = rightAnim.speed = 0.1f;
+	stunLeftAnim.GenerateAnimation({ 0,96,32,32 }, 5);
+	stunLeftAnim.loop = true;
+	stunLeftAnim.speed = 0.1f;
 
 
 	//Colliders
 	enemyCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x ,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMY, this);
-	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 50,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
+	leftWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x - 150,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 	rightWall = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 120,(int)position.y + pixels,pixels,pixels }), Collider::Type::ENEMYWALL, this);
 
 
@@ -113,6 +113,7 @@ bool Enemy::PostUpdate()
 {
 	UpdateMovement();
 	UpdateAnim();
+
 	//Update Animation
 	currentAnim->Update();
 
@@ -156,6 +157,11 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 
 	}
 
+		enemyCollider->SetPos((int)b->rect.x - 1, (int)position.y);
+
+
+
+
 }
 
 void Enemy::UpdateMovement()
@@ -181,6 +187,17 @@ void Enemy::UpdateMovement()
 		case (ENEMYRUNNING):
 		{
 			//PATHFINDING
+			position.x += speed;
+			return;
+		}
+		case(ENEMYSTUN):
+		{
+			//Stun dosn't do anything yet.
+			return;
+		}
+		case(ENEMYDYING):
+		{
+			position.x += speed;
 			return;
 		}
 		}
@@ -216,16 +233,28 @@ void Enemy::UpdateAnim()
 	}
 	case (ENEMYRUNNING):
 	{
-		leftAnim.speed = rightAnim.speed = 1.0f;
+		
 
 		//PATHFINDING ANIM PART
+		if (speed > 0)
+		{
+
+			leftAnim.speed = 1.0f;
+			currentAnim = &rightAnim;
+
+		}
+		else
+		{
+			rightAnim.speed = 1.0f;
+			currentAnim = &leftAnim;
+
+		}
 
 		return;
 
 	}
-	case (ENEMYDYING):
+	case (ENEMYSTUN):
 	{
-
 		if (speed > 0)
 		{
 			currentAnim = &stunRightAnim;
@@ -234,9 +263,26 @@ void Enemy::UpdateAnim()
 		}
 		else
 		{
-			currentAnim = &stunleftAnim;
+			currentAnim = &stunLeftAnim;
 
 		}
+		return;
+	}
+	case (ENEMYDYING):
+	{
+
+		if (speed > 0)
+		{
+			currentAnim = &deadRightAnim;
+
+
+		}
+		else
+		{
+			currentAnim = &deadLeftAnim;
+
+		}
+		return;
 	}
 
 
@@ -245,16 +291,40 @@ void Enemy::UpdateAnim()
 
 void Enemy::ChangeState()
 {
-	if ((position.x - app->player->position.x) < 60.0f)
+	float newPosX = position.x - app->player->position.x;
+
+	//LEFT
+	if (newPosX < 150.0f && newPosX > 0)
 	{
-		eState = EnemyState::ENEMYDYING;
+		leftWall->type = Collider::Type::NONE;
+		rightWall->type = Collider::Type::NONE;
+		eState = EnemyState::ENEMYRUNNING;
+
+
+		if(speed > 0)speed = speed * -1;
+		
+
+	}
+	//RIGHT
+	else if(newPosX < 0 && (newPosX * -1) < 150.0f)
+	{
+		leftWall->type = Collider::Type::NONE;
+		rightWall->type = Collider::Type::NONE;
+		eState = EnemyState::ENEMYRUNNING;
+
+		isMovingRight = false;
+
+		if (speed < 0)speed = speed * -1;
 
 	}
 	else
 	{
 		eState = EnemyState::ENEMYWALKING;
-
+		leftWall->type = Collider::Type::ENEMYWALL;
+		rightWall->type = Collider::Type::ENEMYWALL;
 	}
+
+
 }
 
 bool Enemy::Save(pugi::xml_node& savedGame)
@@ -271,7 +341,7 @@ bool Enemy::Load(pugi::xml_node& savedPlayer)
 	position.x = savedPlayer.attribute("x").as_float();
 	position.y = savedPlayer.attribute("y").as_float();
 	health = savedPlayer.attribute("health").as_float();
-	
+
 
 	return true;
 }

@@ -32,6 +32,7 @@
     </ClCompile>
     <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\Wand.cpp" />
+    <ClCompile Include="Source\Fireball.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -89,6 +90,7 @@
     </ClInclude>
     <ClInclude Include="Source\ModuleUI.h" />
     <ClInclude Include="Source\Wand.h" />
+    <ClInclude Include="Source\Fireball.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
