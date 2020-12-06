@@ -56,6 +56,7 @@ bool ModuleUI::Start()
 	cooldown4 = app->tex->Load("Assets/UI/Cooldown4.png");
 	cooldown5 = app->tex->Load("Assets/UI/Cooldown5.png");
 	healGUI = app->tex->Load("Assets/UI/HealGUI.png");
+	cantSummon = app->tex->Load("Assets/UI/cant.png");
 	fireballGUI = app->tex->Load("Assets/UI/FireBallGUI.png");
 
 	//pressH = app->tex->Load("Assets/UI/PressH.png");
@@ -106,6 +107,10 @@ bool ModuleUI::Update(float dt)
 
 bool ModuleUI::PostUpdate()
 {
+	/*if (maxLifes)
+	{
+		app->render->DrawTexture(cantSummon, camaraPosx + 8, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+	}*/
 	BlitText(600, 2846, font, "LEVEL", false);
 	/*app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);*/
@@ -332,7 +337,7 @@ int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
 	font.totalLength = strlen(characters);
 	font.columns = fonts[id].totalLength / rows;
 
-	uint tex_w, tex_h;
+	uint texWidth, texHeight;
 	app->tex->GetSize(tex, tex_w, tex_h);
 	font.char_w = tex_w / font.columns;
 	font.char_h = tex_h / font.rows;

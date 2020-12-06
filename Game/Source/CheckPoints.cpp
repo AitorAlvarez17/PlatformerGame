@@ -49,8 +49,8 @@ bool CheckPoints::Start()
 	tp3.x = 2502;
 	tp3.y = 2046;
 
-	endlevel.x = 384;
-	endlevel.y = 1374;
+	endLevel.x = 384;
+	endLevel.y = 1374;
 	LOG("Loading Coin textures");
 
 	tp1IDLE = app->tex->Load("Assets/maps/TP1/tp1_to0.png");
@@ -72,7 +72,7 @@ bool CheckPoints::Start()
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
 	tpColl3 = { tp3.x, tp3.y, pixels ,pixels };
-	tpEndLevel = { endlevel.x, endlevel.y - 170, pixels ,pixels*10 };
+	tpEndLevel = { endLevel.x, endLevel.y - 170, pixels ,pixels*10 };
 
 	collider = app->collisions->AddCollider(coll, Collider::Type::SAVEPOINT, this);
 	collidertp1 = app->collisions->AddCollider(tpColl, Collider::Type::TP, this);
@@ -347,7 +347,7 @@ void CheckPoints::InitLevel2()
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
 	tpColl3 = { tp3.x, tp3.y, pixels ,pixels };
-	tpEndLevel = { endlevel.x, endlevel.y - 170, pixels ,pixels * 10 };
+	tpEndLevel = { endLevel.x, endLevel.y - 170, pixels ,pixels * 10 };
 
 	collider = app->collisions->AddCollider(coll, Collider::Type::SAVEPOINT, this);
 	collidertp1 = app->collisions->AddCollider(tpColl, Collider::Type::TP, this);
