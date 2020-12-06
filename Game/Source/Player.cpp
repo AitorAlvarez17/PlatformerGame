@@ -416,9 +416,12 @@ void Player::UpdateState()
 void Player::UpdateLogic(float dt)
 {
 	cooldown += dt;
+	fireCooldown += dt;
 	
 	if (cooldown > maxCooldown)
 		cooldown = maxCooldown;
+	if (fireCooldown > fireMaxCooldown)
+		fireCooldown = maxCooldown;
 
 	switch (playerState)
 	{
@@ -655,14 +658,14 @@ void Player::FireHability()
 			Fireball* fireball = new Fireball(false, position, -1, 100);
 
 		}
-		cooldown = 0;
+		fireCooldown = 0;
 	}
 	else
 	{
 
 	}
 
-	LOG("%f", maxCooldown);
+	LOG("%f", fireMaxCooldown);
 
 }
 

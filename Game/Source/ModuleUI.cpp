@@ -224,7 +224,7 @@ void ModuleUI::WandUi()
 	} 
 	if (app->player->cooldown < app->player->fireMaxCooldown)	//FIREBALL
 	{
-		float fireCd = app->player->cooldown;
+		float fireCd = app->player->fireCooldown;
 		if (fireCd < 1)
 		{
 			app->render->DrawTexture(cooldown5, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
