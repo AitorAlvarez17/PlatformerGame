@@ -27,6 +27,7 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
  - Cooldown Skills included on Player Weapon
  - Audio Feedback
  - Entity system already implemented, used to create all the objects and enemies as well as the firebolt, but we are having some trouble with this last one's collider.
+ - Level 2 is already created and implemented but still too buggy, so we decided not to give access to it just yet.
 
  
 ## Controls
