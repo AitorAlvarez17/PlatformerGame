@@ -45,6 +45,12 @@ bool ModuleUI::Start()
 	singleHeart = app->tex->Load("Assets/UI/heart.png");
 	healthUi = app->tex->Load("Assets/UI/heartAnim.png");
 
+	cooldown1 = app->tex->Load("Assets/UI/Cooldown1.png");
+	cooldown2 = app->tex->Load("Assets/UI/Cooldown2.png");
+	cooldown3 = app->tex->Load("Assets/UI/Cooldown3.png");
+	healGUI = app->tex->Load("Assets/UI/HealGUI.png");
+	pressH = app->tex->Load("Assets/UI/PressH.png");
+
 	if (healthUi == nullptr)LOG("TEXTURE NOT FOUNDED");
 
 	twoHearts.GenerateAnimation({ 0,0,24,24 },2);
@@ -88,7 +94,7 @@ bool ModuleUI::Update(float dt)
 
 bool ModuleUI::PostUpdate()
 {
-
+	
 	/*app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);*/
 	if (app->scene->playing == true)
@@ -102,8 +108,27 @@ bool ModuleUI::PostUpdate()
 
 void ModuleUI::Draw()
 {
-
-	app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3, 0, 0, 0, 0, 0, false);
+	int margin = 3;
+	app->render->DrawTexture(healGUI, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+	app->render->DrawTexture(pressH, camaraPosx + margin + 64, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+	if (app->player->cooldown < app->player->maxCooldown)
+	{
+		float cd = app->player->cooldown;
+		if (cd < 1)
+		{
+			app->render->DrawTexture(cooldown3, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h)/2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (cd < 2 && cd > 1)
+		{
+			app->render->DrawTexture(cooldown2, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (cd < 3 && cd > 2)
+		{
+			app->render->DrawTexture(cooldown1, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+	}
+	
+	app->render->DrawTexture(healthTitle, camaraPosx + margin, camaraPosy + 3, 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
 
 	currentHealthAnim->Update();

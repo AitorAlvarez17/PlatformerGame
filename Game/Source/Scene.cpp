@@ -43,8 +43,14 @@ bool Scene::Start()
 	bgTexture = app->tex->Load("Assets/maps/MenuF.png");//por esto ramon descuenta !!!!!
 	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->oManager->AddObject(ObjType::HEART, 750, 2830);
-	app->oManager->AddObject(ObjType::COIN, 780, 2830);
+	app->oManager->AddObject(ObjType::HEART, 2151, 2654);
+	app->oManager->AddObject(ObjType::COIN, 1053, 2800);
+	app->oManager->AddObject(ObjType::COIN, 1315, 2740);
+	app->oManager->AddObject(ObjType::COIN, 1572, 2677);
+	app->oManager->AddObject(ObjType::COIN, 3269, 2526);
+	app->oManager->AddObject(ObjType::COIN, 3014, 2590);
+	app->oManager->AddObject(ObjType::COIN, 1667, 1850);
+	app->oManager->AddObject(ObjType::COIN, 1537, 1854);
 
 
 	
@@ -149,16 +155,19 @@ bool Scene::Update(float dt)
 		FadeToNewState(GAME_OVER_SCREEN);
 		app->player->position.x = 961;
 		app->player->position.y = 80;
-		if(app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if(app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && gameplayState == GAME_OVER_SCREEN)
 		{
-			/*app->player->isDead = false;
+			app->player->lifes = 3;
+			app->player->isDead = false;
 			app->player->position.x = 600;
 			app->player->position.y = 2816;
 			app->player->vy = 0;
 			app->player->jumps = 0;
 			app->render->camera.x = app->player->position.x;
 			app->render->camera.y = app->player->position.y;
-			app->player->lvl1 = true;*/
+			app->player->lvl1 = true;
+			//gameplayState = PLAYING;
+			playing = true;
 		}
 
 	}
@@ -241,8 +250,8 @@ void Scene::ChangeGameplayState(GameplayState newState)
 		app->map->Load("level1.tmx");
 		app->tex->UnLoad(bgTexture);
 		//PLAYER
-		app->player->position.x = 600;
-		app->player->position.y = 2816;
+		app->player->position.x = app->player->spawnLevel1.x;
+		app->player->position.y = app->player->spawnLevel1.y;
 		app->player->vy = 0;
 		app->player->jumps = 0;
 		app->player->lvl1 = true;
@@ -261,8 +270,6 @@ void Scene::ChangeGameplayState(GameplayState newState)
 	case GAME_OVER_SCREEN:
 		//screenDisplayAnim = &gameOverAnim;
 		gameplayState = GAME_OVER_SCREEN;
-		app->map->CleanUp();
-		
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 		playing = false;

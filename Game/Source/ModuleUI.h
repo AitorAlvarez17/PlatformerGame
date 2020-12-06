@@ -52,6 +52,12 @@ private:
 	SDL_Texture* singleHeart;
 	SDL_Texture* healthUi;
 
+
+	SDL_Texture* cooldown1;
+	SDL_Texture* cooldown2;
+	SDL_Texture* cooldown3;
+	SDL_Texture* healGUI;
+	SDL_Texture* pressH;
 	// A ptr to the current animation
 	Animation* currentHealthAnim = nullptr;
 	Animation twoHearts;

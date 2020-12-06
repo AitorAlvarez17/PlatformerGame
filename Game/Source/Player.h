@@ -45,7 +45,7 @@ public:
 	void UpdateLogic(float dt);
 	void ChangeState(PlayerState previous, PlayerState next);
 	void Reload();
-
+	void HealHability();
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
@@ -75,6 +75,11 @@ public:
 	bool lvl2 = false;
 	bool isDead = false;
 	int lifes = 3;
+
+	int fireBallDirection;
+
+	float cooldown = 3.0f;
+	float maxCooldown = 3.0f;
 
 	int winWidth;
 	int winHeigh;
