@@ -26,9 +26,9 @@ ObjectManager::ObjectManager(bool startEnabled) : Module(startEnabled)
 bool ObjectManager::Start()
 {
 	
-	/*coinTex = app->tex->Load("Assets/textures/coinAnim.png");
+	coinTex = app->tex->Load("Assets/textures/coinAnim.png");
 	heartTex = app->tex->Load("Assets/textures/heartAnim.png");
-	fireBallTex = app->tex->Load("Assets/textures/fireball2.png");*/
+	fireBallTex = app->tex->Load("Assets/textures/fireball2.png");
 
 	return true;
 }
@@ -180,7 +180,7 @@ void ObjectManager::SpawnObj(const ObjSpawnpoint& info)
 				objects[i]->Start();
 				break;
 			case ObjType::FIREBALL:
-				objects[i] = new Object(info.x, info.y, info.dir, ObjType::HEART, true);
+				objects[i] = new Object(info.x, info.y, info.dir, ObjType::FIREBALL, true);
 				objects[i]->Start();
 				break;
 

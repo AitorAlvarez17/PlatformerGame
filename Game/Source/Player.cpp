@@ -642,17 +642,19 @@ void Player::FireHability()
 {
 	if (cooldown == fireMaxCooldown)
 	{
+
+
+		
 		//CREATE FIREBALL
 		if (isGoingRight)
 		{
-			Fireball fireball(false, position, 1, 100);
-			fireball.Start();
-
+			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, 1);
 
 		}
 		else
 		{
-			Fireball* fireball = new Fireball(false, position, -1, 100);
+
+			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, -1);
 
 		}
 		cooldown = 0;
