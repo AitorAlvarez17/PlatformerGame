@@ -643,8 +643,8 @@ void Player::HealHability()
 
 void Player::FireHability()
 {
-	/*if (cooldown == fireMaxCooldown)
-	{*/
+	if (cooldown == fireMaxCooldown)
+	{
 		//CREATE FIREBALL
 		if (isGoingRight)
 		{
@@ -656,13 +656,12 @@ void Player::FireHability()
 
 		}
 		fireCooldown = 0;
-	/*}*/
-	/*else
-	{*/
+	}
+	else
+	{
 
 	}
 
-	LOG("%f", fireMaxCooldown);
 
 }
 
