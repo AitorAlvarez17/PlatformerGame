@@ -52,7 +52,7 @@ private:
 	SDL_Texture* singleHeart;
 	SDL_Texture* healthUi;
 
-
+	SDL_Rect heartRect;
 	SDL_Texture* cooldown1;
 	SDL_Texture* cooldown2;
 	SDL_Texture* cooldown3;
