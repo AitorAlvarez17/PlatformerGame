@@ -421,7 +421,7 @@ void Player::UpdateLogic(float dt)
 	if (cooldown > maxCooldown)
 		cooldown = maxCooldown;
 	if (fireCooldown > fireMaxCooldown)
-		fireCooldown = fireMaxCooldown;
+		fireCooldown = maxCooldown;
 
 	switch (playerState)
 	{
@@ -637,34 +637,32 @@ void Player::HealHability()
 
 	}
 	
+	LOG("%f", maxCooldown);
 
 }
 
 void Player::FireHability()
 {
-	if (fireCooldown == fireMaxCooldown)
-	{
+	/*if (cooldown == fireMaxCooldown)
+	{*/
 		//CREATE FIREBALL
 		if (isGoingRight)
 		{
-			Fireball fireball(false, position, 1, 100);
-			fireball.Start();
-
-
+			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, 1);
 		}
 		else
 		{
-			Fireball* fireball = new Fireball(false, position, -1, 100);
+			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, -1);
 
 		}
 		fireCooldown = 0;
-	}
-	else
-	{
+	/*}*/
+	/*else
+	{*/
 
 	}
 
-	
+	LOG("%f", fireMaxCooldown);
 
 }
 
