@@ -3,11 +3,11 @@
 	<input />
 	<audio />
 	<render>
-		<camara x="-3398" y="-4839" />
+		<camara x="-3398" y="-4909" />
 	</render>
 	<scene currentLevel="level1.tmx" />
 	<textures />
 	<window />
-	<player x="2019.10083" y="2616" jumpsRemaining="2" verticalVelocity="2.5" />
-	<enemy x="435" y="3034" health="20" />
+	<player x="2019.00085" y="2654" jumpsRemaining="3" verticalVelocity="-1.5" />
+	<enemy />
 </saveState>
