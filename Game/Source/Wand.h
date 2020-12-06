@@ -14,7 +14,6 @@ struct SDL_Texture;
 class Wand : public Module
 {
 private:
-	
 
 	SDL_Texture* texture = nullptr;
 
