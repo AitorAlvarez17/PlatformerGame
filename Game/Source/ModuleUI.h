@@ -78,7 +78,7 @@ private:
 	SDL_Texture* cooldown3;
 	SDL_Texture* cooldown4;
 	SDL_Texture* cooldown5;
-
+	SDL_Texture* cantSummon;
 
 
 	SDL_Texture* healGUI;
