@@ -81,6 +81,7 @@ public:
 	int fireBallDirection;
 
 	float cooldown = 3.0f;
+	float fireCooldown = 5.0f;
 	float maxCooldown = 3.0f;
 	float fireMaxCooldown = 5.0f;
 
