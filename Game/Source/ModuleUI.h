@@ -5,11 +5,26 @@
 #include "Point.h"
 #include "Animation.h"
 
+#define MAX_FONTS 100
+#define MAX_FONT_CHARS 256
+
 struct Animation;
 struct Collider;
 struct SDL_Texture;
 
+struct Font
+{
+	// Lookup table. All characters displayed in the same order as the texture
+	char table[MAX_FONT_CHARS];
 
+	// The font texture
+	SDL_Texture* texture = nullptr;
+
+	// Font setup data
+	uint totalLength;
+	uint rows, columns;
+	uint char_w, char_h;
+};
 class ModuleUI : public Module
 {
 private:
@@ -26,9 +41,9 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void Draw();
-
+	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera) const;
 	void HealthUi(int lifesleft);
-
+	void IntToString(char* buffer, int k, int length);
 	bool active = true;
 	bool regulator = true;
 	bool onTp = true;
@@ -42,7 +57,7 @@ public:
 	int camaraPosx;
 	int camaraPosy;
 
-
+	int font = -1;
 private:
 
 	SDL_Texture* renderedOption;
@@ -76,7 +91,9 @@ private:
 	
 	const char* texturePath;
 
+	
 
+	Font fonts[MAX_FONTS];
 };
 
 
