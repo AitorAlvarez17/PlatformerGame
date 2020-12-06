@@ -83,7 +83,16 @@ bool Fireball::PreUpdate()
 
 bool Fireball::Update(float dt)
 {
-	position.x += speed ;
+	if (app->player->isGoingRight)
+	{
+		position.x += speed;
+
+	}
+	else
+	{
+		position.x -= speed;
+
+	}
 	return true;
 }
 
