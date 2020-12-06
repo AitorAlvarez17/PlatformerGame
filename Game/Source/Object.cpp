@@ -17,7 +17,7 @@
 
 Object::Object(int x, int y,ObjType ptype,bool startEnabled) : Module(startEnabled)
 {
-	int pixels = 24;
+	int pixels = 32;
 
 	position.x = x;
 	position.y = y;
@@ -35,9 +35,8 @@ Object::Object(int x, int y,int dir, ObjType ptype, bool startEnabled) : Module(
 	position.y = y;
 	direction = dir;
 	type = ptype;
-	coll = { position.x, position.y, pixels ,pixels };
 
-	
+	coll = { position.x, position.y, pixels ,pixels };
 
 
 }
@@ -55,7 +54,7 @@ bool Object::Start()
 {
 	bool ret = true;
 	int pixels = 24;
-
+	int pixelsFire = 32;
 
 
 	LOG("Loading Coin textures");
@@ -105,8 +104,9 @@ bool Object::Start()
 		objText = app->tex->Load("Assets/textures/fireball2.png");
 
 		speed = 1.0f;
-		
-		coll.y += pixels;
+		speed *= direction;
+
+		coll.y += pixelsFire;
 
 		collider = app->collisions->AddCollider(coll, Collider::Type::FIREBALL, this);
 
