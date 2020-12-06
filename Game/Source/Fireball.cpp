@@ -128,7 +128,6 @@ void Fireball::OnCollision(Collider* a, Collider* b)
 	
 }
 
-
 void Fireball::UpdateAnim()
 {
 }
@@ -145,4 +144,21 @@ bool Fireball::Load(pugi::xml_node&)
 bool Fireball::Save(pugi::xml_node&)
 {
 	return true;
+}
+
+void Fireball::Cooldown()
+{
+	/*if (cooldown == maxCooldown)
+	{
+		if (app->player->lifes <= 3)app->player->lifes++;
+		LOG("%d", app->player->lifes);
+		cooldown = 0;
+	}
+	else
+	{
+
+	}*/
+
+	//LOG("%f", maxCooldown);
+
 }

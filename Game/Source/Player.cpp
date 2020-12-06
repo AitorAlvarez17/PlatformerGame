@@ -154,6 +154,10 @@ bool Player::Update(float dt)
 	{
 		HealHability();
 	}
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		HealHability();
+	}
 	if (app->debug->godMode == false)
 	{
 
