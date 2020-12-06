@@ -48,7 +48,7 @@ public:
 
 	//Physics
 	float speed = 2.0f;
-	float gravityForce = 3.0f;
+	float gravityForce = 0.5f;
 	float health = 20.0f;
 	//true = Right, false = left
 	bool isMoving= true;

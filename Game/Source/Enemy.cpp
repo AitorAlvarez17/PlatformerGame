@@ -48,8 +48,8 @@ bool Enemy::Start()
 	int pixels = 32;
 
 	//Enemy Spawn Position
-	position.x = 700;
-	position.y = 2816;
+	position.x = 800.0f;
+	position.y = 2700.0f;
 
 	//Load Texture
 	texture = app->tex->Load("Assets/textures/warrior.png");
@@ -133,12 +133,10 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 
 	if (app->debug->godMode == false)
 	{
+		int compX = a->rect.x - b->rect.x;
+		int compY = a->rect.y - b->rect.y;
 		if (a->type == Collider::ENEMY && b->type == Collider::ENEMYWALL)
 		{
-
-			int compX = a->rect.x - b->rect.x;
-
-
 			if (compX > 0)
 			{
 				position.x += b->rect.x + b->rect.w - a->rect.x;
@@ -154,7 +152,36 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 
 
 		}
+		if (a->type == Collider::ENEMY && b->type == Collider::Type::FLOOR)
+		{
+			if (std::abs(compY) < std::abs(compX))
+			{
+				if (compX > 0) {
+					position.x += b->rect.x + b->rect.w - a->rect.x;
+				}
+				else
+				{
+					position.x -= a->rect.x + a->rect.w - b->rect.x;
+				}
+			}
+			else
+			{
+				if (compY > 0)
+				{
+					position.y += b->rect.y + b->rect.h - a->rect.y;
 
+				}
+				else
+				{
+					position.y -= a->rect.y + a->rect.h - b->rect.y;
+
+				}
+
+			}
+
+			enemyCollider->SetPos(position.x, position.y);
+
+		}
 	}
 
 	enemyCollider->SetPos((int)b->rect.x - 1, (int)position.y);
@@ -180,6 +207,7 @@ void Enemy::UpdateMovement()
 		case (ENEMYWALKING):
 		{
 			position.x += speed;
+			position.y += gravityForce;
 
 			return;
 		}
@@ -188,6 +216,7 @@ void Enemy::UpdateMovement()
 		{
 			//PATHFINDING
 			position.x += speed * 1.5f;
+			position.y += gravityForce;
 			rightWall->SetPos((int)position.x - 150, (int)position.y + 32);
 			leftWall->SetPos((int)position.x + 120, (int)position.y + 32);
 			return;

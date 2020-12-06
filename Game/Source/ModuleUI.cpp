@@ -139,7 +139,7 @@ void ModuleUI::Draw()
 		int maxLifes = app->player->lifes;
 		for (int i = 1; i <= maxLifes; i++) 
 		{
-			LOG("lifes loading: %d", i);
+			//LOG("lifes loading: %d", i);
 			app->render->DrawTexture(singleHeart, camaraPosx + margin + 65 + (24*i), camaraPosy *2 + 8, 0, 0, 0, 0, 0, false);
 
 

@@ -19,7 +19,8 @@ private:
 
 public:
 
-	Fireball(bool startEnabled);
+	Fireball(bool startEnabled, fPoint spawnPos, float direction, float ballRange);
+	//Fireball(fPoint spawnPos, float direction, float ballRange);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
@@ -37,9 +38,9 @@ public:
 
 	//Physics
 	float speed = 1.0f;
-	float gravityForce = 3.0f;
-	float health = 20.0f;
-
+	float gravityForce = 0.0f;
+	float range = 0.0f;
+	float directionX;
 
 	//Animations
 	Animation rightFireball;
