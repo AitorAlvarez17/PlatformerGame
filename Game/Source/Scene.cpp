@@ -51,7 +51,7 @@ bool Scene::Start()
 	app->oManager->AddObject(ObjType::COIN, 3014, 2590, 0);
 	app->oManager->AddObject(ObjType::COIN, 1667, 1850, 0);
 	app->oManager->AddObject(ObjType::COIN, 1537, 1854, 0);
-	app->oManager->AddEnemy(600, 2200);
+	//app->oManager->AddEnemy(600, 2200);
 
 
 	
