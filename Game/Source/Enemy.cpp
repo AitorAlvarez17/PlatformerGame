@@ -187,7 +187,7 @@ void Enemy::UpdateMovement()
 		case (ENEMYRUNNING):
 		{
 			//PATHFINDING
-			position.x += speed;
+			position.x += speed *1.5f;
 			return;
 		}
 		case(ENEMYSTUN):
@@ -197,7 +197,7 @@ void Enemy::UpdateMovement()
 		}
 		case(ENEMYDYING):
 		{
-			position.x += speed;
+			position.x += speed * 1.5f;
 			return;
 		}
 		}
@@ -234,18 +234,15 @@ void Enemy::UpdateAnim()
 	case (ENEMYRUNNING):
 	{
 		
-
+		rightAnim.speed = leftAnim.speed = 1.0f;
 		//PATHFINDING ANIM PART
 		if (speed > 0)
 		{
-
-			leftAnim.speed = 1.0f;
 			currentAnim = &rightAnim;
 
 		}
 		else
 		{
-			rightAnim.speed = 1.0f;
 			currentAnim = &leftAnim;
 
 		}
