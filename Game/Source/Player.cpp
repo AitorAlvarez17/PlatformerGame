@@ -245,7 +245,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 		case(Collider::Type::FLOOR):
 
-
+			fallDamage = false;
 			if (std::abs(compY) < std::abs(compX))
 			{
 				if (compX > 0) {
@@ -282,9 +282,13 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			if (lifes > 0)
 			{
 				//if level 1 or 2
-				position.x = spawnLevel1.x;
-				position.y = spawnLevel1.y;
-				this->lifes--;
+				if (fallDamage == false)
+				{
+					position.x = spawnLevel1.x;
+					position.y = spawnLevel1.y;
+					lifes--;
+					fallDamage = true;
+				}
 			}
 			if (lifes <= 0)
 			{
