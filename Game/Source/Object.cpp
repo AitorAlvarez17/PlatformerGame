@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "Window.h"
 #include "Render.h"
+#include "Enemy.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
 #include "Audio.h"
@@ -26,9 +27,26 @@ Object::Object(int x, int y,ObjType ptype,bool startEnabled) : Module(startEnabl
 
 }
 
+Object::Object(int x, int y,int dir, ObjType ptype, bool startEnabled) : Module(startEnabled)
+{
+	int pixels = 24;
+
+	position.x = x;
+	position.y = y;
+	direction = dir;
+	type = ptype;
+	coll = { position.x, position.y, pixels ,pixels };
+
+	
+
+
+}
+
 bool Object::Awake(pugi::xml_node& config)
 {
 	texturePath = config.child("texture").child_value();
+	pugi::xml_node move = config.child("move");
+
 
 	return true;
 }
@@ -82,9 +100,51 @@ bool Object::Start()
 		objMov.PushBack({ 120,0,24,24 });
 	}
 
+	if (type == ObjType::FIREBALL)
+	{
+		objText = app->tex->Load("Assets/textures/fireball2.png");
+
+		speed = 1.0f;
+		
+		coll.y += pixels;
+
+		collider = app->collisions->AddCollider(coll, Collider::Type::FIREBALL, this);
+
+		if (objText == nullptr)
+			LOG("Couldn't load heart texture");
+
+		
+		objMovR.GenerateAnimation({ 0,0,32,32 }, 5);
+		objMovR.loop = true;
+		objMovR.speed = 0.7f;
+
+		objMovL.GenerateAnimation({ 0,0,32,32 }, 5);
+		objMovL.loop = true;
+		objMovL.speed = 0.5f;
+
+	}
+
 	if (currAnim == nullptr)
 	{
-		currAnim = &objMov;
+
+		if(type == ObjType::FIREBALL)
+		{
+
+			if (direction == 1)
+			{
+				currAnim = &objMovR;
+			}
+			else if (direction == -1)
+			{
+				currAnim = &objMovL;
+			}
+			
+		}
+		else
+		{
+			currAnim = &objMov;
+		}
+
 	}
 	return ret;
 }
@@ -97,13 +157,20 @@ bool Object::PreUpdate()
 
 bool Object::Update(float dt)
 {
+	if (type == ObjType::FIREBALL)
+	{
+		position.x += speed;
+	}
 	currAnim->Update();
 	return true;
 }
 
 bool Object::PostUpdate()
 {
-	
+	if (type == ObjType::FIREBALL)
+	{
+		collider->SetPos((int)position.x + 16, (int)position.y + 32);
+	}
 	return true;
 }
 
@@ -139,6 +206,17 @@ void Object::OnCollision(Collider* a, Collider* b) {
 	}
 	if (a->type == Collider::PLAYER && b->type == Collider::HEART)
 	{
+		SetToDelete();
+	}
+
+	if (a->type == Collider::FIREBALL && b->type == Collider::ENEMY)
+	{
+		app->enemy->isDead = true;
+		SetToDelete();
+	}
+	if (a->type == Collider::ENEMY && b->type == Collider::FIREBALL)
+	{
+		app->enemy->isDead = true;
 		SetToDelete();
 	}
 

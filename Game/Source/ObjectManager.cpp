@@ -26,8 +26,9 @@ ObjectManager::ObjectManager(bool startEnabled) : Module(startEnabled)
 bool ObjectManager::Start()
 {
 	
-	coinTex = app->tex->Load("Assets/textures/coinAnim.png");
+	/*coinTex = app->tex->Load("Assets/textures/coinAnim.png");
 	heartTex = app->tex->Load("Assets/textures/heartAnim.png");
+	fireBallTex = app->tex->Load("Assets/textures/fireball2.png");*/
 
 	return true;
 }
@@ -94,7 +95,7 @@ bool ObjectManager::CleanUp()
 	return true;
 }
 
-bool ObjectManager::AddObject(ObjType type, int x, int y)
+bool ObjectManager::AddObject(ObjType type, int x, int y, int dir)
 {
 	bool ret = false;
 
@@ -102,12 +103,26 @@ bool ObjectManager::AddObject(ObjType type, int x, int y)
 	{
 		if (spawnQueue[i].type == ObjType::NONE)
 		{
-			spawnQueue[i].type = type;
-			spawnQueue[i].x = x;
-			spawnQueue[i].y = y;
+			if (type == ObjType::FIREBALL)
+			{
+				spawnQueue[i].type = type;
+				spawnQueue[i].x = x;
+				spawnQueue[i].y = y;
+				spawnQueue[i].dir = dir;
+
+			}
+			else
+			{
+				spawnQueue[i].type = type;
+				spawnQueue[i].x = x;
+				spawnQueue[i].y = y;
+				spawnQueue[i].dir = 0;
+
+			}
 
 			ret = true;
 			break;
+
 		}
 	}
 
@@ -162,6 +177,10 @@ void ObjectManager::SpawnObj(const ObjSpawnpoint& info)
 				break;
 			case ObjType::HEART:
 				objects[i] = new Object(info.x, info.y, ObjType::HEART, true);
+				objects[i]->Start();
+				break;
+			case ObjType::FIREBALL:
+				objects[i] = new Object(info.x, info.y, info.dir, ObjType::HEART, true);
 				objects[i]->Start();
 				break;
 

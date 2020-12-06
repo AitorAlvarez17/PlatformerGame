@@ -16,6 +16,7 @@ enum class ObjType
 	COIN,
 	HEART,
 	WEAPON,
+	FIREBALL,
 
 	MAX
 };
@@ -33,7 +34,8 @@ public:
 
 
 
-	Object(int x, int y, ObjType type,bool startEnabled);
+	Object(int x, int y, ObjType otype,bool startEnabled);
+	Object(int x, int y,int dir, ObjType otype, bool startEnabled);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
@@ -50,10 +52,14 @@ public:
 	bool Save(pugi::xml_node&);
 
 	Animation objMov;
+	Animation objMovR;
+	Animation objMovL;
 
 
 
 	Point<int> position;
+	int direction = 0;
+	float speed = 0.0f;
 	bool active = true;
 
 	bool pendingToDelete = false;

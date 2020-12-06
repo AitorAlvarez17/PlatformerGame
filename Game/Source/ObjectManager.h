@@ -15,6 +15,7 @@ struct ObjSpawnpoint
 {
 	ObjType type = ObjType::NONE;
 	int x, y;
+	int dir;
 };
 
 
@@ -49,7 +50,7 @@ public:
 
 	int GetTilePosx(int x);
 	int GetTilePosy(int y);
-	bool AddObject(ObjType type, int x, int y);
+	bool AddObject(ObjType type, int x, int y, int dir);
 
 	// Add an enemy into the queue to be spawned later
 	/*bool AddBall(BALL_TYPE type, int x, int y, bool right);*/
@@ -93,6 +94,7 @@ public:
 	// The enemies sprite sheet
 	SDL_Texture* coinTex = nullptr;
 	SDL_Texture* heartTex = nullptr;
+	SDL_Texture* fireBallTex = nullptr;
 
 
 	// The audio fx for destroying an enemy
