@@ -151,7 +151,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		HealHability();
 	}
