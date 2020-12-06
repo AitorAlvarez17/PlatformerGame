@@ -110,7 +110,6 @@ bool Debug::Update(float dt)
 		app->player->position.x = 443;
 		app->player->position.y = 1333;
 	}
-
 	
 	return ret;
 }

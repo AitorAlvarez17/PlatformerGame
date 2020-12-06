@@ -13,9 +13,8 @@ struct SDL_Texture;
 class CheckPoints : public Module
 {
 private:
+
 	SDL_Texture* texture = nullptr;
-
-
 
 public:
 
@@ -26,7 +25,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	void OnCollision(Collider* a, Collider* b);
-	void CheckOut(); 
+	void CheckOut();
 	void InitLevel2();
 	SDL_Rect texRect;
 	SDL_Rect coll;
@@ -34,25 +33,25 @@ public:
 	SDL_Rect tpColl2;
 	SDL_Rect tpColl3;
 	SDL_Rect tpEndLevel;
-	
+
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
-
 
 	Point<int> position;
 	Point<int> tp1;
 	Point<int> tp2;
 	Point<int> tp3;
 	Point<int> endLevel;
+
 	bool active = true;
 	bool regulator = true;
 	bool onTp = true;
 	bool mapOpen = false;
 	bool onColl = false;
 	bool createLevel2 = false;
+
 	int winWidth;
 	int winHeigh;
-
 
 private:
 
@@ -84,13 +83,9 @@ private:
 	bool onArea3;
 	bool outArea;
 	bool push = false;
+
 	int tpCounter = 1;
 	const char* texturePath;
 
-
 };
-
-
 #endif
-
-
