@@ -130,13 +130,34 @@ void ModuleUI::Draw()
 			app->render->DrawTexture(cooldown1, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
 		}
 	}
-	
+	if (app->player->lifes <= 3)
+	{
+		int life = app->player->lifes;
+		if (life == 1)
+		{
+			LOG("%d", life);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
+		}
+		else if (life == 2)
+		{
+			LOG("%d", life);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90+24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
+		}
+		else if (life == 3)
+		{
+			LOG("%d", life);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy +9, 0, 0, 0, 0, 0, false);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90 + 24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90 + 24 + 24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
+		}
+	}
 	app->render->DrawTexture(healthTitle, camaraPosx + margin, camaraPosy + 3, 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
 
 	//Draw Heart Gui
-	SDL_Rect heartRect = currentHealthAnim->GetCurrentFrame();
-	app->render->DrawTexture(healthUi, app->player->position.x - 150, app->player->position.y - 210, &heartRect);
+	//heartRect = currentHealthAnim->GetCurrentFrame();
+	//app->render->DrawTexture(healthUi, 600, 2840, &heartRect);
 
 	
 }

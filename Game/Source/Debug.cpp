@@ -62,8 +62,14 @@ bool Debug::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
-		
-		app->RequestLoad();
+		if (app->player->lvl2 == true)
+		{
+
+		}
+		else
+		{
+			app->RequestLoad();
+		}
 		LOG("LOAD REQUESTED");
 		
 

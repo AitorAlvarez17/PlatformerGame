@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "ObjectManager.h"
 #include "Window.h"
 #include "Render.h"
 #include "CheckPoints.h"
@@ -229,6 +230,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		case(Collider::Type::ENDLEVEL):
 
 			lvl2 = true;
+			app->oManager->CleanUp();
 			app->map->CleanUp();
 			app->player->Reload();
 			app->scene->LoadLevel("level2.tmx");
