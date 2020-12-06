@@ -30,6 +30,7 @@ public:
 	void ChangeState();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
+	void Cooldown();
 
 	//Transform
 	fPoint position;
