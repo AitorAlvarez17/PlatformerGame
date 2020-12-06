@@ -60,6 +60,7 @@ private:
 	SDL_Texture* pressH;
 	// A ptr to the current animation
 	Animation* currentHealthAnim = nullptr;
+	Animation oneHeart;
 	Animation twoHearts;
 	Animation threeHearts;
 	Animation fourHearts;

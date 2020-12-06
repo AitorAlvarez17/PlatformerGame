@@ -43,7 +43,7 @@ bool ModuleUI::Start()
 	scoreTitle = app->tex->Load("Assets/UI/GoldText.png");
 	healthTitle = app->tex->Load("Assets/UI/HealthText.png");
 	singleHeart = app->tex->Load("Assets/UI/heart.png");
-	healthUi = app->tex->Load("Assets/UI/heartAnim.png");
+	healthUi = app->tex->Load("Assets/UI/healthAnim.png");
 
 	cooldown1 = app->tex->Load("Assets/UI/Cooldown1.png");
 	cooldown2 = app->tex->Load("Assets/UI/Cooldown2.png");
@@ -53,25 +53,28 @@ bool ModuleUI::Start()
 
 	if (healthUi == nullptr)LOG("TEXTURE NOT FOUNDED");
 
-	twoHearts.GenerateAnimation({ 0,0,24,24 },2);
-	twoHearts.speed = 0.2f;
+	//Heart Gui Animations
+
+	oneHeart.GenerateAnimation({ 0,0,0,32 }, 5);
+	oneHeart.speed = 0.3f;
+	oneHeart.loop = true;
+
+	twoHearts.GenerateAnimation({ 0,32,0,32 },5);
+	twoHearts.speed = 0.3f;
 	twoHearts.loop = true;
 
-	threeHearts.GenerateAnimation({ 0,0,24,24 }, 3);
-	threeHearts.speed = 0.2f;
+	threeHearts.GenerateAnimation({ 0,64,32,32 }, 5);
+	threeHearts.speed = 0.3f;
 	threeHearts.loop = true;
 
-	fourHearts.GenerateAnimation({ 0,0,24,24 }, 4);
-	fourHearts.speed = 0.2f;
+	fourHearts.GenerateAnimation({ 0,96,32,32 }, 5);
+	fourHearts.speed = 0.3f;
 	fourHearts.loop = true;
 
-	fiveHearts.GenerateAnimation({ 0,0,24,24 }, 5);
-	fiveHearts.speed = 0.2f;
+	fiveHearts.GenerateAnimation({ 0,128,32,32 }, 5);
+	fiveHearts.speed = 0.3f;
 	fiveHearts.loop = true;
 
-	sixHearts.GenerateAnimation({ 0,0,24,24 }, 6);
-	sixHearts.speed = 0.2f;
-	sixHearts.loop = true;
 	//texRect = { 0, 0, 640, 480};
 
 
@@ -131,9 +134,9 @@ void ModuleUI::Draw()
 	app->render->DrawTexture(healthTitle, camaraPosx + margin, camaraPosy + 3, 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
 
-	currentHealthAnim->Update();
+	//Draw Heart Gui
 	SDL_Rect heartRect = currentHealthAnim->GetCurrentFrame();
-	app->render->DrawTexture(healthUi, 600, 2780, &heartRect);
+	app->render->DrawTexture(healthUi, app->player->position.x - 150, app->player->position.y - 210, &heartRect);
 
 	
 }
@@ -144,27 +147,27 @@ void ModuleUI::HealthUi(int lifesLeft)
 	{
 	case (1):
 	{
-		currentHealthAnim = &twoHearts;
+		currentHealthAnim = &oneHeart;
 		return;
 	}
 	case (2):
 	{
-		currentHealthAnim = &threeHearts;
+		currentHealthAnim = &twoHearts;
 		return;
 	}
 	case (3):
 	{
-		currentHealthAnim = &fourHearts;
+		currentHealthAnim = &threeHearts;
 		return;
 	}
 	case(4):
 	{
-		currentHealthAnim = &fiveHearts;
+		currentHealthAnim = &fourHearts;
 		return;
 	}
 	case (5):
 	{
-		currentHealthAnim = &sixHearts;
+		currentHealthAnim = &fiveHearts;
 		return;
 	}
 	
