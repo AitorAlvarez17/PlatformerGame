@@ -49,7 +49,7 @@ public:
 
 	//Physics
 	float speed = 2.0f;
-	float gravityForce = 3.0f;
+	float gravityForce = 2.0f;
 	float vy = 0.0f;
 	float health = 20.0f;
 	//true = Right, false = left
