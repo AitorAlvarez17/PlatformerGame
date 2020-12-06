@@ -8,22 +8,24 @@
 #include "PathFinding.h"
 #include "Player.h"
 #include "Map.h"
-
 #include "Window.h"
 #include "Render.h"
 #include "Collisions.h"
 #include "Audio.h"
-
 #include "SDL/include/SDL_scancode.h"
 #include "../Defs.h"
 #include "../Log.h"
 #include <math.h>
 
 
-Enemy::Enemy(bool startEnabled) : Module(startEnabled)
+Enemy::Enemy(int x, int y,bool startEnabled) : Module(startEnabled)
 {
 	name.create("enemy");
+
+	position.x = x;
+	position.y = y;
 }
+
 
 bool Enemy::Awake(pugi::xml_node& config)
 {
@@ -48,8 +50,7 @@ bool Enemy::Start()
 	int pixels = 32;
 
 	//Enemy Spawn Position
-	position.x = 800.0f;
-	position.y = 2700.0f;
+
 
 	//Load Texture
 	texture = app->tex->Load("Assets/textures/warrior.png");
@@ -95,9 +96,7 @@ bool Enemy::Start()
 
 bool Enemy::PreUpdate()
 {
-	/*position.y = (int)(position.y - vy);
-	vy -= gravityForce * 0.5;
-	app->player->UpdateState();*/
+	
 
 	return true;
 }
@@ -367,6 +366,13 @@ void Enemy::ChangeState()
 	}
 
 
+}
+
+void Enemy::SetToDelete()
+{
+	pendingToDelete = true;
+	if (enemyCollider != nullptr)
+		enemyCollider->pendingToDelete = true;
 }
 
 bool Enemy::Save(pugi::xml_node& savedGame)

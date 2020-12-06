@@ -9,7 +9,6 @@
 #include "Wand.h"
 #include "Collisions.h"
 #include "Player.h"
-#include "Enemy.h"
 #include "ObjectManager.h"
 #include "Object.h"
 #include "CheckPoints.h"
@@ -38,7 +37,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map(false);
 	collisions = new Collisions(false);
 	player = new Player(false);
-	enemy = new Enemy(false);
 
 	fade = new ModuleFadeToBlack(true);
 	pathfinding = new PathFinding(false);
@@ -54,12 +52,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
-	AddModule(oManager);
 	AddModule(wand);
 	// Render last to swap buffer
 
 	AddModule(player);
-	AddModule(enemy);
+	AddModule(oManager);
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
@@ -450,7 +447,6 @@ bool App::Load()
 	app->scene->Load(sce);
 	app->win->Load(wi);
 	app->player->Load(pl);
-	app->enemy->Load(en);
 
 	requestLoad = false;
 
@@ -490,7 +486,6 @@ bool App::Save()
 		player->Save(p);
 
 		pugi::xml_node e = node.append_child("enemy");
-		enemy->Save(e);
 
 
 

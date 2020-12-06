@@ -10,7 +10,7 @@ struct Animation;
 struct Collider;
 struct SDL_Texture;
 
-enum EnemyState {
+enum EnemyState{
 	ENEMYIDLE,
 	ENEMYWALKING,
 	ENEMYRUNNING,
@@ -30,7 +30,7 @@ private:
 
 public:
 
-	Enemy(bool startEnabled);
+	Enemy(int x, int y,bool startEnabled);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool PreUpdate();
@@ -40,6 +40,7 @@ public:
 	void UpdateMovement();
 	void UpdateAnim();
 	void ChangeState();
+	void SetToDelete();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
 
@@ -48,7 +49,8 @@ public:
 
 	//Physics
 	float speed = 2.0f;
-	float gravityForce = 0.5f;
+	float gravityForce = 3.0f;
+	float vy = 0.0f;
 	float health = 20.0f;
 	//true = Right, false = left
 	bool isMoving= true;
@@ -72,6 +74,8 @@ public:
 	Collider* enemyCollider;
 	Collider* rightWall;
 	Collider* leftWall;
+
+	bool pendingToDelete = false;
 
 private:
 

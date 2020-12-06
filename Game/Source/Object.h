@@ -17,6 +17,7 @@ enum class ObjType
 	HEART,
 	WEAPON,
 	FIREBALL,
+	ENEMY,
 
 	MAX
 };
