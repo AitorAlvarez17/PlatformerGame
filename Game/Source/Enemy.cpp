@@ -105,15 +105,15 @@ bool Enemy::Update(float dt)
 {
 	//Proccess
 	ChangeState();
+	UpdateMovement();
+
 
 
 	return true;
 }
 
 bool Enemy::PostUpdate()
-{
-	UpdateMovement();
-	UpdateAnim();
+{	UpdateAnim();
 
 	//Update Animation
 	currentAnim->Update();

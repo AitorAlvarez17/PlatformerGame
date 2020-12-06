@@ -16,7 +16,7 @@
 
 Object::Object(int x, int y,ObjType ptype,bool startEnabled) : Module(startEnabled)
 {
-	int pixels = 32;
+	int pixels = 24;
 
 	position.x = x;
 	position.y = y;
@@ -28,7 +28,7 @@ Object::Object(int x, int y,ObjType ptype,bool startEnabled) : Module(startEnabl
 
 Object::Object(int x, int y,int dir, ObjType ptype, bool startEnabled) : Module(startEnabled)
 {
-	int pixels = 24;
+	int pixels = 32;
 
 	position.x = x;
 	position.y = y;
