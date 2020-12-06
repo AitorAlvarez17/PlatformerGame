@@ -21,7 +21,6 @@ class Map;
 class Collisions;
 class Player;
 class Enemy;
-class Fireball;
 class CheckPoints;
 class ModuleFadeToBlack;
 class Intro;
@@ -101,7 +100,6 @@ public:
 	Player* player;
 	ModuleUI* ui;
 	Enemy* enemy;
-	Fireball* fireball;
 	ModuleFadeToBlack* fade;
 	Intro* menu;
 	PathFinding* pathfinding;
