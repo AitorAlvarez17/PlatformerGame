@@ -49,11 +49,16 @@ bool ModuleUI::Start()
 	singleHeart = app->tex->Load("Assets/UI/heart.png");
 	healthUi = app->tex->Load("Assets/UI/healthAnim.png");
 
+	//WAND GUI Textures
 	cooldown1 = app->tex->Load("Assets/UI/Cooldown1.png");
 	cooldown2 = app->tex->Load("Assets/UI/Cooldown2.png");
 	cooldown3 = app->tex->Load("Assets/UI/Cooldown3.png");
+	cooldown4 = app->tex->Load("Assets/UI/Cooldown4.png");
+	cooldown5 = app->tex->Load("Assets/UI/Cooldown5.png");
 	healGUI = app->tex->Load("Assets/UI/HealGUI.png");
-	pressH = app->tex->Load("Assets/UI/PressH.png");
+	fireballGUI = app->tex->Load("Assets/UI/FireBallGUI.png");
+
+	//pressH = app->tex->Load("Assets/UI/PressH.png");
 
 	if (healthUi == nullptr)LOG("TEXTURE NOT FOUNDED");
 
@@ -107,6 +112,7 @@ bool ModuleUI::PostUpdate()
 	if (app->scene->playing == true)
 	{
 		HealthUi(app->player->lifes);
+		WandUi();
 		Draw();
 	}
 	
@@ -115,25 +121,8 @@ bool ModuleUI::PostUpdate()
 
 void ModuleUI::Draw()
 {
+
 	int margin = 3;
-	app->render->DrawTexture(healGUI, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
-	app->render->DrawTexture(pressH, camaraPosx + margin + 64, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
-	if (app->player->cooldown < app->player->maxCooldown)
-	{
-		float cd = app->player->cooldown;
-		if (cd < 1)
-		{
-			app->render->DrawTexture(cooldown3, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h)/2.5), 0, 0, 0, 0, 0, false);
-		}
-		else if (cd < 2 && cd > 1)
-		{
-			app->render->DrawTexture(cooldown2, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
-		}
-		else if (cd < 3 && cd > 2)
-		{
-			app->render->DrawTexture(cooldown1, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
-		}
-	}
 	if (app->player->lifes !=0)
 	{
 		int maxLifes = app->player->lifes;
@@ -207,6 +196,58 @@ void ModuleUI::HealthUi(int lifesLeft)
 	}
 	currentHealthAnim->Update();
 	
+}
+
+void ModuleUI::WandUi()
+{
+	//HEAL
+	int margin = 3;
+	app->render->DrawTexture(healGUI, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+	app->render->DrawTexture(fireballGUI, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+	//app->render->DrawTexture(pressH, camaraPosx + margin + 64, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+
+	if (app->player->cooldown < app->player->maxCooldown) // HEAL
+	{
+		float cd = app->player->cooldown;
+		if (cd < 1)
+		{
+			app->render->DrawTexture(cooldown3, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (cd < 2 && cd > 1)
+		{
+			app->render->DrawTexture(cooldown2, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (cd < 3 && cd > 2)
+		{
+			app->render->DrawTexture(cooldown1, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+	} 
+	if (app->player->cooldown < app->player->fireMaxCooldown)	//FIREBALL
+	{
+		float fireCd = app->player->cooldown;
+		if (fireCd < 1)
+		{
+			app->render->DrawTexture(cooldown5, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (fireCd < 2 && fireCd > 1)
+		{
+			app->render->DrawTexture(cooldown4, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (fireCd < 3 && fireCd > 2)
+		{
+			app->render->DrawTexture(cooldown3, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (fireCd < 4 && fireCd > 3)
+		{
+			app->render->DrawTexture(cooldown2, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		else if (fireCd < 5 && fireCd > 4)
+		{
+			app->render->DrawTexture(cooldown1, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+	}
+
+
 }
 
 void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const
