@@ -14,7 +14,7 @@ enum EnemyState {
 	ENEMYIDLE,
 	ENEMYWALKING,
 	ENEMYRUNNING,
-	ENEMYJUMPING,
+	ENEMYSTUN,
 	ENEMYDYING,
 
 };
@@ -52,13 +52,16 @@ public:
 	float health = 20.0f;
 	//true = Right, false = left
 	bool isMoving= true;
+	bool isMovingRight = false;
+
+	
 
 	//Animations
 	Animation idleAnim;
 	Animation leftAnim;
 	Animation rightAnim;
 
-	Animation stunleftAnim;
+	Animation stunLeftAnim;
 	Animation stunRightAnim;
 
 	Animation deadLeftAnim;

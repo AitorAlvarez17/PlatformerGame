@@ -27,7 +27,7 @@
 
   <enemy>
     <texture>Assets/textures/Warrior.png</texture>
-    <move gravity="1800" jumpForceValue="2.0f" speed="3.0f" health="20.0f"/>
+    <move gravity="1800" jumpForceValue="2.0f" speed="-2.0f" health="20.0f"/>
     <audio jump="Assets/audio/fx/Jump.wav" />
   </enemy>
 
