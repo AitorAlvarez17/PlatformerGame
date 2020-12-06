@@ -64,8 +64,8 @@ bool CheckPoints::Start()
 	tp3To1 = app->tex->Load("Assets/maps/TP3/tp3_to_1.png");
 	tp3To2 = app->tex->Load("Assets/maps/TP3/tp3_to_2.png");
 
-	OpenPhrase = app->tex->Load("Assets/maps/DialogueArt/OpenMenu.png");
-	TeleportPhrase = app->tex->Load("Assets/maps/DialogueArt/TeleportMenu.png");
+	openPhrase = app->tex->Load("Assets/maps/DialogueArt/OpenMenu.png");
+	teleportPhrase = app->tex->Load("Assets/maps/DialogueArt/TeleportMenu.png");
 
 	//Set colliders
 	coll = { position.x, position.y, pixels ,pixels * 10 };
@@ -140,13 +140,13 @@ bool CheckPoints::PostUpdate()
 	{
 		if (onArea1 || onArea2 || onArea3)
 		{
-			app->render->DrawTexture(OpenPhrase, app->player->position.x - 42, (app->player->position.y) - 35);
+			app->render->DrawTexture(openPhrase, app->player->position.x - 42, (app->player->position.y) - 35);
 			if (mapOpen)
 			{
 				int camaraPosx = -(app->render->camera.x) / 2;
 				int camaraPosy = (-(app->render->camera.y) / 2);
 				app->render->DrawTexture(renderedOption, camaraPosx, camaraPosy - 58);
-				app->render->DrawTexture(TeleportPhrase, camaraPosx + ((app->render->camera.w) / 5), camaraPosy);
+				app->render->DrawTexture(teleportPhrase, camaraPosx + ((app->render->camera.w) / 5), camaraPosy);
 
 			}
 
@@ -220,7 +220,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
 		onColl = true;
-		app->render->DrawTexture(OpenPhrase, app->player->position.x - 42, (app->player->position.y) - 35);
+		app->render->DrawTexture(openPhrase, app->player->position.x - 42, (app->player->position.y) - 35);
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
 			if (mapOpen == true)

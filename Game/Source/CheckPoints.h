@@ -75,8 +75,8 @@ private:
 	SDL_Texture* tp3To1;
 	SDL_Texture* tp3To2;
 
-	SDL_Texture* OpenPhrase;
-	SDL_Texture* TeleportPhrase;
+	SDL_Texture* openPhrase;
+	SDL_Texture* teleportPhrase;
 
 	bool onArea1;
 	bool onArea2;
