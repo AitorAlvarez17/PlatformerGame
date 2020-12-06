@@ -421,7 +421,7 @@ void Player::UpdateLogic(float dt)
 	if (cooldown > maxCooldown)
 		cooldown = maxCooldown;
 	if (fireCooldown > fireMaxCooldown)
-		fireCooldown = maxCooldown;
+		fireCooldown = fireMaxCooldown;
 
 	switch (playerState)
 	{
@@ -637,13 +637,12 @@ void Player::HealHability()
 
 	}
 	
-	LOG("%f", maxCooldown);
 
 }
 
 void Player::FireHability()
 {
-	if (cooldown == fireMaxCooldown)
+	if (fireCooldown == fireMaxCooldown)
 	{
 		//CREATE FIREBALL
 		if (isGoingRight)
@@ -665,7 +664,7 @@ void Player::FireHability()
 
 	}
 
-	LOG("%f", fireMaxCooldown);
+	
 
 }
 
