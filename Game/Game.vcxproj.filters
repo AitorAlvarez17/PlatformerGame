@@ -31,6 +31,7 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleUI.cpp" />
+    <ClCompile Include="Source\Wand.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Collider.h" />
@@ -87,6 +88,7 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleUI.h" />
+    <ClInclude Include="Source\Wand.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

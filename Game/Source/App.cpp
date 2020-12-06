@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Wand.h"
 #include "Collisions.h"
 #include "Player.h"
 #include "Enemy.h"
@@ -41,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new ModuleFadeToBlack(true);
 	pathfinding = new PathFinding(false);
 	debug = new Debug(true);
+	wand = new Wand(true);
 	oManager = new ObjectManager(true);
 	ui = new ModuleUI(true);
 
@@ -52,7 +54,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(oManager);
-
+	AddModule(wand);
 	// Render last to swap buffer
 
 	AddModule(player);

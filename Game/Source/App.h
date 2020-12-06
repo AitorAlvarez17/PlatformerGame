@@ -25,6 +25,7 @@ class CheckPoints;
 class ModuleFadeToBlack;
 class Intro;
 class PathFinding;
+class Wand;
 class Debug;
 class ObjectManager;
 
@@ -103,6 +104,7 @@ public:
 	Intro* menu;
 	PathFinding* pathfinding;
 	Debug* debug;
+	Wand* wand;
 	ObjectManager* oManager;
 
 	bool Load();
