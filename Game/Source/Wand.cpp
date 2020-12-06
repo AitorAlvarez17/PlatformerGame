@@ -30,9 +30,6 @@ bool Wand::Awake(pugi::xml_node& config)
 	LOG("Loading Wand config");
 	bool ret = true;
 
-	
-	
-
 	return ret;
 }
 
@@ -40,13 +37,11 @@ bool Wand::Start()
 {
 	int pixels = 32;
 
-
 	return true;
 }
 
 bool Wand::PreUpdate()
 {
-
 
 	return true;
 }

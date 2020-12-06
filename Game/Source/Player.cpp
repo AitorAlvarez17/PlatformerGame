@@ -318,7 +318,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 			break;
 		}
-		
+
 	}
 
 }
@@ -358,8 +358,6 @@ void Player::UpdateState()
 		if (isDead == true)
 		{
 			ChangeState(playerState, DYING);
-
-
 		}
 
 		break;
@@ -429,7 +427,7 @@ void Player::UpdateLogic(float dt)
 {
 	cooldown += dt;
 	fireCooldown += dt;
-	
+
 	if (cooldown > maxCooldown)
 		cooldown = maxCooldown;
 	if (fireCooldown > fireMaxCooldown)
@@ -448,13 +446,11 @@ void Player::UpdateLogic(float dt)
 		{
 			if (isGoingRight == true)
 			{
-
 				position.x += speed * dt;
 
 			}
 			else
 			{
-
 				position.x -= speed * dt;
 
 			}
@@ -624,16 +620,6 @@ void Player::Reload()
 		app->player->position.x = app->player->spawnLevel2.x;
 		app->player->position.y = app->player->spawnLevel2.y;
 	}
-	//verticalVelocity = 0.0f;
-	/*if (health == 0)
-	{
-		health = 3;
-		app->ui->score = 0;
-	}*/
-	//initialPosition = position;
-	//respawnPosition = initialPosition;
-	//gravityOn = false;
-	//initialWaitCount = 0.0f;*/
 }
 
 void Player::HealHability()
@@ -657,7 +643,7 @@ void Player::HealHability()
 	{
 
 	}
-	
+
 	LOG("%f", maxCooldown);
 
 }
