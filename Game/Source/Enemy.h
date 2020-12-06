@@ -52,7 +52,8 @@ public:
 	float health = 20.0f;
 	//true = Right, false = left
 	bool isMoving= true;
-	bool isMovingRight = false;
+	bool isDead = false;
+	
 
 	
 
