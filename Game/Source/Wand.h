@@ -34,16 +34,33 @@ public:
 	void ChangeState();
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
-	void FireBall();
 
-	SDL_Rect wandColl;
 	//Transform
-	Point<int> position;
+	fPoint position;
+
+	//Physics
+	float speed = 2.0f;
+	float gravityForce = 3.0f;
+	float health = 20.0f;
+	//true = Right, false = left
+	bool isMoving= true;
+
+	//Animations
+	Animation idleAnim;
+	Animation leftAnim;
+	Animation rightAnim;
+
+	Animation stunleftAnim;
+	Animation stunRightAnim;
+
+	Animation deadLeftAnim;
+	Animation deadRightAnim;
 
 	//Colliders
+	Collider* enemyCollider;
+	Collider* rightWall;
+	Collider* leftWall;
 
-	Collider* wandCollider;
-	
 private:
 
 	const char* texturePath;
