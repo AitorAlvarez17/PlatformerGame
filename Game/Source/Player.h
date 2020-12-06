@@ -28,7 +28,6 @@ private:
 	
 	Animation* currentAnim = nullptr;
 
-	bool isGoingRight = false;
 	unsigned int jumpsLeft = 2;
 	
 public:
@@ -74,6 +73,8 @@ public:
 	bool lvl1 = false;
 	bool lvl2 = false;
 	bool isDead = false;
+	bool isGoingRight = false;
+
 	int lifes = 3;
 
 	int fireBallDirection;
