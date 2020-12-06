@@ -53,6 +53,8 @@ private:
 
 	const char* texturePath;
 
+	bool direction = false;
+
 
 };
 
