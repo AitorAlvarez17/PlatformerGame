@@ -130,12 +130,20 @@ void ModuleUI::Draw()
 			app->render->DrawTexture(cooldown1, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
 		}
 	}
-	if (app->player->lifes <= 3)
+	if (app->player->lifes !=0)
 	{
-		int life = app->player->lifes;
+		int maxLifes = app->player->lifes;
+		for (int i = 1; i <= maxLifes; i++) 
+		{
+			LOG("lifes loading: %d", i);
+			app->render->DrawTexture(singleHeart, camaraPosx + margin + 65 + (24*i), camaraPosy *2 + 8, 0, 0, 0, 0, 0, false);
+
+
+		}
+		/*int life = app->player->lifes;
 		if (life == 1)
 		{
-			LOG("%d", life);
+			
 			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
 		}
 		else if (life == 2)
@@ -150,7 +158,7 @@ void ModuleUI::Draw()
 			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy +9, 0, 0, 0, 0, 0, false);
 			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90 + 24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
 			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90 + 24 + 24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
-		}
+		}*/
 	}
 	app->render->DrawTexture(healthTitle, camaraPosx + margin, camaraPosy + 3, 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
