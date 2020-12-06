@@ -98,7 +98,7 @@ private:
 	float gravityForce = 3.0f;
 
 	
-
+	bool fallDamage = false;
 	bool isJumping;
 	bool canMoveRight = true;
 	bool canMoveLeft = true;
