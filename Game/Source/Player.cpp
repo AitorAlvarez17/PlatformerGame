@@ -7,6 +7,7 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "ObjectManager.h"
+#include "Fireball.h"
 #include "Window.h"
 #include "Render.h"
 #include "CheckPoints.h"
@@ -157,7 +158,18 @@ bool Player::Update(float dt)
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		//SPAWN BALL
-		HealHability();
+		if (isGoingRight)
+		{
+			Fireball fireball(false, position, 1, 100);
+			fireball.Start();
+			
+
+		}
+		else
+		{
+			Fireball* fireball = new Fireball(false, position, -1, 100);
+
+		}
 	}
 	if (app->debug->godMode == false)
 	{

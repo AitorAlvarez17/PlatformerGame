@@ -20,13 +20,20 @@
 #include "../Log.h"
 #include <math.h>
 
-Fireball::Fireball(bool startEnabled) : Module(startEnabled)
+Fireball::Fireball(bool startEnabled, fPoint spawnPos, float direction, float ballRange) : Module(startEnabled)
 {
 	name.create("fireball");
+	LOG("BALL CREATED");
+	position.x = spawnPos.x + 10 * direction;
+	position.y = spawnPos.y;
+
+	speed = speed * direction;
+	range = ballRange;
 }
 
 bool Fireball::Awake(pugi::xml_node& config)
 {
+	LOG("BALL AWAKEN");
 	LOG("Loading Fireball config");
 	bool ret = true;
 
@@ -49,10 +56,9 @@ bool Fireball::Awake(pugi::xml_node& config)
 
 bool Fireball::Start()
 {
+	LOG("BALL STARTED");
 	int pixels = 32;
 	//Spawns at player position
-	position.x = app->player->position.x - 200;
-	position.y = app->player->position.y;
 
 	//Load Textures
 	texture = app->tex->Load("Assets/textures/fireball2.png");
@@ -82,16 +88,9 @@ bool Fireball::PreUpdate()
 
 bool Fireball::Update(float dt)
 {
-	if (direction)
-	{
-		position.x += speed;
+	for(float d = 0; d < range;++d )
+	position.x += speed ;
 
-	}
-	else
-	{
-		position.x -= speed;
-
-	}
 	return true;
 }
 
@@ -111,7 +110,7 @@ bool Fireball::PostUpdate()
 void Fireball::OnCollision(Collider* a, Collider* b)
 {
 	if (a->type == Collider::FIREBALL && b->type == Collider::ENEMY)
-		{
+	{
 
 		int compX = a->rect.x - b->rect.x;
 
@@ -123,8 +122,8 @@ void Fireball::OnCollision(Collider* a, Collider* b)
 			LOG("ISDEAD TRUE");
 		}
 
-		}
-	
+	}
+
 }
 
 void Fireball::UpdateAnim()
