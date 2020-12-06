@@ -53,7 +53,7 @@ bool Fireball::Start()
 {
 	int pixels = 32;
 	//Spawns at player position
-	position.x = app->player->position.x - 100;
+	position.x = app->player->position.x - 200;
 	position.y = app->player->position.y;
 
 	//Load Textures
@@ -102,6 +102,20 @@ bool Fireball::PostUpdate()
 
 void Fireball::OnCollision(Collider* a, Collider* b)
 {
+	if (a->type == Collider::FIREBALL && b->type == Collider::ENEMY)
+		{
+
+		int compX = a->rect.x - b->rect.x;
+
+
+		if (compX > 0)
+		{
+			app->enemy->isDead = true;
+			//DESTROY BALL
+			LOG("ISDEAD TRUE");
+		}
+
+		}
 	
 }
 

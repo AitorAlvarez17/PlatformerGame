@@ -197,7 +197,7 @@ void Enemy::UpdateMovement()
 		}
 		case(ENEMYDYING):
 		{
-			position.x += speed * 1.5f;
+			position.x += speed ;
 			return;
 		}
 		}
@@ -289,7 +289,6 @@ void Enemy::UpdateAnim()
 void Enemy::ChangeState()
 {
 	float newPosX = position.x - app->player->position.x;
-
 	//LEFT
 	if (newPosX < 150.0f && newPosX > 0)
 	{
@@ -309,7 +308,6 @@ void Enemy::ChangeState()
 		rightWall->type = Collider::Type::NONE;
 		eState = EnemyState::ENEMYRUNNING;
 
-		isMovingRight = false;
 
 		if (speed < 0)speed = speed * -1;
 
@@ -319,6 +317,20 @@ void Enemy::ChangeState()
 		eState = EnemyState::ENEMYWALKING;
 		leftWall->type = Collider::Type::ENEMYWALL;
 		rightWall->type = Collider::Type::ENEMYWALL;
+	}
+
+	//DEAD CONTINTION
+	if (isDead == true)
+	{
+		if (health <= 0.0f)
+		{
+			//Destroy Enemy
+			isDead = false;
+			LOG("ENEMY DEAD");
+		}
+		health -= 1.0f;
+		eState = EnemyState::ENEMYDYING;
+
 	}
 
 

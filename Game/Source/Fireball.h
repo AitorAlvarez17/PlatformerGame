@@ -35,7 +35,7 @@ public:
 	fPoint position;
 
 	//Physics
-	float speed = 2.0f;
+	float speed = 1.0f;
 	float gravityForce = 3.0f;
 	float health = 20.0f;
 
