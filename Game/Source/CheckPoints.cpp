@@ -26,19 +26,18 @@ CheckPoints::CheckPoints(bool startEnabled) : Module(startEnabled)
 
 bool CheckPoints::Awake(pugi::xml_node& config)
 {
-	//texturePath = config.child("texture").child_value();
-
 	return true;
 }
 
 bool CheckPoints::Start()
 {
 	bool ret = true;
-	int pixels = 24;
-	
 
+	int pixels = 24;
+
+	//Set Positions
 	position.x = 2040;
-	position.y = 2654-200;
+	position.y = 2654 - 200;
 
 	tp1.x = 480;
 	tp1.y = 2846;
@@ -51,8 +50,8 @@ bool CheckPoints::Start()
 
 	endLevel.x = 384;
 	endLevel.y = 1374;
-	LOG("Loading Coin textures");
 
+	//Load Textures
 	tp1IDLE = app->tex->Load("Assets/maps/TP1/tp1_to0.png");
 	tp1To2 = app->tex->Load("Assets/maps/TP1/tp1_to2.png");
 	tp1To3 = app->tex->Load("Assets/maps/TP1/tp1_to3.png");
@@ -68,11 +67,12 @@ bool CheckPoints::Start()
 	OpenPhrase = app->tex->Load("Assets/maps/DialogueArt/OpenMenu.png");
 	TeleportPhrase = app->tex->Load("Assets/maps/DialogueArt/TeleportMenu.png");
 
-	coll = { position.x, position.y, pixels ,pixels*10 };
+	//Set colliders
+	coll = { position.x, position.y, pixels ,pixels * 10 };
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
 	tpColl3 = { tp3.x, tp3.y, pixels ,pixels };
-	tpEndLevel = { endLevel.x, endLevel.y - 170, pixels ,pixels*10 };
+	tpEndLevel = { endLevel.x, endLevel.y - 170, pixels ,pixels * 10 };
 
 	collider = app->collisions->AddCollider(coll, Collider::Type::SAVEPOINT, this);
 	collidertp1 = app->collisions->AddCollider(tpColl, Collider::Type::TP, this);
@@ -80,9 +80,8 @@ bool CheckPoints::Start()
 	collidertp3 = app->collisions->AddCollider(tpColl3, Collider::Type::TP, this);
 	colliderEndLevel = app->collisions->AddCollider(tpEndLevel, Collider::Type::ENDLEVEL, this);
 
-	texRect = { 0, 0, 640, 480};
+	texRect = { 0, 0, 640, 480 };
 
-	
 	return ret;
 }
 
@@ -107,15 +106,12 @@ bool CheckPoints::Update(float dt)
 		createLevel2 = true;
 		InitLevel2();
 	}
+
 	CheckOut();
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		
+
 	}
-	/*if (onArea1 == false || onArea2 == false || onArea3 == false)
-	{
-		renderedOption = NULL;
-	}*/
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		tpCounter--;
@@ -123,7 +119,7 @@ bool CheckPoints::Update(float dt)
 		{
 			tpCounter = 2;
 		}
-		//LOG("%d", tpCounter);
+
 	}
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
@@ -132,9 +128,9 @@ bool CheckPoints::Update(float dt)
 		{
 			tpCounter = 1;
 		}
-		//LOG("%d", tpCounter);
+
 	}
-	
+
 	return true;
 }
 
@@ -144,22 +140,24 @@ bool CheckPoints::PostUpdate()
 	{
 		if (onArea1 || onArea2 || onArea3)
 		{
-			app->render->DrawTexture(OpenPhrase, app->player->position.x-42, (app->player->position.y) - 35);
+			app->render->DrawTexture(OpenPhrase, app->player->position.x - 42, (app->player->position.y) - 35);
 			if (mapOpen)
 			{
 				int camaraPosx = -(app->render->camera.x) / 2;
 				int camaraPosy = (-(app->render->camera.y) / 2);
 				app->render->DrawTexture(renderedOption, camaraPosx, camaraPosy - 58);
-				app->render->DrawTexture(TeleportPhrase, camaraPosx + ((app->render->camera.w)/5), camaraPosy);
-			
+				app->render->DrawTexture(TeleportPhrase, camaraPosx + ((app->render->camera.w) / 5), camaraPosy);
+
 			}
+
 		}
+
 	}
-	
-	
+
+
 	if (active == true)
 	{
-		
+
 	}
 	if (active == false)
 	{
@@ -229,39 +227,39 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 			{
 				LOG("%d", mapOpen);
 				mapOpen = false;
-				
+
 			}
 			else
 			{
 				LOG("%d", mapOpen);
 				mapOpen = true;
-				
+
 			}
 		}
 		if (onArea1 && mapOpen == true)
 		{
 			switch (tpCounter)
 			{
-				case 1:
-					renderedOption = tp1To2;
-					if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-					{
-						app->player->position.x = tp2.x;
-						app->player->position.y = tp2.y;
+			case 1:
+				renderedOption = tp1To2;
+				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					app->player->position.x = tp2.x;
+					app->player->position.y = tp2.y;
 
-						mapOpen = false;
-					}
-					break;
-				case 2:
-					renderedOption = tp1To3;
-					if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-					{
-						app->player->position.x = tp3.x;
-						app->player->position.y = tp3.y;
+					mapOpen = false;
+				}
+				break;
+			case 2:
+				renderedOption = tp1To3;
+				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					app->player->position.x = tp3.x;
+					app->player->position.y = tp3.y;
 
-						mapOpen = false;
-					}
-					break;
+					mapOpen = false;
+				}
+				break;
 			}
 
 		}
@@ -320,11 +318,8 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 			}
 
 		}
-		
-		
-	}
-	
 
+	}
 
 
 }
@@ -342,7 +337,7 @@ void CheckPoints::InitLevel2()
 	tp3To2 = app->tex->Load("Assets/maps/TP3/LVL2/3to2.png");
 
 	LOG("helo");
-	
+
 	coll = { position.x, position.y - 250, pixels ,pixels * 10 };
 	tpColl = { tp1.x, tp1.y, pixels ,pixels };
 	tpColl2 = { tp2.x, tp2.y, pixels ,pixels };
@@ -354,21 +349,15 @@ void CheckPoints::InitLevel2()
 	collidertp2 = app->collisions->AddCollider(tpColl2, Collider::Type::TP, this);
 	collidertp3 = app->collisions->AddCollider(tpColl3, Collider::Type::TP, this);
 
-
 }
 
 bool CheckPoints::Save(pugi::xml_node& savedGame)
 {
-
-
-
-
 	return true;
 }
 
 bool CheckPoints::Load(pugi::xml_node& savedPlayer)
 {
-
 	return true;
 }
 
