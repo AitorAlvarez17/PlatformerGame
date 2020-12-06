@@ -110,6 +110,7 @@
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Wand.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\CheckPoints.h" />
     <ClInclude Include="Source\Enemy.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Wand.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\List.h" />
