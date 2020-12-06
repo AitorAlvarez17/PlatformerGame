@@ -26,6 +26,8 @@ SOFTWARE.
 
 Hero Sprite: Pixel art character about Finn the human made for platformer games. Created with aseprite in 32x32 size. You can use these for what ever you'd like, but be sure to tag my twitter @LazyHamsters and credit me properly.
 
+Coin, Heart and Token sprites made by ourselves.
+
 Inca Tileset: Assets are public domain. This means you can use it for your personal and commercial games. No credit needed, but if you do, please, let me know via twitter at @DavitMasia , so i can do some RT ;) .
 
 Music made by ourselves.
