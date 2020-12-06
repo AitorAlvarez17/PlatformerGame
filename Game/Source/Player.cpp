@@ -158,18 +158,8 @@ bool Player::Update(float dt)
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		//SPAWN BALL
-		if (isGoingRight)
-		{
-			Fireball fireball(false, position, 1, 100);
-			fireball.Start();
-			
+		FireHability();
 
-		}
-		else
-		{
-			Fireball* fireball = new Fireball(false, position, -1, 100);
-
-		}
 	}
 	if (app->debug->godMode == false)
 	{
@@ -648,6 +638,32 @@ void Player::HealHability()
 
 }
 
+void Player::FireHability()
+{
+	if (cooldown == fireMaxCooldown)
+	{
+		//CREATE FIREBALL
+		if (isGoingRight)
+		{
+			Fireball fireball(false, position, 1, 100);
+			fireball.Start();
 
+
+		}
+		else
+		{
+			Fireball* fireball = new Fireball(false, position, -1, 100);
+
+		}
+		cooldown = 0;
+	}
+	else
+	{
+
+	}
+
+	LOG("%f", maxCooldown);
+
+}
 
 

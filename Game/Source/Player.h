@@ -45,6 +45,7 @@ public:
 	void ChangeState(PlayerState previous, PlayerState next);
 	void Reload();
 	void HealHability();
+	void FireHability();
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
@@ -81,6 +82,7 @@ public:
 
 	float cooldown = 3.0f;
 	float maxCooldown = 3.0f;
+	float fireMaxCooldown = 5.0f;
 
 	int winWidth;
 	int winHeigh;
