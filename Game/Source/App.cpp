@@ -10,7 +10,6 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "Enemy.h"
-#include "Fireball.h"
 #include "ObjectManager.h"
 #include "Object.h"
 #include "CheckPoints.h"
@@ -40,7 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collisions = new Collisions(false);
 	player = new Player(false);
 	enemy = new Enemy(false);
-	fireball = new Fireball(false);
+
 	fade = new ModuleFadeToBlack(true);
 	pathfinding = new PathFinding(false);
 	debug = new Debug(true);
@@ -61,7 +60,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(player);
 	AddModule(enemy);
-	AddModule(fireball);
 	AddModule(collisions);
 	AddModule(map);
 	AddModule(fade);
