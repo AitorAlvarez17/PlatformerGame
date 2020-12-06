@@ -44,7 +44,9 @@ public:
 	void Draw();
 	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera) const;
 	void HealthUi(int lifesleft);
+	void WandUi();
 	void IntToString(char* buffer, int k, int length);
+
 	bool active = true;
 	bool regulator = true;
 	bool onTp = true;
@@ -63,18 +65,28 @@ private:
 
 	SDL_Texture* renderedOption;
 
+	//GUI TEXTURES
 	SDL_Texture* scoreTitle;
 	SDL_Texture* healthTitle;
 	SDL_Texture* singleHeart;
 	SDL_Texture* healthUi;
 
+	//FIRE AND HEAL TEXTURES
 	SDL_Rect heartRect;
 	SDL_Texture* cooldown1;
 	SDL_Texture* cooldown2;
 	SDL_Texture* cooldown3;
+	SDL_Texture* cooldown4;
+	SDL_Texture* cooldown5;
+
+
+
 	SDL_Texture* healGUI;
-	SDL_Texture* pressH;
-	// A ptr to the current animation
+	//SDL_Texture* pressH;
+	SDL_Texture* fireballGUI;
+
+
+	// LIFES ANIMATION
 	Animation* currentHealthAnim = nullptr;
 	Animation oneHeart;
 	Animation twoHearts;
