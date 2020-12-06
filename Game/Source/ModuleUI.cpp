@@ -1,4 +1,4 @@
-#include "Debug.h"
+﻿#include "Debug.h"
 #include "ModuleUI.h"
 #include "App.h"
 #include "Input.h"
@@ -35,10 +35,14 @@ bool ModuleUI::Start()
 	bool ret = true;
 	int pixels = 24;
 
+	fontPath = "Assets/UI/font.png";
+
 	camaraPosx = -(app->render->camera.x) / 2;
 	camaraPosy = -(app->render->camera.y) / 2;
 	LOG("Loading Coin textures");
 
+	char lookupTable[] = { "0123456789.,\"!'-�ABCDEFGHIJKLMNOPQRSTUVWXYZ.    " };
+	font = Load(fontPath, lookupTable, 3);
 
 	scoreTitle = app->tex->Load("Assets/UI/GoldText.png");
 	healthTitle = app->tex->Load("Assets/UI/HealthText.png");
@@ -97,7 +101,7 @@ bool ModuleUI::Update(float dt)
 
 bool ModuleUI::PostUpdate()
 {
-	
+	BlitText(600, 2846, font, "LEVEL", false);
 	/*app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);*/
 	if (app->scene->playing == true)
@@ -203,6 +207,99 @@ void ModuleUI::HealthUi(int lifesLeft)
 	}
 	currentHealthAnim->Update();
 	
+}
+
+void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const
+{
+	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
+	{
+		return;
+	}
+
+	const Font* font = &fonts[font_id];
+	SDL_Rect spriteRect;
+	uint len = strlen(text);
+
+	spriteRect.w = font->char_w;
+	spriteRect.h = font->char_h;
+
+	for (uint i = 0; i < len; ++i)
+	{
+		uint charIndex = 0;
+
+		// Find the location of the current character in the lookup table
+		for (uint j = 0; j < font->totalLength; ++j)
+		{
+			if (font->table[j] == text[i])
+			{
+				charIndex = j;
+				break;
+			}
+		}
+
+		// Retrieve the position of the current character in the sprite
+		spriteRect.x = spriteRect.w * (charIndex % font->columns);
+		spriteRect.y = spriteRect.h * (charIndex / font->columns);
+
+		app->render->DrawTexture(font->texture, x, y, &spriteRect, 1.0f, 0.0f, INT_MAX, INT_MAX, useCamera);
+
+		// Advance the position where we blit the next character
+		x += spriteRect.w;
+	}
+}
+
+int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
+{
+	int id = -1;
+
+	if (texture_path == nullptr || characters == nullptr || rows == 0)
+	{
+		return id;
+	}
+
+	SDL_Texture* tex = app->tex->Load(texture_path);
+
+	if (tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
+	{
+		return id;
+	}
+
+	id = 0;
+	for (; id < MAX_FONTS; ++id)
+		if (fonts[id].texture == nullptr)
+			break;
+
+	if (id == MAX_FONTS)
+	{
+		return id;
+	}
+
+	Font& font = fonts[id];
+
+	font.texture = tex;
+	font.rows = rows;
+
+	// TODO 1: Finish storing font data
+
+	// totalLength ---	length of the lookup table
+	// table ---------  All characters displayed in the same order as the texture
+	// columns -------  Amount of chars per row of the texture
+	// char_w --------	Width of each character
+	// char_h --------	Height of each character
+
+	strcpy_s(fonts[id].table, MAX_FONT_CHARS, characters);
+	font.totalLength = strlen(characters);
+	font.columns = fonts[id].totalLength / rows;
+
+	uint tex_w, tex_h;
+	app->tex->GetSize(tex, tex_w, tex_h);
+	font.char_w = tex_w / font.columns;
+	font.char_h = tex_h / font.rows;
+
+
+	k++;
+
+	return id;
 }
 
 
