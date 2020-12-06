@@ -46,6 +46,7 @@ public:
 	void HealthUi(int lifesleft);
 	void WandUi();
 	void IntToString(char* buffer, int k, int length);
+	void GoldUi();
 
 	bool active = true;
 	bool regulator = true;
@@ -61,6 +62,8 @@ public:
 	int camaraPosy;
 
 	int font = -1;
+
+	float cantSumon;
 private:
 
 	SDL_Texture* renderedOption;
@@ -70,7 +73,7 @@ private:
 	SDL_Texture* healthTitle;
 	SDL_Texture* singleHeart;
 	SDL_Texture* healthUi;
-
+	SDL_Texture* goldUi;
 	//FIRE AND HEAL TEXTURES
 	SDL_Rect heartRect;
 	SDL_Texture* cooldown1;
