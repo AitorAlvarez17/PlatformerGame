@@ -40,6 +40,7 @@ public:
 	bool PreUpdate();
 	bool Update(float dt);
 	bool PostUpdate();
+	int Load(const char* texturePath, const char* characters, uint rows = 1);
 	void Draw();
 	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera) const;
 	void HealthUi(int lifesleft);
@@ -90,8 +91,9 @@ private:
 	int tpCounter = 1;
 	
 	const char* texturePath;
+	const char* fontPath;
+	int k = 0;
 
-	
 
 	Font fonts[MAX_FONTS];
 };
