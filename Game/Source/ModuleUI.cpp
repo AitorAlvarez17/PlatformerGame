@@ -337,7 +337,7 @@ int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
 	font.totalLength = strlen(characters);
 	font.columns = fonts[id].totalLength / rows;
 
-	uint texWidth, texHeight;
+	uint tex_w, tex_h;
 	app->tex->GetSize(tex, tex_w, tex_h);
 	font.char_w = tex_w / font.columns;
 	font.char_h = tex_h / font.rows;

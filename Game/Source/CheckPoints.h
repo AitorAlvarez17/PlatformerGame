@@ -43,7 +43,7 @@ public:
 	Point<int> tp1;
 	Point<int> tp2;
 	Point<int> tp3;
-	Point<int> endlevel;
+	Point<int> endLevel;
 	bool active = true;
 	bool regulator = true;
 	bool onTp = true;
