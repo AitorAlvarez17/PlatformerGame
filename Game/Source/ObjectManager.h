@@ -4,10 +4,12 @@
 #include "App.h"
 #include "Module.h"
 #include "Object.h"
+#include "Enemy.h"
 #include "Animation.h"
 
 
 #define MAX_OBJECTS 100
+#define MAX_ENEMIES 100
 
 
 
@@ -16,6 +18,12 @@ struct ObjSpawnpoint
 	ObjType type = ObjType::NONE;
 	int x, y;
 	int dir;
+};
+
+struct EnemySpawnPoint
+{
+	ObjType type = ObjType::NONE;
+	int x, y;
 };
 
 
@@ -51,20 +59,20 @@ public:
 	int GetTilePosx(int x);
 	int GetTilePosy(int y);
 	bool AddObject(ObjType type, int x, int y, int dir);
+	bool AddEnemy(int x, int y);
 
 	// Add an enemy into the queue to be spawned later
 	/*bool AddBall(BALL_TYPE type, int x, int y, bool right);*/
 
 	// Iterates the queue and checks for camera position
-	void HandleBallsSpawn();
+	void HandleObjectsSpawn();
 
 	// Destroys any enemies that have moved outside the camera limits
-	void HandleBallsDespawn();
+	void HandleObjectsDespawn();
 
 	//spawns new balls after destroyed ones
 
 	//checks if all balls have been destroyed
-	bool checkRemainingBalls();
 
 
 	int Xoffset = 10;
@@ -72,12 +80,14 @@ public:
 
 
 	Object* objects[MAX_OBJECTS] = { nullptr };
+	Enemy* enemies[MAX_ENEMIES] = { nullptr };
 
 	uint ballsLeft = 15;
 
 	bool ballsStop = false;
 
 	void SpawnObj(const ObjSpawnpoint& info);
+	void SpawnEnemy(const EnemySpawnPoint& info);
 
 
 	// Spawns a new enemy using the data from the queue
@@ -87,6 +97,7 @@ public:
 
 	// A queue with all spawn points information
 	ObjSpawnpoint spawnQueue[MAX_OBJECTS];
+	EnemySpawnPoint enemySpawnQueue[MAX_ENEMIES];
 
 	// All spawned enemies in the scene
 

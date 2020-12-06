@@ -115,12 +115,6 @@ void Fireball::OnCollision(Collider* a, Collider* b)
 		int compX = a->rect.x - b->rect.x;
 
 
-		if (compX > 0)
-		{
-			app->enemy->isDead = true;
-			//DESTROY BALL
-			LOG("ISDEAD TRUE");
-		}
 
 	}
 

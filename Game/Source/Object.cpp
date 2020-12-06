@@ -6,7 +6,6 @@
 #include "Textures.h"
 #include "Window.h"
 #include "Render.h"
-#include "Enemy.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
 #include "Audio.h"
@@ -211,12 +210,10 @@ void Object::OnCollision(Collider* a, Collider* b) {
 
 	if (a->type == Collider::FIREBALL && b->type == Collider::ENEMY)
 	{
-		app->enemy->isDead = true;
 		SetToDelete();
 	}
 	if (a->type == Collider::ENEMY && b->type == Collider::FIREBALL)
 	{
-		app->enemy->isDead = true;
 		SetToDelete();
 	}
 

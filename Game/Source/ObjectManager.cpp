@@ -21,6 +21,9 @@ ObjectManager::ObjectManager(bool startEnabled) : Module(startEnabled)
 {
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 		objects[i] = nullptr;
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+		enemies[i] = nullptr;
+
 }
 
 bool ObjectManager::Start()
@@ -45,13 +48,22 @@ bool ObjectManager::PreUpdate()
 		}
 	}
 
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr && enemies[i]->pendingToDelete)
+		{
+			delete enemies[i];
+			enemies[i] = nullptr;
+		}
+	}
+
 	return true;
 }
 
 bool ObjectManager::Update(float dt)
 {
 
-	HandleBallsSpawn();
+	HandleObjectsSpawn();
 
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
@@ -59,7 +71,13 @@ bool ObjectManager::Update(float dt)
 			objects[i]->Update(dt);
 	}
 
-	HandleBallsDespawn();
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+			enemies[i]->Update(dt);
+	}
+
+	HandleObjectsDespawn();
 
 	return true;
 
@@ -72,6 +90,12 @@ bool ObjectManager::PostUpdate()
 	{
 		if (objects[i] != nullptr)
 			objects[i]->Draw();
+	}
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+			enemies[i]->PostUpdate();
 	}
 
 	return true;
@@ -88,6 +112,16 @@ bool ObjectManager::CleanUp()
 		{
 			delete objects[i];
 			objects[i] = nullptr;
+		}
+
+	}
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			delete enemies[i];
+			enemies[i] = nullptr;
 		}
 
 	}
@@ -130,7 +164,29 @@ bool ObjectManager::AddObject(ObjType type, int x, int y, int dir)
 }
 
 
-void ObjectManager::HandleBallsSpawn()
+bool ObjectManager::AddEnemy( int x, int y)
+{
+	bool ret = false;
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemySpawnQueue[i].type == ObjType::NONE)
+		{
+
+			enemySpawnQueue[i].type = ObjType::ENEMY;
+			enemySpawnQueue[i].x = x;
+			enemySpawnQueue[i].y = y;
+
+			ret = true;
+			break;
+		}
+
+	}
+
+	return ret;
+}
+
+void ObjectManager::HandleObjectsSpawn()
 {
 	// Iterate all the enemies queue
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
@@ -141,12 +197,23 @@ void ObjectManager::HandleBallsSpawn()
 			LOG("Spawning object at %d", spawnQueue[i].x);
 
 			SpawnObj(spawnQueue[i]);
-			spawnQueue[i].type = ObjType::NONE; // Removing the newly spawned enemy from the queue
+			spawnQueue[i].type = ObjType::NONE; // Removing the newly spawned object from the queue
+		}
+	}
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemySpawnQueue[i].type != ObjType::NONE)
+		{
+			// Spawn a new enemy if the screen has reached a spawn position
+			LOG("Spawning Enemy at %d", enemySpawnQueue[i].x);
+
+			SpawnEnemy(enemySpawnQueue[i]);
+			enemySpawnQueue[i].type = ObjType::NONE; // Removing the newly spawned enemy from the queue
 		}
 	}
 }
 
-void ObjectManager::HandleBallsDespawn()
+void ObjectManager::HandleObjectsDespawn()
 {
 	// Iterate existing enemies
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
@@ -156,6 +223,17 @@ void ObjectManager::HandleBallsDespawn()
 			if (active == false)
 			{
 				objects[i]->SetToDelete();
+			}
+		}
+	}
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			if (active == false)
+			{
+				enemies[i]->SetToDelete();
 			}
 		}
 	}
@@ -192,67 +270,24 @@ void ObjectManager::SpawnObj(const ObjSpawnpoint& info)
 		}
 	}
 }
+void ObjectManager::SpawnEnemy(const EnemySpawnPoint& info)
+{
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] == nullptr)
+		{
+			enemies[i] = new Enemy(info.x, info.y,true);
+			enemies[i]->Start();
 
+			break;
+		}
+	}
+
+}
 
 void ObjectManager::OnCollision(Collider* c1, Collider* c2)
 {
-	for (uint i = 0; i < MAX_OBJECTS; ++i)
-	{
-
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::ROPE)
-		//{
-		//	coins[i]->OnCollision(c2);
-		//	delete Balls[i];
-		//	Balls[i] = nullptr;
-
-		//	break;
-		//}
-
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::WALL_A) {
-		//	App->balls->Balls[i]->position.y += 5;
-		//	coins[i]->Ball_vx *= -1;
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::WALL_D) {
-
-		//	coins[i]->Ball_vx *= -1;
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::FLOOR) {
-
-		//	App->balls->Balls[i]->OnCollision(c2);
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::TOP) {
-
-		//	coins[i]->Ball_vy *= -1;
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::STRUCTT) {
-
-		//	App->balls->Balls[i]->OnCollision(c2);
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::STRUCTD) {
-		//	App->balls->Balls[i]->position.y += 5;
-		//	Balls[i]->Ball_vy *= -1;
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::STRUCTR) {
-
-		//	coins[i]->Ball_vx *= -1;
-
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::STRUCTL) {
-
-		//	Balls[i]->Ball_vx *= -1;
-		//}
-		//if (coins[i] != nullptr && coins[i]->GetCollider() == c1 && c2->type == Collider::Type::STRUCTT2) {
-
-		//	App->balls->Balls[i]->OnCollision(c2);
-
-		//}
-	}
+	
 }
 
 int ObjectManager::GetTilePosx(int x) {
@@ -273,31 +308,4 @@ int ObjectManager::GetTilePosy(int y) {
 
 
 
-
-
-bool ObjectManager::checkRemainingBalls()
-{
-	int counter = 0;
-	for (int i = 0; i < MAX_OBJECTS; ++i)
-	{
-	/*	if (Balls[i] != nullptr)
-		{
-			return update_status::UPDATE_CONTINUE;
-			break;
-			counter = 0;
-		}
-		else if (Balls[i] == nullptr)
-		{
-			counter++;
-			if (counter == MAX_BALLS) {
-				App->fade->FadeToBlack((Module*)App->scene, (Module*)App->win, 60);
-			}
-
-		}
-		else {
-			LOG("ERROR");
-		}*/
-	}
-	return true;
-}
 

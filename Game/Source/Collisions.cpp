@@ -122,8 +122,8 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::WALL_D] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::FLOOR] = false;
-	matrix[Collider::Type::ENEMY][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::FLOOR] = true;
+	matrix[Collider::Type::ENEMY][Collider::Type::DEATH] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::HEART] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::COIN] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::TP] = false;
