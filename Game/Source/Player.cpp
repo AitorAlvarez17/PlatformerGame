@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Animation.h"
 #include "Textures.h"
+#include "ModuleUI.h"
 #include "Scene.h"
 #include "ObjectManager.h"
 #include "Fireball.h"
@@ -311,6 +312,11 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			position.y = spawnLevel1.y;
 			lifes--;
 
+		case(Collider::Type::COIN):
+
+			if (goldScore < 8)goldScore++;
+
+			break;
 		}
 		
 	}
@@ -634,7 +640,16 @@ void Player::HealHability()
 {
 	if (cooldown == maxCooldown)
 	{
-		if(lifes <5)app->player->lifes++;
+		if (lifes < 5)
+		{
+			app->player->lifes++;
+			maxLifes = false;
+		}
+		else
+		{
+			app->ui->cantSumon = 0;
+			maxLifes = true;
+		}
 		LOG("%d", app->player->lifes);
 		cooldown = 0;
 	}

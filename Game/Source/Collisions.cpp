@@ -69,7 +69,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::DEATH][Collider::Type::TP] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::ENDLEVEL] = false;
-	matrix[Collider::Type::DEATH][Collider::Type::ENDLEVEL] = SDL_FillRect;
+	matrix[Collider::Type::DEATH][Collider::Type::ENDLEVEL] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::FIREBALL] = false;
 
 	matrix[Collider::Type::HEART][Collider::Type::WALL_A] = false;
