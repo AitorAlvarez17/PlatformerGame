@@ -24,8 +24,7 @@ struct Collider
 		ENEMY,
 		ENEMYWALL,
 		ENDLEVEL,
-		FIREBALL,
-
+		
 		MAX
 	};
 
