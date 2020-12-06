@@ -16,23 +16,27 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
  - Logo screen
  - Frame Time Control
  - Deltatime on Move
- - Destrucible Enemies
+ - Destrucible Enemies (WIP).
  - Game Items: Health / Lives
  - Collectable Items: Coins / Hearts
+ - Double jump.
  - Frame Time Control
  - Checkpoints autosaves the game
  - Checkpoints Teleports
  - Player Weapon
  - Cooldown Skills included on Player Weapon
  - Audio Feedback
+ - Entity system already implemented, used to create all the objects and enemies as well as the firebolt, but we are having some trouble with this last one's collider.
 
  
 ## Controls
 
  - WASD for movement.
  - Weapon: Mouse Right Click to change a coin with an extra live. Limited to 5.
- - E: Use Teleport
+ - E: Open teleport menu and Arrows to move arround. Press T to telepor to the selected location.
  - SPACE for jumping
+ - Left mouse click to fire a fireball, no collider yet, but implemented.
+ - Right click to use the healing ability, it gives you one heart.
  - F1/F2 Start from the first/second level.
  - F3 Start from the beginning of the current level.
  - F5 Save the current game state.
