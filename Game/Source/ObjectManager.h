@@ -75,8 +75,8 @@ public:
 	//checks if all balls have been destroyed
 
 
-	int Xoffset = 10;
-	int Yoffset = 0;
+	int offsetX = 10;
+	int offsetY = 0;
 
 
 	Object* objects[MAX_OBJECTS] = { nullptr };

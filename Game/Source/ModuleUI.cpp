@@ -44,21 +44,21 @@ bool ModuleUI::Start()
 	char lookupTable[] = { "0123456789.,\"!'-�ABCDEFGHIJKLMNOPQRSTUVWXYZ.    " };
 	font = Load(fontPath, lookupTable, 3);
 
-	scoreTitle = app->tex->Load("Assets/UI/GoldText.png");
-	healthTitle = app->tex->Load("Assets/UI/HealthText.png");
+	scoreTitle = app->tex->Load("Assets/UI/gold_text.png");
+	healthTitle = app->tex->Load("Assets/UI/health_text.png");
 	singleHeart = app->tex->Load("Assets/UI/heart.png");
 	healthUi = app->tex->Load("Assets/UI/healthAnim.png");
 
 	//WAND GUI Textures
-	cooldown1 = app->tex->Load("Assets/UI/Cooldown1.png");
-	cooldown2 = app->tex->Load("Assets/UI/Cooldown2.png");
-	cooldown3 = app->tex->Load("Assets/UI/Cooldown3.png");
-	cooldown4 = app->tex->Load("Assets/UI/Cooldown4.png");
-	cooldown5 = app->tex->Load("Assets/UI/Cooldown5.png");
-	healGUI = app->tex->Load("Assets/UI/HealGUI.png");
+	cooldown1 = app->tex->Load("Assets/UI/cooldown_1.png");
+	cooldown2 = app->tex->Load("Assets/UI/cooldown_2.png");
+	cooldown3 = app->tex->Load("Assets/UI/cooldown_3.png");
+	cooldown4 = app->tex->Load("Assets/UI/cooldown_4.png");
+	cooldown5 = app->tex->Load("Assets/UI/cooldown_5.png");
+	healGUI = app->tex->Load("Assets/UI/heal_gui.png");
 	goldUi = app->tex->Load("Assets/textures/coin.png");
 	cantSummon = app->tex->Load("Assets/UI/cant.png");
-	fireballGUI = app->tex->Load("Assets/UI/FireBallGUI.png");
+	fireballGUI = app->tex->Load("Assets/UI/fireball_gui.png");
 
 	//pressH = app->tex->Load("Assets/UI/PressH.png");
 
@@ -298,8 +298,8 @@ void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCam
 	SDL_Rect spriteRect;
 	uint len = strlen(text);
 
-	spriteRect.w = font->char_w;
-	spriteRect.h = font->char_h;
+	spriteRect.w = font->charW;
+	spriteRect.h = font->charH;
 
 	for (uint i = 0; i < len; ++i)
 	{
@@ -369,10 +369,10 @@ int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
 	font.totalLength = strlen(characters);
 	font.columns = fonts[id].totalLength / rows;
 
-	uint tex_w, tex_h;
-	app->tex->GetSize(tex, tex_w, tex_h);
-	font.char_w = tex_w / font.columns;
-	font.char_h = tex_h / font.rows;
+	uint texW, texH;
+	app->tex->GetSize(tex, texW, texH);
+	font.charW = texW / font.columns;
+	font.charH = texH / font.rows;
 
 
 	k++;
