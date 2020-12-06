@@ -149,6 +149,10 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		HealHability();
+	}
 	if (app->debug->godMode == false)
 	{
 
@@ -229,8 +233,6 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			app->player->Reload();
 			app->scene->LoadLevel("level2.tmx");
 			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
-			app->player->position.x = app->player->spawnLevel2.x;
-			app->player->position.y = app->player->spawnLevel2.y;
 			return;
 			break;
 
@@ -400,6 +402,10 @@ void Player::UpdateState()
 
 void Player::UpdateLogic(float dt)
 {
+	cooldown += dt;
+	
+	if (cooldown > maxCooldown)
+		cooldown = maxCooldown;
 
 	switch (playerState)
 	{
@@ -580,6 +586,16 @@ bool Player::Load(pugi::xml_node& savedPlayer)
 void Player::Reload()
 {
 	playerState = PlayerState::IDLE;
+	if (lvl2 == false)
+	{
+		app->player->position.x = app->player->spawnLevel1.x;
+		app->player->position.y = app->player->spawnLevel1.y;
+	}
+	else
+	{
+		app->player->position.x = app->player->spawnLevel2.x;
+		app->player->position.y = app->player->spawnLevel2.y;
+	}
 	//verticalVelocity = 0.0f;
 	/*if (health == 0)
 	{
@@ -590,6 +606,23 @@ void Player::Reload()
 	//respawnPosition = initialPosition;
 	//gravityOn = false;
 	//initialWaitCount = 0.0f;*/
+}
+
+void Player::HealHability()
+{
+	if (cooldown == maxCooldown)
+	{
+		if(app->player->lifes <= 3)app->player->lifes++;
+		LOG("%d", app->player->lifes);
+		cooldown = 0;
+	}
+	else
+	{
+
+	}
+	
+	LOG("%f", maxCooldown);
+
 }
 
 
