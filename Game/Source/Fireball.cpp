@@ -34,8 +34,6 @@ bool Fireball::Awake(pugi::xml_node& config)
 
 
 	pugi::xml_node move = config.child("move");
-
-
 	//health = move.attribute("health").as_float();
 	//speed = move.attribute("speed").as_float();
 
@@ -61,7 +59,6 @@ bool Fireball::Start()
 	if (texture == nullptr)LOG("Invalid Fireball Texture");
 
 	//Animations
-
 	rightFireball.GenerateAnimation({ 0,0,32,32 }, 5);
 	rightFireball.loop = true;
 	rightFireball.speed = 0.7f;
@@ -73,6 +70,8 @@ bool Fireball::Start()
 	//Colliders
 	fireballCollider = app->collisions->AddCollider(SDL_Rect({ (int)position.x ,(int)position.y + pixels,pixels,pixels }), Collider::Type::FIREBALL, this);
 
+	direction = app->player->isGoingRight;
+
 	return true;
 }
 
@@ -83,7 +82,7 @@ bool Fireball::PreUpdate()
 
 bool Fireball::Update(float dt)
 {
-	if (app->player->isGoingRight)
+	if (direction)
 	{
 		position.x += speed;
 
@@ -128,7 +127,6 @@ void Fireball::OnCollision(Collider* a, Collider* b)
 	
 }
 
-
 void Fireball::UpdateAnim()
 {
 }
@@ -145,4 +143,21 @@ bool Fireball::Load(pugi::xml_node&)
 bool Fireball::Save(pugi::xml_node&)
 {
 	return true;
+}
+
+void Fireball::Cooldown()
+{
+	/*if (cooldown == maxCooldown)
+	{
+		if (app->player->lifes <= 3)app->player->lifes++;
+		LOG("%d", app->player->lifes);
+		cooldown = 0;
+	}
+	else
+	{
+
+	}*/
+
+	//LOG("%f", maxCooldown);
+
 }

@@ -157,7 +157,7 @@ void Enemy::OnCollision(Collider* a, Collider* b) {
 
 	}
 
-		enemyCollider->SetPos((int)b->rect.x - 1, (int)position.y);
+	enemyCollider->SetPos((int)b->rect.x - 1, (int)position.y);
 
 
 
@@ -187,7 +187,9 @@ void Enemy::UpdateMovement()
 		case (ENEMYRUNNING):
 		{
 			//PATHFINDING
-			position.x += speed *1.5f;
+			position.x += speed * 1.5f;
+			rightWall->SetPos((int)position.x - 150, (int)position.y + 32);
+			leftWall->SetPos((int)position.x + 120, (int)position.y + 32);
 			return;
 		}
 		case(ENEMYSTUN):
@@ -197,7 +199,7 @@ void Enemy::UpdateMovement()
 		}
 		case(ENEMYDYING):
 		{
-			position.x += speed ;
+			position.x += speed;
 			return;
 		}
 		}
@@ -233,7 +235,7 @@ void Enemy::UpdateAnim()
 	}
 	case (ENEMYRUNNING):
 	{
-		
+
 		rightAnim.speed = leftAnim.speed = 1.0f;
 		//PATHFINDING ANIM PART
 		if (speed > 0)
@@ -296,13 +298,13 @@ void Enemy::ChangeState()
 		rightWall->type = Collider::Type::NONE;
 		eState = EnemyState::ENEMYRUNNING;
 
+		if (speed > 0)speed = speed * -1;
 
-		if(speed > 0)speed = speed * -1;
-		
+
 
 	}
 	//RIGHT
-	else if(newPosX < 0 && (newPosX * -1) < 150.0f)
+	else if (newPosX < 0 && (newPosX * -1) < 150.0f)
 	{
 		leftWall->type = Collider::Type::NONE;
 		rightWall->type = Collider::Type::NONE;
