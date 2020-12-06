@@ -304,6 +304,13 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			if (lifes < 5)lifes++;
 
 			break;
+
+		case(Collider::Type::ENEMY):
+
+			position.x = spawnLevel1.x;
+			position.y = spawnLevel1.y;
+			lifes--;
+
 		}
 		
 	}

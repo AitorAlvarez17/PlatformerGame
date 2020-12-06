@@ -45,6 +45,7 @@ Collisions::Collisions(bool startEnabled) : Module(startEnabled)
 	matrix[Collider::Type::PLAYER][Collider::Type::SAVEPOINT] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENDLEVEL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::FIREBALL] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
 
 	matrix[Collider::Type::FLOOR][Collider::Type::WALL_A] = false;
 	matrix[Collider::Type::FLOOR][Collider::Type::WALL_D] = false;
