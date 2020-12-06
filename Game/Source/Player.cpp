@@ -301,8 +301,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 		case(Collider::Type::HEART):
 
-
-			lifes++;
+			if (lifes < 5)lifes++;
 
 			break;
 		}
@@ -628,7 +627,7 @@ void Player::HealHability()
 {
 	if (cooldown == maxCooldown)
 	{
-		if(app->player->lifes <= 3)app->player->lifes++;
+		if(lifes <5)app->player->lifes++;
 		LOG("%d", app->player->lifes);
 		cooldown = 0;
 	}
