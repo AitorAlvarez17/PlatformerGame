@@ -43,14 +43,14 @@ bool Scene::Start()
 	bgTexture = app->tex->Load("Assets/maps/MenuF.png");//por esto ramon descuenta !!!!!
 	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->oManager->AddObject(ObjType::HEART, 2151, 2654);
-	app->oManager->AddObject(ObjType::COIN, 1053, 2800);
-	app->oManager->AddObject(ObjType::COIN, 1315, 2740);
-	app->oManager->AddObject(ObjType::COIN, 1572, 2677);
-	app->oManager->AddObject(ObjType::COIN, 3269, 2526);
-	app->oManager->AddObject(ObjType::COIN, 3014, 2590);
-	app->oManager->AddObject(ObjType::COIN, 1667, 1850);
-	app->oManager->AddObject(ObjType::COIN, 1537, 1854);
+	app->oManager->AddObject(ObjType::HEART, 2151, 2654,0);
+	app->oManager->AddObject(ObjType::COIN, 1053, 2800, 0);
+	app->oManager->AddObject(ObjType::COIN, 1315, 2740, 0);
+	app->oManager->AddObject(ObjType::COIN, 1572, 2677, 0);
+	app->oManager->AddObject(ObjType::COIN, 3269, 2526, 0);
+	app->oManager->AddObject(ObjType::COIN, 3014, 2590, 0);
+	app->oManager->AddObject(ObjType::COIN, 1667, 1850, 0);
+	app->oManager->AddObject(ObjType::COIN, 1537, 1854, 0);
 
 
 	
