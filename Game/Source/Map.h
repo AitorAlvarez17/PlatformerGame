@@ -11,14 +11,16 @@
 #include "PugiXml\src\pugixml.hpp"
 
 
-struct Tile {
+struct Tile 
+{
 
     int id;
     int terrain[4];
 
 };
 
-struct TileSet {
+struct TileSet 
+{
 
     SString	name;
     int	firstgid;
@@ -101,7 +103,8 @@ enum MapTypes
 
 
 
-struct MapData {
+struct MapData 
+{
 
 
 

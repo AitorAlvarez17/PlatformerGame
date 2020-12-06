@@ -77,7 +77,8 @@ public:
 	bool isGoingRight = false;
 
 	int lifes = 3;
-
+	int goldScore;
+	bool maxLifes;
 	int fireBallDirection;
 
 	float cooldown = 3.0f;
@@ -108,7 +109,7 @@ private:
 	bool canMoveUp = true;
 	bool canMoveDown = true;
 	bool push = false;
-	
+
 	const char* texturePath;
 
 	

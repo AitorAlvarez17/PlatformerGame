@@ -56,6 +56,7 @@ bool ModuleUI::Start()
 	cooldown4 = app->tex->Load("Assets/UI/Cooldown4.png");
 	cooldown5 = app->tex->Load("Assets/UI/Cooldown5.png");
 	healGUI = app->tex->Load("Assets/UI/HealGUI.png");
+	goldUi = app->tex->Load("Assets/textures/coin.png");
 	cantSummon = app->tex->Load("Assets/UI/cant.png");
 	fireballGUI = app->tex->Load("Assets/UI/FireBallGUI.png");
 
@@ -101,16 +102,23 @@ bool ModuleUI::PreUpdate()
 bool ModuleUI::Update(float dt)
 {
 	write = true;
+	LOG("%f", cantSumon);
+	if (cantSumon <= 1.5)
+	{
+		cantSumon += dt;
+	}
+	if (cantSumon > 1.5)
+	{
+		cantSumon = 1.5;
+	}
+
+
 	return true;
 
 }
 
 bool ModuleUI::PostUpdate()
 {
-	/*if (maxLifes)
-	{
-		app->render->DrawTexture(cantSummon, camaraPosx + 8, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
-	}*/
 	BlitText(600, 2846, font, "LEVEL", false);
 	/*app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);*/
@@ -118,6 +126,7 @@ bool ModuleUI::PostUpdate()
 	{
 		HealthUi(app->player->lifes);
 		WandUi();
+		GoldUi();
 		Draw();
 	}
 	
@@ -210,7 +219,15 @@ void ModuleUI::WandUi()
 	app->render->DrawTexture(healGUI, camaraPosx + margin + 5, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(fireballGUI, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
 	//app->render->DrawTexture(pressH, camaraPosx + margin + 64, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
-
+	if (app->player->maxLifes)
+	{
+		if(cantSumon < 1.5)
+		{
+			app->render->DrawTexture(cantSummon, camaraPosx + 8, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
+		}
+		
+		return;
+	}
 	if (app->player->cooldown < app->player->maxCooldown) // HEAL
 	{
 		float cd = app->player->cooldown;
@@ -251,6 +268,21 @@ void ModuleUI::WandUi()
 			app->render->DrawTexture(cooldown1, camaraPosx + margin + 560, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
 		}
 	}
+
+
+}
+
+void ModuleUI::GoldUi()
+{
+
+	int maxGold = app->player->goldScore;
+	for (int i = 0; i < maxGold; i++)
+	{
+		//LOG("lifes loading: %d", i);
+		app->render->DrawTexture(goldUi, camaraPosx + ((app->win->GetWidth()) / 2.5) + 83, camaraPosy + 10 + (24 * i), 0, 0, 0, 0, 0, false);
+
+	}
+
 
 
 }
