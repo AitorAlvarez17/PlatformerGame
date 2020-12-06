@@ -59,6 +59,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
+	// L02: TODO 1: Create methods to request Load / Save
+
 private:
 
 	// Load config file
@@ -66,6 +68,7 @@ private:
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();
+
 
 	// Call modules before each loop iteration
 	void FinishUpdate();
@@ -125,25 +128,30 @@ private:
 
 	List<Module*> modules;
 
+	// L01: DONE 2: Create new variables from pugui namespace:
 	// xml_document to store the config file and
 	// xml_node(s) to read specific branches of the xml
 	pugi::xml_document configFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
-
+	//pugi::xml_document save;
 	uint frames;
 
-	//Load Files
+
+	// L02: TODO 1: Create required variables to request load / save and 
+	// the filename for save / load
 	pugi::xml_document saveGame;
 	pugi::xml_node saveState;
-	pugi::xml_node rend;//load the render
-	pugi::xml_node inp;//load the input
-	pugi::xml_node sce;//load the scene
-	pugi::xml_node wi;//load the window
-	pugi::xml_node au;//load the audio
-	pugi::xml_node pl;//load the player
-	pugi::xml_node en;//load the enemy
+	pugi::xml_node rend;//variable que carga las cosas en renderer
+	pugi::xml_node inp;//carga en input
+	pugi::xml_node sce;//carga en scene
+	pugi::xml_node wi;//carga en window
+	pugi::xml_node au;//carga en audio
+	pugi::xml_node pl;//carga en player
+	pugi::xml_node en;//carga en enemy
 
+
+	//PREGUNTASELO A RAMÓN
 	bool requestLoad = false;
 	bool requestSave = false;
 
