@@ -53,8 +53,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(wand);
-
 	// Render last to swap buffer
+
 	AddModule(player);
 	AddModule(oManager);
 	AddModule(collisions);
@@ -65,6 +65,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(debug);
 	AddModule(ui);
 	AddModule(render);
+
 
 }
 
@@ -81,6 +82,7 @@ App::~App()
 	}
 
 	modules.clear();
+
 	configFile.reset();
 }
 
@@ -108,6 +110,8 @@ bool App::Awake()
 
 		int cap = configApp.attribute("framerate_cap").as_int();
 
+		//frame delay
+		//if (cap > 0) { frameDelay = static_cast<float>(1000) / cap; }
 		if (cap > 0) frameDelay = 1000 / cap;
 
 		while (item != NULL && ret == true)
@@ -181,19 +185,24 @@ bool App::LoadConfig()
 	return ret;
 }
 
+// ---------------------------------------------
 void App::PrepareUpdate()
 {
 	// Amount of frames since startup
 	frameCount++;
 	lastFrame++;
 	dt = frameTime.ReadSec();
-
 	//start time
 	frameTime.Start();
+
+	//lastFrameTime.Start();
+
 }
 
+// ---------------------------------------------
 void App::FinishUpdate()
 {
+
 	if (requestLoad == true)
 	{
 		Load();
@@ -231,10 +240,12 @@ void App::FinishUpdate()
 	framesOnLastUpdate = prevFrame;
 	//framesOnLastUpdate = SDL_GetPerformanceFrequency();
 
+
+
 	static char title[256];
 
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+	averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);
 
@@ -242,6 +253,8 @@ void App::FinishUpdate()
 	{
 		SDL_Delay((uint32)frameDelay - lastFrameMs);
 	}
+
+
 
 }
 
@@ -329,11 +342,13 @@ bool App::CleanUp()
 	return ret;
 }
 
+// ---------------------------------------
 int App::GetArgc() const
 {
 	return argc;
 }
 
+// ---------------------------------------
 const char* App::GetArgv(int index) const
 {
 	if (index < argc)
@@ -342,18 +357,23 @@ const char* App::GetArgv(int index) const
 		return NULL;
 }
 
+// ---------------------------------------
 const char* App::GetTitle() const
 {
 	return title.GetString();
 }
 
+// ---------------------------------------
 const char* App::GetOrganization() const
 {
 	return organization.GetString();
 }
 
+
+
 bool App::Load()
 {
+
 	bool ret = true;
 
 	pugi::xml_parse_result result = saveGame.load_file("save.xml");
@@ -418,6 +438,7 @@ bool App::Load()
 			LOG("player not loading");
 		}
 
+
 	}
 
 	app->audio->Load(au);
@@ -431,6 +452,8 @@ bool App::Load()
 
 	return ret;
 }
+
+
 
 bool App::Save()
 {
@@ -446,22 +469,29 @@ bool App::Save()
 	else
 	{
 		pugi::xml_node node = save.append_child("saveState");
+
 		pugi::xml_node i = node.append_child("input");
+
 		pugi::xml_node a = node.append_child("audio");
 
 		pugi::xml_node r = node.append_child("render");
 		render->Save(r);
-
 		pugi::xml_node s = node.append_child("scene");
 		scene->Save(s);
-
 		pugi::xml_node t = node.append_child("textures");
+
 		pugi::xml_node w = node.append_child("window");
 
 		pugi::xml_node p = node.append_child("player");
 		player->Save(p);
 
 		pugi::xml_node e = node.append_child("enemy");
+
+
+
+
+
+
 
 		save.save_file("save.xml");
 	}
