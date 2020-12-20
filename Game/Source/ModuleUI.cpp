@@ -48,6 +48,8 @@ bool ModuleUI::Start()
 	healthTitle = app->tex->Load("Assets/UI/health_text.png");
 	singleHeart = app->tex->Load("Assets/UI/heart.png");
 	healthUi = app->tex->Load("Assets/UI/healthAnim.png");
+	//SAVE LOAD UI
+	autosave = app->tex->Load("Assets/UI/autosave_feedback.png");
 
 	//WAND GUI Textures
 	cooldown1 = app->tex->Load("Assets/UI/cooldown_1.png");
@@ -102,7 +104,6 @@ bool ModuleUI::PreUpdate()
 bool ModuleUI::Update(float dt)
 {
 	write = true;
-	LOG("%f", cantSumon);
 	if (cantSumon <= 1.5)
 	{
 		cantSumon += dt;
@@ -111,14 +112,25 @@ bool ModuleUI::Update(float dt)
 	{
 		cantSumon = 1.5;
 	}
+	if (standardCooldownUI <= 2)
+	{
 
-
+		standardCooldownUI += dt;
+		
+	}
+	if (standardCooldownUI > 2)
+	{
+		standardCooldownUI = 2;
+		
+	}
+	LOG("%f", standardCooldownUI);
 	return true;
 
 }
 
 bool ModuleUI::PostUpdate()
 {
+	
 	BlitText(600, 2846, font, "LEVEL", false);
 	/*app->render->DrawTexture(healthTitle, camaraPosx + 3, camaraPosy + 3);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->render->camera.w) / 2.5), camaraPosy + 5);*/
@@ -127,6 +139,7 @@ bool ModuleUI::PostUpdate()
 		HealthUi(app->player->lifes);
 		WandUi();
 		GoldUi();
+		SaveUI();
 		Draw();
 	}
 	
@@ -147,28 +160,10 @@ void ModuleUI::Draw()
 
 
 		}
-		/*int life = app->player->lifes;
-		if (life == 1)
-		{
-			
-			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
-		}
-		else if (life == 2)
-		{
-			LOG("%d", life);
-			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
-			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90+24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
-		}
-		else if (life == 3)
-		{
-			LOG("%d", life);
-			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90, camaraPosy + camaraPosy +9, 0, 0, 0, 0, 0, false);
-			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90 + 24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
-			app->render->DrawTexture(singleHeart, camaraPosx + margin + 90 + 24 + 24, camaraPosy + camaraPosy + 9, 0, 0, 0, 0, 0, false);
-		}*/
 	}
 	app->render->DrawTexture(healthTitle, camaraPosx + margin, camaraPosy + 3, 0, 0, 0, 0, 0, false);
 	app->render->DrawTexture(scoreTitle, camaraPosx + ((app->win->GetWidth()) / 2.5), camaraPosy + 5, 0, 0, 0, 0, 0, false);
+
 
 	//Draw Heart Gui
 	//heartRect = currentHealthAnim->GetCurrentFrame();
@@ -285,6 +280,16 @@ void ModuleUI::GoldUi()
 
 
 
+}
+
+void ModuleUI::SaveUI()
+{
+	if (standardCooldownUI < 2)
+	{
+		app->render->DrawTexture(autosave, app->player->position.x + 10, (app->player->position.y) - 50);
+	}
+	
+	
 }
 
 void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const

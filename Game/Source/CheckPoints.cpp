@@ -7,6 +7,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Player.h"
+#include "ModuleUI.h"
 #include "Log.h"
 #include "Scene.h"
 #include "Animation.h"
@@ -215,6 +216,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 
 	if (a->type == Collider::SAVEPOINT && b->type == Collider::PLAYER)
 	{
+		app->ui->standardCooldownUI = 0;
 		active = false;
 	}
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
@@ -360,5 +362,6 @@ bool CheckPoints::Load(pugi::xml_node& savedPlayer)
 {
 	return true;
 }
+
 
 

@@ -46,7 +46,8 @@ public:
 	void HealthUi(int lifesleft);
 	void WandUi();
 	void IntToString(char* buffer, int k, int length);
-	void GoldUi();
+	void GoldUi(); 
+	void SaveUI();
 
 	bool active = true;
 	bool regulator = true;
@@ -57,13 +58,13 @@ public:
 
 	int winWidth;
 	int winHeigh;
-
 	int camaraPosx;
 	int camaraPosy;
 
 	int font = -1;
 
 	float cantSumon;
+	float standardCooldownUI;
 private:
 
 	SDL_Texture* renderedOption;
@@ -82,6 +83,7 @@ private:
 	SDL_Texture* cooldown4;
 	SDL_Texture* cooldown5;
 	SDL_Texture* cantSummon;
+	SDL_Texture* autosave;
 
 
 	SDL_Texture* healGUI;
