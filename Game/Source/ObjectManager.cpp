@@ -29,9 +29,9 @@ ObjectManager::ObjectManager(bool startEnabled) : Module(startEnabled)
 bool ObjectManager::Start()
 {
 	
-	coinTex = app->tex->Load("Assets/textures/coinAnim.png");
-	heartTex = app->tex->Load("Assets/textures/heartAnim.png");
-	fireBallTex = app->tex->Load("Assets/textures/fireball2.png");
+	coinTex = app->tex->Load("Assets/textures/coin_anim.png");
+	heartTex = app->tex->Load("Assets/textures/heart_anim.png");
+	fireBallTex = app->tex->Load("Assets/textures/fireball_sprite.png");
 
 	return true;
 }

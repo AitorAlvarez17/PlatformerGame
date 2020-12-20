@@ -58,7 +58,7 @@ bool Object::Start()
 
 	LOG("Loading Coin textures");
 	if (type == ObjType::COIN) {
-		objText = app->tex->Load("Assets/textures/coinAnim.png");
+		objText = app->tex->Load("Assets/textures/coin_anim.png");
 
 		collider = app->collisions->AddCollider(coll, Collider::Type::COIN, this);
 
@@ -80,7 +80,7 @@ bool Object::Start()
 
 	if (type == ObjType::HEART)
 	{
-		objText = app->tex->Load("Assets/textures/heartAnim.png");
+		objText = app->tex->Load("Assets/textures/heart_anim.png");
 
 		collider = app->collisions->AddCollider(coll, Collider::Type::HEART, this);
 
@@ -100,7 +100,7 @@ bool Object::Start()
 
 	if (type == ObjType::FIREBALL)
 	{
-		objText = app->tex->Load("Assets/textures/fireball2.png");
+		objText = app->tex->Load("Assets/textures/fireball_sprite.png");
 
 		speed = 1.0f;
 		speed *= direction;

@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!-- L02: TODO 4: Create a simulation xml file to read -->
-<renderer>
-	<camera x="0" y="0" />
-</renderer>
-<audio volume="128" />
-<scene currentLevel="level1.tmx" />
-<player verticalVelocity="0" availableJumps="2" x="640.640198" y="966.696777" />
