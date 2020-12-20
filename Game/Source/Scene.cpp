@@ -40,8 +40,8 @@ bool Scene::Start()
 	//pushbacks for anims
 
 	//app->map->Load("level1.tmx");
-	bgTexture = app->tex->Load("Assets/maps/MenuF.png");//por esto ramon descuenta !!!!!
-	bgTexture2 = app->tex->Load("Assets/maps/Gameover.png");
+	bgTexture = app->tex->Load("Assets/maps/menu_second.png");//por esto ramon descuenta !!!!!
+	bgTexture2 = app->tex->Load("Assets/maps/gameover_screen.png");
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	app->oManager->AddObject(ObjType::HEART, 2151, 2654,0);
 	app->oManager->AddObject(ObjType::COIN, 1053, 2800, 0);

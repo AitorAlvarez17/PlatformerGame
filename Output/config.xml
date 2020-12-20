@@ -20,13 +20,13 @@
   </window>
 
   <player>
-    <texture>Assets/textures/FinnSprite.png</texture>
+    <texture>Assets/textures/finn_sprite.png</texture>
     <move gravity="1800" jumpForceValue="11" speed="150.0f" maxJumps="2"/>
     <audio jump="Assets/audio/fx/Jump.wav" />
   </player>
 
   <enemy>
-    <texture>Assets/textures/Warrior.png</texture>
+    <texture>Assets/textures/warrior_anim.png</texture>
     <move gravity="1800" jumpForceValue="2.0f" speed="-2.0f" health="20.0f"/>
     <audio jump="Assets/audio/fx/Jump.wav" />
   </enemy>

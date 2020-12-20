@@ -69,7 +69,7 @@ bool Player::Start()
 
 	LOG("Loading Player textures");
 
-	texture = app->tex->Load("Assets/textures/FinnSprite.png");
+	texture = app->tex->Load("Assets/textures/finn_sprite.png");
 
 	if (texture == nullptr)
 		LOG("Couldn't load player texture");

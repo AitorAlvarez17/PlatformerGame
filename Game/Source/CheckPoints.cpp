@@ -64,8 +64,8 @@ bool CheckPoints::Start()
 	tp3To1 = app->tex->Load("Assets/maps/TP3/tp3_to_1.png");
 	tp3To2 = app->tex->Load("Assets/maps/TP3/tp3_to_2.png");
 
-	openPhrase = app->tex->Load("Assets/maps/DialogueArt/OpenMenu.png");
-	teleportPhrase = app->tex->Load("Assets/maps/DialogueArt/TeleportMenu.png");
+	openPhrase = app->tex->Load("Assets/maps/Dialogue/open_menu.png");
+	teleportPhrase = app->tex->Load("Assets/maps/Dialogue/teleport_menu.png");
 
 	//Set colliders
 	coll = { position.x, position.y, pixels ,pixels * 10 };
