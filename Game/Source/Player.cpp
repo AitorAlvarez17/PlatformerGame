@@ -462,7 +462,7 @@ void Player::UpdateLogic(float dt)
 	{
 		if (jumps > 0)
 		{
-			vy = jumpForceValue;
+			vy = jumpForceValue * dt;
 		}
 		if (jumps == 2) {
 			//jump fix. Do not delete this before asking 
