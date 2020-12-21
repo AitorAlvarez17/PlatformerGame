@@ -287,6 +287,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 				//if level 1 or 2
 				if (fallDamage == false)
 				{
+					app->audio->PlayFx(3, 0);
 					position.x = spawnLevel1.x;
 					position.y = spawnLevel1.y;
 					lifes--;
@@ -303,7 +304,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		case(Collider::Type::HEART):
 
 			if (lifes < 5)lifes++;
-
+			app->audio->PlayFx(6, 0);
 			break;
 
 		case(Collider::Type::ENEMY):
@@ -315,7 +316,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 		case(Collider::Type::COIN):
 
 			if (goldScore < 8)goldScore++;
-
+			app->audio->PlayFx(9, 0);
 			break;
 		}
 
@@ -357,6 +358,7 @@ void Player::UpdateState()
 
 		if (isDead == true)
 		{
+			app->audio->PlayFx(3, 0);
 			ChangeState(playerState, DYING);
 		}
 
@@ -447,12 +449,12 @@ void Player::UpdateLogic(float dt)
 			if (isGoingRight == true)
 			{
 				position.x += speed * dt;
-
+				//app->audio->PlayFx(5, 0);
 			}
 			else
 			{
 				position.x -= speed * dt;
-
+				//app->audio->PlayFx(5, 0);
 			}
 		}
 
@@ -629,6 +631,7 @@ void Player::HealHability()
 		if (lifes < 5)
 		{
 			app->player->lifes++;
+			app->audio->PlayFx(6, 0);
 			maxLifes = false;
 		}
 		else
@@ -655,10 +658,12 @@ void Player::FireHability()
 		//CREATE FIREBALL
 		if (isGoingRight)
 		{
+			app->audio->PlayFx(4, 0);
 			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, 1);
 		}
 		else
 		{
+			app->audio->PlayFx(4, 0);
 			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, -1);
 
 		}

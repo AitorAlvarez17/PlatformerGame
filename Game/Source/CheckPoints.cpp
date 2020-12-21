@@ -116,6 +116,7 @@ bool CheckPoints::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 	{
 		tpCounter--;
+		app->audio->PlayFx(8, 0);
 		if (tpCounter == 0)
 		{
 			tpCounter = 2;
@@ -125,6 +126,7 @@ bool CheckPoints::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		tpCounter++;
+		app->audio->PlayFx(8, 0);
 		if (tpCounter == 3)
 		{
 			tpCounter = 1;
@@ -217,6 +219,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	if (a->type == Collider::SAVEPOINT && b->type == Collider::PLAYER)
 	{
 		app->ui->standardCooldownUI = 0;
+		app->audio->PlayFx(2, 0);
 		active = false;
 	}
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
@@ -227,12 +230,14 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 		{
 			if (mapOpen == true)
 			{
+				app->audio->PlayFx(8, 0);
 				LOG("%d", mapOpen);
 				mapOpen = false;
 
 			}
 			else
 			{
+				app->audio->PlayFx(8, 0);
 				LOG("%d", mapOpen);
 				mapOpen = true;
 
@@ -246,6 +251,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 				renderedOption = tp1To2;
 				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 				{
+					app->audio->PlayFx(8, 0);
 					app->player->position.x = tp2.x;
 					app->player->position.y = tp2.y;
 
@@ -256,6 +262,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 				renderedOption = tp1To3;
 				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 				{
+					app->audio->PlayFx(8, 0);
 					app->player->position.x = tp3.x;
 					app->player->position.y = tp3.y;
 
@@ -273,6 +280,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 				renderedOption = tp2To1;
 				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 				{
+					app->audio->PlayFx(8, 0);
 					app->player->position.x = tp1.x;
 					app->player->position.y = tp1.y;
 
@@ -284,6 +292,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 				renderedOption = tp2To3;
 				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 				{
+					app->audio->PlayFx(8, 0);
 					app->player->position.x = tp3.x;
 					app->player->position.y = tp3.y;
 
@@ -301,6 +310,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 				renderedOption = tp3To1;
 				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 				{
+					app->audio->PlayFx(8, 0);
 					app->player->position.x = tp1.x;
 					app->player->position.y = tp1.y;
 
@@ -311,6 +321,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 				renderedOption = tp3To2;
 				if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 				{
+					app->audio->PlayFx(8, 0);
 					app->player->position.x = tp2.x;
 					app->player->position.y = tp2.y;
 
