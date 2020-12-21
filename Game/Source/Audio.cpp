@@ -57,7 +57,15 @@ bool Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	app->audio->LoadFx("Assets/audio/fx/Jump.wav");//1
+	app->audio->LoadFx("Assets/audio/fx/jump.ogg");//1
+	app->audio->LoadFx("Assets/audio/fx/auto_save_feedback.ogg");//2
+	app->audio->LoadFx("Assets/audio/fx/dying.ogg");//3
+	app->audio->LoadFx("Assets/audio/fx/fireball.ogg");//4
+	app->audio->LoadFx("Assets/audio/fx/footsteps_feedback.ogg");//5
+	app->audio->LoadFx("Assets/audio/fx/health_feedback.ogg");//6
+	app->audio->LoadFx("Assets/audio/fx/jump.ogg");//7
+	app->audio->LoadFx("Assets/audio/fx/select_menu.ogg");//8
+	app->audio->LoadFx("Assets/audio/fx/money_till_i_die.ogg");//9
 
 	return ret;
 }
