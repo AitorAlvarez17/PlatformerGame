@@ -94,12 +94,12 @@ public:
 	Point<int> spawnLevel2;
 private:
 
-	int jumpForce = 0;
+	float jumpForce = 0.0f;
 	float jumpForceValue = 10.0f;
 	
 	const char* jumpFxPath;
 
-	float gravityForce = 4.5f;
+	float gravityForce = 1.5f;
 
 	
 	bool fallDamage = false;

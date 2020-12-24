@@ -25,7 +25,7 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	frames = 0;
+	PERF_START(ptimer);
 
 	input = new Input(true);
 	win = new Window(true);
@@ -66,6 +66,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(checkpoints);
 	AddModule(render);
 
+	PERF_PEEK(ptimer);
 }
 
 // Destructor
@@ -94,8 +95,12 @@ void App::AddModule(Module* module)
 // Called before render is available
 bool App::Awake()
 {
+	PERF_START(ptimer);
+
 	// Load config from XML
 	bool ret = LoadConfig();
+	int cap = configApp.attribute("framerate_cap").as_int(-1);
+	if (cap > 0) cappedMs = 1000 / cap;
 
 	if (ret == true)
 	{
@@ -106,9 +111,8 @@ bool App::Awake()
 		ListItem<Module*>* item;
 		item = modules.start;
 
-		int cap = configApp.attribute("framerate_cap").as_int();
 
-		if (cap > 0) frameDelay = 1000 / cap;
+
 
 		while (item != NULL && ret == true)
 		{
@@ -117,12 +121,16 @@ bool App::Awake()
 		}
 	}
 
+	PERF_PEEK(ptimer);
+
 	return ret;
 }
 
 // Called before the first frame
 bool App::Start()
 {
+	PERF_START(ptimer);
+
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -132,8 +140,9 @@ bool App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
-	// Initialize timer
-	startupTime.Start();
+
+	PERF_PEEK(ptimer);
+
 	return ret;
 }
 
@@ -185,10 +194,11 @@ void App::PrepareUpdate()
 {
 	// Amount of frames since startup
 	frameCount++;
-	lastFrame++;
+	lastSecFrameCount++;
 	dt = frameTime.ReadSec();
 
 	//start time
+	dt = frameTime.ReadSec();
 	frameTime.Start();
 }
 
@@ -205,44 +215,32 @@ void App::FinishUpdate()
 		Save();
 	}
 
-	if (lastFrameTime.Read() > 1000)
+	if (lastSecFrameTime.Read() > 1000)
 	{
-		lastFrameTime.Start();
-		prevFrame = lastFrame; //last second frame count
-		lastFrame = 0;
+		lastSecFrameTime.Start();
+		prevLastSecFrameCount = lastSecFrameCount;
+		lastSecFrameCount = 0;
 	}
 
-	float secondsSinceStartup = 0.0f;
-	float averageFps = 0.0f;
-
-	uint32 lastFrameMs = 0;
-	uint32 framesOnLastUpdate = 0;
-
-	//// Amount of time since game start (use a low resolution timer)
-	secondsSinceStartup = startupTime.ReadSec();
-
-	//// Average FPS for the whole game life
-	averageFps = float(frameCount) / startupTime.ReadSec();
-
-	//// Amount of ms took the last update
-	lastFrameMs = frameTime.Read(); //last second frame count
-
-	//// Amount of frames during the last second
-	framesOnLastUpdate = prevFrame;
-	//framesOnLastUpdate = SDL_GetPerformanceFrequency();
+	float averageFps = float(frameCount) / startupTime.ReadSec();
+	float secondsSinceStartup = startupTime.ReadSec();
+	uint32 lastFrameMs = frameTime.Read();
+	uint32 framesOnLastUpdate = prevLastSecFrameCount;
 
 	static char title[256];
-
 	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
 		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);
 
-	if (lastFrameMs < frameDelay)
+	// L08: DONE 2: Use SDL_Delay to make sure you get your capped framerate
+	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
 	{
-		SDL_Delay((uint32)frameDelay - lastFrameMs);
+		// L08: DONE 3: Measure accurately the amount of time SDL_Delay actually waits compared to what was expected
+		PerfTimer pt;
+		SDL_Delay(cappedMs - lastFrameMs);
+		LOG("We waited for %d milliseconds and got back in %f", cappedMs - lastFrameMs, pt.ReadMs());
 	}
-
 }
 
 // Call modules before each loop iteration

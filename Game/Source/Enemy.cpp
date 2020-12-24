@@ -53,7 +53,7 @@ bool Enemy::Start()
 
 
 	//Load Texture
-	texture = app->tex->Load("Assets/textures/warrior.png");
+	texture = app->tex->Load("Assets/textures/warrior_anim.png");
 	if (texture == nullptr)LOG("Invalid enemy Texture");
 
 	//Animations
