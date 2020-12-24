@@ -36,7 +36,7 @@ bool Player::Awake(pugi::xml_node& config)
 	pugi::xml_node move = config.child("move");
 
 
-	jumpForceValue = move.attribute("jumpForceValue").as_int();
+	jumpForceValue = move.attribute("jumpForceValue").as_float();
 	speed = move.attribute("speed").as_int();
 	jumps = move.attribute("maxJumps").as_int();
 

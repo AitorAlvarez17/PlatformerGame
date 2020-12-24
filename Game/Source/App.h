@@ -147,20 +147,30 @@ private:
 	bool requestLoad = false;
 	bool requestSave = false;
 
+	//PerfTimer ptimer;
+
+	//Timer startupTime;
+	//Timer frameTime;
+	//Timer lastFrameTime;
+
+	//uint32 lastFrame = 0;
+	//uint32 prevFrame = 0;
+
+	//uint64 frameCount = 0;
+
+	//float dt = 0.0f;
+	//float frameDelay = -1;
 	PerfTimer ptimer;
+	uint64 frameCount = 0;
 
 	Timer startupTime;
 	Timer frameTime;
-	Timer lastFrameTime;
-
-	uint32 lastFrame = 0;
-	uint32 prevFrame = 0;
-
-	uint64 frameCount = 0;
-
+	Timer lastSecFrameTime;
+	uint32 lastSecFrameCount = 0;
+	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
-	float frameDelay = -1;
 
+	int	cappedMs = -1;
 };
 
 extern App* app;

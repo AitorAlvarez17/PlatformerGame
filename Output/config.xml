@@ -21,7 +21,7 @@
 
   <player>
     <texture>Assets/textures/finn_sprite.png</texture>
-    <move gravity="1800" jumpForceValue="140" speed="150.0f" maxJumps="2"/>
+    <move jumpForceValue="250.0f" speed="150.0f" maxJumps="2"/>
     <audio jump="Assets/audio/fx/Jump.wav" />
   </player>
 
