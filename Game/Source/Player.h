@@ -99,7 +99,7 @@ private:
 	
 	const char* jumpFxPath;
 
-	float gravityForce = 1.5f;
+	float gravityForce = 30.0f;
 
 	
 	bool fallDamage = false;

@@ -142,8 +142,8 @@ bool Player::PreUpdate()
 {
 	if (app->debug->godMode == false)
 	{
-		position.y = (int)(position.y - vy);
-		vy -= gravityForce * 0.5;
+		position.y = (position.y - vy);
+		vy -= gravityForce * 0.5 * app->dt;
 		app->player->UpdateState();
 	}
 

@@ -115,7 +115,7 @@ public:
 		requestLoad = true;
 
 	}
-
+	float dt = 0.0f;
 private:
 
 	int argc;
@@ -168,7 +168,7 @@ private:
 	Timer lastSecFrameTime;
 	uint32 lastSecFrameCount = 0;
 	uint32 prevLastSecFrameCount = 0;
-	float dt = 0.0f;
+	//float dt = 0.0f;
 
 	int	cappedMs = -1;
 };
