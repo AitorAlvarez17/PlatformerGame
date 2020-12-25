@@ -32,27 +32,6 @@ bool Debug::Update(float dt)
 {
 	
 	bool ret = true;
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		/*app->player->position.x = 600;
-		app->player->position.y = 2816;
-		app->player->vy = 0;
-		app->player->jumps = 0;
-		app->render->camera.x = app->player->position.x;
-		app->render->camera.y = app->player->position.y;*/
-
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		//only one level yet.
-
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{
-
-	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{ 
@@ -100,6 +79,20 @@ bool Debug::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x -= 100;
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (capFrameRate)
+		{
+			storeFrameRateCap = app->cappedMs;
+			app->cappedMs = 1000.0f / 30.0f;
+			capFrameRate = false;
+		}
+		else
+		{
+			app->cappedMs = storeFrameRateCap;
+			capFrameRate = true;
+		}
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
