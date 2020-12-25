@@ -34,7 +34,8 @@ public:
 	//int levelChoose = 0;
 
 private:
-	
+	int storeFrameRateCap;
+	bool capFrameRate = true;
 	bool isEnabled = true;
 };
 #endif // __DEBUG_H__

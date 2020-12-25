@@ -123,7 +123,6 @@ bool ModuleUI::Update(float dt)
 		standardCooldownUI = 2;
 		
 	}
-	LOG("%f", standardCooldownUI);
 	return true;
 
 }
