@@ -142,7 +142,7 @@ bool Player::PreUpdate()
 {
 	if (app->debug->godMode == false)
 	{
-		position.y = (position.y - vy);
+		position.y =(int)(position.y - vy); // arreglar posicion para que funcione con floats.
 		vy -= gravityForce * 0.5 * app->dt;
 		app->player->UpdateState();
 	}
@@ -243,7 +243,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 			app->player->Reload();
 			app->scene->LoadLevel("level2.tmx");
 			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
-			return;
+			return; //Preguntar Andreu. Innecesario.
 			break;
 
 		case(Collider::Type::FLOOR):
@@ -275,7 +275,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 			}
 
-			collider->SetPos(position.x, position.y);
+			collider->SetPos((int)position.x, (int)position.y);
 
 
 			break;
