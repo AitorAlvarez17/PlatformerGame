@@ -174,10 +174,10 @@ bool Scene::Update(float dt)
 	}
 	if (app->player->lvl1 == true)
 	{
-		
+		app->map->LoadColliders();
 	}
 	
-	app->map->LoadColliders();
+	
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d", app->map->data.width, app->map->data.height, app->map->data.tileWidth, app->map->data.tileHeight, app->map->data.tilesets.count());
 

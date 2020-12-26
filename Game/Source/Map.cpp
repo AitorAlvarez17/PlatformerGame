@@ -449,8 +449,7 @@ bool Map::Load(const char* filename)
             layerList = layerList->next;
         }
 
-    }
-
+    } 
 
     mapLoaded = ret;
 
