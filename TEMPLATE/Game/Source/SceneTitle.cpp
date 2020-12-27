@@ -32,7 +32,7 @@ SceneTitle::SceneTitle()
     fullscreen = new GuiCheckBox(7, { 290, 440, 80, 80 }, "fullscreen");
     fullscreen->SetObserver(this);
 
-    bgAnim.GenerateAnimationVertically({ 0,23,1200,675 },2, 0,45);
+    bgAnim.GenerateAnimation({ 0,0,1280,720 },2, 2, 0, 0);
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
 
@@ -82,7 +82,7 @@ bool SceneTitle::Draw(Render* render)
 {
    // render->DrawRectangle({ 0, 0, 1280, 720 }, { 100, 200, 200, 255 });
     SDL_Rect rect = currentAnim->GetCurrentFrame();
-    render->DrawTexture(bg, 50, 420, &rect);
+    render->DrawTexture(bg, 0, 400, &rect);
 
     if (credits)
     {
