@@ -127,7 +127,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
         else if (control->id == 2) LOG("CONTINUE"); // TODO: Exit request
         else if (control->id == 3) settings = 1;
         else if (control->id == 4) credits = 1;
-        else if (control->id == 5);
+        else if (control->id == 5) SDL_Quit();
         else if (control->id == 6)
         {
             credits = 0;
