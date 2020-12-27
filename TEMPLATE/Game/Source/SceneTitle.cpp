@@ -32,6 +32,10 @@ SceneTitle::SceneTitle()
     fullscreen = new GuiCheckBox(7, { 290, 440, 80, 80 }, "fullscreen");
     fullscreen->SetObserver(this);
 
+    bgAnim.GenerateAnimation({ 0,23,1200,675 },2, 5, 45);
+    bgAnim.loop = true;
+    bgAnim.speed = 0.01f;
+
     Vsync = new GuiCheckBox(8, { 890, 440, 80, 80 }, "Vsync");
     Vsync->SetObserver(this);
 }
@@ -42,6 +46,7 @@ SceneTitle::~SceneTitle()
 
 bool SceneTitle::Load(Textures* tex)
 {
+    bg = tex->Load(PATH("Assets/Textures/", "background.png"));
     playText = tex->Load(PATH("Assets/Textures/", "play.png"));
     continueText = tex->Load(PATH("Assets/Textures/", "continue.png"));
     settingsText = tex->Load(PATH("Assets/Textures/", "settings.png"));
@@ -49,6 +54,7 @@ bool SceneTitle::Load(Textures* tex)
     exitText = tex->Load(PATH("Assets/Textures/", "exit.png"));
     backText = tex->Load(PATH("Assets/Textures/", "back.png"));
     
+    currentAnim = &bgAnim;
     return false;
 }
 
@@ -67,13 +73,16 @@ bool SceneTitle::Update(Input* input, float dt)
      fullscreen->Update(input, dt);
      Vsync->Update(input, dt);
     
-    
+     currentAnim->Update();
+
     return false;
 }
 
 bool SceneTitle::Draw(Render* render)
 {
-    render->DrawRectangle({ 0, 0, 1280, 720 }, { 100, 200, 200, 255 });
+   // render->DrawRectangle({ 0, 0, 1280, 720 }, { 100, 200, 200, 255 });
+    SDL_Rect rect = currentAnim->GetCurrentFrame();
+    render->DrawTexture(bg, 50, 600, &rect);
 
     if (credits)
     {

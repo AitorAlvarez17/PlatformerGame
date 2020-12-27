@@ -180,7 +180,7 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 6) menu = 0;
 		else if (control->id == 7) settings = 1;
 		else if (control->id == 8) TransitionToScene(SceneType::TITLE);
-		else if (control->id == 9) LOG("EXIT");
+		else if (control->id == 9) SDL_Quit();
 		else if (control->id == 10) settings = 0;
 		
 	}

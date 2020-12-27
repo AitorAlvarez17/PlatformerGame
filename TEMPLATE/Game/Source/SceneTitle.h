@@ -7,6 +7,8 @@
 #include "GuiCheckBox.h"
 #include "GuiSlider.h"
 
+#include "Animation.h"
+
 class SceneTitle : public Scene
 {
 public:
@@ -37,12 +39,17 @@ private:
     GuiCheckBox* fullscreen;
     GuiCheckBox* Vsync;
 
+    SDL_Texture* bg;
     SDL_Texture* playText;
     SDL_Texture* continueText;
     SDL_Texture* settingsText;
     SDL_Texture* creditsText;
     SDL_Texture* exitText;
     SDL_Texture* backText;
+
+    Animation* currentAnim = nullptr;
+    Animation bgAnim;
+
     bool credits;
     bool settings;
 };
