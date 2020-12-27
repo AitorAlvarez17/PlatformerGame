@@ -65,7 +65,7 @@ bool SceneLogo::Update(Input* input, float dt)
 
 bool SceneLogo::Draw(Render* render)
 {
-    render->DrawRectangle({ 0, 0, 1280, 720 }, { 100, 200, 200, 255 });
+    render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 0 });
 
     render->DrawRectangle(logo, { 255, 0, 0, (uchar)(255.0f * logoAlpha) });
 
