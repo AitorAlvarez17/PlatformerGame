@@ -3,7 +3,7 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
     texture = NULL;
-    position = iPoint(12 * 16, 27 * 16);
+    position = iPoint(5 * 16, 17 * 16);
     jumpSpeed = 200.0f;
 
     width = 16;
@@ -38,6 +38,9 @@ bool Player::Draw(Render* render)
     // animation state and animation frame
     //SDL_Rect rec = { 0 };
     //render->DrawTexture(texture, position.x, position.y, rec);
+
+    render->camera.x = -position.x;
+    render->camera.y = -position.y - 200;
 
     render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 

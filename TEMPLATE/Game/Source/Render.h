@@ -2,7 +2,7 @@
 #define __RENDER_H__
 
 #include "Module.h"
-
+#include "Input.h"
 #include "Point.h"
 #include "Font.h"
 
@@ -27,7 +27,7 @@ public:
 
 	// Called each loop iteration
 	bool PreUpdate();
-	bool Update(float dt);
+	bool Update(Input* input, float dt);
 	bool PostUpdate();
 
 	// Called before quitting
@@ -60,6 +60,7 @@ public:
 	SDL_Rect viewport;
 	SDL_Color background;
 
+	
 	Window* win;
 	uint scale;
 };
