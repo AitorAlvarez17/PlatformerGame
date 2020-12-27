@@ -10,9 +10,9 @@
 Render::Render(Window* win) : Module()
 {
 	name.Create("renderer");
-	background.r = 0;
+	background.r = 3;
 	background.g = 0;
-	background.b = 0;
+	background.b = 97;
 	background.a = 0;
 	scale = 1;
 	this->win = win;
@@ -27,6 +27,7 @@ bool Render::Awake(pugi::xml_node& config)
 {
 	LOG("Create SDL rendering context");
 	bool ret = true;
+
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
@@ -70,8 +71,10 @@ bool Render::PreUpdate()
 	return true;
 }
 
-bool Render::Update(float dt)
+bool Render::Update(Input* input, float dt)
 {
+	
+
 	return true;
 }
 

@@ -32,7 +32,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	// L03: DONE: Load map
 	// L12b: Create walkability map on map loading
-	if (map->Load("platformer.tmx") == true)
+	if (map->Load("levelPrueba.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -80,6 +80,8 @@ bool SceneGameplay::Update(Input *input, float dt)
 	// Collision detection: map vs player
 	iPoint tempPlayerPosition = player->position;
 
+	LOG("X %d", tempPlayerPosition.x);
+	LOG("Y %d", tempPlayerPosition.y);
 	player->Update(input, dt);
 
 	// Check if updated player position collides with next tile
@@ -88,7 +90,7 @@ bool SceneGameplay::Update(Input *input, float dt)
 	{
 		for (int x = 0; x < map->data.width; x++)
 		{
-			if ((map->data.layers[2]->Get(x, y) >= 484) && 
+			if ((map->data.layers[8]->Get(x, y) >= 484) && 
 				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 			{
 				player->position = tempPlayerPosition;
