@@ -2,6 +2,7 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "GuiButton.h"
 
 struct SDL_Texture;
 
@@ -39,6 +40,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	virtual bool OnGuiMouseClickEvent(GuiControl* control)
+	{
+		return true;
+	}
 
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
@@ -66,6 +71,9 @@ private:
 	bool fading = false;
 	GameplayState targetState = gameplayState;
 	SDL_Rect fullScreenRect;
+
+	GuiButton* btnStart;
+	GuiButton* btnEnd;
 };
 
 #endif // __SCENE_H__
