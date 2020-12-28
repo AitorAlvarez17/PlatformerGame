@@ -41,6 +41,7 @@ private:
     GuiButton* btnExit;
     GuiButton* btnBack;
 
+    SDL_Texture* playerText;
     SDL_Texture* playText;
     SDL_Texture* continueText;
     SDL_Texture* settingsText;

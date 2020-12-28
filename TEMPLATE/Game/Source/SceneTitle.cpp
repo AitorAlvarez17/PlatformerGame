@@ -32,12 +32,13 @@ SceneTitle::SceneTitle()
     fullscreen = new GuiCheckBox(7, { 290, 440, 80, 80 }, "fullscreen");
     fullscreen->SetObserver(this);
 
-    bgAnim.GenerateAnimation({ 0,0,1280,720 },2, 2, 0, 0);
+    Vsync = new GuiCheckBox(8, { 890, 440, 80, 80 }, "Vsync");
+    Vsync->SetObserver(this);
+
+    bgAnim.GenerateAnimation({ 0,0,1280,720 }, 3, 1, 0, 0);
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
 
-    Vsync = new GuiCheckBox(8, { 890, 440, 80, 80 }, "Vsync");
-    Vsync->SetObserver(this);
 }
 
 SceneTitle::~SceneTitle()

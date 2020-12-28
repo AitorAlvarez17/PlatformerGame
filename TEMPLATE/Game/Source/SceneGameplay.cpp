@@ -54,16 +54,18 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
 
-	// Initialize player
-	player = new Player();
-	player->position = iPoint(200, 400);
-
+	playerText = tex->Load(PATH("Assets/Maps/", "players.png"));
 	playText = tex->Load(PATH("Assets/Textures/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/", "settings.png"));
 	title = tex->Load(PATH("Assets/Textures/", "title.png"));
 	exitText = tex->Load(PATH("Assets/Textures/", "exit.png"));
 	backText = tex->Load(PATH("Assets/Textures/", "back.png"));
+
+	// Initialize player
+	player = new Player();
+	player->position = iPoint(200, 400);
+	player->SetTexture(playerText);
 
     return false;
 }
@@ -80,10 +82,6 @@ bool SceneGameplay::Update(Input *input, float dt)
 	// Collision detection: map vs player
 	iPoint tempPlayerPosition = player->position;
 
-	//LOG("X %d", tempPlayerPosition.x);
-	//LOG("Y %d", tempPlayerPosition.y);
-	player->Update(input, dt);
-
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
 	for (int y = 0; y < map->data.height; y++)
@@ -94,7 +92,7 @@ bool SceneGameplay::Update(Input *input, float dt)
 				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 			{
 				player->position = tempPlayerPosition;
-				player->jumpSpeed = 0.0f;
+				player->vy = 0.0f;
 				break;
 			}
 		}
@@ -117,6 +115,7 @@ bool SceneGameplay::Update(Input *input, float dt)
 	//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) app->LoadGameRequest();
 	//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
 
+	player->Update(input, dt);
 	btnResume->Update(input, dt);
 	btnSettings->Update(input, dt);
 	btnBackToTitle->Update(input, dt);
@@ -157,7 +156,6 @@ bool SceneGameplay::Draw(Render* render)
 			btnExit->Draw(render);
 			render->DrawTexture(exitText, 490, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
-		
 		
 	}
 
