@@ -82,7 +82,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleUI.cpp">
-      <Filter>Modules</Filter>
+      <Filter>GuiControls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,7 +205,7 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleUI.h">
-      <Filter>Modules</Filter>
+      <Filter>GuiControls</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

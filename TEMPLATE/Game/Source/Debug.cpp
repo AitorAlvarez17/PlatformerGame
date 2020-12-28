@@ -7,9 +7,13 @@
 
 #include "SDL/include/SDL.h"
 
-Debug::Debug() : Module()
+
+Debug::Debug(Input* input, App* app) : Module()
 {
 	name.Create("debug");
+
+	this->input = input;
+	this->app = app;
 }
 
 // Destructor
@@ -33,9 +37,9 @@ bool Debug::CleanUp()
 	return true;
 }
 
-bool Debug::Update(float dt, Input* input, App* app)
+bool Debug::Update(float dt)
 {
-	LOG("khay");
+	
 	if (input->GetKey(SDL_SCANCODE_F5) == KEY_REPEAT) app->SaveGameRequest();
 
 	if (input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT) app->LoadGameRequest();
