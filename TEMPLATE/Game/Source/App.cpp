@@ -7,6 +7,8 @@
 #include "Audio.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
+#include "Debug.h"
+#include "ModuleUI.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -30,6 +32,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new AudioManager();
 	entityManager = new EntityManager();
 	sceneManager = new SceneManager(input, render, tex);
+	debug = new Debug();
+	ui = new ModuleUI();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -39,6 +43,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(entityManager);
 	AddModule(sceneManager);
+	AddModule(debug);
+	AddModule(ui);
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -345,6 +351,10 @@ void App::LoadGameRequest()
 void App::SaveGameRequest() const
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
+	/*if (SAVE_STATE_FILENAME != NULL)
+	{
+
+	}*/
 	saveGameRequested = true;
 }
 
@@ -353,9 +363,77 @@ void App::SaveGameRequest() const
 // then call all the modules to load themselves
 bool App::LoadGame()
 {
-	bool ret = false;
 
-	//...
+	bool ret = true;
+
+	pugi::xml_parse_result result = saveGame.load_file("save_game.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+		ret = false;
+	}
+	else
+	{
+		saveState = saveGame.child("saveState");
+		if (saveState == NULL)
+		{
+			LOG("save_state not loading");
+		}
+
+		//renderer
+		rend = saveState.child("render");
+		if (rend == NULL)
+		{
+			LOG("Renderer not loading");
+		}
+
+		//input
+		inp = saveState.child("input");
+		if (inp == NULL)
+		{
+			LOG("Input not loading");
+		}
+
+		//audio
+		au = saveState.child("audio");
+		if (au == NULL)
+		{
+			LOG("Audio not loading");
+		}
+
+		//scene
+		sce = saveState.child("scene");
+		if (sce == NULL)
+		{
+			LOG("Scene not loading");
+		}
+
+		//window
+		wi = saveState.child("window");
+		if (wi == NULL)
+		{
+			LOG("window not loading");
+		}
+
+		pl = saveState.child("player");
+		if (pl == NULL)
+		{
+			LOG("player not loading");
+		}
+
+		en = saveState.child("enemy");
+		if (en == NULL)
+		{
+			LOG("player not loading");
+		}
+
+	}
+
+	audio->LoadState(au);
+	input->LoadState(inp);
+	render->LoadState(rend);
+	entityManager->LoadState(pl);
 
 	loadGameRequested = false;
 
@@ -366,8 +444,33 @@ bool App::LoadGame()
 bool App::SaveGame() const
 {
 	bool ret = true;
+	
+	pugi::xml_document save;
+	if (save == NULL)
+	{
+		LOG("save not loading");
+		ret = false;
+	}
+	else
+	{
+		pugi::xml_node node = save.append_child("saveState");
+		pugi::xml_node i = node.append_child("input");
+		pugi::xml_node a = node.append_child("audio");
 
-	//...
+		pugi::xml_node r = node.append_child("render");
+		render->SaveState(r);
+
+		pugi::xml_node t = node.append_child("textures");
+		pugi::xml_node w = node.append_child("window");
+
+		
+
+		pugi::xml_node e = node.append_child("enemy");
+
+		save.save_file("save_game.xml");
+	}
+
+
 
 	saveGameRequested = false;
 

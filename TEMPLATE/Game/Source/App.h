@@ -20,6 +20,8 @@ class Textures;
 class AudioManager;
 class EntityManager;
 class SceneManager;
+class Debug;
+class ModuleUI;
 
 class App
 {
@@ -91,8 +93,20 @@ public:
 	AudioManager* audio;
 	EntityManager* entityManager;
 	SceneManager* sceneManager;
+	Debug* debug;
+	ModuleUI* ui;
 
 private:
+
+	pugi::xml_document saveGame;
+	pugi::xml_node saveState;
+	pugi::xml_node rend;//load the render
+	pugi::xml_node inp;//load the input
+	pugi::xml_node sce;//load the scene
+	pugi::xml_node wi;//load the window
+	pugi::xml_node au;//load the audio
+	pugi::xml_node pl;//load the player
+	pugi::xml_node en;//load the enemy
 
 	int argc;
 	char** args;
