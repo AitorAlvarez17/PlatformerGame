@@ -176,3 +176,17 @@ bool AudioManager::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+bool AudioManager::LoadState(pugi::xml_node& savedRender)
+{
+	
+	return true;
+}
+
+bool AudioManager::SaveState(pugi::xml_node& savedGame) const
+{
+
+
+
+	return true;
+}
