@@ -1,0 +1,26 @@
+### FILE SECTION ###
+
+Name change:
+
+Assets/Maps/Token tp.png -------------> token_tp.png
+Assets/Maps/levelPrueba.tmx ----------> level-prueba.tmx
+
+File change:
+
+Assets/Maps/player.png ----------> Assets/Textures/Player/player.png
+Assets/Maps/player.png ----------> Assets/Textures/Player/player.png
+
+All UI pngs need to be moved to a UI folder inside textures.
+
+
+Delete:
+
+Assets/textures/test.png 
+Assets/textures/finn_sprite.png 
+
+
+### CODE SECTION ###
+
+Line ----> change
+
+
