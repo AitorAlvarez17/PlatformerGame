@@ -4,67 +4,42 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	int pixels = 32;
-	texture = NULL;
+
     position = iPoint(5 * 16, 17 * 16);
     jumpSpeed = 200.0f;
 
     width = 16;
     height = 32;
 
+
 	// Define Player animations
-	if (push == false)
-	{
-		for (int i = 0; i < 27; i++)// 0 to 9
-		{
-			if (i >= 0 && i < 9)//RIGHT ANIM IDLE
-			{
-				idleAnimR.PushBack({ i * pixels,0,32,32 });
+	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);
+	idleAnimL.loop = true;
+	idleAnimL.speed = 1.0f;
 
-			}
-			if (i >= 0 && i < 9)//LEFT ANIM IDLE
-			{
-				idleAnimL.PushBack({ (27 - i) * pixels + 5,32,32,32 });
+	idleAnimR.GenerateAnimation({ 288,192,32,32 }, 0, 3,0,0);
+	idleAnimR.loop = true;
+	idleAnimR.speed = 1.0f;
 
-			}
-			if (i >= 9 && i < 15)// RIGHT
-			{
-				runRightAnim.PushBack({ i * pixels,0,32,32 });
+	runLeftAnim.GenerateAnimation({ 96,192,32,32 }, 0, 3, 0, 0);
+	runLeftAnim.loop = true;
+	runLeftAnim.speed = 1.0f;
 
-			}
-			if (i >= 9 && i < 15)// LEFT
-			{
-				runLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
+	runRightAnim.GenerateAnimation({ 384,192,32,32 }, 0, 3, 0, 0);
+	runRightAnim.loop = true;
+	runRightAnim.speed = 1.0f;
 
-			}
-			if (i == 15) // JUMP R & L
-			{
-				jumpRightAnim.PushBack({ i * pixels,0,32,32 });
-				jumpLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
+	jumpLeftAnim.GenerateAnimation({ 0,224,32,32 }, 0, 3, 0, 0);
+	jumpLeftAnim.loop = true;
+	jumpLeftAnim.speed = 1.0f;
 
-			}
-			if (i >= 20 && i < 23) // DEAD RIGHT
-			{
-				deadAnimR.PushBack({ i * pixels,0,32,32 });
+	jumpRightAnim.GenerateAnimation({ 288,224,32,32 }, 0, 3, 0, 0);
+	jumpRightAnim.loop = true;
+	jumpRightAnim.speed = 1.0f;
 
-			}
-			if (i >= 20 && i < 23) // DEAD RIGHT
-			{
-				deadAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
+	actualAnimation = &idleAnimR;
 
-			}
-			push = true;
 
-		}
-
-	}
-
-	//left
-	if (actualAnimation == nullptr)
-	{
-		actualAnimation = &idleAnimR;
-	}
-
-    
 }
 
 bool Player::Start(Textures* tex)
@@ -72,6 +47,7 @@ bool Player::Start(Textures* tex)
 
 	return true;
 }
+
 bool Player::PreUpdate(float dt, Input* input, AudioManager* audio)
 {
     UpdateState(input, audio);
@@ -85,7 +61,7 @@ bool Player::Update(Input* input, float dt)
     //#define PLAYER_MOVE_SPEED 200.0f
     //#define PLAYER_JUMP_SPEED 350.0f
 
-    UpdateLogic(dt, input);
+   // UpdateLogic(dt, input);
 
     //if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y += (PLAYER_MOVE_SPEED * dt);
     //if (input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) position.y -= (PLAYER_MOVE_SPEED * dt);
@@ -113,33 +89,32 @@ bool Player::Draw(Render* render)
 {
     // TODO: Calculate the corresponding rectangle depending on the
     // animation state and animation frame
-    //SDL_Rect rec = { 0 };
-    //render->DrawTexture(texture, position.x, position.y, rec);
+    SDL_Rect rec = actualAnimation->GetCurrentFrame();
+    render->DrawTexture(texture, position.x, position.y, &rec);
 
     render->camera.x = -position.x;
     render->camera.y = -position.y - 200;
 
-    render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+    //render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 
-	/*SDL_Rect rect = actualAnimation->GetCurrentFrame();
 
-	if (isGoingRight == true)
-	{
-		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-		render->DrawTexture(texture, position.x - 12, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
-	}
-	else
-	{
-		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-		render->DrawTexture(texture, position.x - 24, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
-	}*/
+	//if (isGoingRight == true)
+	//{
+	//	if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
+	//	render->DrawTexture(texture, position.x - 12, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
+	//}
+	//else
+	//{
+	//	if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
+	//	render->DrawTexture(texture, position.x - 24, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
+	//}
 
     return false;
 }
 
 void Player::SetTexture(SDL_Texture *tex, Textures* texture)
 {
-	tex = texture->Load(PATH("Assets/Textures/", "finn_sprite.png"));
+	tex = texture->Load(PATH("Assets/Textures/", "players.png"));
     //texture = tex;
 }
 
