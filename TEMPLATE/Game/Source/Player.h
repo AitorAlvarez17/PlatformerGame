@@ -13,6 +13,8 @@
 
 #include "SDL/include/SDL.h"
 
+class Textures;
+
 enum PlayerAnim {
 
     IDLE,
@@ -86,6 +88,9 @@ public:
     bool isJumping = false;
     float gravityForce = 30.0f;
     bool push = false;
+
+    Textures* tex;
+
 };
 
 #endif // __PLAYER_H__

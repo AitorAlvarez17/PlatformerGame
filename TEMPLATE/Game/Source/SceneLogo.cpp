@@ -10,7 +10,7 @@
 
 SceneLogo::SceneLogo()
 {
-    logo = { 640 - 150, 180, 300, 300 };
+    logo = { 0, 180, 1280, 300 };
 
     state = 0;
     timeCounter = 0.0f;
@@ -67,7 +67,7 @@ bool SceneLogo::Draw(Render* render)
 {
     render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 0 });
 
-    render->DrawRectangle(logo, { 255, 0, 0, (uchar)(255.0f * logoAlpha) });
+    render->DrawRectangle(logo, { 41, 157, 157, (uchar)(255.0f * logoAlpha) });
 
     render->DrawTexture(logoTexture, 490, 180, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
     return false;
