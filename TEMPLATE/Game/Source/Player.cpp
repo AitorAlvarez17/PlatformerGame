@@ -121,7 +121,7 @@ bool Player::Draw(Render* render)
 
     render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 
-	SDL_Rect rect = actualAnimation->GetCurrentFrame();
+	/*SDL_Rect rect = actualAnimation->GetCurrentFrame();
 
 	if (isGoingRight == true)
 	{
@@ -132,7 +132,7 @@ bool Player::Draw(Render* render)
 	{
 		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
 		render->DrawTexture(texture, position.x - 24, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
-	}
+	}*/
 
     return false;
 }

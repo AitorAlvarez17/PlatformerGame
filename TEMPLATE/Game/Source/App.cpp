@@ -32,7 +32,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new AudioManager();
 	entityManager = new EntityManager();
 	sceneManager = new SceneManager(input, render, tex);
-	debug = new Debug();
+	debug = new Debug(input, this);
 	ui = new ModuleUI();
 
 	// Ordered for awake / Start / Update
@@ -343,18 +343,22 @@ const char* App::GetOrganization() const
 // Load / Save
 void App::LoadGameRequest()
 {
+	if (SAVE_STATE_FILENAME != NULL)
+	{
+		loadGameRequested = true;
+	}
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
-	loadGameRequested = true;
+
 }
 
 // ---------------------------------------
 void App::SaveGameRequest() const
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
-	/*if (SAVE_STATE_FILENAME != NULL)
+	if (SAVE_STATE_FILENAME != NULL)
 	{
-
-	}*/
+		saveGameRequested = true;
+	}
 	saveGameRequested = true;
 }
 
@@ -436,7 +440,7 @@ bool App::LoadGame()
 	entityManager->LoadState(pl);
 
 	loadGameRequested = false;
-
+	LOG("game loaded");
 	return ret;
 }
 
@@ -471,7 +475,7 @@ bool App::SaveGame() const
 	}
 
 
-
+	LOG("game saved");
 	saveGameRequested = false;
 
 	return ret;

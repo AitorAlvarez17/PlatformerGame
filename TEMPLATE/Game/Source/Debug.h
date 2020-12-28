@@ -7,11 +7,14 @@
 
 #include "List.h"
 
+class Input;
+class App;
+
 class Debug : public Module
 {
 public:
 
-	Debug();
+	Debug(Input* input, App* app);
 
 	// Destructor
 	virtual ~Debug();
@@ -19,7 +22,7 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
-	bool Update(float dt, Input* input, App* app);
+	bool Update(float dt);
 
 	// Called before quitting
 	bool CleanUp();
@@ -30,6 +33,11 @@ public:
 	float accumulatedTime = 0.0f;
 	float updateMsCycle = 0.0f;
 	bool doLogic = false;
+
+private:
+
+	Input* input;
+	App* app;
 };
 
 #endif // __DEBUG_H__

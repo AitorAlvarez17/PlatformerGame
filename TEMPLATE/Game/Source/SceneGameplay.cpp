@@ -80,8 +80,8 @@ bool SceneGameplay::Update(Input *input, float dt)
 	// Collision detection: map vs player
 	iPoint tempPlayerPosition = player->position;
 
-	LOG("X %d", tempPlayerPosition.x);
-	LOG("Y %d", tempPlayerPosition.y);
+	//LOG("X %d", tempPlayerPosition.x);
+	//LOG("Y %d", tempPlayerPosition.y);
 	player->Update(input, dt);
 
 	// Check if updated player position collides with next tile
