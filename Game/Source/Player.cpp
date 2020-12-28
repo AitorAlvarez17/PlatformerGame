@@ -468,7 +468,7 @@ void Player::UpdateLogic(float dt)
 		}
 		if (jumps == 2) {
 			//jump fix. Do not delete this before asking 
-			position.y -= 2;
+			//position.y -= 2;
 		}
 		ChangeState(JUMPING, FALLING);
 

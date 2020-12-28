@@ -29,23 +29,18 @@ public:
 
     Player();
 
-    bool Start(Textures* tex);
-
-    bool PreUpdate(float dt, Input* input, AudioManager* audio);
-
     bool Update(Input* input, float dt);
-
-    bool PostUpdate(float dt);
 
     bool Draw(Render* render);
 
-    void SetTexture(SDL_Texture *tex, Textures* texture);
+    void SetTexture(SDL_Texture* tex);
 
-    void UpdateState(Input* input, AudioManager* audio);
+    void UpdateState(Input* input);
 
     void UpdateLogic(float dt, Input* input);
 
     void ChangeState(PlayerAnim lastAnim, PlayerAnim nextAnim);
+
 
     SDL_Rect GetBounds();
 
@@ -73,23 +68,14 @@ public:
     Animation* actualAnimation = nullptr;//diferentiate --- THIS IS THE ANIMATION!!
 
     int width, height;
+
     //PlayerProperties
-    float jumpSpeed = 0.0f;
-    bool readyToJump = true;
-    bool hitObstacle = false;
-    bool isGoingRight = false;
-
-
-    float vy = 0.0f;
-    float speed = 0.0f;
     int jumps = 2;
-    float jumpForce = 0.0f;
-    float jumpForceValue = 10.0f;
-    bool isJumping = false;
-    float gravityForce = 30.0f;
-    bool push = false;
+    float vy = 0.0f;
 
-    Textures* tex;
+    bool isGoingRight = false;
+    bool isJumping = false;
+
 
 };
 

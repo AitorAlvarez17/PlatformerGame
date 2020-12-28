@@ -5,135 +5,122 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	int pixels = 32;
 
-    position = iPoint(5 * 16, 17 * 16);
-    jumpSpeed = 200.0f;
+	position = iPoint(5 * 16, 17 * 16);
+	vy = 200.0f;
 
-    width = 16;
-    height = 32;
-
+	width = 16;
+	height = 32;
 
 	// Define Player animations
 	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);
 	idleAnimL.loop = true;
-	idleAnimL.speed = 1.0f;
+	idleAnimL.speed = 0.1f;
 
-	idleAnimR.GenerateAnimation({ 288,192,32,32 }, 0, 3,0,0);
+	idleAnimR.GenerateAnimation({ 320,192,32,32 }, 0, 3, 0, 0);
 	idleAnimR.loop = true;
-	idleAnimR.speed = 1.0f;
+	idleAnimR.speed = 0.1f;
 
-	runLeftAnim.GenerateAnimation({ 96,192,32,32 }, 0, 3, 0, 0);
+	runLeftAnim.GenerateAnimation({ 128,192,32,32 }, 0, 3, 0, 0);
 	runLeftAnim.loop = true;
-	runLeftAnim.speed = 1.0f;
+	runLeftAnim.speed = 0.1f;
 
-	runRightAnim.GenerateAnimation({ 384,192,32,32 }, 0, 3, 0, 0);
+	runRightAnim.GenerateAnimation({ 448,192,32,32 }, 0, 3, 0, 0);
 	runRightAnim.loop = true;
-	runRightAnim.speed = 1.0f;
+	runRightAnim.speed = 0.1f;
 
 	jumpLeftAnim.GenerateAnimation({ 0,224,32,32 }, 0, 3, 0, 0);
-	jumpLeftAnim.loop = true;
-	jumpLeftAnim.speed = 1.0f;
+	jumpLeftAnim.loop = false;
+	jumpLeftAnim.speed = 0.1f;
 
-	jumpRightAnim.GenerateAnimation({ 288,224,32,32 }, 0, 3, 0, 0);
-	jumpRightAnim.loop = true;
-	jumpRightAnim.speed = 1.0f;
+	jumpRightAnim.GenerateAnimation({ 320,224,32,32 }, 0, 3, 0, 0);
+	jumpRightAnim.loop = false;
+	jumpRightAnim.speed = 0.1f;
 
-	actualAnimation = &idleAnimR;
+	deadAnimL.GenerateAnimation({ 256,224,32,32 }, 0, 0, 0, 0);
+	deadAnimL.loop = false;
 
+	deadAnimR.GenerateAnimation({ 576,224,32,32 }, 0, 0, 0, 0);
+	deadAnimR.loop = false;
 
-}
+	actualAnimation = &deadAnimR;
 
-bool Player::Start(Textures* tex)
-{
-
-	return true;
-}
-
-bool Player::PreUpdate(float dt, Input* input, AudioManager* audio)
-{
-    UpdateState(input, audio);
-
-    return true;
 }
 
 bool Player::Update(Input* input, float dt)
 {
-    #define GRAVITY 400.0f
-    #define PLAYER_MOVE_SPEED 200.0f
-    #define PLAYER_JUMP_SPEED 350.0f
+#define GRAVITY 400.0f
+#define PLAYER_MOVE_SPEED 200.0f
+#define PLAYER_JUMP_SPEED 350.0f
 
-   // UpdateLogic(dt, input);
+	vy += GRAVITY * dt;
+	position.y += (vy * dt);
+	UpdateState(input);
+	UpdateLogic(dt, input);
 
-    //if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y += (PLAYER_MOVE_SPEED * dt);
-    //if (input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) position.y -= (PLAYER_MOVE_SPEED * dt);
-    if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
-    if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 
-    if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
+	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
+	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
+	// if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
 
-     //Calculate gravity acceleration
-    jumpSpeed += GRAVITY * dt;
-    position.y += (jumpSpeed * dt);
+	 //Calculate gravity acceleration
+	
 
-    return true;
-}
 
-bool Player::PostUpdate(float dt)
-{
-
-   
 
 	return true;
 }
 
 bool Player::Draw(Render* render)
 {
-    // TODO: Calculate the corresponding rectangle depending on the
-    // animation state and animation frame
-    SDL_Rect rec = actualAnimation->GetCurrentFrame();
-    render->DrawTexture(texture, position.x, position.y, &rec);
-
-    render->camera.x = -position.x;
-    render->camera.y = -position.y - 200;
-
-    //render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+	// TODO: Calculate the corresponding rectangle depending on the
+	// animation state and animation frame
 
 
-	//if (isGoingRight == true)
-	//{
-	//	if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-	//	render->DrawTexture(texture, position.x - 12, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
-	//}
-	//else
-	//{
-	//	if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-	//	render->DrawTexture(texture, position.x - 24, position.y - 30, &rect, 0, 0, 0, 0, SDL_FLIP_NONE);
-	//}
+	//actualAnimation->Update();
+	SDL_Rect rec = actualAnimation->GetCurrentFrame();
+	if (isGoingRight == true)
+	{
+		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
+		render->DrawTexture(texture, position.x - 12, position.y - 30, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
+	}
+	else
+	{
+		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
+		render->DrawTexture(texture, position.x - 24, position.y - 30, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
+	}
 
-    return false;
+	render->camera.x = -position.x;
+	render->camera.y = -position.y - 200;
+
+	//render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+
+
+
+
+	return false;
 }
 
-void Player::SetTexture(SDL_Texture *tex, Textures* texture)
+void Player::SetTexture(SDL_Texture* tex)
 {
-	tex = texture->Load(PATH("Assets/Textures/", "players.png"));
-    //texture = tex;
+	texture = tex;
 }
 
 SDL_Rect Player::GetBounds()
 {
-    return { position.x, position.y, width, height };
+	return { position.x, position.y, width, height };
 }
 
-void Player::UpdateState(Input* input, AudioManager* audio)
+void Player::UpdateState(Input* input)
 {
 
-	if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		isGoingRight = false;
-	}
-
-	else if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		isGoingRight = true;
+	}
+
+	else if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		isGoingRight = false;
 	}
 
 	switch (currentAnim)//THE ACTUAL STATE THAT WE CHANGE TO ANOTHER
@@ -141,44 +128,35 @@ void Player::UpdateState(Input* input, AudioManager* audio)
 	case IDLE:
 	{
 
-		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
-			input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+		if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT ||
+			input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
 			ChangeState(currentAnim, WALK);//CHANGTE TO WALK
 
 		}
 
-		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		{
 			jumps--;
-			audio->PlayFx(1, 0);
 			ChangeState(currentAnim, JUMP);//CHANGE TO JUMP
 
 		}
 
-		/*if (isDead == true)
-		{
-			audio->PlayFx(3, 0);
-			ChangeState(currentAnim, DYING);
-		}*/
+		//if (isDead == true)
+		//{
+		//	ChangeState(currentAnim, DYING);
+		//}
 
 		break;
 	}
 
 	case WALK:
 	{
-		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
-
-			if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 			{
 				jumps--;
-
-				if (jumps > 0)
-					audio->PlayFx(1, 0);
-
 				ChangeState(currentAnim, JUMP);
-
-
 			}
 
 		}
@@ -192,9 +170,8 @@ void Player::UpdateState(Input* input, AudioManager* audio)
 	{
 		//once animation is done change to falling
 		// or simply add the falling sprite on jumping animations
-		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		{
-
 
 		}
 
@@ -203,7 +180,7 @@ void Player::UpdateState(Input* input, AudioManager* audio)
 
 	case FALLING:
 	{
-		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		{
 
 		}
@@ -227,24 +204,20 @@ void Player::UpdateLogic(float dt, Input* input)
 	{
 	case(IDLE):
 	{
-
 		break;
 	}
 	case(WALK):
 	{
-		//if (app->checkpoints->mapOpen == 0)
-		//{
-			if (isGoingRight == true)
-			{
-				position.x += speed * dt;
-				//app->audio->PlayFx(5, 0);
-			}
-			else
-			{
-				position.x -= speed * dt;
-				//app->audio->PlayFx(5, 0);
-			}
-		//}*/
+		if (isGoingRight == true)
+		{
+			position.x += (PLAYER_MOVE_SPEED * dt);
+			
+		}
+		else
+		{
+			position.x -= (PLAYER_MOVE_SPEED * dt);
+
+		}
 
 		break;
 	}
@@ -252,11 +225,12 @@ void Player::UpdateLogic(float dt, Input* input)
 	{
 		if (jumps > 0)
 		{
-			vy = jumpForceValue * dt;
+			//position.y -= (PLAYER_JUMP_SPEED * dt);
+			//vy = (PLAYER_JUMP_SPEED * dt);
 		}
 		if (jumps == 2) {
 			//jump fix. Do not delete this before asking 
-			position.y -= 2;
+			//position.y -= (PLAYER_JUMP_SPEED * dt);
 		}
 		ChangeState(currentAnim, FALLING);
 
@@ -268,12 +242,12 @@ void Player::UpdateLogic(float dt, Input* input)
 
 		if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed * dt;
+			position.x += (PLAYER_MOVE_SPEED * dt);
 
 		}
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x -= speed * dt;
+			position.x -= (PLAYER_MOVE_SPEED * dt);
 
 		}
 
@@ -290,19 +264,19 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 
 	switch (newState)
 	{
-		case(IDLE):
+	case(IDLE):
+	{
+		if (isGoingRight == true)
 		{
-			if (isGoingRight == true)
-			{
-				actualAnimation = &idleAnimR;
-			}
-			else
-			{
-				actualAnimation = &idleAnimL;
-			}
-
-			break;
+			actualAnimation = &idleAnimR;
 		}
+		else
+		{
+			actualAnimation = &idleAnimL;
+		}
+
+		break;
+	}
 	case(WALK):
 	{
 		if (isGoingRight == true)
@@ -315,7 +289,6 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 			actualAnimation = &runLeftAnim;
 
 		}
-
 
 		break;
 	}
@@ -331,7 +304,6 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 			actualAnimation = &jumpLeftAnim;
 			isJumping = true;
 		}
-
 
 		break;
 	}
