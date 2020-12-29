@@ -1,7 +1,8 @@
 #include "Item.h"
 
-Item::Item() : Entity(EntityType::ITEM)
+Item::Item(iPoint origin) : Entity(EntityType::ITEM)
 {
+	position = origin;
 }
 
 Item::~Item()

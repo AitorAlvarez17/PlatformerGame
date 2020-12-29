@@ -8,7 +8,7 @@ enum class EntityType
 {
     PLAYER,
     ENEMY,
-    ITEM,
+    ITEM,   //coin o lo que sea, se cambaiara en el momento.
     MAP,
     UNKNOWN
 };
@@ -28,6 +28,7 @@ public:
 
     EntityType type;
     bool active = true;
+    bool pendingToDelete = false;
     //SString name;         // Entity name identifier?
     //uint32 id;            // Entity identifier?
 

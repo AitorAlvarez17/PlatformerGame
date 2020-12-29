@@ -41,8 +41,8 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	{
 		// L13: Create the corresponding type entity
 		case EntityType::PLAYER: ret = new Player();  break;
-		//case EntityType::ENEMY: ret = new Enemy();  break;
-		//case EntityType::ITEM: ret = new Item();  break;
+		/*case EntityType::ENEMY: ret = new Enemy();  break;
+		case EntityType::ITEM: ret = new Item();  break;*/
 		default: break;
 	}
 
@@ -70,8 +70,16 @@ bool EntityManager::Update(float dt)
 
 bool EntityManager::UpdateAll(float dt, bool doLogic)
 {
+	ListItem<Entity*> entity = nullptr;
+	if(entities.start != nullptr)entity.data = entities.start->data;
 	if (doLogic)
 	{
+		while (entity.data != nullptr) {
+			entity.data->Update(dt);
+			entity = entity.next->data;
+		}
+		
+		
 		// TODO: Update all entities 
 	}
 
