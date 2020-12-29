@@ -55,6 +55,9 @@ public:
 
     Animation fallRightAnim;
     Animation fallLeftAnim;
+    
+    Animation damageAnimR;
+    Animation damageAnimL;
 
     Animation deadAnimR;
     Animation deadAnimL;
