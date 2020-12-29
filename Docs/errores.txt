@@ -4,16 +4,19 @@ DO NOT FORGET TO DELETE THIS BEFORE THE DELIVERY
 
 Name change:
 
-Assets/Maps/Token tp.png -------------> token_tp.png
-Assets/Maps/levelPrueba.tmx ----------> level-prueba.tmx
+token_tp.png -------- change code.
+level-prueba.tmx ---- change code.
 
 File change:
 
 Assets/Maps/player.png ----------> Assets/Textures/Player/player.png
 Assets/Maps/player.png ----------> Assets/Textures/Player/player.png
 
-All UI pngs need to be moved to a UI folder inside textures.
 
+All UI pngs changed to the UI folder inside textures. ------- change code
+
+
+Items moved into the Items folder
 
 Delete:
 
