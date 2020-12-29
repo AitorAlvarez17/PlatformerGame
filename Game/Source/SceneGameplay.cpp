@@ -91,7 +91,10 @@ bool SceneGameplay::Update(Input *input, float dt)
 			if ((map->data.layers[8]->Get(x, y) >= 484) && 
 				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 			{
+
 				player->position = tempPlayerPosition;
+				//player->ChangeState(WALK);
+				//create a function that changes the player's state to a new one from the one before.
 				player->vy = 0.0f;
 				break;
 			}
