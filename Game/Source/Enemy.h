@@ -12,6 +12,7 @@ class Enemy : public Entity
 public:
 
     Enemy();
+    Enemy(iPoint origin);
     virtual ~Enemy();
 
 private:

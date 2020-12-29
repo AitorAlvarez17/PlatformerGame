@@ -11,6 +11,7 @@ class Item : public Entity
 public:
 
     Item();
+    Item(iPoint origin);
     virtual ~Item();
 };
 
