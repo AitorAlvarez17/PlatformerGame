@@ -17,6 +17,7 @@ public:
 private:
 
     DynArray<iPoint>* path;
+
 };
 
 #endif // __ENEMY_H__
