@@ -38,7 +38,7 @@ SceneTitle::SceneTitle()
     bgAnim.GenerateAnimation({ 0,0,1280,720 }, 3, 1, 0, 0);
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
-
+   
 }
 
 SceneTitle::~SceneTitle()
@@ -64,12 +64,15 @@ bool SceneTitle::Update(Input* input, float dt)
     //if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) TransitionToScene(SceneType::GAMEPLAY);
     
     
+    if (settings == 0 && credits == 0)
+    {
+        btnStart->Update(input, dt);
+        btnContinue->Update(input, dt);
+        btnExit->Update(input, dt);
+        btnSettings->Update(input, dt);
+        btnCredits->Update(input, dt);
+    }
     
-     btnStart->Update(input, dt);
-     btnContinue->Update(input, dt);
-     btnExit->Update(input, dt);
-     btnSettings->Update(input, dt);
-     btnCredits->Update(input, dt);
      btnBack->Update(input, dt);
      fullscreen->Update(input, dt);
      Vsync->Update(input, dt);
@@ -115,7 +118,6 @@ bool SceneTitle::Draw(Render* render)
         render->DrawTexture(creditsText, 490, 440, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
     }
     
-
     return false;
 }
 
