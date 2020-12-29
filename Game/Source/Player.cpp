@@ -22,11 +22,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	runLeftAnim.GenerateAnimation({ 128,192,32,32 }, 0, 3, 0, 0);
 	runLeftAnim.loop = true;
-	runLeftAnim.speed = 0.1f;
+	runLeftAnim.speed = 0.3f;
 
 	runRightAnim.GenerateAnimation({ 448,192,32,32 }, 0, 3, 0, 0);
 	runRightAnim.loop = true;
-	runRightAnim.speed = 0.1f;
+	runRightAnim.speed = 0.3f;
 
 	jumpLeftAnim.GenerateAnimation({ 0,224,32,32 }, 0, 3, 0, 0);
 	jumpLeftAnim.loop = false;
@@ -36,21 +36,29 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpRightAnim.loop = false;
 	jumpRightAnim.speed = 0.1f;
 
+	damageAnimL.GenerateAnimation({ 256,192,32,32 }, 0, 1, 0, 0);
+	damageAnimL.loop = true;
+	damageAnimL.speed = 0.1f;
+
+	damageAnimR.GenerateAnimation({ 576,192,32,32 }, 0, 1, 0, 0);
+	damageAnimR.loop = true;
+	damageAnimR.speed = 0.1f;
+
 	deadAnimL.GenerateAnimation({ 256,224,32,32 }, 0, 0, 0, 0);
 	deadAnimL.loop = false;
 
 	deadAnimR.GenerateAnimation({ 576,224,32,32 }, 0, 0, 0, 0);
 	deadAnimR.loop = false;
 
-	actualAnimation = &deadAnimR;
+	actualAnimation = &damageAnimR;
 
 }
 
 bool Player::Update(Input* input, float dt)
 {
-#define GRAVITY 400.0f
-#define PLAYER_MOVE_SPEED 200.0f
-#define PLAYER_JUMP_SPEED 350.0f
+#define GRAVITY 200.0f
+#define PLAYER_MOVE_SPEED 100.0f
+#define PLAYER_JUMP_SPEED 450.0f
 
 	vy += GRAVITY * dt;
 	position.y += (vy * dt);
@@ -74,9 +82,8 @@ bool Player::Draw(Render* render)
 {
 	// TODO: Calculate the corresponding rectangle depending on the
 	// animation state and animation frame
+	actualAnimation->Update();
 
-
-	//actualAnimation->Update();
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 	if (isGoingRight == true)
 	{
@@ -93,10 +100,6 @@ bool Player::Draw(Render* render)
 	render->camera.y = -position.y - 200;
 
 	//render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
-
-
-
-
 	return false;
 }
 
@@ -158,7 +161,7 @@ void Player::UpdateState(Input* input)
 				jumps--;
 				ChangeState(currentAnim, JUMP);
 			}
-
+			ChangeState(currentAnim, WALK);
 		}
 		else
 			ChangeState(currentAnim, IDLE);
@@ -174,7 +177,6 @@ void Player::UpdateState(Input* input)
 		{
 
 		}
-
 		break;
 	}
 
@@ -188,6 +190,7 @@ void Player::UpdateState(Input* input)
 	}
 
 	}
+
 }
 
 void Player::UpdateLogic(float dt, Input* input)
@@ -265,7 +268,6 @@ void Player::UpdateLogic(float dt, Input* input)
 
 	}
 
-	actualAnimation->Update();
 }
 
 void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
@@ -316,8 +318,10 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 
 		break;
 	}
+
 	}
 
 	currentAnim = newState;
+
 }
 
