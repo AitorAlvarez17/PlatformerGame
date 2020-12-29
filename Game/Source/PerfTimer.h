@@ -19,8 +19,4 @@ private:
 	static uint64 frequency;
 };
 
-// Performance macros
-#define PERF_START(timer) timer.Start()
-#define PERF_PEEK(timer) LOG("%s took %f ms", __FUNCTION__, timer.ReadMs())
-
 #endif //__PERFTIMER_H__

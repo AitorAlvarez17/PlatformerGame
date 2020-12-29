@@ -1,41 +1,43 @@
 #ifndef __DEBUG_H__
 #define __DEBUG_H__
 
-#define MAX_COLLIDERS 1000
-
 #include "Module.h"
+#include "Input.h"
+#include "App.h"
+
+#include "List.h"
+
+class Input;
+class App;
+
 class Debug : public Module
 {
 public:
-	Debug(bool startEnabled);
+
+	Debug(Input* input, App* app);
 
 	// Destructor
-	~Debug();
+	virtual ~Debug();
 
-	bool Start();
-	bool PreUpdate();
+	// Called before render is available
+	bool Awake(pugi::xml_node&);
+
 	bool Update(float dt);
-	bool PostUpdate();
 
-	//Called at the end of the application
+	// Called before quitting
 	bool CleanUp();
 
-	// Switches isEnabled and calls Start() method
-	void Enable();
 
-	// Switches isEnabled and calls CleanUp() method
-	void Disable();
+public:
 
-	inline bool IsEnabled() const { return isEnabled; }
-
-
-	
-	bool godMode = false;
-	//int levelChoose = 0;
+	float accumulatedTime = 0.0f;
+	float updateMsCycle = 0.0f;
+	bool doLogic = false;
 
 private:
-	int storeFrameRateCap;
-	bool capFrameRate = true;
-	bool isEnabled = true;
+
+	Input* input;
+	App* app;
 };
+
 #endif // __DEBUG_H__

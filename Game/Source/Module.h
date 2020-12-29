@@ -5,24 +5,19 @@
 
 #include "PugiXml/src/pugixml.hpp"
 
-class App;
-struct Collider;
+class GuiControl;
+enum class GuiControlState;
 
 class Module
 {
 public:
 
-	Module(bool startEnabled) : active(false)
+	Module() : active(false)
 	{}
 
 	void Init()
 	{
 		active = true;
-	}
-
-	void Disable()
-	{
-		active = false;
 	}
 
 	// Called before render is available
@@ -62,40 +57,22 @@ public:
 		return true;
 	}
 
-	// L02: TODO 2: Create new virtual methods to Load / Save
-
-	virtual bool Load(pugi::xml_node&)
-	{
-		return true;
-
-	}
-	virtual bool Save(pugi::xml_node&)
-	{
-		return true;
-
-	}
-
-	virtual bool RequestLoad()
+    // L02: DONE 2: Create new virtual methods to Load / Save state
+	virtual bool LoadState(pugi::xml_node&)
 	{
 		return true;
 	}
 
-	virtual bool RequestSave()
+	virtual bool SaveState(pugi::xml_node&) const
 	{
 		return true;
 	}
 
-	virtual void OnCollision(Collider* c1, Collider* c2) 
-	{
-	
-	}
-
-	
 public:
 
 	SString name;
 	bool active;
-	bool isEnabled = true;
+
 };
 
 #endif // __MODULE_H__

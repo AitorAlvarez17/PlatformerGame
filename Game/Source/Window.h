@@ -10,7 +10,7 @@ class Window : public Module
 {
 public:
 
-	Window(bool startEnabled);
+	Window();
 
 	// Destructor
 	virtual ~Window();
@@ -26,9 +26,6 @@ public:
 
 	// Retrive window size
 	void GetWindowSize(uint& width, uint& height) const;
-
-	uint GetWidth() const;
-	uint GetHeight() const;
 
 	// Retrieve window scale
 	uint GetScale() const;

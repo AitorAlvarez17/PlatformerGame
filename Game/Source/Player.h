@@ -1,119 +1,82 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "Module.h"
+#include "Entity.h"
 #include "Animation.h"
+#include "Input.h"
+#include "Render.h"
+#include "Audio.h"
+#include "Textures.h"
+
 #include "Point.h"
+#include "SString.h"
 
-struct Animation;
-struct Collider;
-struct SDL_Texture;	
+#include "SDL/include/SDL.h"
 
-enum PlayerState {
+class Textures;
 
-	IDLE,
-	RUNNING,
-	JUMPING,
-	ATTACK,
-	DOUBLE_JUMPING,
-	FALLING,
-	DYING
+enum PlayerAnim {
+
+    IDLE,
+    WALK,
+    JUMP,
+    FALLING
 };
 
-class Player : public Module
+class Player: public Entity
 {
-private:
-	PlayerState playerState = PlayerState::IDLE;
-	SDL_Texture* texture = nullptr;
-	
-	Animation* currentAnim = nullptr;
-
-	unsigned int jumpsLeft = 2;
-	
 public:
 
-	Player(bool startEnabled);
-	bool Awake(pugi::xml_node&);
-	bool Start();
-	bool PreUpdate();
-	bool Update(float dt);
-	bool PostUpdate();
-	void OnCollision(Collider* a, Collider* b);
-	SDL_Rect coll;
-	void UpdateState();
-	void UpdateLogic(float dt);
-	void ChangeState(PlayerState previous, PlayerState next);
-	void Reload();
-	void HealHability();
-	void FireHability();
+    Player();
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&);
+    bool Update(Input* input, float dt);
 
-	Animation idleAnimR;
-	Animation idleAnimL;
+    bool Draw(Render* render);
 
-	Animation runRightAnim;
-	Animation runLeftAnim;
+    void SetTexture(SDL_Texture* tex);
 
-	Animation jumpRightAnim;
-	Animation jumpLeftAnim;
+    void UpdateState(Input* input);
 
-	Animation fallRightAnim;
-	Animation fallLeftAnim;
+    void UpdateLogic(float dt, Input* input);
 
-	Animation deadAnimR;
-	Animation deadAnimL;
-	
+    void ChangeState(PlayerAnim lastAnim, PlayerAnim nextAnim);
 
-	fPoint position;
 
-	float vy = 0.0f;
-	float speed = 0.0f;
-	int jumps = 2;
-	bool lvl1 = false;
-	bool lvl2 = false;
-	bool isDead = false;
-	bool isGoingRight = false;
+    SDL_Rect GetBounds();
 
-	int lifes = 3;
-	int goldScore;
-	bool maxLifes;
-	int fireBallDirection;
+    Animation idleAnimR;
+    Animation idleAnimL;
 
-	float cooldown = 3.0f;
-	float fireCooldown = 5.0f;
-	float maxCooldown = 3.0f;
-	float fireMaxCooldown = 5.0f;
+    Animation runRightAnim;
+    Animation runLeftAnim;
 
-	int winWidth;
-	int winHeigh;
-	Collider* collider;
+    Animation jumpRightAnim;
+    Animation jumpLeftAnim;
 
-	Point<int> spawnLevel1;
-	Point<int> spawnLevel2;
-private:
+    Animation fallRightAnim;
+    Animation fallLeftAnim;
 
-	float jumpForce = 0.0f;
-	float jumpForceValue = 10.0f;
-	
-	const char* jumpFxPath;
+    Animation deadAnimR;
+    Animation deadAnimL;
 
-	float gravityForce = 30.0f;
+public:
 
-	
-	bool fallDamage = false;
-	bool isJumping;
-	bool canMoveRight = true;
-	bool canMoveLeft = true;
-	bool canMoveUp = true;
-	bool canMoveDown = true;
-	bool push = false;
+    SDL_Texture* texture;   // Player spritesheet
 
-	const char* texturePath;
+    // TODO: Define all animation properties
+    PlayerAnim currentAnim = PlayerAnim::IDLE;//diferentiate --- THIS IS THE STATE!
+    Animation* actualAnimation = nullptr;//diferentiate --- THIS IS THE ANIMATION!!
 
-	
+    int width, height;
+
+    //PlayerProperties
+    int jumps = 2;
+    float vy = 0.0f;
+
+    bool isGoingRight = false;
+    bool isJumping = false;
+
+
 };
 
-
-#endif
+#endif // __PLAYER_H__

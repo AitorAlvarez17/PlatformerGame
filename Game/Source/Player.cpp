@@ -1,401 +1,177 @@
 #include "Player.h"
-#include "Debug.h"
-#include "Map.h"
-#include "App.h"
-#include "Input.h"
-#include "Animation.h"
 #include "Textures.h"
-#include "ModuleUI.h"
-#include "Scene.h"
-#include "ObjectManager.h"
-#include "Fireball.h"
-#include "Window.h"
-#include "Render.h"
-#include "CheckPoints.h"
-#include "Collisions.h"
-#include "SDL/include/SDL_scancode.h"
-#include "Audio.h"
-#include "../Defs.h"
-#include "../Log.h"
-#include <math.h>
 
-
-Player::Player(bool startEnabled) : Module(startEnabled)
+Player::Player() : Entity(EntityType::PLAYER)
 {
-	name.create("player");
-}
-
-bool Player::Awake(pugi::xml_node& config)
-{
-	LOG("Loading player config");
-	bool ret = true;
-
-	texturePath = config.child("texture").child_value();
-
-
-	pugi::xml_node move = config.child("move");
-
-
-	jumpForceValue = move.attribute("jumpForceValue").as_float();
-	speed = move.attribute("speed").as_int();
-	jumps = move.attribute("maxJumps").as_int();
-
-
-	pugi::xml_node audio = config.child("audio");
-
-	jumpFxPath = audio.attribute("jump").as_string();
-
-	return ret;
-}
-
-bool Player::Start()
-{
-	bool ret = true;
 	int pixels = 32;
 
+	position = iPoint(5 * 16, 17 * 16);
+	vy = 200.0f;
 
-	spawnLevel1.x = 600;
-	spawnLevel1.y = 2816;
+	width = 16;
+	height = 32;
 
-	position.x = spawnLevel1.x;
-	position.y = spawnLevel1.y;
+	// Define Player animations
+	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);
+	idleAnimL.loop = true;
+	idleAnimL.speed = 0.1f;
 
-	spawnLevel2.x = 3427;
-	spawnLevel2.y = 508;
+	idleAnimR.GenerateAnimation({ 320,192,32,32 }, 0, 3, 0, 0);
+	idleAnimR.loop = true;
+	idleAnimR.speed = 0.1f;
 
-	winWidth = app->win->GetWidth();
-	winHeigh = app->win->GetHeight();
+	runLeftAnim.GenerateAnimation({ 128,192,32,32 }, 0, 3, 0, 0);
+	runLeftAnim.loop = true;
+	runLeftAnim.speed = 0.1f;
 
+	runRightAnim.GenerateAnimation({ 448,192,32,32 }, 0, 3, 0, 0);
+	runRightAnim.loop = true;
+	runRightAnim.speed = 0.1f;
 
-	LOG("Loading Player textures");
+	jumpLeftAnim.GenerateAnimation({ 0,224,32,32 }, 0, 3, 0, 0);
+	jumpLeftAnim.loop = false;
+	jumpLeftAnim.speed = 0.1f;
 
-	texture = app->tex->Load("Assets/textures/finn_sprite.png");
+	jumpRightAnim.GenerateAnimation({ 320,224,32,32 }, 0, 3, 0, 0);
+	jumpRightAnim.loop = false;
+	jumpRightAnim.speed = 0.1f;
 
-	if (texture == nullptr)
-		LOG("Couldn't load player texture");
+	deadAnimL.GenerateAnimation({ 256,224,32,32 }, 0, 0, 0, 0);
+	deadAnimL.loop = false;
 
-	coll = { (int)position.x, (int)position.y, pixels - 4,pixels + 2 };
+	deadAnimR.GenerateAnimation({ 576,224,32,32 }, 0, 0, 0, 0);
+	deadAnimR.loop = false;
 
-	//cambiar això
-	collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
+	actualAnimation = &deadAnimR;
 
-	idleAnimR.loop = idleAnimL.loop = runRightAnim.loop = runLeftAnim.loop = true;
-	idleAnimR.speed = idleAnimL.speed = 0.2f;
-	runRightAnim.speed = runLeftAnim.speed = 0.3f;
-
-	if (push == false)
-	{
-		for (int i = 0; i < 27; i++)// 0 to 9
-		{
-			if (i >= 0 && i < 9)//RIGHT ANIM IDLE
-			{
-				idleAnimR.PushBack({ i * pixels,0,32,32 });
-
-			}
-			if (i >= 0 && i < 9)//LEFT ANIM IDLE
-			{
-				idleAnimL.PushBack({ (27 - i) * pixels + 5,32,32,32 });
-
-			}
-			if (i >= 9 && i < 15)// RIGHT
-			{
-				runRightAnim.PushBack({ i * pixels,0,32,32 });
-
-			}
-			if (i >= 9 && i < 15)// LEFT
-			{
-				runLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
-
-			}
-			if (i == 15) // JUMP R & L
-			{
-				jumpRightAnim.PushBack({ i * pixels,0,32,32 });
-				jumpLeftAnim.PushBack({ (27 - i) * pixels + 5,32,32,32 });
-
-			}
-			if (i >= 20 && i < 23) // DEAD RIGHT
-			{
-				deadAnimR.PushBack({ i * pixels,0,32,32 });
-
-			}
-			if (i >= 20 && i < 23) // DEAD RIGHT
-			{
-				deadAnimL.PushBack({ (27 - i) * pixels,32,32,32 });
-
-			}
-			push = true;
-
-		}
-
-	}
-
-	//left
-	if (currentAnim == nullptr)
-	{
-		currentAnim = &idleAnimR;
-	}
-
-	return ret;
 }
 
-bool Player::PreUpdate()
+bool Player::Update(Input* input, float dt)
 {
-	if (app->debug->godMode == false)
-	{
-		position.y =(int)(position.y - vy); // arreglar posicion para que funcione con floats.
-		vy -= gravityForce * 0.5 * app->dt;
-		app->player->UpdateState();
-	}
+#define GRAVITY 400.0f
+#define PLAYER_MOVE_SPEED 200.0f
+#define PLAYER_JUMP_SPEED 350.0f
+
+	vy += GRAVITY * dt;
+	position.y += (vy * dt);
+	UpdateState(input);
+	UpdateLogic(dt, input);
+
+
+	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
+	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
+	// if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
+
+	 //Calculate gravity acceleration
+	
+
+
 
 	return true;
 }
 
-bool Player::Update(float dt)
+bool Player::Draw(Render* render)
 {
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		HealHability();
-	}
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		//SPAWN BALL
-		FireHability();
-
-	}
-	if (app->debug->godMode == false)
-	{
-
-		app->player->UpdateLogic(dt);
-
-	}
-	else
-	{
-
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		{
-			position.x -= speed * dt;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		{
-			position.x += speed * dt;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		{
-			position.y += speed * dt;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		{
-			position.y -= speed * dt;
-		}
-
-	}
-	if (app->input->GetKey(SDL_SCANCODE_C) == KEY_REPEAT)
-	{
-		LOG("%d", position.x);
-		LOG("%d", position.y);
-
-	}
-	return true;
-}
-
-bool Player::PostUpdate()
-{
-
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	// TODO: Calculate the corresponding rectangle depending on the
+	// animation state and animation frame
 
 
+	//actualAnimation->Update();
+	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 	if (isGoingRight == true)
 	{
-		if (currentAnim == &runLeftAnim) { currentAnim = &runRightAnim; }
-		app->render->DrawTexturePlayer(texture, position.x - 12, position.y - 30, &rect);
+		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
+		render->DrawTexture(texture, position.x - 12, position.y - 30, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
 	}
 	else
 	{
-		if (currentAnim == &runRightAnim) { currentAnim = &runLeftAnim; }
-		app->render->DrawTexturePlayer(texture, position.x - 24, position.y - 30, &rect);
+		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
+		render->DrawTexture(texture, position.x - 24, position.y - 30, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
 	}
 
+	render->camera.x = -position.x;
+	render->camera.y = -position.y - 200;
 
-	return true;
+	//render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+
+
+
+
+	return false;
 }
 
-void Player::OnCollision(Collider* a, Collider* b) {
-
-	if (app->debug->godMode == false)
-	{
-
-		if (b == collider)
-		{
-			Collider* c = a;
-			a = b;
-			b = c;
-		}
-
-		int compY = a->rect.y - b->rect.y;
-		int compX = a->rect.x - b->rect.x;
-		switch (b->type)
-		{
-		case(Collider::Type::ENDLEVEL):
-
-			lvl2 = true;
-			app->oManager->CleanUp();
-			app->map->CleanUp();
-			app->player->Reload();
-			app->scene->LoadLevel("level2.tmx");
-			collider = app->collisions->AddCollider(coll, Collider::Type::PLAYER, this);
-			return; //Preguntar Andreu. Innecesario.
-			break;
-
-		case(Collider::Type::FLOOR):
-
-			fallDamage = false;
-			if (std::abs(compY) < std::abs(compX))
-			{
-				if (compX > 0) {
-					position.x += b->rect.x + b->rect.w - a->rect.x;
-				}
-				else
-				{
-					position.x -= a->rect.x + a->rect.w - b->rect.x;
-				}
-			}
-			else
-			{
-				if (compY > 0)
-				{
-					position.y += b->rect.y + b->rect.h - a->rect.y;
-
-				}
-				else
-				{
-					position.y -= a->rect.y + a->rect.h - b->rect.y;
-					vy = 0;
-					jumps = 3;
-				}
-
-			}
-
-			collider->SetPos((int)position.x, (int)position.y);
-
-
-			break;
-
-		case(Collider::Type::DEATH):
-
-			if (lifes > 0)
-			{
-				//if level 1 or 2
-				if (fallDamage == false)
-				{
-					app->audio->PlayFx(3, 0);
-					position.x = spawnLevel1.x;
-					position.y = spawnLevel1.y;
-					lifes--;
-					fallDamage = true;
-				}
-			}
-			if (lifes <= 0)
-			{
-				isDead = true;
-			}
-
-			break;
-
-		case(Collider::Type::HEART):
-
-			if (lifes < 5)lifes++;
-			app->audio->PlayFx(6, 0);
-			break;
-
-		case(Collider::Type::ENEMY):
-
-			position.x = spawnLevel1.x;
-			position.y = spawnLevel1.y;
-			lifes--;
-
-		case(Collider::Type::COIN):
-
-			if (goldScore < 8)goldScore++;
-			app->audio->PlayFx(9, 0);
-			break;
-		}
-
-	}
-
+void Player::SetTexture(SDL_Texture* tex)
+{
+	texture = tex;
 }
 
-void Player::UpdateState()
+SDL_Rect Player::GetBounds()
+{
+	return { position.x, position.y, width, height };
+}
+
+void Player::UpdateState(Input* input)
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		isGoingRight = false;
-	}
-
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 	{
 		isGoingRight = true;
 	}
 
-	switch (playerState)
+	else if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		isGoingRight = false;
+	}
+
+	switch (currentAnim)//THE ACTUAL STATE THAT WE CHANGE TO ANOTHER
 	{
 	case IDLE:
 	{
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
-			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
-			ChangeState(playerState, RUNNING);
+		if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT ||
+			input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+			ChangeState(currentAnim, WALK);//CHANGTE TO WALK
 
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		{
 			jumps--;
-			app->audio->PlayFx(1, 0);
-			ChangeState(playerState, JUMPING);
+			ChangeState(currentAnim, JUMP);//CHANGE TO JUMP
 
 		}
 
-		if (isDead == true)
-		{
-			app->audio->PlayFx(3, 0);
-			ChangeState(playerState, DYING);
-		}
+		//if (isDead == true)
+		//{
+		//	ChangeState(currentAnim, DYING);
+		//}
 
 		break;
 	}
 
-	case RUNNING:
+	case WALK:
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		{
-
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 			{
 				jumps--;
-
-				if (jumps > 0)
-					app->audio->PlayFx(1, 0);
-
-				ChangeState(playerState, JUMPING);
-
-
+				ChangeState(currentAnim, JUMP);
 			}
 
 		}
 		else
-			ChangeState(playerState, IDLE);
+			ChangeState(currentAnim, IDLE);
 
 		break;
 	}
 
-	case JUMPING:
+	case JUMP:
 	{
 		//once animation is done change to falling
 		// or simply add the falling sprite on jumping animations
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		{
-
 
 		}
 
@@ -404,73 +180,59 @@ void Player::UpdateState()
 
 	case FALLING:
 	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		{
 
 		}
 		break;
 	}
 
-	case DYING:
-	{
-		if (isDead == false)
-		{
-			ChangeState(DYING, IDLE);
-		}
-
-		break;
 	}
-
-	}
-
 }
 
-void Player::UpdateLogic(float dt)
+void Player::UpdateLogic(float dt, Input* input)
 {
-	cooldown += dt;
+	/*cooldown += dt;
 	fireCooldown += dt;
 
 	if (cooldown > maxCooldown)
 		cooldown = maxCooldown;
 	if (fireCooldown > fireMaxCooldown)
-		fireCooldown = fireMaxCooldown;
+		fireCooldown = fireMaxCooldown;*/
 
-	switch (playerState)
+	switch (currentAnim)
 	{
 	case(IDLE):
 	{
-
 		break;
 	}
-	case(RUNNING):
+	case(WALK):
 	{
-		if (app->checkpoints->mapOpen == 0)
+		if (isGoingRight == true)
 		{
-			if (isGoingRight == true)
-			{
-				position.x += speed * dt;
-				//app->audio->PlayFx(5, 0);
-			}
-			else
-			{
-				position.x -= speed * dt;
-				//app->audio->PlayFx(5, 0);
-			}
+			position.x += (PLAYER_MOVE_SPEED * dt);
+			
+		}
+		else
+		{
+			position.x -= (PLAYER_MOVE_SPEED * dt);
+
 		}
 
 		break;
 	}
-	case(JUMPING):
+	case(JUMP):
 	{
 		if (jumps > 0)
 		{
-			vy = jumpForceValue * dt;
+			//position.y -= (PLAYER_JUMP_SPEED * dt);
+			//vy = (PLAYER_JUMP_SPEED * dt);
 		}
 		if (jumps == 2) {
 			//jump fix. Do not delete this before asking 
-			//position.y -= 2;
+			//position.y -= (PLAYER_JUMP_SPEED * dt);
 		}
-		ChangeState(JUMPING, FALLING);
+		ChangeState(currentAnim, FALLING);
 
 		break;
 	}
@@ -478,32 +240,26 @@ void Player::UpdateLogic(float dt)
 	case(FALLING):
 	{
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			position.x += speed * dt;
+			position.x += (PLAYER_MOVE_SPEED * dt);
 
 		}
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			position.x -= speed * dt;
+			position.x -= (PLAYER_MOVE_SPEED * dt);
 
 		}
 
 		ChangeState(FALLING, IDLE);
 	}
-	case(DYING):
-	{
-		break;
-	}
 
 	}
 
-	collider->SetPos(position.x, position.y);
-
-	currentAnim->Update();
+	actualAnimation->Update();
 }
 
-void Player::ChangeState(PlayerState previousState, PlayerState newState)
+void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 {
 
 	switch (newState)
@@ -512,169 +268,47 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	{
 		if (isGoingRight == true)
 		{
-			currentAnim = &idleAnimR;
+			actualAnimation = &idleAnimR;
 		}
 		else
 		{
-			currentAnim = &idleAnimL;
+			actualAnimation = &idleAnimL;
 		}
 
 		break;
 	}
-	case(RUNNING):
+	case(WALK):
 	{
 		if (isGoingRight == true)
 		{
-			currentAnim = &runRightAnim;
+			actualAnimation = &runRightAnim;
 
 		}
 		else
 		{
-			currentAnim = &runLeftAnim;
+			actualAnimation = &runLeftAnim;
 
 		}
 
-
 		break;
 	}
-	case(JUMPING):
+	case(JUMP):
 	{
 		if (isGoingRight == true)
 		{
-			currentAnim = &jumpRightAnim;
+			actualAnimation = &jumpRightAnim;
 			isJumping = true;
 		}
 		else
 		{
-			currentAnim = &jumpLeftAnim;
+			actualAnimation = &jumpLeftAnim;
 			isJumping = true;
 		}
 
-
-		break;
-	}
-	case(DOUBLE_JUMPING):
-	{
-		if (isGoingRight == true)
-		{
-			currentAnim = &jumpRightAnim;
-		}
-		else
-		{
-			currentAnim = &jumpLeftAnim;
-		}
-
-
-		break;
-	}
-	case(DYING):
-	{
-		if (isGoingRight == true)
-		{
-			currentAnim = &deadAnimR;
-
-		}
-		else
-		{
-			currentAnim = &deadAnimL;
-		}
-
-
 		break;
 	}
 	}
 
-	playerState = newState;
+	currentAnim = newState;
 }
-
-bool Player::Save(pugi::xml_node& savedGame)
-{
-
-	savedGame.append_attribute("x") = position.x;
-	savedGame.append_attribute("y") = position.y;
-	savedGame.append_attribute("jumpsRemaining") = jumps;
-	savedGame.append_attribute("verticalVelocity") = vy;
-
-
-	return true;
-}
-
-bool Player::Load(pugi::xml_node& savedPlayer)
-{
-	position.x = savedPlayer.attribute("x").as_int();
-	position.y = savedPlayer.attribute("y").as_int();
-	jumps = savedPlayer.attribute("jumpsRemaining").as_int();
-	vy = savedPlayer.attribute("verticalVelocity").as_int();
-
-	return true;
-}
-
-void Player::Reload()
-{
-	playerState = PlayerState::IDLE;
-	if (lvl2 == false)
-	{
-		app->player->position.x = app->player->spawnLevel1.x;
-		app->player->position.y = app->player->spawnLevel1.y;
-	}
-	else
-	{
-		app->player->position.x = app->player->spawnLevel2.x;
-		app->player->position.y = app->player->spawnLevel2.y;
-	}
-}
-
-void Player::HealHability()
-{
-	if (cooldown == maxCooldown)
-	{
-		if (lifes < 5)
-		{
-			app->player->lifes++;
-			app->audio->PlayFx(6, 0);
-			maxLifes = false;
-		}
-		else
-		{
-			app->ui->cantSumon = 0;
-			maxLifes = true;
-		}
-		LOG("%d", app->player->lifes);
-		cooldown = 0;
-	}
-	else
-	{
-
-	}
-
-	LOG("%f", maxCooldown);
-
-}
-
-void Player::FireHability()
-{
-	if (fireCooldown == fireMaxCooldown)
-	{
-		//CREATE FIREBALL
-		if (isGoingRight)
-		{
-			app->audio->PlayFx(4, 0);
-			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, 1);
-		}
-		else
-		{
-			app->audio->PlayFx(4, 0);
-			app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, -1);
-
-		}
-		fireCooldown = 0;
-	}
-	else
-	{
-
-	}
-
-
-}
-
 
