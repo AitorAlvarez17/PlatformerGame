@@ -60,7 +60,7 @@ bool Player::Update(Input* input, float dt)
 
 	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
-	// if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
+	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
 
 	 //Calculate gravity acceleration
 	
@@ -134,7 +134,7 @@ void Player::UpdateState(Input* input)
 
 		}
 
-		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
 			jumps--;
 			ChangeState(currentAnim, JUMP);//CHANGE TO JUMP
@@ -170,7 +170,7 @@ void Player::UpdateState(Input* input)
 	{
 		//once animation is done change to falling
 		// or simply add the falling sprite on jumping animations
-		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
 
 		}
@@ -180,7 +180,7 @@ void Player::UpdateState(Input* input)
 
 	case FALLING:
 	{
-		if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		{
 
 		}
@@ -223,15 +223,24 @@ void Player::UpdateLogic(float dt, Input* input)
 	}
 	case(JUMP):
 	{
-		if (jumps > 0)
+	
+	
+		position.y -= (PLAYER_JUMP_SPEED * dt);
+			
+		if (isGoingRight == true)
 		{
-			//position.y -= (PLAYER_JUMP_SPEED * dt);
-			//vy = (PLAYER_JUMP_SPEED * dt);
+			position.x += (PLAYER_MOVE_SPEED * dt);
+
 		}
-		if (jumps == 2) {
+		else
+		{
+			position.x -= (PLAYER_MOVE_SPEED * dt);
+
+		}
+		
 			//jump fix. Do not delete this before asking 
 			//position.y -= (PLAYER_JUMP_SPEED * dt);
-		}
+
 		ChangeState(currentAnim, FALLING);
 
 		break;
@@ -251,7 +260,7 @@ void Player::UpdateLogic(float dt, Input* input)
 
 		}
 
-		ChangeState(FALLING, IDLE);
+		ChangeState(currentAnim, IDLE);
 	}
 
 	}
