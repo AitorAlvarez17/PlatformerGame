@@ -325,3 +325,30 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 
 }
 
+/*void Player::HealHability()
+{
+	if (cooldown == maxCooldown)
+	{
+		if (lifes < 5)
+		{
+			app->player->lifes++;
+			app->audio->PlayFx(6, 0);
+			maxLifes = false;
+		}
+		else
+		{
+			app->ui->cantSumon = 0;
+			maxLifes = true;
+		}
+		LOG("%d", app->player->lifes);
+		cooldown = 0;
+	}
+	else
+	{
+
+	}
+
+	LOG("%f", maxCooldown);
+
+}*/
+

@@ -61,6 +61,12 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	title = tex->Load(PATH("Assets/Textures/UI/", "title.png"));
 	exitText = tex->Load(PATH("Assets/Textures/UI/", "exit.png"));
 	backText = tex->Load(PATH("Assets/Textures/UI/", "back.png"));
+	backgroundUi = tex->Load(PATH("Assets/Textures/UI/", "background_ui.png"));
+	habUi = tex->Load(PATH("Assets/Textures/UI/", "hab_ui.png"));
+	healthNameUi = tex->Load(PATH("Assets/Textures/UI/", "hearth_ui.png"));
+	healthBackground = tex->Load(PATH("Assets/Textures/UI/", "health_background.png"));
+	moneyBackgroundUi = tex->Load(PATH("Assets/Textures/UI/", "money_background_ui.png"));
+
 
 	// Initialize player
 	player = new Player();
@@ -134,6 +140,20 @@ bool SceneGameplay::Draw(Render* render)
 	map->Draw(render);
 
 	player->Draw(render);
+
+	//MONEY UI
+	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	//HEALTH BACKGROUND
+	render->DrawTexture(healthBackground, 0, 15, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	//HEARTHS
+	render->DrawTexture(healthNameUi, 15 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(healthNameUi, 55 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(healthNameUi, 95 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(healthNameUi, 135 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	//ABILITY UI
+	render->DrawTexture(backgroundUi, 490, 625, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(habUi, 500, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(habUi, 600, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 
 	if (menu)
 	{
