@@ -25,6 +25,8 @@ public:
 
     bool OnGuiMouseClickEvent(GuiControl* control);
 
+    float cooldown;
+    float maxCooldown;
 private:
 
     Map* map;
@@ -48,6 +50,12 @@ private:
     SDL_Texture* title;
     SDL_Texture* exitText;
     SDL_Texture* backText;
+    SDL_Texture* habUi;
+    SDL_Texture* backgroundUi;
+    SDL_Texture* healthNameUi;
+
+    SDL_Texture* healthBackground;
+    SDL_Texture* moneyBackgroundUi;
 };
 
 #endif // __SCENEGAMEPLAY_H__
