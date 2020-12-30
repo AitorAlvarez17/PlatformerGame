@@ -60,27 +60,22 @@ bool Player::Update(Input* input, float dt)
 #define PLAYER_MOVE_SPEED 100.0f
 #define PLAYER_JUMP_SPEED 450.0f
 
+	//Calculate gravity acceleration
 	vy += GRAVITY * dt;
 	position.y += (vy * dt);
+
 	UpdateState(input);
 	UpdateLogic(dt, input);
-
 
 	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
-
-	 //Calculate gravity acceleration
-	
-
-
 
 	return true;
 }
 
 bool Player::Draw(Render* render)
 {
-	// TODO: Calculate the corresponding rectangle depending on the
 	// animation state and animation frame
 	actualAnimation->Update();
 
@@ -99,7 +94,6 @@ bool Player::Draw(Render* render)
 	render->camera.x = -position.x;
 	render->camera.y = -position.y - 200;
 
-	//render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 	return false;
 }
 
@@ -195,14 +189,6 @@ void Player::UpdateState(Input* input)
 
 void Player::UpdateLogic(float dt, Input* input)
 {
-	/*cooldown += dt;
-	fireCooldown += dt;
-
-	if (cooldown > maxCooldown)
-		cooldown = maxCooldown;
-	if (fireCooldown > fireMaxCooldown)
-		fireCooldown = fireMaxCooldown;*/
-
 	switch (currentAnim)
 	{
 	case(IDLE):
@@ -324,31 +310,4 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 	currentAnim = newState;
 
 }
-
-/*void Player::HealHability()
-{
-	if (cooldown == maxCooldown)
-	{
-		if (lifes < 5)
-		{
-			app->player->lifes++;
-			app->audio->PlayFx(6, 0);
-			maxLifes = false;
-		}
-		else
-		{
-			app->ui->cantSumon = 0;
-			maxLifes = true;
-		}
-		LOG("%d", app->player->lifes);
-		cooldown = 0;
-	}
-	else
-	{
-
-	}
-
-	LOG("%f", maxCooldown);
-
-}*/
 
