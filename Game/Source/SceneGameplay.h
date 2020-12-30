@@ -25,8 +25,7 @@ public:
 
     bool OnGuiMouseClickEvent(GuiControl* control);
 
-    float cooldown;
-    float maxCooldown;
+ 
 private:
 
     Map* map;
