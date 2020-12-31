@@ -2,7 +2,7 @@
 
 ## Description
 
-We are Nirvana team and this is our 2D platformer video game developement. It is developed in c++ on visual studio using SDL libraries. Hope you enjoy it!
+We are Nirvana team and this is our 2D platformer video game prototype made by students from the CITM University on Barcelona. It is developed in c++ on visual studio using SDL library. Hope you enjoy it!
 
 ## Key Features
  - Load/Save game state using XML file
@@ -47,20 +47,19 @@ We are Nirvana team and this is our 2D platformer video game developement. It is
 
 ## Developers
 
- - Aitor Àlvarez - Programmer
- - Telmo Beroiz - Programmer
- - Andrés Sànchez - Programmer
+ - Aitor Àlvarez - Developer.
+ - Telmo Beroiz - Developer.
+ - Andrés Sànchez - Developer.  
 
 ## License
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
- - 8 Bit Sound Pack by SoundsbyDane on itch.io: "What is the licensing on this? Is it Creative Commons?" "It's copyrighted. So you can use just give credit."
- - Hero Sprite: Pixel art character about Finn the human made for platformer games. Created with aseprite in 32x32 size. You can use these for what ever you'd like, but be sure to tag my twitter @LazyHamsters and credit me properly. 
- - Inca Tileset: Assets are public domain. This means you can use it for your personal and commercial games. No credit needed, but if you do, please, let me know via twitter at @DavitMasia , so i can do some RT ;) .
- - Music made by ourselves.
- - Fireball by @XYEzawr on Twitter.
- - Enemy assets by pellaore on itch.io. It has been modified by us.
+ - Players spritesheets by Modsama on gamedevmarket.net
+ - Tileset by Modsama on gamedevmarket.net
+ - SDL License
+ - PUGI License
+ - Optick License
  
 
 
