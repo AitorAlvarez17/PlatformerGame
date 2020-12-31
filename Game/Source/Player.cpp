@@ -8,7 +8,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	position = iPoint(5 * 16, 17 * 16);
 	vy = 200.0f;
 
-	width = 16;
+	width = 32;
 	height = 32;
 
 	// Define Player animations
@@ -76,19 +76,21 @@ bool Player::Update(Input* input, float dt)
 
 bool Player::Draw(Render* render)
 {
+	int pixels = 32;
 	// animation state and animation frame
 	actualAnimation->Update();
+	render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 	if (isGoingRight == true)
 	{
 		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-		render->DrawTexture(texture, position.x - 12, position.y - 30, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
+		render->DrawTexture(texture, position.x, position.y, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
 	}
 	else
 	{
 		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-		render->DrawTexture(texture, position.x - 24, position.y - 30, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
+		render->DrawTexture(texture, position.x, position.y, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
 	}
 
 	render->camera.x = -position.x;
@@ -104,6 +106,7 @@ void Player::SetTexture(SDL_Texture* tex)
 
 SDL_Rect Player::GetBounds()
 {
+	int pixels = 32;
 	return { position.x, position.y, width, height };
 }
 

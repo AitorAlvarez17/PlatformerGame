@@ -61,6 +61,7 @@ bool Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+	//SDL_RenderSetLogicalSize(renderer, camera.w , camera.h - 100);
 	return true;
 }
 
