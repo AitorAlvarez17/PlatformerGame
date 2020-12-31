@@ -7,17 +7,28 @@
 #include "Point.h"
 #include "SString.h"
 
+enum class EnemyType
+{
+    WALKING,
+    FLYING,
+    UKNOWN
+
+};
+
 class Enemy : public Entity
 {
 public:
 
     Enemy();
-    Enemy(iPoint origin);
+    Enemy(fPoint origin);
     virtual ~Enemy();
+    EnemyType GetType();
+    EnemyType SetType(EnemyType type);
 
 private:
 
     DynArray<iPoint>* path;
+    EnemyType eType;
 
 };
 

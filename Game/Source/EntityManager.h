@@ -3,6 +3,9 @@
 
 #include "Module.h"
 #include "Entity.h"
+#include "Item.h"
+#include "Enemy.h"
+#include "Player.h"
 
 #include "List.h"
 
@@ -24,7 +27,10 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType type);
+	Entity* CreatePlayer(fPoint origin);
+	Entity* CreateEntity(EntityType type, fPoint origin,ItemType iType);
+	Entity* CreateEntity(EntityType type, fPoint origin, EnemyType eType);
+
 	void DestroyEntity(Entity* entity);
 
 	void AddEntity(Entity* entity);

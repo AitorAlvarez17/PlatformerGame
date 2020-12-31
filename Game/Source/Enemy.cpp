@@ -4,7 +4,7 @@
 
 #define DEFAULT_PATH_LENGTH 50
 
-Enemy::Enemy(iPoint origin) : Entity(EntityType::ENEMY)
+Enemy::Enemy(fPoint origin) : Entity(EntityType::ENEMY)
 {
     path = PathFinding::GetInstance()->CreatePath(iPoint(0, 0), iPoint(0, 0));
     position = origin;
