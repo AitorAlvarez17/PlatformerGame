@@ -25,6 +25,7 @@ private:
 
     int minValue;
     int maxValue;
+    int unit;
 };
 
 #endif // __GUISLIDER_H__
