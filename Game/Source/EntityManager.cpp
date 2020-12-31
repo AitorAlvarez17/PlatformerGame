@@ -33,24 +33,58 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type)
+Entity* EntityManager::CreatePlayer(fPoint origin)
 {
 	Entity* ret = nullptr;
 
-	switch (type)
-	{
-		// L13: Create the corresponding type entity
-		case EntityType::PLAYER: ret = new Player();  break;
-		/*case EntityType::ENEMY: ret = new Enemy();  break;
-		case EntityType::ITEM: ret = new Item();  break;*/
-		default: break;
-	}
+	
+	ret = new Player(origin);
+	
 
 	// Created entities are added to the list
 	if (ret != nullptr) entities.Add(ret);
 
 	return ret;
 }
+
+Entity* EntityManager::CreateEntity(EntityType type, fPoint origin, ItemType iType)
+{
+	Entity* ret = nullptr;
+
+	//switch (type)
+	//{
+	//	// L13: Create the corresponding type entity
+	//	case EntityType::PLAYER: ret = new Player();  break;
+	//	/*case EntityType::ENEMY: ret = new Enemy();  break;
+	//	case EntityType::ITEM: ret = new Item();  break;*/
+	//	default: break;
+	//}
+
+	//// Created entities are added to the list
+	//if (ret != nullptr) entities.Add(ret);
+
+	return ret;
+}
+
+Entity* EntityManager::CreateEntity(EntityType type, fPoint origin, EnemyType eType)
+{
+	Entity* ret = nullptr;
+
+	//switch (type)
+	//{
+	//	// L13: Create the corresponding type entity
+	//case EntityType::PLAYER: ret = new Player();  break;
+	//	/*case EntityType::ENEMY: ret = new Enemy();  break;
+	//	case EntityType::ITEM: ret = new Item();  break;*/
+	//default: break;
+	//}
+
+	//// Created entities are added to the list
+	//if (ret != nullptr) entities.Add(ret);
+
+	return ret;
+}
+
 
 bool EntityManager::Update(float dt)
 {

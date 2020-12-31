@@ -1,11 +1,11 @@
 #include "Player.h"
 #include "Textures.h"
 
-Player::Player() : Entity(EntityType::PLAYER)
+Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 {
 	int pixels = 32;
 
-	position = iPoint(5 * 16, 17 * 16);
+	position = origin;
 	vy = 200.0f;
 
 	width = 32;
@@ -107,7 +107,7 @@ void Player::SetTexture(SDL_Texture* tex)
 SDL_Rect Player::GetBounds()
 {
 	int pixels = 32;
-	return { position.x, position.y, width, height };
+	return {(int)position.x, (int)position.y, (int)width, (int)height };
 }
 
 void Player::UpdateState(Input* input)

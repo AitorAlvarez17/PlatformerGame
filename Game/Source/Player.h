@@ -27,7 +27,7 @@ class Player: public Entity
 {
 public:
 
-    Player();
+    Player(fPoint origin);
 
     bool Update(Input* input, float dt);
 

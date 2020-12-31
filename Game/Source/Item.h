@@ -6,13 +6,27 @@
 #include "Point.h"
 #include "SString.h"
 
+enum class ItemType
+{
+    HEART,
+    COIN,
+    UKNOWN
+};
+
+
+
 class Item : public Entity
 {
 public:
 
     Item();
-    Item(iPoint origin);
+    Item(fPoint origin);
     virtual ~Item();
+    ItemType GetType();
+    ItemType SetType(ItemType type);
+
+private:
+    ItemType iType;
 };
 
 #endif // __ITEM_H__

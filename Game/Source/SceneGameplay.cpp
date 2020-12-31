@@ -70,8 +70,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 
 	// Initialize player
-	player = new Player();
-	player->position = iPoint(200, 400);
+	player = new Player(fPoint(5 * 16, 17 * 16));
+	player->position = fPoint(200, 400);
 	player->SetTexture(playerText);
 
     return false;
@@ -87,7 +87,7 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 bool SceneGameplay::Update(Input *input, float dt)
 {
 	// Collision detection: map vs player
-	iPoint tempPlayerPosition = player->position;
+	fPoint tempPlayerPosition = player->position;
 
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
