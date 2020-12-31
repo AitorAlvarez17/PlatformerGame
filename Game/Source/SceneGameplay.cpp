@@ -27,13 +27,8 @@ SceneGameplay::~SceneGameplay()
 
 bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 {
-	//Load BG
-	background = tex->Load(PATH("Assets/Textures/Maps/", "background.png"));
-	//render->DrawTexture(background, camera.x, camera.y);
-
 	map = new Map(tex);
 
-	// L03: DONE: Load map
 	// L12b: Create walkability map on map loading
 	if (map->Load("main_level.tmx") == true)
 	{
@@ -57,7 +52,9 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
 
-
+	background = tex->Load(PATH("Assets/Textures/Maps/", "bg.png"));
+	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
+	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
@@ -140,6 +137,11 @@ bool SceneGameplay::Update(Input *input, float dt)
 
 bool SceneGameplay::Draw(Render* render)
 {
+	//Draw BG
+	render->DrawTexture(background, player->position.x, player->position.y + 200);
+	render->DrawTexture(olympus, 0, 720);
+	render->DrawTexture(clouds, render->camera.x, 720);
+
 	// Draw map
 	map->Draw(render);
 

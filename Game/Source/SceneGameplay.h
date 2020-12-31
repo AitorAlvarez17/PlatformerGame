@@ -42,7 +42,12 @@ private:
     GuiButton* btnExit;
     GuiButton* btnBack;
 
+    //Parallax BG
     SDL_Texture* background;
+    SDL_Texture* olympus;
+    SDL_Texture* clouds;
+
+    //GUI
     SDL_Texture* playerText;
     SDL_Texture* playText;
     SDL_Texture* continueText;
