@@ -93,8 +93,8 @@ bool Player::Draw(Render* render)
 		render->DrawTexture(texture, position.x, position.y, &rec, 0, 0, 0, 0, SDL_FLIP_NONE);
 	}
 
-	render->camera.x = -position.x;
-	render->camera.y = -position.y - 200;
+	render->camera.x = -(int)position.x * 4 + render->camera.w / 2;
+	render->camera.y = -(int)position.y * 4 + render->camera.h / 2;
 
 	return false;
 }

@@ -73,7 +73,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	// Initialize player
 	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
-	player->position = fPoint(200, 400);
+	player->position = fPoint(200, 470);
 	player->SetTexture(playerText);
 
     return false;
@@ -140,9 +140,9 @@ bool SceneGameplay::Update(Input *input, float dt)
 bool SceneGameplay::Draw(Render* render)
 {
 	//Draw BG
-	render->DrawTexture(background, player->position.x, player->position.y + 200);
-	render->DrawTexture(olympus, 0, 720);
-	render->DrawTexture(clouds, render->camera.x, 720);
+	render->DrawTexture(background, 0, 0);
+	render->DrawTexture(olympus, 0, 1900);
+	render->DrawTexture(clouds, render->camera.x, 1900);
 
 	// Draw map
 	map->Draw(render);
