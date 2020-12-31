@@ -39,6 +39,9 @@ private:
     GuiCheckBox* fullscreen;
     GuiCheckBox* Vsync;
 
+    GuiSlider* music;
+    GuiSlider* other;
+
     SDL_Texture* bg;
     SDL_Texture* playText;
     SDL_Texture* continueText;

@@ -2,6 +2,7 @@
 #define __GUICHECKBOX_H__
 
 #include "GuiControl.h"
+#include "Log.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -21,6 +22,7 @@ private:
     // GuiCheckBox specific properties
     // Maybe some animation properties for state change?
     bool checked;
+    SDL_Rect checkedBounds;
 };
 
 #endif // __GUICHECKBOX_H__

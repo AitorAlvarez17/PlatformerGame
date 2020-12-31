@@ -159,7 +159,7 @@ bool SceneGameplay::Draw(Render* render)
 	{
 		if (settings)
 		{
-			render->DrawRectangle({ 100, 50, 1080, 620 }, { 0, 0, 200, 255 });
+			render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
 			btnBack->Draw(render);
 			render->DrawTexture(backText, 490, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 			//music volume

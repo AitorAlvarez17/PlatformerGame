@@ -1,9 +1,15 @@
 #include "GuiSlider.h"
+#include <stdio.h>      /* printf */
+#include <math.h>       /* round, floor, ceil, trunc */
+
+#include "Log.h"
+
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
 {
     this->bounds = bounds;
     this->text = text;
+    slider = { bounds.x, bounds.y, 30, 30 };
 }
 
 GuiSlider::~GuiSlider()
@@ -16,14 +22,35 @@ bool GuiSlider::Update(Input* input, float dt)
     {
         int mouseX, mouseY;
         input->GetMousePosition(mouseX, mouseY);
-
+        
         // Check collision between mouse and button bounds
         if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) && 
             (mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
         {
             state = GuiControlState::FOCUSED;
-
             // TODO.
+            unit = bounds.w / 100;
+            value = (mouseX - bounds.x) / unit;
+            value = round(value);
+            
+            if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+            {
+                state = GuiControlState::PRESSED;
+                for (int i = 1; i <= 100; i++)
+                {
+                    if (i == value)
+                    {
+                        slider.x = ((i * unit) + bounds.x) - unit;
+                    }
+                }
+            }
+
+            // If mouse button pressed -> Generate event!
+            if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+            {
+                NotifyObserver();
+            }
+            
         }
         else state = GuiControlState::NORMAL;
     }
@@ -38,11 +65,17 @@ bool GuiSlider::Draw(Render* render)
     {
     case GuiControlState::DISABLED: render->DrawRectangle(bounds, { 100, 100, 100, 255 });
         break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
+    case GuiControlState::NORMAL: 
+        render->DrawRectangle(bounds, { 46, 108, 107, 255 });
+        render->DrawRectangle(slider, { 0, 255, 255, 255 });
         break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds, { 255, 255, 0, 255 });
+    case GuiControlState::FOCUSED: 
+        render->DrawRectangle(bounds, { 255, 255, 0, 255 });
+        render->DrawRectangle(slider, { 0, 255, 255, 255 });
         break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds, { 0, 255, 255, 255 });
+    case GuiControlState::PRESSED: 
+        render->DrawRectangle(bounds, { 46, 108, 107, 255 });
+        render->DrawRectangle(slider, { 255, 0, 255, 255 });
         break;
     case GuiControlState::SELECTED: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
         break;

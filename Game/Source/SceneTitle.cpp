@@ -35,6 +35,12 @@ SceneTitle::SceneTitle()
     Vsync = new GuiCheckBox(8, { 890, 440, 80, 80 }, "Vsync");
     Vsync->SetObserver(this);
 
+    music = new GuiSlider(9, { 1280 / 2 - 600 / 2, 200, 600, 30 }, "music");
+    music->SetObserver(this);
+
+    other = new GuiSlider(10, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
+    other->SetObserver(this);
+
     bgAnim.GenerateAnimation({ 0,0,1280,720 }, 3, 1, 0, 0);
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
@@ -72,10 +78,15 @@ bool SceneTitle::Update(Input* input, float dt)
         btnSettings->Update(input, dt);
         btnCredits->Update(input, dt);
     }
-    
-     btnBack->Update(input, dt);
-     fullscreen->Update(input, dt);
-     Vsync->Update(input, dt);
+    else
+    {
+        btnBack->Update(input, dt);
+        fullscreen->Update(input, dt);
+        Vsync->Update(input, dt);
+        music->Update(input, dt);
+        other->Update(input, dt);
+    }
+     
     
      currentAnim->Update();
 
@@ -91,18 +102,20 @@ bool SceneTitle::Draw(Render* render)
     if (credits)
     {
         
-        render->DrawRectangle({ 100, 50, 1080, 620 }, { 200, 0, 0, 255 });
+        render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
         btnBack->Draw(render);
         render->DrawTexture(backText, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
        
     }
     else if (settings)
     {
-        render->DrawRectangle({ 100, 50, 1080, 620 }, { 0, 0, 200, 255 });
+        render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
         btnBack->Draw(render);
         render->DrawTexture(backText, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
         fullscreen->Draw(render);
         Vsync->Draw(render);
+        music->Draw(render);
+        other->Draw(render);
     }
     else
     {
