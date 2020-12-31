@@ -33,9 +33,9 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
-Entity* EntityManager::CreatePlayer(fPoint origin)
+Player* EntityManager::CreatePlayer(fPoint origin)
 {
-	Entity* ret = nullptr;
+	Player* ret = nullptr;
 
 	
 	ret = new Player(origin);

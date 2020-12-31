@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "EntityManager.h"
 
 class SceneGameplay : public Scene
 {
@@ -30,6 +31,7 @@ private:
 
     Map* map;
     Player* player;
+    EntityManager* eManager;
 
     SDL_Rect camera;
 

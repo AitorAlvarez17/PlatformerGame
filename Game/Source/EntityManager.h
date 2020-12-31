@@ -27,7 +27,7 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreatePlayer(fPoint origin);
+	Player* CreatePlayer(fPoint origin);
 	Entity* CreateEntity(EntityType type, fPoint origin,ItemType iType);
 	Entity* CreateEntity(EntityType type, fPoint origin, EnemyType eType);
 
