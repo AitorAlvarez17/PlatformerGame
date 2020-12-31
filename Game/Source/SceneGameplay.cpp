@@ -19,6 +19,8 @@ SceneGameplay::SceneGameplay()
 
 	btnBack = new GuiButton(10, { 1280 / 2 - 300 / 2, 515, 300, 80 }, "EXIT");
 	btnBack->SetObserver(this);
+
+	eManager = new EntityManager;
 	
 }
 
@@ -70,7 +72,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 
 	// Initialize player
-	player = new Player(fPoint(5 * 16, 17 * 16));
+	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
 	player->position = fPoint(200, 400);
 	player->SetTexture(playerText);
 
