@@ -19,7 +19,6 @@ SceneGameplay::SceneGameplay()
 
 	btnBack = new GuiButton(10, { 1280 / 2 - 300 / 2, 515, 300, 80 }, "EXIT");
 	btnBack->SetObserver(this);
-
 	
 }
 
@@ -28,11 +27,15 @@ SceneGameplay::~SceneGameplay()
 
 bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 {
+	//Load BG
+	background = tex->Load(PATH("Assets/Textures/Maps/", "background.png"));
+	//render->DrawTexture(background, camera.x, camera.y);
+
 	map = new Map(tex);
 
 	// L03: DONE: Load map
 	// L12b: Create walkability map on map loading
-	if (map->Load("level_prueba.tmx") == true)
+	if (map->Load("main_level.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -53,6 +56,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
+
 
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
@@ -94,7 +98,7 @@ bool SceneGameplay::Update(Input *input, float dt)
 	{
 		for (int x = 0; x < map->data.width; x++)
 		{
-			if ((map->data.layers[8]->Get(x, y) >= 484) && 
+			if ((map->data.layers[2]->Get(x, y) >= 65) && 
 				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 			{
 
