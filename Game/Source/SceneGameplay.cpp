@@ -101,6 +101,9 @@ bool SceneGameplay::Update(Input *input, float dt)
 				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 			{
 
+				 // parte de ray, comentala hasta el break;
+
+				SDL_Rect tile = map->GetTilemapRec(x, y);
 				player->position = tempPlayerPosition;
 				player->onGround = true;
 				player->max = 0;
@@ -108,7 +111,47 @@ bool SceneGameplay::Update(Input *input, float dt)
 				//create a function that changes the player's state to a new one from the one before.
 				player->vy = 0.0f;
 				break;
+
+
+
+				// nuestra parte, descomenta la de abajo para probarlo.
+
+
+				/*int compY = player->position.y - tile.y;
+				int compX = player->position.x - tile.x;
+
+					if (std::abs(compY) < std::abs(compX))
+					{
+						if (compX > 0) {
+							player->position.x += tile.x + tile.w - player->position.x;
+						}
+						else
+						{
+							player->position.x -= player->position.x + player->width - tile.x;
+						}
+					}
+					else
+					{
+						if (compY > 0)
+						{
+							player->position.y += tile.y + tile.h - player->position.y;
+
+						}
+						else
+						{
+							player->position.y -= player->position.y + player->height - tile.y;
+							player->vy = 0;
+							player->jumps = 3;
+						}
+						
+
+					}*/
+
+					/*collider->SetPos((int)position.x, (int)position.y);*/
+
+
 			}
+
 		}
 	}
 
