@@ -102,6 +102,8 @@ bool SceneGameplay::Update(Input *input, float dt)
 			{
 
 				player->position = tempPlayerPosition;
+				player->onGround = true;
+				player->max = 0;
 				//player->ChangeState(WALK);
 				//create a function that changes the player's state to a new one from the one before.
 				player->vy = 0.0f;
@@ -110,7 +112,7 @@ bool SceneGameplay::Update(Input *input, float dt)
 		}
 	}
 
-	if (input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_UP) map->drawColliders = !map->drawColliders;
+	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP) map->drawColliders = !map->drawColliders;
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 	{
 		if (menu == true)

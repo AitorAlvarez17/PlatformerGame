@@ -65,9 +65,10 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 bool Player::Update(Input* input, float dt)
 {
 
-	//UpdateState(input);
 	FixedUpdate(input, dt);
 
+	LOG("%d", onGround);
+	
 	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
@@ -119,28 +120,30 @@ void Player::FixedUpdate(Input* input, float dt)
 	UpdateAnim(currentAnim, IDLE);
 
 	//Get left / right input
-	if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		position.x -= PLAYER_MOVE_SPEED * dt;
 		isGoingRight = false;
 		UpdateAnim(currentAnim, WALK);
 
 	}
-	if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		position.x += PLAYER_MOVE_SPEED * dt;
 		isGoingRight = true;
 		UpdateAnim(currentAnim, WALK);
 
 	}
-	if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	if (onGround)
 	{
-		position.y += -PLAYER_JUMP_SPEED * dt;
+		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			position.y += -PLAYER_JUMP_SPEED * dt;
+			UpdateAnim(currentAnim, JUMP);
 
-		UpdateAnim(currentAnim, JUMP);
+		}
 
 	}
-
 
 }
 
