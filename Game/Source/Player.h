@@ -35,6 +35,10 @@ public:
 
     void SetTexture(SDL_Texture* tex);
 
+    void FixedUpdate(Input* input, float dt);
+    
+    void UpdateAnim();
+
     void UpdateState(Input* input);
 
     void UpdateLogic(float dt, Input* input);
@@ -74,11 +78,10 @@ public:
 
     //PlayerProperties
     int jumps = 2;
+    int vx = 0;
     float vy = 0.0f;
 
     bool isGoingRight = false;
-    bool isJumping = false;
-
 
 };
 
