@@ -21,7 +21,7 @@ SceneGameplay::SceneGameplay()
 	btnBack->SetObserver(this);
 
 	eManager = new EntityManager;
-	
+
 }
 
 SceneGameplay::~SceneGameplay()
@@ -76,7 +76,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = fPoint(200, 470);
 	player->SetTexture(playerText);
 
-    return false;
+	return false;
 }
 
 inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
@@ -97,57 +97,66 @@ bool SceneGameplay::Update(Input *input, float dt)
 	{
 		for (int x = 0; x < map->data.width; x++)
 		{
-			if ((map->data.layers[2]->Get(x, y) >= 65) && 
+			if ((map->data.layers[2]->Get(x, y) >= 65) &&
 				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 			{
 
-				 // parte de ray, comentala hasta el break;
+				// parte de ray, comentala hasta el break;
 
-				SDL_Rect tile = map->GetTilemapRec(x, y);
-				player->position = tempPlayerPosition;
-				player->onGround = true;
-				player->max = 0;
-				//player->ChangeState(WALK);
-				//create a function that changes the player's state to a new one from the one before.
-				player->vy = 0.0f;
-				break;
-
-
-
-				// nuestra parte, descomenta la de abajo para probarlo.
+			   SDL_Rect tile = map->GetTilemapRec(x, y);
+			  // player->position = tempPlayerPosition;
+			   //player->onGround = true;
+			   //player->max = 0;
+			   ////player->ChangeState(WALK);
+			   ////create a function that changes the player's state to a new one from the one before.
+			   //player->vy = 0.0f;
+			   //break;
 
 
-				/*int compY = player->position.y - tile.y;
+
+			   // nuestra parte, descomenta la de abajo para probarlo.
+
+
+				int compY = player->position.y - tile.y;
 				int compX = player->position.x - tile.x;
+				bool floor = false;
 
-					if (std::abs(compY) < std::abs(compX))
-					{
-						if (compX > 0) {
-							player->position.x += tile.x + tile.w - player->position.x;
-						}
-						else
-						{
-							player->position.x -= player->position.x + player->width - tile.x;
-						}
+				if (std::abs(compY) < std::abs(compX))
+				{
+					if (compX > 0) {
+						player->position.x = player->prevPos.x;
+						
+						
+						LOG("LEFT");
 					}
 					else
 					{
-						if (compY > 0)
-						{
-							player->position.y += tile.y + tile.h - player->position.y;
-
-						}
-						else
-						{
-							player->position.y -= player->position.y + player->height - tile.y;
-							player->vy = 0;
-							player->jumps = 3;
-						}
+						player->position.x = player->prevPos.x;
+					
+						LOG("RIGHT");
+					}
+				}
+				else
+				{
+					if (compY > 0)
+					{
+						player->position.y = player->prevPos.y;
+						
+						LOG("UP");
+					}
+					else
+					{
+						player->position.y = player->prevPos.y - 1.0f;
+						player->vy = 0;
 						
 
-					}*/
+						LOG("DOWN");
+					}
 
-					/*collider->SetPos((int)position.x, (int)position.y);*/
+
+				}
+
+				//collider->SetPos((int)position.x, (int)position.y);
 
 
 			}
@@ -232,17 +241,17 @@ bool SceneGameplay::Draw(Render* render)
 			btnExit->Draw(render);
 			render->DrawTexture(exitText, 490, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
-		
+
 	}
 
-    return false;
+	return false;
 }
 
 bool SceneGameplay::Unload()
 {
 	// TODO: Unload all resources
 
-    return false;
+	return false;
 }
 
 bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
@@ -256,7 +265,7 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 		else if (control->id == 8) TransitionToScene(SceneType::TITLE);
 		else if (control->id == 9) SDL_Quit();
 		else if (control->id == 10) settings = 0;
-		
+
 	}
 	default: break;
 	}
