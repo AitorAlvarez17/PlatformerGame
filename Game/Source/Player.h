@@ -73,8 +73,9 @@ public:
     //PlayerProperties
     int jumps = 2;
     float vy = 0.0f;
-    
     int max = 0;
+    
+    bool onGround = false;
 
     bool isGoingRight = false;
 
