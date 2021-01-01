@@ -67,9 +67,6 @@ bool SceneTitle::Load(Textures* tex)
 
 bool SceneTitle::Update(Input* input, float dt)
 {
-    //if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) TransitionToScene(SceneType::GAMEPLAY);
-    
-    
     if (settings == 0 && credits == 0)
     {
         btnStart->Update(input, dt);
