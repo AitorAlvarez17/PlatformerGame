@@ -86,81 +86,86 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 	else return false;
 }
 
-bool SceneGameplay::Update(Input *input, float dt)
+bool SceneGameplay::Update(Input* input, float dt)
 {
 	// Collision detection: map vs player
 	fPoint tempPlayerPosition = player->position;
 
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
-	for (int y = 0; y < map->data.height; y++)
+	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
+
+	if (player->godMode < 0)
 	{
-		for (int x = 0; x < map->data.width; x++)
+		for (int y = 0; y < map->data.height; y++)
 		{
-			if ((map->data.layers[2]->Get(x, y) >= 65) &&
-				CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
+			for (int x = 0; x < map->data.width; x++)
 			{
-
-				// parte de ray, comentala hasta el break;
-
-			   SDL_Rect tile = map->GetTilemapRec(x, y);
-			  // player->position = tempPlayerPosition;
-			   //player->onGround = true;
-			   //player->max = 0;
-			   ////player->ChangeState(WALK);
-			   ////create a function that changes the player's state to a new one from the one before.
-			   //player->vy = 0.0f;
-			   //break;
-
-
-
-			   // nuestra parte, descomenta la de abajo para probarlo.
-
-
-				int compY = player->position.y - tile.y;
-				int compX = player->position.x - tile.x;
-				bool floor = false;
-
-				if (std::abs(compY) < std::abs(compX))
+				if ((map->data.layers[2]->Get(x, y) >= 65) &&
+					CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 				{
-					if (compX > 0) {
-						player->position.x = player->prevPos.x;
-						
-						
-						LOG("LEFT");
+
+					// parte de ray, comentala hasta el break;
+
+					SDL_Rect tile = map->GetTilemapRec(x, y);
+					// player->position = tempPlayerPosition;
+					 //player->onGround = true;
+					 //player->max = 0;
+					 ////player->ChangeState(WALK);
+					 ////create a function that changes the player's state to a new one from the one before.
+					 //player->vy = 0.0f;
+					 //break;
+
+
+
+					 // nuestra parte, descomenta la de abajo para probarlo.
+
+
+					int compY = player->position.y - tile.y;
+					int compX = player->position.x - tile.x;
+					bool floor = false;
+
+					if (std::abs(compY) < std::abs(compX))
+					{
+						if (compX > 0) {
+							player->position.x = player->prevPos.x;
+
+
+							LOG("LEFT");
+						}
+						else
+						{
+							player->position.x = player->prevPos.x;
+
+							LOG("RIGHT");
+						}
 					}
 					else
 					{
-						player->position.x = player->prevPos.x;
-					
-						LOG("RIGHT");
-					}
-				}
-				else
-				{
-					if (compY > 0)
-					{
-						player->position.y = player->prevPos.y;
-						
-						LOG("UP");
-					}
-					else
-					{
-						player->position.y = player->prevPos.y - 1.0f;
-						player->vy = 0;
-						
+						if (compY > 0)
+						{
+							player->position.y = player->prevPos.y;
 
-						LOG("DOWN");
+							LOG("UP");
+						}
+						else
+						{
+							player->position.y = player->prevPos.y - 1.0f;
+							player->vy = 0;
+
+
+							LOG("DOWN");
+						}
+
+
 					}
+
+					//collider->SetPos((int)position.x, (int)position.y);
 
 
 				}
-
-				//collider->SetPos((int)position.x, (int)position.y);
-
 
 			}
-
 		}
 	}
 
