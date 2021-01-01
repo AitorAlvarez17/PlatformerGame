@@ -29,6 +29,8 @@ bool SceneLogo::Load(Textures* tex)
 
 bool SceneLogo::Update(Input* input, float dt)
 {
+    if (input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) TransitionToScene(SceneType::GAMEPLAY);
+
     if (state == 0)
     {
         state = 1;
