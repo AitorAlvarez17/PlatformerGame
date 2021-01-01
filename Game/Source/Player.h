@@ -37,13 +37,7 @@ public:
 
     void FixedUpdate(Input* input, float dt);
     
-    void UpdateAnim();
-
-    void UpdateState(Input* input);
-
-    void UpdateLogic(float dt, Input* input);
-
-    void ChangeState(PlayerAnim lastAnim, PlayerAnim nextAnim);
+    void UpdateAnim(PlayerAnim previousState, PlayerAnim newState);
 
 
     SDL_Rect GetBounds();
@@ -78,8 +72,9 @@ public:
 
     //PlayerProperties
     int jumps = 2;
-    int vx = 0;
     float vy = 0.0f;
+    
+    int max = 0;
 
     bool isGoingRight = false;
 
