@@ -110,36 +110,46 @@ void Player::FixedUpdate(Input* input, float dt)
 #define PLAYER_MOVE_SPEED 64.0f
 #define PLAYER_JUMP_SPEED 90.0f
 
-	//Calculate gravity acceleration
-	position.y += (vy * dt);
-	vy += GRAVITY * dt;
+
 
 	//Start Idle
 	UpdateAnim(currentAnim, IDLE);
-
-	//Get left / right input
-	if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	if (godMode < 0)
 	{
-		position.x -= PLAYER_MOVE_SPEED * dt;
-		isGoingRight = false;
-		UpdateAnim(currentAnim, WALK);
+		//Calculate gravity acceleration
+		position.y += (vy * dt);
+		vy += GRAVITY * dt;
+
+		//Get left / right input
+		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		{
+			position.x -= PLAYER_MOVE_SPEED * dt;
+			isGoingRight = false;
+			UpdateAnim(currentAnim, WALK);
+
+		}
+		if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		{
+			position.x += PLAYER_MOVE_SPEED * dt;
+			isGoingRight = true;
+			UpdateAnim(currentAnim, WALK);
+
+		}
+		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			position.y += -PLAYER_JUMP_SPEED * dt;
+			UpdateAnim(currentAnim, JUMP);
+
+		}
 
 	}
-	if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	else
 	{
-		position.x += PLAYER_MOVE_SPEED * dt;
-		isGoingRight = true;
-		UpdateAnim(currentAnim, WALK);
-
+		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
+		if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
+		if (input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
+		if (input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) position.y += (PLAYER_JUMP_SPEED * dt);
 	}
-	if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		position.y += -PLAYER_JUMP_SPEED * dt;
-		UpdateAnim(currentAnim, JUMP);
-
-	}
-
-
 
 }
 

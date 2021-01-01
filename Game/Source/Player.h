@@ -76,7 +76,7 @@ public:
     float vy = 0.0f;
     int max = 0;
     
-    bool onGround = false;
+    int godMode = -1;
 
     bool isGoingRight = false;
 
