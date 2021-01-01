@@ -56,16 +56,9 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 
 bool Player::Update(Input* input, float dt)
 {
-#define GRAVITY 200.0f
-#define PLAYER_MOVE_SPEED 100.0f
-#define PLAYER_JUMP_SPEED 450.0f
-
-	//Calculate gravity acceleration
-	vy += GRAVITY * dt;
-	position.y += (vy * dt);
 
 	UpdateState(input);
-	UpdateLogic(dt, input);
+	FixedUpdate(input, dt);
 
 	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
@@ -104,10 +97,45 @@ void Player::SetTexture(SDL_Texture* tex)
 	texture = tex;
 }
 
+void Player::FixedUpdate(Input* input, float dt)
+{
+#define GRAVITY 128.0f
+#define PLAYER_MOVE_SPEED 64.0f
+#define PLAYER_JUMP_SPEED 68.0f
+
+	//Calculate gravity acceleration
+	position.y += (vy * dt);
+	vy += GRAVITY * dt;
+
+	//Get left / right input
+	if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		position.x -= PLAYER_MOVE_SPEED * dt;
+		ChangeState(currentAnim, WALK);//CHANGTE TO WALK
+
+	}
+	if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		position.x += PLAYER_MOVE_SPEED * dt;
+		ChangeState(currentAnim, WALK);//CHANGTE TO WALK
+
+
+	}
+	if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		position.y += -PLAYER_JUMP_SPEED * dt;
+		ChangeState(currentAnim, JUMP);//CHANGTE TO WALK
+
+
+	}
+
+
+}
+
 SDL_Rect Player::GetBounds()
 {
 	int pixels = 32;
-	return {(int)position.x, (int)position.y, (int)width, (int)height };
+	return { (int)position.x, (int)position.y, (int)width, (int)height };
 }
 
 void Player::UpdateState(Input* input)
@@ -203,7 +231,7 @@ void Player::UpdateLogic(float dt, Input* input)
 		if (isGoingRight == true)
 		{
 			position.x += (PLAYER_MOVE_SPEED * dt);
-			
+
 		}
 		else
 		{
@@ -215,10 +243,10 @@ void Player::UpdateLogic(float dt, Input* input)
 	}
 	case(JUMP):
 	{
-	
-	
+
+		//vy = PLAYER_JUMP_SPEED;
 		position.y -= (PLAYER_JUMP_SPEED * dt);
-			
+
 		if (isGoingRight == true)
 		{
 			position.x += (PLAYER_MOVE_SPEED * dt);
@@ -229,9 +257,9 @@ void Player::UpdateLogic(float dt, Input* input)
 			position.x -= (PLAYER_MOVE_SPEED * dt);
 
 		}
-		
-			//jump fix. Do not delete this before asking 
-			//position.y -= (PLAYER_JUMP_SPEED * dt);
+
+		//jump fix. Do not delete this before asking 
+		//position.y -= (PLAYER_JUMP_SPEED * dt);
 
 		ChangeState(currentAnim, FALLING);
 
@@ -297,12 +325,10 @@ void Player::ChangeState(PlayerAnim previousState, PlayerAnim newState)
 		if (isGoingRight == true)
 		{
 			actualAnimation = &jumpRightAnim;
-			isJumping = true;
 		}
 		else
 		{
 			actualAnimation = &jumpLeftAnim;
-			isJumping = true;
 		}
 
 		break;
