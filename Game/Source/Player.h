@@ -70,6 +70,7 @@ public:
 
     int width, height;
 
+    fPoint prevPos;
     //PlayerProperties
     int jumps = 2;
     float vy = 0.0f;

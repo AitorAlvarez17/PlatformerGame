@@ -64,11 +64,9 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 
 bool Player::Update(Input* input, float dt)
 {
-
+	prevPos = position;
 	FixedUpdate(input, dt);
 
-	LOG("%d", onGround);
-	
 	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
@@ -134,16 +132,14 @@ void Player::FixedUpdate(Input* input, float dt)
 		UpdateAnim(currentAnim, WALK);
 
 	}
-	if (onGround)
+	if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-		{
-			position.y += -PLAYER_JUMP_SPEED * dt;
-			UpdateAnim(currentAnim, JUMP);
-
-		}
+		position.y += -PLAYER_JUMP_SPEED * dt;
+		UpdateAnim(currentAnim, JUMP);
 
 	}
+
+
 
 }
 
@@ -213,7 +209,7 @@ void Player::UpdateAnim(PlayerAnim previousState, PlayerAnim newState)
 SDL_Rect Player::GetBounds()
 {
 
-	return { (int)position.x , (int)position.y, (int)width + PIXELS , (int)height + PIXELS};
+	return { (int)position.x , (int)position.y, (int)width + PIXELS , (int)height + PIXELS };
 }
 
 
