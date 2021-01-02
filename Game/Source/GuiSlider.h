@@ -16,12 +16,12 @@ public:
     bool Update(Input* input, float dt);
     bool Draw(Render* render);
 
+    int value;
 private:
 
     // GuiSlider specific properties
     // Maybe some animation properties for state change?
     SDL_Rect slider;
-    int value;
 
     int minValue;
     int maxValue;
