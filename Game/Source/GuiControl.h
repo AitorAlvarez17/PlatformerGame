@@ -4,7 +4,6 @@
 #include "Input.h"
 #include "Render.h"
 #include "Scene.h"
-#include "Audio.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -44,10 +43,15 @@ public:
         type(type),
         state(GuiControlState::NORMAL),
         bounds(bounds),
-        text(text) 
+        text(text)
     {
         color.r = 255; color.g = 255; color.b = 255;
         texture = NULL;
+    }
+    
+    virtual bool Start()
+    {
+        return true;
     }
 
     virtual bool Update(Input* input, float dt)
@@ -88,7 +92,6 @@ public:
 
     SDL_Texture* texture;   // Texture atlas reference
     SDL_Rect section;       // Texture atlas base section
-
     //Font font;              // Text font
 
     Scene* observer;        // Observer module (it should probably be an array/list)

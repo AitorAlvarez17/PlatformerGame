@@ -20,7 +20,20 @@ SceneGameplay::SceneGameplay(AudioManager* manager)
 	btnBack = new GuiButton(10, { 1280 / 2 - 300 / 2, 515, 300, 80 }, "EXIT");
 	btnBack->SetObserver(this);
 
+	fullscreen = new GuiCheckBox(11, { 290, 440, 80, 80 }, "fullscreen");
+	fullscreen->SetObserver(this);
+
+	Vsync = new GuiCheckBox(12, { 890, 440, 80, 80 }, "Vsync");
+	Vsync->SetObserver(this);
+
+	music = new GuiSlider(13, { 1280 / 2 - 600 / 2, 200, 600, 30 }, "music");
+	music->SetObserver(this);
+
+	fxVolume = new GuiSlider(14, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
+	fxVolume->SetObserver(this);
+
 	eManager = new EntityManager;
+
 
 	this->aud = manager;
 }
@@ -70,6 +83,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	healthNameUi = tex->Load(PATH("Assets/Textures/UI/", "hearth_ui.png"));
 	healthBackground = tex->Load(PATH("Assets/Textures/UI/", "health_background.png"));
 	moneyBackgroundUi = tex->Load(PATH("Assets/Textures/UI/", "money_background_ui.png"));
+	
 
 
 	// Initialize player
@@ -91,6 +105,23 @@ bool SceneGameplay::Update(Input* input, float dt)
 {
 	// Collision detection: map vs player
 	fPoint tempPlayerPosition = player->position;
+
+	if (settings == 0 && credits == 0)
+	{
+		btnResume->Update(input, dt);
+		btnSettings->Update(input, dt);
+		btnBackToTitle->Update(input, dt);
+		btnExit->Update(input, dt);
+		btnBack->Update(input, dt);
+	}
+	else
+	{
+		btnBack->Update(input, dt);
+		fullscreen->Update(input, dt);
+		Vsync->Update(input, dt);
+		music->Update(input, dt);
+		fxVolume->Update(input, dt);
+	}
 
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
@@ -132,13 +163,13 @@ bool SceneGameplay::Update(Input* input, float dt)
 							player->position.x = player->prevPos.x;
 
 
-							LOG("LEFT");
+							//LOG("LEFT");
 						}
 						else
 						{
 							player->position.x = player->prevPos.x;
 
-							LOG("RIGHT");
+							//LOG("RIGHT");
 						}
 					}
 					else
@@ -147,7 +178,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 						{
 							player->position.y = player->prevPos.y;
 
-							LOG("UP");
+							//LOG("UP");
 						}
 						else
 						{
@@ -155,7 +186,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 							player->vy = 0;
 
 
-							LOG("DOWN");
+							//LOG("DOWN");
 						}
 
 
@@ -188,11 +219,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
 
 	player->Update(input, dt);
-	btnResume->Update(input, dt);
-	btnSettings->Update(input, dt);
-	btnBackToTitle->Update(input, dt);
-	btnExit->Update(input, dt);
-	btnBack->Update(input, dt);
+	
 
 	return true;
 }
@@ -208,6 +235,7 @@ bool SceneGameplay::Draw(Render* render)
 	map->Draw(render);
 
 	player->Draw(render);
+
 
 	//MONEY UI
 	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
@@ -229,7 +257,11 @@ bool SceneGameplay::Draw(Render* render)
 		{
 			render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
 			btnBack->Draw(render);
-			render->DrawTexture(backText, 490, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(backText, 1280 / 2 - 300 / 2, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			fullscreen->Draw(render);
+			Vsync->Draw(render);
+			music->Draw(render);
+			fxVolume->Draw(render);
 			//music volume
 			//fx volume
 			//fullscreen mode
@@ -268,11 +300,66 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		aud->PlayFx(8, 0);
 		if (control->id == 6) menu = 0;
-		else if (control->id == 7) settings = 1;
+		else if (control->id == 7)
+		{
+			settings = 1;
+			music->Start();//music value stored in config ----- read volume value and set slider.x to it
+			fxVolume->Start();//fx value stored in config ----- read volume value and set slider.x to it
+			Vsync->Start();//set vsync value ---- read it from file and set it to the current state
+			fullscreen->Start();//set fullscreen value ---- read it from file and set it to the current state
+		}
 		else if (control->id == 8) TransitionToScene(SceneType::TITLE);
 		else if (control->id == 9) SDL_Quit();
 		else if (control->id == 10) settings = 0;
 
+	}
+	case GuiControlType::CHECKBOX:
+	{
+		aud->PlayFx(8, 0);
+		if (control->id == 11)
+		{
+			//FULLSCREEN
+			/*if (prove)
+			{
+				//FullscreenConfig();
+				LOG("OFF");
+			}
+			else
+			{
+				//FullscreenConfig();
+				LOG("ON");
+			}
+			prove = !prove;
+		}
+		else if (control->id == 12)
+		{
+			//VSYNC
+			if (prove2)
+			{
+				//VsyncConfig();
+				LOG("OFF");
+			}
+			else
+			{
+				//VsyncConfig();
+				LOG("ON");
+			}
+			prove2 = !prove2;*/
+		};
+	}
+	case GuiControlType::SLIDER:
+	{
+		aud->PlayFx(8, 0);
+		if (control->id == 13)
+		{
+			//mixmusic = music->value;
+			aud->VolumeMusic(music->value);
+		}
+		else if (control->id == 14)
+		{
+			//fxmusic = music->value
+			aud->VolumeFx(fxVolume->value);
+		}
 	}
 	default: break;
 	}
