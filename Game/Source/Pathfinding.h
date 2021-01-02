@@ -2,6 +2,7 @@
 #define __PATHFINDING_H__
 
 #include "Module.h"
+#include "Map.h"
 
 #include "Point.h"
 #include "DynArray.h"
@@ -32,6 +33,8 @@ public:
 
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
+
+	void DrawPath(Map* map,Render* render, const DynArray<iPoint>* path, SDL_Color);
 
 	// Main function to request a path from A to B
 	DynArray<iPoint>* CreatePath(const iPoint& origin, const iPoint& destination);
