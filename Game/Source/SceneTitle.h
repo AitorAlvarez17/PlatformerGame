@@ -44,7 +44,7 @@ private:
     GuiCheckBox* Vsync;
 
     GuiSlider* music;
-    GuiSlider* other;
+    GuiSlider* fxVolume;
 
     SDL_Texture* bg;
     SDL_Texture* playText;

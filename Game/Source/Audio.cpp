@@ -177,6 +177,20 @@ bool AudioManager::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
+void AudioManager::VolumeDown(int volume)
+{
+	Mix_VolumeMusic(Mix_Volume(-1, Mix_Volume(-1, -1) - volume));
+
+	if (Mix_Volume(-1, -1) > 0 && Mix_Volume(-1, -1) < 2 * volume)
+		Mix_VolumeMusic(0);
+}
+
+void AudioManager::VolumeUp(int volume)
+{
+	Mix_VolumeMusic(Mix_Volume(-1, Mix_Volume(-1, -1) + volume));
+
+}
+
 bool AudioManager::LoadState(pugi::xml_node& savedRender)
 {
 	

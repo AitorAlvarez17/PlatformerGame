@@ -38,8 +38,8 @@ SceneTitle::SceneTitle()
     music = new GuiSlider(9, { 1280 / 2 - 600 / 2, 200, 600, 30 }, "music");
     music->SetObserver(this);
 
-    other = new GuiSlider(10, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
-    other->SetObserver(this);
+    fxVolume = new GuiSlider(10, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
+    fxVolume->SetObserver(this);
 
     bgAnim.GenerateAnimation({ 0,0,1280,720 }, 3, 1, 0, 0);
     bgAnim.loop = true;
@@ -83,7 +83,7 @@ bool SceneTitle::Update(Input* input, float dt)
         fullscreen->Update(input, dt);
         Vsync->Update(input, dt);
         music->Update(input, dt);
-        other->Update(input, dt);
+        fxVolume->Update(input, dt);
     }
      
     
@@ -114,7 +114,7 @@ bool SceneTitle::Draw(Render* render)
         fullscreen->Draw(render);
         Vsync->Draw(render);
         music->Draw(render);
-        other->Draw(render);
+        fxVolume->Draw(render);
     }
     else
     {
@@ -195,6 +195,18 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
             prove2 = !prove2;
         };
     }
+    case GuiControlType::SLIDER:
+    {
+        if (control->id == 9)
+        {
+            //mixmusic = music->value;
+            
+        }
+        else if (control->id == 10)
+        {
+            //fxmusic = music->value
+        }
+    }
     default: break;
     }
 
@@ -245,3 +257,5 @@ bool SceneTitle::FullscreenConfig()
     }
 
     return true;
+
+}
