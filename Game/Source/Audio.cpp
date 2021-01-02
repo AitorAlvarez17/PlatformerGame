@@ -212,7 +212,5 @@ bool AudioManager::LoadState(pugi::xml_node& savedRender)
 bool AudioManager::SaveState(pugi::xml_node& savedGame) const
 {
 
-
-
 	return true;
 }
