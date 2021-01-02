@@ -2,6 +2,7 @@
 #define __SCENELOGO_H__
 
 #include "Scene.h"
+#include "Audio.h"
 
 #include "SDL/include/SDL.h"
 
@@ -27,6 +28,7 @@ private:
     int state;
     float timeCounter;
     float logoAlpha;
+
 };
 
 #endif // __SCENELOGO_H__

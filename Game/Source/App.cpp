@@ -31,7 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(render);
 	audio = new AudioManager();
 	entityManager = new EntityManager();
-	sceneManager = new SceneManager(input, render, tex);
+	sceneManager = new SceneManager(input, render, tex, audio);
 	debug = new Debug(input, this);
 	ui = new ModuleUI();
 

@@ -2,7 +2,7 @@
 #define __SCENEGAMEPLAY_H__
 
 #include "Scene.h"
-
+#include "Audio.h"
 #include "Map.h"
 #include "Player.h"
 #include "GuiButton.h"
@@ -13,7 +13,7 @@ class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay();
+    SceneGameplay(AudioManager* manager);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -63,6 +63,8 @@ private:
 
     SDL_Texture* healthBackground;
     SDL_Texture* moneyBackgroundUi;
+
+    AudioManager* aud;
 };
 
 #endif // __SCENEGAMEPLAY_H__
