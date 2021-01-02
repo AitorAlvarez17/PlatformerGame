@@ -163,6 +163,22 @@ int PathNode::CalculateF(const iPoint& destination)
 	return g + h;
 }
 
+void PathFinding::DrawPath(Map* map, Render* render, const DynArray<iPoint>* path, SDL_Color color)
+{
+	int c = path->Count() - 1;
+	for (int i = 0; i < c; i++)
+	{
+		iPoint ap = (*path)[i];
+		iPoint bp = (*path)[i + 1];
+		ap.x = ap.x * map->data.tileWidth + map->data.tileWidth / 2;
+		ap.y = ap.y * map->data.tileHeight + map->data.tileHeight / 2;
+		bp.x = bp.x * map->data.tileWidth + map->data.tileWidth / 2;
+		bp.y = bp.y * map->data.tileHeight + map->data.tileHeight / 2;
+
+		render->DrawLine(ap.x, ap.y, bp.x, bp.y, color);
+	}
+}
+
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
