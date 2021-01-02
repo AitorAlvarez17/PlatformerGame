@@ -54,6 +54,7 @@ private:
     SDL_Texture* creditsText;
     SDL_Texture* exitText;
     SDL_Texture* backText;
+    SDL_Texture* creditsUi;
 
     Animation* currentAnim = nullptr;
     Animation bgAnim;

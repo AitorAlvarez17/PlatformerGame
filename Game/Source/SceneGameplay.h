@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "GuiButton.h"
+#include "GuiCheckBox.h"
 #include "GuiSlider.h"
 #include "EntityManager.h"
 
@@ -37,7 +38,8 @@ private:
 
     bool menu;
     bool settings;
-    
+    bool credits;
+
     GuiButton* btnResume;
     GuiButton* btnSettings;
     GuiButton* btnBackToTitle;
@@ -60,9 +62,16 @@ private:
     SDL_Texture* habUi;
     SDL_Texture* backgroundUi;
     SDL_Texture* healthNameUi;
+   
 
     SDL_Texture* healthBackground;
     SDL_Texture* moneyBackgroundUi;
+
+    GuiCheckBox* fullscreen;
+    GuiCheckBox* Vsync;
+
+    GuiSlider* music;
+    GuiSlider* fxVolume;
 
     AudioManager* aud;
 };

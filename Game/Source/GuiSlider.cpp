@@ -10,10 +10,17 @@ GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(
     this->bounds = bounds;
     this->text = text;
     slider = { bounds.x, bounds.y, 30, 30 };
+    
 }
 
 GuiSlider::~GuiSlider()
 {
+}
+
+bool GuiSlider::Start()
+{
+    
+    return true;
 }
 
 bool GuiSlider::Update(Input* input, float dt)
