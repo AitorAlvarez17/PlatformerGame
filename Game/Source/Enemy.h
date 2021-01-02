@@ -25,6 +25,7 @@ public:
     EnemyType GetType();
     EnemyType SetType(EnemyType type);
 
+
 private:
 
     DynArray<iPoint>* path;

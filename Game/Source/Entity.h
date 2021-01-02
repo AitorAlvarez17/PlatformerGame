@@ -3,7 +3,10 @@
 
 #include "Point.h"
 #include "SString.h"
+#include "Collider.h"
+#include "Collisions.h"
 
+class Collider;
 enum class EntityType
 {
     PLAYER,
@@ -29,8 +32,11 @@ public:
     EntityType type;
     bool active = true;
     bool pendingToDelete = false;
+    int width, height;
     //SString name;         // Entity name identifier?
     //uint32 id;            // Entity identifier?
+
+    Collider* hitbox;
 
     // Possible properties, it depends on how generic we
     // want our Entity class, maybe it's not renderable...
