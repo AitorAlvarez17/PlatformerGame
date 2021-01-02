@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Audio.h"
 
 #include "GuiButton.h"
 
@@ -19,7 +20,7 @@
 #define FADEOUT_TRANSITION_SPEED	2.0f
 #define FADEIN_TRANSITION_SPEED		2.0f
 
-SceneManager::SceneManager(Input* input, Render* render, Textures* tex) : Module()
+SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager) : Module()
 {
 	name.Create("scenemanager");
 
@@ -30,6 +31,7 @@ SceneManager::SceneManager(Input* input, Render* render, Textures* tex) : Module
 	this->input = input;
 	this->render = render;
 	this->tex = tex;
+	this->aud = manager;
 }
 
 // Destructor
@@ -51,9 +53,8 @@ bool SceneManager::Start()
 	exitDemand = false;
 	current = new SceneLogo();
 	current->Load(tex);
-
 	next = nullptr;
-
+	aud->PlayMusic(PATH("Assets/Audio/music/", "music.ogg"));
 	return true;
 }
 
@@ -171,8 +172,8 @@ bool SceneManager::Update(float dt)
 		switch (current->nextScene)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
-			case SceneType::TITLE: next = new SceneTitle(); break;
-			case SceneType::GAMEPLAY: next = new SceneGameplay(); break;
+			case SceneType::TITLE: next = new SceneTitle(aud); break;
+			case SceneType::GAMEPLAY: next = new SceneGameplay(aud); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;
 		}

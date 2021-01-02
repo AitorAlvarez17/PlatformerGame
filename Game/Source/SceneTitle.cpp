@@ -3,12 +3,13 @@
 #include "Input.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Audio.h"
 #include "EntityManager.h"
 #include "Log.h"
 #include "SDL/include/SDL.h"
 
 
-SceneTitle::SceneTitle()
+SceneTitle::SceneTitle(AudioManager* manager)
 {
     // GUI: Initialize required controls for the screen
     btnStart = new GuiButton(1, { 1280/2 - 300/2, 80, 300, 80 }, "START");
@@ -47,6 +48,8 @@ SceneTitle::SceneTitle()
    
     prove = 0;
     prove2 = 0;
+
+    this->aud = manager;
 }
 
 SceneTitle::~SceneTitle()
@@ -147,6 +150,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
     {
     case GuiControlType::BUTTON:
     {
+        aud->PlayFx(8, 0);
         if (control->id == 1) TransitionToScene(SceneType::GAMEPLAY);
         else if (control->id == 2) LOG("CONTINUE"); // TODO: Exit request
         else if (control->id == 3) settings = 1;
@@ -164,6 +168,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
     }
     case GuiControlType::CHECKBOX:
     {
+        aud->PlayFx(8, 0);
         if (control->id == 7)
         {
             //FULLSCREEN
@@ -197,14 +202,16 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
     }
     case GuiControlType::SLIDER:
     {
+        aud->PlayFx(8, 0);
         if (control->id == 9)
         {
             //mixmusic = music->value;
-            
+            aud->VolumeMusic(music->value);
         }
         else if (control->id == 10)
         {
             //fxmusic = music->value
+            aud->VolumeFx(fxVolume->value);
         }
     }
     default: break;

@@ -6,6 +6,7 @@
 #include "GuiButton.h"
 #include "GuiCheckBox.h"
 #include "GuiSlider.h"
+#include "Audio.h"
 
 #include "Animation.h"
 
@@ -13,7 +14,7 @@ class SceneTitle : public Scene
 {
 public:
 
-    SceneTitle();
+    SceneTitle(AudioManager* manager);
     virtual ~SceneTitle();
 
     bool Load(Textures* tex);
@@ -65,6 +66,8 @@ private:
     pugi::xml_document configFile;
     pugi::xml_node config;
     pugi::xml_node configRend;
+
+    AudioManager* aud;
 };
 
 #endif // __SCENETITLE_H__

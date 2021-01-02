@@ -55,6 +55,15 @@ bool AudioManager::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	LoadFx(PATH("Assets/Audio/Fx/", "auto_save_feedback.ogg"));//1
+	LoadFx(PATH("Assets/Audio/Fx/", "dying.ogg"));//2
+	LoadFx(PATH("Assets/Audio/Fx/", "fireball.ogg"));//3
+	LoadFx(PATH("Assets/Audio/Fx/", "footsteps_feedback.ogg"));//4
+	LoadFx(PATH("Assets/Audio/Fx/", "health_feedback.ogg"));//5
+	LoadFx(PATH("Assets/Audio/Fx/", "jump.ogg"));//6
+	LoadFx(PATH("Assets/Audio/Fx/", "money_till_i_die.ogg"));//7
+	LoadFx(PATH("Assets/Audio/Fx/", "select_menu.ogg"));//8
+
 	return ret;
 }
 
@@ -177,18 +186,21 @@ bool AudioManager::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
-void AudioManager::VolumeDown(int volume)
+void AudioManager::VolumeMusic(int volume)
 {
-	Mix_VolumeMusic(Mix_Volume(-1, Mix_Volume(-1, -1) - volume));
-
-	if (Mix_Volume(-1, -1) > 0 && Mix_Volume(-1, -1) < 2 * volume)
-		Mix_VolumeMusic(0);
+	Mix_VolumeMusic(volume);
+	LOG("Changing music volume to %d", volume);
+	//if (Mix_Volume(-1, -1) > 0 && Mix_Volume(-1, -1) < 2 * volume)
+		//Mix_VolumeMusic(0);
 }
 
-void AudioManager::VolumeUp(int volume)
+void AudioManager::VolumeFx(int volume)
 {
-	Mix_VolumeMusic(Mix_Volume(-1, Mix_Volume(-1, -1) + volume));
-
+	//choose the chunk where fx is stored and low the volume
+	LOG("Changing fx volume to %d", volume);
+	Mix_Volume(-1, volume);
+	
+	
 }
 
 bool AudioManager::LoadState(pugi::xml_node& savedRender)

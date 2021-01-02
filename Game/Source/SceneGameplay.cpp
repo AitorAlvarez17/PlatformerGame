@@ -3,7 +3,7 @@
 #include "EntityManager.h"
 #include "Log.h"
 
-SceneGameplay::SceneGameplay()
+SceneGameplay::SceneGameplay(AudioManager* manager)
 {
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
 	btnResume->SetObserver(this);
@@ -22,6 +22,7 @@ SceneGameplay::SceneGameplay()
 
 	eManager = new EntityManager;
 
+	this->aud = manager;
 }
 
 SceneGameplay::~SceneGameplay()
@@ -265,6 +266,7 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
+		aud->PlayFx(8, 0);
 		if (control->id == 6) menu = 0;
 		else if (control->id == 7) settings = 1;
 		else if (control->id == 8) TransitionToScene(SceneType::TITLE);

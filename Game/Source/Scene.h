@@ -7,6 +7,7 @@
 class Input;
 class Render;
 class Textures;
+class AudioManager;
 
 class GuiControl;
 
