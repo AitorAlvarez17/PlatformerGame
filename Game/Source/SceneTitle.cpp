@@ -65,6 +65,7 @@ bool SceneTitle::Load(Textures* tex)
     creditsText = tex->Load(PATH("Assets/Textures/UI/", "credits.png"));
     exitText = tex->Load(PATH("Assets/Textures/UI/", "exit.png"));
     backText = tex->Load(PATH("Assets/Textures/UI/", "back.png"));
+    creditsUi = tex->Load(PATH("Assets/Textures/UI/", "credits_panel.png"));
     
     currentAnim = &bgAnim;
     return false;
@@ -100,13 +101,13 @@ bool SceneTitle::Draw(Render* render)
    // render->DrawRectangle({ 0, 0, 1280, 720 }, { 100, 200, 200, 255 });
     SDL_Rect rect = currentAnim->GetCurrentFrame();
     render->DrawTexture(bg, 0, 400, &rect);
-
+    
     if (credits)
     {
-        
         render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
         btnBack->Draw(render);
         render->DrawTexture(backText, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(creditsUi, 100, -70, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
        
     }
     else if (settings)
@@ -153,7 +154,10 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
         aud->PlayFx(8, 0);
         if (control->id == 1) TransitionToScene(SceneType::GAMEPLAY);
         else if (control->id == 2) LOG("CONTINUE"); // TODO: Exit request
-        else if (control->id == 3) settings = 1;
+        else if (control->id == 3)
+        {
+            settings = 1;
+        }
         else if (control->id == 4) credits = 1;
         else if (control->id == 5) SDL_Quit();
         else if (control->id == 6)
