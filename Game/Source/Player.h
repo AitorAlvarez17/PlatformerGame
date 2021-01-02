@@ -68,7 +68,6 @@ public:
     PlayerAnim currentAnim = PlayerAnim::IDLE;//diferentiate --- THIS IS THE STATE!
     Animation* actualAnimation = nullptr;//diferentiate --- THIS IS THE ANIMATION!!
 
-    int width, height;
 
     fPoint prevPos;
     //PlayerProperties

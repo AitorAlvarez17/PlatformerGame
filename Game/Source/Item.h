@@ -25,6 +25,7 @@ public:
     ItemType GetType();
     ItemType SetType(ItemType type);
 
+
 private:
     ItemType iType;
 };

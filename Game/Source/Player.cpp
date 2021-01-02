@@ -12,6 +12,11 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 
 	width = 32;
 	height = 32;
+	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
+
+	/*hitbox = Collisions::AddCollider(size, Collider::Type::PLAYER,this);*/
+	
+
 
 	// Define Player animations
 	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);

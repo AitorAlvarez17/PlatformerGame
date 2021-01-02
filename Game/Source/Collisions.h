@@ -36,7 +36,7 @@ public:
 	void RemoveCollider(Collider* collider);
 
 	// Draws all existing colliders with some transparency
-	/*void DebugDraw();*/
+	void DebugDraw();
 	void DebugRequest();
 	
 
