@@ -45,6 +45,8 @@ SceneTitle::SceneTitle()
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
    
+    prove = 0;
+    prove2 = 0;
 }
 
 SceneTitle::~SceneTitle()
@@ -160,8 +162,86 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
        
            
     }
+    case GuiControlType::CHECKBOX:
+    {
+        if (control->id == 7)
+        {
+            //FULLSCREEN
+            if (prove)
+            {
+                FullscreenConfig();
+                LOG("OFF");
+            }
+            else
+            {
+                FullscreenConfig();
+                LOG("ON");
+            }
+            prove = !prove;
+        }
+        else if (control->id == 8)
+        {
+            //VSYNC
+            if (prove2)
+            {
+                VsyncConfig();
+                LOG("OFF");
+            }
+            else
+            {
+                VsyncConfig();
+                LOG("ON");
+            }
+            prove2 = !prove2;
+        };
+    }
     default: break;
     }
 
     return true;
 }
+
+bool SceneTitle::VsyncConfig()
+{
+    pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+    if (result == NULL)
+    {
+        LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+        return false;
+    }
+    else
+    {
+
+        config = configFile.child("config");
+        configRend = config.child("renderer");
+
+        LOG("changing VSYNC");
+        if (prove2 == 1) config.append_child("MAMA");
+        else config.child("vsync").attribute("value").set_value(false);
+
+    }
+    LOG("%d", config.child("vsync").attribute("value").as_bool(false));
+    return true;
+}
+
+bool SceneTitle::FullscreenConfig()
+{
+    bool ret = true;
+
+    pugi::xml_parse_result result = configFile.load_file("config.xml");
+
+    if (result == NULL)
+    {
+        LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+        return false;
+    }
+    else
+    {
+        config = configFile.child("config");
+        configRend = config.child("app");
+
+        config.child("fullscreen").attribute("value").as_bool(false);
+    }
+
+    return true;

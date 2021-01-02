@@ -27,6 +27,10 @@ public:
     // Declare on mouse click event
     bool OnGuiMouseClickEvent(GuiControl* control);
 
+    bool VsyncConfig();
+
+    bool FullscreenConfig();
+
 private:
 
     GuiButton* btnStart;
@@ -55,6 +59,12 @@ private:
 
     bool credits;
     bool settings;
+    bool prove;
+    bool prove2;
+
+    pugi::xml_document configFile;
+    pugi::xml_node config;
+    pugi::xml_node configRend;
 };
 
 #endif // __SCENETITLE_H__
