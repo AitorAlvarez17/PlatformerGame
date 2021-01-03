@@ -37,7 +37,7 @@ public:
 	void DrawPath(Map* map,Render* render, const DynArray<iPoint>* path, SDL_Color);
 
 	// Main function to request a path from A to B
-	DynArray<iPoint>* CreatePath(const iPoint& origin, const iPoint& destination);
+	int CreatePath(const iPoint& origin, const iPoint& destination);
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -77,9 +77,9 @@ struct PathList;
 // ---------------------------------------------------------------------
 struct PathNode
 {
+	iPoint pos;
 	int g;
 	int h;
-	iPoint pos;
 	const PathNode* parent; // needed to reconstruct the path in the end
 
 	// Convenient constructors
@@ -94,6 +94,8 @@ struct PathNode
 	int Score() const;
 	// Calculate the F for a specific destination tile
 	int CalculateF(const iPoint& destination);
+	//Show Log for easy debugging
+	void Description(const PathNode& node);
 };
 
 // ---------------------------------------------------------------------

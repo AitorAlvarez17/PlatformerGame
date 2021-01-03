@@ -9,6 +9,7 @@
 #include "GuiCheckBox.h"
 #include "GuiSlider.h"
 #include "EntityManager.h"
+#include "Pathfinding.h"
 
 class SceneGameplay : public Scene
 {
@@ -33,6 +34,7 @@ private:
     Map* map;
     Player* player;
     EntityManager* eManager;
+    PathFinding* path;
 
     SDL_Rect camera;
 

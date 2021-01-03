@@ -163,6 +163,12 @@ int PathNode::CalculateF(const iPoint& destination)
 	return g + h;
 }
 
+void PathNode::Description(const PathNode& node)
+{
+	LOG("position x: %d position y: %d", node.pos.x,node.pos.y);
+	LOG("f score: %d g: %d h: %d",node.Score(), node.g, node.h);
+}
+
 void PathFinding::DrawPath(Map* map, Render* render, const DynArray<iPoint>* path, SDL_Color color)
 {
 	int c = path->Count() - 1;
@@ -182,12 +188,23 @@ void PathFinding::DrawPath(Map* map, Render* render, const DynArray<iPoint>* pat
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-DynArray<iPoint>* PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
+	if (!IsWalkable(origin) || !IsWalkable(destination))
+		return -1;
+
+	if (origin == destination)
+		return -1;
 
 	// L12b: TODO 2: Create two lists: open, close
+	PathList open;
+	PathList close;
 	// Add the origin tile to open
+
+	PathNode* originNode = new PathNode(0, 0, origin, NULL);
+	originNode->CalculateF(destination);
+	open.list.Add(*originNode);
 	// Iterate while we have tile in the open list
 
 	// L12b: TODO 3: Move the lowest score cell from open list to the closed list
