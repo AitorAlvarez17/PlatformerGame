@@ -203,7 +203,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 					 // nuestra parte, descomenta la de abajo para probarlo.
 
 
-					int compY = player->position.y - tile.y;
+					int compY = player->position.y - tile.y - 20;
 					int compX = player->position.x - tile.x;
 					bool floor = false;
 
@@ -232,9 +232,8 @@ bool SceneGameplay::Update(Input* input, float dt)
 						}
 						else
 						{
-							player->position.y = player->prevPos.y - 1.0f;
+							//player->position.y = player->prevPos.y;
 							player->vy = 0;
-
 
 							//LOG("DOWN");
 						}
