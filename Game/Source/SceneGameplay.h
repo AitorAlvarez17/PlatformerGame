@@ -78,6 +78,7 @@ private:
 
     AudioManager* aud;
 
+    bool pathCreated = false;
 };
 
 #endif // __SCENEGAMEPLAY_H__
