@@ -42,7 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	//AddModule(collisions);
+	AddModule(collisions);
 	AddModule(entityManager);
 	AddModule(sceneManager);
 	AddModule(debug);
