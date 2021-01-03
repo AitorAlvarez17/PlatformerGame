@@ -1,6 +1,5 @@
 #include "SceneGameplay.h"
 
-#include "EntityManager.h"
 #include "Log.h"
 
 SceneGameplay::SceneGameplay(AudioManager* manager)
@@ -46,13 +45,17 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 {
 	map = new Map(tex);
 
-	// L12b: Create walkability map on map loading
+	// Create walkability map on map loading
 	if (map->Load("main_level.tmx") == true)
 	{
-		int w, h;
-		uchar* data = NULL;
+		 int w, h;
+		 uchar* data = NULL;
+	
+		if (map->CreateWalkabilityMap(w, h, &data))
+		{
+			path->GetInstance()->SetMap(w, h, data);
 
-		//if (map->CreateWalkabilityMap(w, h, &data)) pathFinding->SetMap(w, h, data);
+		}
 
 		RELEASE_ARRAY(data);
 	}

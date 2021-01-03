@@ -4816,6 +4816,7 @@
  </layer>
  <layer id="3" name="Collisions" width="60" height="40">
   <properties>
+   <property name="Navigation" type="int" value="1"/>
    <property name="drawable" type="int" value="0"/>
   </properties>
   <data>
