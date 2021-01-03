@@ -9,10 +9,10 @@
 class Collisions : public Module
 {
 public:
-	Collisions(bool startEnabled);
+	Collisions();
 
 	// Destructor
-	virtual ~Collisions(){}
+	virtual ~Collisions() {}
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -36,9 +36,9 @@ public:
 	void RemoveCollider(Collider* collider);
 
 	// Draws all existing colliders with some transparency
-	void DebugDraw();
+	/*void DebugDraw();*/
 	void DebugRequest();
-	
+
 
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];
 

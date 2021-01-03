@@ -90,7 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Prev Game\Game\Source\Collider.cpp" />
-    <ClCompile Include="..\Prev Game\Game\Source\Collisions.cpp" />
+    <ClCompile Include="Source\Collisions.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -120,8 +120,8 @@
     <ClCompile Include="Source\Wand.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="..\Prev Game\Game\Source\Collider.h" />
-    <ClInclude Include="..\Prev Game\Game\Source\Collisions.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />

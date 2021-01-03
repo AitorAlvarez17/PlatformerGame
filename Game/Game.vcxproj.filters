@@ -90,7 +90,7 @@
     <ClCompile Include="..\Prev Game\Game\Source\Collider.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\Prev Game\Game\Source\Collisions.cpp">
+    <ClCompile Include="Source\Collisions.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -222,7 +222,7 @@
     <ClInclude Include="..\Prev Game\Game\Source\Collider.h">
       <Filter>Entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\Prev Game\Game\Source\Collisions.h">
+    <ClInclude Include="Source\Collisions.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

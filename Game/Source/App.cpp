@@ -42,11 +42,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	//AddModule(collisions);
 	AddModule(entityManager);
 	AddModule(sceneManager);
 	AddModule(debug);
 	AddModule(ui);
-	AddModule(collisions);
+	
 
 	// Render last to swap buffer
 	AddModule(render);
