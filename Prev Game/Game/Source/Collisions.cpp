@@ -1,11 +1,12 @@
 #include "Collisions.h"
 
+
 #include "App.h"
 #include "Input.h"
 #include "Log.h"
 #include "Render.h"
 
-Collisions::Collisions(bool startEnabled) : Module(startEnabled)
+Collisions::Collisions() : Module()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
