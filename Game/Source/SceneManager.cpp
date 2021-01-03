@@ -9,6 +9,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Window.h"
 
 #include "GuiButton.h"
 
@@ -20,7 +21,7 @@
 #define FADEOUT_TRANSITION_SPEED	2.0f
 #define FADEIN_TRANSITION_SPEED		2.0f
 
-SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager) : Module()
+SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, App* app) : Module()
 {
 	name.Create("scenemanager");
 
@@ -32,6 +33,8 @@ SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioMan
 	this->render = render;
 	this->tex = tex;
 	this->aud = manager;
+	this->win = window;
+	this->app = app;
 }
 
 // Destructor
@@ -172,7 +175,7 @@ bool SceneManager::Update(float dt)
 		switch (current->nextScene)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
-			case SceneType::TITLE: next = new SceneTitle(aud); break;
+			case SceneType::TITLE: next = new SceneTitle(aud, win, app); break;
 			case SceneType::GAMEPLAY: next = new SceneGameplay(aud); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;

@@ -4,12 +4,15 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "Window.h"
+#include "App.h"
+
 #include "EntityManager.h"
 #include "Log.h"
 #include "SDL/include/SDL.h"
 
 
-SceneTitle::SceneTitle(AudioManager* manager)
+SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app)
 {
     // GUI: Initialize required controls for the screen
     btnStart = new GuiButton(1, { 1280/2 - 300/2, 80, 300, 80 }, "START");
@@ -50,6 +53,8 @@ SceneTitle::SceneTitle(AudioManager* manager)
 
     buffer = true;
     this->aud = manager;
+    this->win = window;
+    this->app = app;
 }
 
 SceneTitle::~SceneTitle()
@@ -91,7 +96,7 @@ bool SceneTitle::Update(Input* input, float dt)
         }
         else
         {
-            fullscreen->checked = false;
+            Vsync->checked = false;
         }
         //full screen STORED is aud->fullscreenCheck);
         //full screen checked is fullscreen->checked);
@@ -177,7 +182,14 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
     {
         aud->PlayFx(8, 0);
         if (control->id == 1) TransitionToScene(SceneType::GAMEPLAY);
-        else if (control->id == 2) LOG("CONTINUE"); // TODO: Exit request
+        else if (control->id == 2)
+        {
+            if (SAVE_STATE_FILENAME != NULL)
+            {
+                app->LoadGameRequest();
+                TransitionToScene(SceneType::GAMEPLAY);
+            }
+        }
         else if (control->id == 3)
         {
             settings = 1;
@@ -203,14 +215,14 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
             //FULLSCREEN
             if (fullscreen->checked)
             {
-                FullscreenConfig();
+                win->ChangeFullscreen(fullscreen->checked);
                 aud->fullscreenCheck = 1;
                 //fullscreen changed to aud->fullscreenCheck);
                 //LOG("ON");
             }
             else
             {
-                FullscreenConfig();
+                win->ChangeFullscreen(fullscreen->checked);
                 aud->fullscreenCheck = 0;
                 //fullscreen changed to aud->fullscreenCheck);
                 //LOG("OFF");
@@ -222,13 +234,14 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
             //VSYNC
             if (Vsync->checked)
             {
-                VsyncConfig();
+                SDL_GL_SetSwapInterval(1);
+                //SDL_HINT_RENDER_VSYNC "SDL_RENDER_VSYNC"
                 aud->vsyncCheck = 1;
                 //LOG("OFF");
             }
             else
             {
-                VsyncConfig();
+                SDL_GL_SetSwapInterval(0);
                 aud->vsyncCheck = 0;
                 //LOG("ON");
             }
@@ -257,7 +270,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
     return true;
 }
 
-bool SceneTitle::VsyncConfig()
+bool SceneTitle::VsyncConfig(int checked)
 {
     pugi::xml_parse_result result = configFile.load_file("config.xml");
 
@@ -272,16 +285,17 @@ bool SceneTitle::VsyncConfig()
         config = configFile.child("config");
         configRend = config.child("renderer");
 
-        //LOG("changing VSYNC");
-       
-        //else config.child("vsync").attribute("value").set_value(false);
+        
+        if (checked)config.child("renderer").child("vsync").attribute("value").set_value(true);
+        else config.child("renderer").child("vsync").attribute("value").set_value(false);
 
+        LOG("%d", config.child("renderer").child("vsync").attribute("value").as_bool(false));
     }
-    LOG("%d", config.child("vsync").attribute("value").as_bool(false));
+    //LOG("%d", config.child("vsync").attribute("value").as_bool(false));
     return true;
 }
 
-bool SceneTitle::FullscreenConfig()
+bool SceneTitle::FullscreenConfig(int checked)
 {
     bool ret = true;
 
@@ -297,7 +311,9 @@ bool SceneTitle::FullscreenConfig()
         config = configFile.child("config");
         configRend = config.child("app");
 
-        config.child("fullscreen").attribute("value").as_bool(false);
+        if (checked)config.child("window").child("fullscreen").attribute("value").as_bool(true);
+        else config.child("window").child("fullscreen").attribute("value").as_bool(false);
+        
     }
 
     return true;

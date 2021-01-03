@@ -10,12 +10,14 @@ class Input;
 class Render;
 class Textures;
 class AudioManager;
+class Window;
+class App;
 
 class SceneManager : public Module
 {
 public:
 
-	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio);
+	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, App* app);
 
 	// Destructor
 	virtual ~SceneManager();
@@ -45,6 +47,8 @@ private:
 	Render* render;
 	Textures* tex; 
 	AudioManager * aud;
+	Window* win;
+	App* app;
 	
 	Scene* current;
 	Scene* next;
