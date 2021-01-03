@@ -30,7 +30,7 @@ SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app)
     btnExit = new GuiButton(5, { 1280/2 - 300/2, 560, 300, 80 }, "EXIT");
     btnExit->SetObserver(this);
 
-    btnBack = new GuiButton(6, { 1280 / 2 - 300 / 2, 560, 300, 80 }, "BACK");
+    btnBack = new GuiButton(6, { 1280 / 2 - 300 / 2, 540, 300, 80 }, "BACK");
     btnBack->SetObserver(this);
 
     fullscreen = new GuiCheckBox(7, { 290, 440, 80, 80 }, "fullscreen");
@@ -71,6 +71,9 @@ bool SceneTitle::Load(Textures* tex)
     exitText = tex->Load(PATH("Assets/Textures/UI/", "exit.png"));
     backText = tex->Load(PATH("Assets/Textures/UI/", "back.png"));
     creditsUi = tex->Load(PATH("Assets/Textures/UI/", "credits_panel.png"));
+    marginsUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui.png"));
+    marginsButtonUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_button.png"));
+    marginsSlidersUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_music_and_fx.png"));
     
     currentAnim = &bgAnim;
     return false;
@@ -134,32 +137,54 @@ bool SceneTitle::Draw(Render* render)
     if (credits)
     {
         render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
+        render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         btnBack->Draw(render);
-        render->DrawTexture(backText, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-        render->DrawTexture(creditsUi, 100, -70, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(marginsButtonUi, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+        render->DrawTexture(backText, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(creditsUi, 100, -70, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
        
     }
     else if (settings)
     {
+        //BG
         render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
+        render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+        //BACK
         btnBack->Draw(render);
-        render->DrawTexture(backText, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+        render->DrawTexture(backText, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        //SLIDERS AND CHECK
+        render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
         fullscreen->Draw(render);
+        render->DrawRectangle({ Vsync->bounds.x - 2, Vsync->bounds.y - 2, Vsync->bounds.w + 4, Vsync->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
         Vsync->Draw(render);
+        //SLIDERS
         music->Draw(render);
+        render->DrawTexture(marginsSlidersUi, music->bounds.x - 20, music->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         fxVolume->Draw(render);
+        render->DrawTexture(marginsSlidersUi, fxVolume->bounds.x - 20, fxVolume->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
     }
     else
     {
+        //START
         btnStart->Draw(render);
+        render->DrawTexture(marginsButtonUi, btnStart->bounds.x, btnStart->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         render->DrawTexture(playText, 490, 80, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        //CONTINUE
         btnContinue->Draw(render);
+        render->DrawTexture(marginsButtonUi, btnContinue->bounds.x, btnContinue->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         render->DrawTexture(continueText, 490, 200, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        //EXIT TEXT
         btnExit->Draw(render);
+        render->DrawTexture(marginsButtonUi, btnExit->bounds.x, btnExit->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         render->DrawTexture(exitText, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        //SETTINGS 
         btnSettings->Draw(render);
+        render->DrawTexture(marginsButtonUi, btnSettings->bounds.x, btnSettings->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         render->DrawTexture(settingsText, 490, 320, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        //CREDITS
         btnCredits->Draw(render);
+        render->DrawTexture(marginsButtonUi, btnCredits->bounds.x, btnCredits->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         render->DrawTexture(creditsText, 490, 440, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
     }
     

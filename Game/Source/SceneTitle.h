@@ -56,6 +56,10 @@ private:
     SDL_Texture* exitText;
     SDL_Texture* backText;
     SDL_Texture* creditsUi;
+    SDL_Texture* marginsUi;
+    SDL_Texture* marginsButtonUi;
+    SDL_Texture* marginsSlidersUi;
+
 
     Animation* currentAnim = nullptr;
     Animation bgAnim;

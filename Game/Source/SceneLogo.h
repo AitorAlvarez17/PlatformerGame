@@ -25,6 +25,7 @@ private:
 
     SDL_Rect logo;
     SDL_Texture* logoTexture;
+    SDL_Texture* logo_ui;
     int state;
     float timeCounter;
     float logoAlpha;

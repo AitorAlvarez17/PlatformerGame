@@ -24,6 +24,7 @@ SceneLogo::~SceneLogo()
 bool SceneLogo::Load(Textures* tex)
 {
     logoTexture = tex->Load(PATH("Assets/Textures/UI/","logo.png"));
+    logo_ui = tex->Load(PATH("Assets/Textures/UI/", "logo_ui.png"));
     return false;
 }
 
@@ -72,6 +73,8 @@ bool SceneLogo::Draw(Render* render)
     render->DrawRectangle(logo, { 41, 157, 157, (uchar)(255.0f * logoAlpha) });
 
     render->DrawTexture(logoTexture, 490, 180, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+    render->DrawTexture(logo_ui, 0, 180-40, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+    render->DrawTexture(logo_ui, 0, 480, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
     return false;
 }
 
