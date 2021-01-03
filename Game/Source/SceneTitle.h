@@ -61,8 +61,7 @@ private:
 
     bool credits;
     bool settings;
-    bool prove;
-    bool prove2;
+    bool buffer;
 
     pugi::xml_document configFile;
     pugi::xml_node config;

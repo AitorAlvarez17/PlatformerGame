@@ -34,6 +34,7 @@ SceneGameplay::SceneGameplay(AudioManager* manager)
 
 	eManager = new EntityManager;
 
+	buffer = true;
 
 	this->aud = manager;
 }
@@ -91,6 +92,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = fPoint(200, 470);
 	player->SetTexture(playerText);
 
+	
 	return false;
 }
 
@@ -105,6 +107,31 @@ bool SceneGameplay::Update(Input* input, float dt)
 {
 	// Collision detection: map vs player
 	fPoint tempPlayerPosition = player->position;
+	
+	if (settings && buffer)
+	{
+		music->slider.x = ((aud->volumeMusic * music->bounds.w/100) + music->bounds.x) - music->bounds.w / 100;
+		fxVolume->slider.x = ((aud->volumeFx * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
+		if (aud->fullscreenCheck)
+		{
+			fullscreen->checked = true;
+		}
+		else if(aud->fullscreenCheck == 0)
+		{
+			fullscreen->checked = false;
+		}
+		if (aud->vsyncCheck)
+		{
+			Vsync->checked = true;
+		}
+		else if(aud->fullscreenCheck == 0)
+		{
+			Vsync->checked = false;
+		}
+		//full screen STORED is aud->fullscreenCheck);
+		//full screen checked is fullscreen->checked);
+		buffer = 0;
+	}
 
 	if (settings == 0 && credits == 0)
 	{
@@ -262,10 +289,6 @@ bool SceneGameplay::Draw(Render* render)
 			Vsync->Draw(render);
 			music->Draw(render);
 			fxVolume->Draw(render);
-			//music volume
-			//fx volume
-			//fullscreen mode
-			//Vsync
 		}
 		else
 		{
@@ -319,32 +342,37 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 		if (control->id == 11)
 		{
 			//FULLSCREEN
-			/*if (prove)
+			if (fullscreen->checked)
 			{
 				//FullscreenConfig();
-				LOG("OFF");
+				aud->fullscreenCheck = 1;
+				//fullscreen changed to aud->fullscreenCheck);
+				
 			}
 			else
 			{
 				//FullscreenConfig();
-				LOG("ON");
+				aud->fullscreenCheck = 0;
+				//fullscreen changed to aud->fullscreenCheck);
+				
 			}
-			prove = !prove;
+			
 		}
 		else if (control->id == 12)
 		{
 			//VSYNC
-			if (prove2)
+			if (Vsync->checked)
 			{
 				//VsyncConfig();
-				LOG("OFF");
+				aud->vsyncCheck = 1;
+				//LOG("ON");
 			}
 			else
 			{
 				//VsyncConfig();
-				LOG("ON");
+				aud->vsyncCheck = 0;
+				//LOG("OFF");
 			}
-			prove2 = !prove2;*/
 		};
 	}
 	case GuiControlType::SLIDER:
@@ -354,11 +382,13 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			//mixmusic = music->value;
 			aud->VolumeMusic(music->value);
+			aud->volumeMusic = music->value;
 		}
 		else if (control->id == 14)
 		{
 			//fxmusic = music->value
 			aud->VolumeFx(fxVolume->value);
+			aud->volumeFx = fxVolume->value;
 		}
 	}
 	default: break;

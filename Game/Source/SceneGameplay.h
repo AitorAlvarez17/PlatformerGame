@@ -39,6 +39,7 @@ private:
     bool menu;
     bool settings;
     bool credits;
+    bool buffer; //for load and save sliders
 
     GuiButton* btnResume;
     GuiButton* btnSettings;
@@ -74,6 +75,7 @@ private:
     GuiSlider* fxVolume;
 
     AudioManager* aud;
+
 };
 
 #endif // __SCENEGAMEPLAY_H__

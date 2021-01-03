@@ -19,16 +19,17 @@ public:
     bool Draw(Render* render);
 
     int value;
+    SDL_Rect slider;
+    int unit;
 private:
 
     // GuiSlider specific properties
     // Maybe some animation properties for state change?
-    SDL_Rect slider;
 
     AudioManager * aud;
     int minValue;
     int maxValue;
-    int unit;
+
 };
 
 #endif // __GUISLIDER_H__

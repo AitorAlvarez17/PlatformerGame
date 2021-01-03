@@ -17,11 +17,12 @@ public:
     bool Update(Input* input, float dt);
     bool Draw(Render* render);
 
+    bool checked;
 private:
 
     // GuiCheckBox specific properties
     // Maybe some animation properties for state change?
-    bool checked;
+   
     SDL_Rect checkedBounds;
 };
 
