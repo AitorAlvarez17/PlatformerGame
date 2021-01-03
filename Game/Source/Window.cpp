@@ -66,6 +66,18 @@ bool Window::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+void Window::ChangeFullscreen(bool fullscreen)
+{
+	if (fullscreen)
+	{
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(window, 0);
+	}
+}
+
 // Called before quitting
 bool Window::CleanUp()
 {

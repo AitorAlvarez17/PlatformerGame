@@ -3,7 +3,7 @@
 	<input />
 	<audio />
 	<render>
-		<camera x="-160" y="-1668" />
+		<camera x="-1696" y="-1512" />
 	</render>
 	<textures />
 	<window />

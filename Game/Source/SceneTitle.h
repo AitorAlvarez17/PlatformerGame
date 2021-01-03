@@ -6,6 +6,7 @@
 #include "GuiButton.h"
 #include "GuiCheckBox.h"
 #include "GuiSlider.h"
+#include "App.h"
 #include "Audio.h"
 
 #include "Animation.h"
@@ -14,7 +15,7 @@ class SceneTitle : public Scene
 {
 public:
 
-    SceneTitle(AudioManager* manager);
+    SceneTitle(AudioManager* manager, Window* window, App* app);
     virtual ~SceneTitle();
 
     bool Load(Textures* tex);
@@ -28,9 +29,9 @@ public:
     // Declare on mouse click event
     bool OnGuiMouseClickEvent(GuiControl* control);
 
-    bool VsyncConfig();
+    bool VsyncConfig(int checked);
 
-    bool FullscreenConfig();
+    bool FullscreenConfig(int checked);
 
 private:
 
@@ -68,6 +69,8 @@ private:
     pugi::xml_node configRend;
 
     AudioManager* aud;
+    Window* win;
+    App* app;
 };
 
 #endif // __SCENETITLE_H__
