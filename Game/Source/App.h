@@ -22,6 +22,7 @@ class EntityManager;
 class SceneManager;
 class Debug;
 class ModuleUI;
+class Collisions;
 
 class App
 {
@@ -95,6 +96,7 @@ public:
 	SceneManager* sceneManager;
 	Debug* debug;
 	ModuleUI* ui;
+	Collisions* collisions;
 
 private:
 

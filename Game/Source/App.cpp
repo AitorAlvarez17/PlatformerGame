@@ -34,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneManager = new SceneManager(input, render, tex, audio);
 	debug = new Debug(input, this);
 	ui = new ModuleUI();
+	collisions = new Collisions();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -45,6 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneManager);
 	AddModule(debug);
 	AddModule(ui);
+	AddModule(collisions);
 
 	// Render last to swap buffer
 	AddModule(render);
