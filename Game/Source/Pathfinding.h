@@ -8,6 +8,7 @@
 #include "DynArray.h"
 #include "List.h"
 
+#define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 
 // --------------------------------------------------
@@ -34,7 +35,7 @@ public:
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
 
-	void DrawPath(Map* map,Render* render, const DynArray<iPoint>* path, SDL_Color);
+	void DrawPath(Map* map,Render* render);
 
 	// Main function to request a path from A to B
 	int CreatePath(const iPoint& origin, const iPoint& destination);
@@ -47,6 +48,8 @@ public:
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+
+	const DynArray<iPoint>* GetLastPath() const;
 
 private:
 
@@ -67,6 +70,9 @@ private:
 
 	// Map walkability values [0..255]
 	uchar* map;
+public:
+	// we store the created path here
+	DynArray<iPoint> lastPath;
 };
 
 // forward declaration
@@ -95,7 +101,7 @@ struct PathNode
 	// Calculate the F for a specific destination tile
 	int CalculateF(const iPoint& destination);
 	//Show Log for easy debugging
-	void Description(const PathNode& node);
+	void Description(PathNode& node);
 };
 
 // ---------------------------------------------------------------------

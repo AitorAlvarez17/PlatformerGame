@@ -108,9 +108,29 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
-	// Collision detection: map vs player
-	fPoint tempPlayerPosition = player->position;
-	
+	//DynArray<iPoint> newpath;
+	//path->GetInstance()->lastPath.Clear();
+
+	// Conversion
+	iPoint dst = { (int)player->position.x,(int)player->position.y + 32 };
+	dst = map->WorldToMap(dst.x, dst.y);
+
+	// Conversion
+	iPoint origin = map->WorldToMap(300, 470);
+	path->GetInstance()->CreatePath(origin, dst);
+	pathCreated = true;
+
+	//// Clear current path
+	//newpath.Clear();
+
+	//// Add eachpath points to our own path dyn array
+	//for (int i = 0; i < path->GetInstance()->GetLastPath()->Count(); ++i)
+	//{
+	//	newpath.PushBack(*path->lastPath.At(i));
+	//}
+	//newpath.Flip();
+
+
 	if (settings && buffer)
 	{
 		music->slider.x = ((aud->volumeMusic * music->bounds.w/100) + music->bounds.x) - music->bounds.w / 100;
@@ -266,6 +286,8 @@ bool SceneGameplay::Draw(Render* render)
 
 	player->Draw(render);
 
+	if(pathCreated)
+		path->GetInstance()->DrawPath(map, render);
 
 	//MONEY UI
 	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);

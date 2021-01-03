@@ -229,7 +229,7 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, SDL_Color color) const
 
 	int result = -1;
 
-	result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
+	result = SDL_RenderDrawLine(renderer, x1 * scale , y1 * scale , x2 * scale , y2 * scale );
 
 	if(result != 0)
 	{
