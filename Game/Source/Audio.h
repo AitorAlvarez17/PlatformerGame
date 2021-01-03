@@ -40,6 +40,11 @@ public:
 	// Load / Save
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
+
+	int volumeMusic;
+	int volumeFx;
+	bool fullscreenCheck;
+	bool vsyncCheck;
 private:
 
 	_Mix_Music* music;

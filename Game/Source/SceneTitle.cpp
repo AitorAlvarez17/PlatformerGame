@@ -46,9 +46,9 @@ SceneTitle::SceneTitle(AudioManager* manager)
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
    
-    prove = 0;
-    prove2 = 0;
+   
 
+    buffer = true;
     this->aud = manager;
 }
 
@@ -73,6 +73,30 @@ bool SceneTitle::Load(Textures* tex)
 
 bool SceneTitle::Update(Input* input, float dt)
 {
+    if (settings && buffer)
+    {
+        music->slider.x = ((aud->volumeMusic * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
+        fxVolume->slider.x = ((aud->volumeFx * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
+        if (aud->fullscreenCheck)
+        {
+            fullscreen->checked = true;
+        }
+        else
+        {
+            fullscreen->checked = false;
+        }
+        if (aud->vsyncCheck)
+        {
+            Vsync->checked = true;
+        }
+        else
+        {
+            fullscreen->checked = false;
+        }
+        //full screen STORED is aud->fullscreenCheck);
+        //full screen checked is fullscreen->checked);
+        buffer = 0;
+    }
     if (settings == 0 && credits == 0)
     {
         btnStart->Update(input, dt);
@@ -164,6 +188,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
         {
             credits = 0;
             settings = 0;
+            
         }
         else if (control->id == 7) LOG("fullscreen ON");
         else if (control->id == 8) LOG("Vsync ON");
@@ -176,32 +201,38 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
         if (control->id == 7)
         {
             //FULLSCREEN
-            if (prove)
+            if (fullscreen->checked)
             {
                 FullscreenConfig();
-                LOG("OFF");
+                aud->fullscreenCheck = 1;
+                //fullscreen changed to aud->fullscreenCheck);
+                //LOG("ON");
             }
             else
             {
                 FullscreenConfig();
-                LOG("ON");
+                aud->fullscreenCheck = 0;
+                //fullscreen changed to aud->fullscreenCheck);
+                //LOG("OFF");
             }
-            prove = !prove;
+            
         }
         else if (control->id == 8)
         {
             //VSYNC
-            if (prove2)
+            if (Vsync->checked)
             {
                 VsyncConfig();
-                LOG("OFF");
+                aud->vsyncCheck = 1;
+                //LOG("OFF");
             }
             else
             {
                 VsyncConfig();
-                LOG("ON");
+                aud->vsyncCheck = 0;
+                //LOG("ON");
             }
-            prove2 = !prove2;
+            
         };
     }
     case GuiControlType::SLIDER:
@@ -211,11 +242,13 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
         {
             //mixmusic = music->value;
             aud->VolumeMusic(music->value);
+            aud->volumeMusic = music->value;
         }
         else if (control->id == 10)
         {
             //fxmusic = music->value
             aud->VolumeFx(fxVolume->value);
+            aud->volumeFx = fxVolume->value;
         }
     }
     default: break;
@@ -239,9 +272,9 @@ bool SceneTitle::VsyncConfig()
         config = configFile.child("config");
         configRend = config.child("renderer");
 
-        LOG("changing VSYNC");
-        if (prove2 == 1) config.append_child("MAMA");
-        else config.child("vsync").attribute("value").set_value(false);
+        //LOG("changing VSYNC");
+       
+        //else config.child("vsync").attribute("value").set_value(false);
 
     }
     LOG("%d", config.child("vsync").attribute("value").as_bool(false));
