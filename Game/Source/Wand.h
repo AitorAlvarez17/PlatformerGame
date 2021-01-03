@@ -16,6 +16,10 @@ public:
 
     bool Update(float dt, Input* input);
 
+    bool Load(Textures* tex);
+
+    bool Draw(Render* render);
+
     void Ability();
 
     void Attack();

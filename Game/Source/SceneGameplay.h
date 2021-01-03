@@ -65,6 +65,9 @@ private:
     SDL_Texture* habUi;
     SDL_Texture* backgroundUi;
     SDL_Texture* healthNameUi;
+    SDL_Texture* marginsUi;
+    SDL_Texture* marginsButtonUi;
+    SDL_Texture* marginsSlidersUi;
    
 
     SDL_Texture* healthBackground;
