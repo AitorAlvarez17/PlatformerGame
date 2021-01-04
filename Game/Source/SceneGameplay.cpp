@@ -339,7 +339,7 @@ bool SceneGameplay::Draw(Render* render)
 	player->Draw(render);
 
 	if(pathCreated)
-		path->GetInstance()->DrawPath(map, render);
+		path->GetInstance()->DrawPath(render);
 
 	//MONEY UI
 	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
