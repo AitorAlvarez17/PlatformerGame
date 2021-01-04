@@ -6,14 +6,19 @@
 #include "Item.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "Collisions.h"
 
 #include "List.h"
+
+#define MAX_ENTITIES 100
 
 class EntityManager : public Module
 {
 public:
 
 	EntityManager();
+
+	EntityManager(Collisions* coll);
 
 	// Destructor
 	virtual ~EntityManager();
@@ -28,8 +33,9 @@ public:
 
 	// Additional methods
 	Player* CreatePlayer(fPoint origin);
-	Entity* CreateEntity(EntityType type, fPoint origin,ItemType iType);
-	Entity* CreateEntity(EntityType type, fPoint origin, EnemyType eType);
+	Entity* CreateItem(fPoint origin,ItemType iType);
+	Entity* CreateEnemy(fPoint origin, EnemyType eType);
+
 
 	void DestroyEntity(Entity* entity);
 
@@ -39,7 +45,9 @@ public:
 
 public:
 
-	List<Entity*> entities;
+
+	Collisions* collisions;
+	Entity* entities[MAX_ENTITIES] = { nullptr };
 
 	float accumulatedTime = 0.0f;
 	float updateMsCycle = 0.0f;

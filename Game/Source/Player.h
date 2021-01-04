@@ -79,6 +79,8 @@ public:
 
     bool isGoingRight = false;
 
+ 
+
 };
 
 #endif // __PLAYER_H__

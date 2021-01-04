@@ -12,6 +12,7 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 
 	width = 32;
 	height = 32;
+
 	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 
 	/*hitbox = Collisions::AddCollider(size, Collider::Type::PLAYER,this);*/
@@ -66,6 +67,7 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 	actualAnimation = &jumpLeftAnim;
 
 }
+
 
 bool Player::Update(Input* input, float dt)
 {

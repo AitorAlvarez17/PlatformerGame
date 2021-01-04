@@ -12,9 +12,6 @@ struct Collider
 	enum Type
 	{
 		NONE = -1,
-		WALL_A,
-		WALL_D,
-		FLOOR,
 		PLAYER,
 		DEATH,
 		HEART,

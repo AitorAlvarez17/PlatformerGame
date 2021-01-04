@@ -12,12 +12,13 @@ class Textures;
 class AudioManager;
 class Window;
 class App;
+class EntityManager;
 
 class SceneManager : public Module
 {
 public:
 
-	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, App* app);
+	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app);
 
 	// Destructor
 	virtual ~SceneManager();
@@ -49,6 +50,7 @@ private:
 	AudioManager * aud;
 	Window* win;
 	App* app;
+	EntityManager* entityManager;
 	
 	Scene* current;
 	Scene* next;

@@ -1,10 +1,14 @@
 #include "Item.h"
 
-Item::Item(fPoint origin) : Entity(EntityType::ITEM)
+Item::Item(fPoint origin,ItemType type) : Entity(EntityType::ITEM)
 {
 	position = origin;
-
+	iType = type;
 	//set the width and the height to the requested value depending on the item etc...
+	width = 32;
+	height = 32;
+
+
 
 	/*hitbox->rect.x = origin.x;
 	hitbox->rect.y = origin.y;
@@ -15,3 +19,5 @@ Item::Item(fPoint origin) : Entity(EntityType::ITEM)
 Item::~Item()
 {
 }
+
+

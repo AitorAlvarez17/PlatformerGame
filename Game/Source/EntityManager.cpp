@@ -4,17 +4,22 @@
 #include "Enemy.h"
 #include "Item.h"
 
+#include "Collisions.h"
+
 #include "Defs.h"
 #include "Log.h"
 
-EntityManager::EntityManager() : Module()
+EntityManager::EntityManager(Collisions* coll) : Module()
 {
 	name.Create("entitymanager");
+	collisions = coll;
+
 }
 
 // Destructor
 EntityManager::~EntityManager()
-{}
+{
+}
 
 // Called before render is available
 bool EntityManager::Awake(pugi::xml_node& config)
@@ -33,6 +38,7 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
+
 Player* EntityManager::CreatePlayer(fPoint origin)
 {
 	Player* ret = nullptr;
@@ -40,47 +46,82 @@ Player* EntityManager::CreatePlayer(fPoint origin)
 	
 	ret = new Player(origin);
 	
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
 
 	// Created entities are added to the list
-	if (ret != nullptr) entities.Add(ret);
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::PLAYER, this);
 
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type, fPoint origin, ItemType iType)
+Entity* EntityManager::CreateItem(fPoint origin, ItemType iType)
 {
-	Entity* ret = nullptr;
+	Item* ret = nullptr;
 
-	//switch (type)
-	//{
-	//	// L13: Create the corresponding type entity
-	//	case EntityType::PLAYER: ret = new Player();  break;
-	//	/*case EntityType::ENEMY: ret = new Enemy();  break;
-	//	case EntityType::ITEM: ret = new Item();  break;*/
-	//	default: break;
-	//}
+	ret = new Item(origin, iType);
 
-	//// Created entities are added to the list
-	//if (ret != nullptr) entities.Add(ret);
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
+
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::COIN, this);
+	
 
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type, fPoint origin, EnemyType eType)
+Entity* EntityManager::CreateEnemy(fPoint origin, EnemyType eType)
 {
-	Entity* ret = nullptr;
+	Enemy* ret = nullptr;
 
-	//switch (type)
-	//{
-	//	// L13: Create the corresponding type entity
-	//case EntityType::PLAYER: ret = new Player();  break;
-	//	/*case EntityType::ENEMY: ret = new Enemy();  break;
-	//	case EntityType::ITEM: ret = new Item();  break;*/
-	//default: break;
-	//}
+	ret = new Enemy(origin, eType);
 
-	//// Created entities are added to the list
-	//if (ret != nullptr) entities.Add(ret);
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
+	
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::ENEMY, this);
 
 	return ret;
 }
@@ -104,18 +145,21 @@ bool EntityManager::Update(float dt)
 
 bool EntityManager::UpdateAll(float dt, bool doLogic)
 {
-	ListItem<Entity*> entity = nullptr;
-	if(entities.start != nullptr)entity.data = entities.start->data;
+	
 	if (doLogic)
 	{
-		while (entity.data != nullptr) {
-			entity.data->Update(dt);
-			entity = entity.next->data;
+		for (uint i = 0; i < MAX_ENTITIES; ++i)
+		{
+			if (entities[i] != nullptr)
+			{
+				entities[i]->Update(dt);
+			}
 		}
-		
 		
 		// TODO: Update all entities 
 	}
+
+	
 
 	return true;
 }
