@@ -3,6 +3,7 @@
 
 #include "Scene.h"
 #include "Audio.h"
+#include "Window.h"
 #include "Map.h"
 #include "Player.h"
 #include "GuiButton.h"
@@ -15,7 +16,7 @@ class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager);
+    SceneGameplay(AudioManager* manager, Window* win);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -73,6 +74,23 @@ private:
     SDL_Texture* healthBackground;
     SDL_Texture* moneyBackgroundUi;
 
+    SDL_Texture* zero;
+    SDL_Texture* one;
+    SDL_Texture* two;
+    SDL_Texture* three;
+    SDL_Texture* four;
+    SDL_Texture* five;
+    SDL_Texture* six;
+    SDL_Texture* seven;
+    SDL_Texture* eight;
+    SDL_Texture* nine;
+    SDL_Texture* x;
+
+    SDL_Texture* number;
+
+    int coins;
+
+
     GuiCheckBox* fullscreen;
     GuiCheckBox* Vsync;
 
@@ -80,6 +98,7 @@ private:
     GuiSlider* fxVolume;
 
     AudioManager* aud;
+    Window* win;
 
     bool pathCreated = false;
 };
