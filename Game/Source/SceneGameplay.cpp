@@ -2,7 +2,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window)
 {
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
 	btnResume->SetObserver(this);
@@ -36,6 +36,7 @@ SceneGameplay::SceneGameplay(AudioManager* manager)
 	buffer = true;
 
 	this->aud = manager;
+	this->win = window;
 }
 
 SceneGameplay::~SceneGameplay()
@@ -90,7 +91,18 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	marginsUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui.png"));
 	marginsButtonUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_button.png"));
 	marginsSlidersUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_music_and_fx.png"));
-	
+	//NUMBERS
+	zero = tex->Load(PATH("Assets/Textures/UI/Numbers", "0.png"));
+	one = tex->Load(PATH("Assets/Textures/UI/Numbers", "1.png"));
+	two = tex->Load(PATH("Assets/Textures/UI/Numbers", "2.png"));
+	three = tex->Load(PATH("Assets/Textures/UI/Numbers", "3.png"));
+	four = tex->Load(PATH("Assets/Textures/UI/Numbers", "4.png"));
+	five = tex->Load(PATH("Assets/Textures/UI/Numbers", "5.png"));
+	six = tex->Load(PATH("Assets/Textures/UI/Numbers", "6.png"));
+	seven = tex->Load(PATH("Assets/Textures/UI/Numbers", "7.png"));
+	eight = tex->Load(PATH("Assets/Textures/UI/Numbers", "8.png"));
+	nine = tex->Load(PATH("Assets/Textures/UI/Numbers", "9.png"));
+
 
 
 	// Initialize player
@@ -120,6 +132,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 	// Conversion
 	iPoint origin = map->WorldToMap(300, 470);
+	path->GetInstance()->lastPath.Clear();
 	path->GetInstance()->CreatePath(origin, dst);
 	pathCreated = true;
 
@@ -179,6 +192,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
 	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
+	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) coins++;
 
 	if (player->godMode < 0)
 	{
@@ -278,6 +292,42 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 bool SceneGameplay::Draw(Render* render)
 {
+	//COINS
+	/*switch (coins)
+	{
+		case 1:
+			number = one;
+			break;
+		case 2:
+			number = two;
+			break;
+		case 3:
+			number = three;
+			break;
+		case 4:
+			number = four;
+			break;
+		case 5:
+			number = five;
+			break;
+		case 6:
+			number = six;
+			break;
+		case 7:
+			number = seven;
+			break;
+		case 8:
+			number = eight;
+			break;
+		case 9:
+			number = nine;
+			break;
+	default:
+		number = zero;
+		break;
+	}
+	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(one, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);*/
 	//Draw BG
 	render->DrawTexture(background, 0, 0);
 	render->DrawTexture(olympus, 0, 1900);
@@ -390,14 +440,13 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			//FULLSCREEN
 			if (fullscreen->checked)
 			{
-				//FullscreenConfig();
+				win->ChangeFullscreen(fullscreen->checked);
 				aud->fullscreenCheck = 1;
-				//fullscreen changed to aud->fullscreenCheck);
 				
 			}
 			else
 			{
-				//FullscreenConfig();
+				win->ChangeFullscreen(fullscreen->checked);
 				aud->fullscreenCheck = 0;
 				//fullscreen changed to aud->fullscreenCheck);
 				
@@ -409,13 +458,13 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			//VSYNC
 			if (Vsync->checked)
 			{
-				//VsyncConfig();
+				SDL_GL_SetSwapInterval(1);
 				aud->vsyncCheck = 1;
 				//LOG("ON");
 			}
 			else
 			{
-				//VsyncConfig();
+				SDL_GL_SetSwapInterval(0);
 				aud->vsyncCheck = 0;
 				//LOG("OFF");
 			}

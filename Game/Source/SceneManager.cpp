@@ -176,7 +176,7 @@ bool SceneManager::Update(float dt)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
 			case SceneType::TITLE: next = new SceneTitle(aud, win, app); break;
-			case SceneType::GAMEPLAY: next = new SceneGameplay(aud); break;
+			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;
 		}
