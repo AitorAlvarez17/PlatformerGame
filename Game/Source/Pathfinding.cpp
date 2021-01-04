@@ -174,7 +174,7 @@ void PathNode::Description(PathNode& node)
 	LOG("f score: %d g: %d h: %d", node.Score(), node.g, node.h);
 }
 
-void PathFinding::DrawPath(Map* map, Render* render)
+void PathFinding::DrawPath(Render* render)
 {
 	int c = lastPath.Count() ;
 	for (int i = 0; i < c; i++)
@@ -182,17 +182,7 @@ void PathFinding::DrawPath(Map* map, Render* render)
 		SDL_Rect tmp = { lastPath[i].x * 16,lastPath[i].y * 16 , 16, 16 };
 		render->DrawRectangle(tmp, { 255, 0, 0, 255 });
 	}
-	//for (int i = 0; i < c; i++)
-	//{
-	//	iPoint ap = (lastPath)[i];
-	//	iPoint bp = (lastPath)[i];
 
-	//	ap.x = ap.x * map->data.tileWidth + map->data.tileWidth / 2;
-	//	ap.y = ap.y * map->data.tileHeight + map->data.tileHeight / 2;
-	//	bp.x = bp.x * map->data.tileWidth + map->data.tileWidth / 2;
-	//	bp.y = bp.y * map->data.tileHeight + map->data.tileHeight / 2;
-	//	render->DrawLine(ap.x, ap.y, bp.x, bp.y, { 255, 0, 0, 255 });
-	//}
 }
 
 // ----------------------------------------------------------------------------------
