@@ -2,7 +2,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input)
 {
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
 	btnResume->SetObserver(this);
@@ -37,6 +37,7 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 	this->aud = manager;
 	this->win = window;
 	this->eManager = eManager;
+	this->input = input;
 }
 
 SceneGameplay::~SceneGameplay()
@@ -192,7 +193,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
 	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
-	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) coins++;
+	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN);
 
 	if (player->godMode < 0)
 	{
@@ -428,7 +429,7 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			fullscreen->Start();//set fullscreen value ---- read it from file and set it to the current state
 		}
 		else if (control->id == 8) TransitionToScene(SceneType::TITLE);
-		else if (control->id == 9) SDL_Quit();
+		else if (control->id == 9) input->windowEvents[WE_QUIT] = 1;
 		else if (control->id == 10) settings = 0;
 
 	}

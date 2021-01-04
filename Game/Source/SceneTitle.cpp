@@ -12,7 +12,7 @@
 #include "SDL/include/SDL.h"
 
 
-SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app)
+SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app, Input* input)
 {
     // GUI: Initialize required controls for the screen
     btnStart = new GuiButton(1, { 1280/2 - 300/2, 80, 300, 80 }, "START");
@@ -55,6 +55,7 @@ SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app)
     this->aud = manager;
     this->win = window;
     this->app = app;
+    this->input = input;
 }
 
 SceneTitle::~SceneTitle()
@@ -220,7 +221,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
             settings = 1;
         }
         else if (control->id == 4) credits = 1;
-        else if (control->id == 5) SDL_Quit();
+        else if (control->id == 5) input->windowEvents[WE_QUIT] = 1;
         else if (control->id == 6)
         {
             credits = 0;
