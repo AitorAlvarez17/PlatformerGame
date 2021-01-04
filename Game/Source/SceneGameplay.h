@@ -16,7 +16,7 @@ class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win);
+    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);

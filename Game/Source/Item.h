@@ -20,10 +20,10 @@ class Item : public Entity
 public:
 
     Item();
-    Item(fPoint origin);
+    Item(fPoint origin, ItemType type);
     virtual ~Item();
     ItemType GetType();
-    ItemType SetType(ItemType type);
+    //ItemType SetType(ItemType type);
 
 
 private:

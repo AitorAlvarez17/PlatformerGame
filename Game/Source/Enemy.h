@@ -6,6 +6,9 @@
 #include "DynArray.h"
 #include "Point.h"
 #include "SString.h"
+#include "Render.h"
+
+#include "SDL/include/SDL.h"
 
 enum class EnemyType
 {
@@ -20,16 +23,25 @@ class Enemy : public Entity
 public:
 
     Enemy();
-    Enemy(fPoint origin);
+    Enemy(fPoint origin,EnemyType type);
     virtual ~Enemy();
+
     EnemyType GetType();
     EnemyType SetType(EnemyType type);
+
+    bool Update(float dt);
+
+    bool Draw(Render* render);
+
+    void SetTexture(SDL_Texture* tex);
 
 
 private:
 
     DynArray<iPoint>* path;
     EnemyType eType;
+public:
+    SDL_Texture* texture;
 
 };
 

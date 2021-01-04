@@ -1,7 +1,7 @@
 #ifndef __COLLISIONS_H__
 #define __COLLISIONS_H__
 
-#define MAX_COLLIDERS 1000
+#define MAX_COLLIDERS 100
 
 #include "Module.h"
 #include "Collider.h"
@@ -42,9 +42,10 @@ public:
 
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];
 
+	Collider* colliders[MAX_COLLIDERS] = { nullptr };
 private:
 	// All existing colliders in the scene
-	Collider* colliders[MAX_COLLIDERS] = { nullptr };
+	
 
 	// The collision matrix. Defines the interaction for two collider types
 	// If set two false, collider 1 will ignore collider 2

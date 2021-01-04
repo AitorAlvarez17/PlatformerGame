@@ -2,7 +2,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager)
 {
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
 	btnResume->SetObserver(this);
@@ -31,12 +31,12 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window)
 	fxVolume = new GuiSlider(14, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
 	fxVolume->SetObserver(this);
 
-	eManager = new EntityManager;
 
 	buffer = true;
 
 	this->aud = manager;
 	this->win = window;
+	this->eManager = eManager;
 }
 
 SceneGameplay::~SceneGameplay()
