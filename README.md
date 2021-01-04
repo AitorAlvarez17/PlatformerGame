@@ -61,5 +61,10 @@ This project is licensed under an unmodified MIT license, which is an OSI-certif
  - PUGI License
  - Optick License
  
+ ## Working Method
+ 
+This project has used the website notion.so to apply the Kanban working method and thus be able to organize and fulfill correctly established goals.
+
+ ![](Images/kanban.png)
 
 
