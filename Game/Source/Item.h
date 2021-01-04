@@ -21,9 +21,13 @@ public:
 
     Item();
     Item(fPoint origin, ItemType type);
+
     virtual ~Item();
+
     ItemType GetType();
     //ItemType SetType(ItemType type);
+
+    void OnCollision(Collider* c1, Collider* c2);
 
 
 private:

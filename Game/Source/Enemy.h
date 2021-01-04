@@ -35,6 +35,8 @@ public:
 
     void SetTexture(SDL_Texture* tex);
 
+    void OnCollision(Collider* c1, Collider* c2);
+
 
 private:
 
