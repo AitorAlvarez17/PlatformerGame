@@ -39,6 +39,8 @@ public:
     
     void UpdateAnim(PlayerAnim previousState, PlayerAnim newState);
 
+    void OnCollision(Collider* c1, Collider* c2);
+
 
     SDL_Rect GetBounds();
 
