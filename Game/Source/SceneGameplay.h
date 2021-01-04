@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Player.h"
+#include "Input.h"
 #include "GuiButton.h"
 #include "GuiCheckBox.h"
 #include "GuiSlider.h"
@@ -16,7 +17,7 @@ class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager);
+    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -36,7 +37,7 @@ private:
     Player* player;
     EntityManager* eManager;
     PathFinding* path;
-
+    
     SDL_Rect camera;
 
     bool menu;
@@ -99,6 +100,7 @@ private:
 
     AudioManager* aud;
     Window* win;
+    Input* input;
 
     bool pathCreated = false;
 };
