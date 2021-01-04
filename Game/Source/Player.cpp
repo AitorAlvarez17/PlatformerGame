@@ -106,6 +106,20 @@ bool Player::Draw(Render* render)
 	return false;
 }
 
+void Player::OnCollision(Collider* c1, Collider* c2)
+{
+	if (c2 == hitbox)
+	{
+		Collider* c3 = c1;
+		c1 = c2;
+		c2 = c3;
+	}
+
+	//aqui se meterán las comparaciones entre colliders. C1 siempre sera el collider del cpp en el que estas.
+
+
+}
+
 void Player::SetTexture(SDL_Texture* tex)
 {
 	texture = tex;
