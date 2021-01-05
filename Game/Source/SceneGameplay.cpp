@@ -16,20 +16,21 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 	btnExit = new GuiButton(9, { 1280 / 2 - 300 / 2, 515, 300, 80 }, "EXIT");
 	btnExit->SetObserver(this);
 
-	btnBack = new GuiButton(10, { 1280 / 2 - 300 / 2, 515, 300, 80 }, "EXIT");
+	btnBack = new GuiButton(10, { 1280 / 2 - 300 / 2, 520, 300, 80 }, "EXIT");
 	btnBack->SetObserver(this);
 
-	fullscreen = new GuiCheckBox(11, { 290, 440, 80, 80 }, "fullscreen");
+	fullscreen = new GuiCheckBox(11, { 320, 400, 80, 80 }, "fullscreen");
 	fullscreen->SetObserver(this);
 
-	Vsync = new GuiCheckBox(12, { 890, 440, 80, 80 }, "Vsync");
+	Vsync = new GuiCheckBox(12, { 880, 400, 80, 80 }, "Vsync");
 	Vsync->SetObserver(this);
 
-	music = new GuiSlider(13, { 1280 / 2 - 600 / 2, 200, 600, 30 }, "music");
+	music = new GuiSlider(13, { 1280 / 2 - 600 / 2, 170, 600, 30 }, "music");
 	music->SetObserver(this);
 
-	fxVolume = new GuiSlider(14, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
+	fxVolume = new GuiSlider(14, { 1280 / 2 - 600 / 2, 270, 600, 30 }, "other");
 	fxVolume->SetObserver(this);
+
 
 
 	buffer = true;
@@ -365,7 +366,7 @@ bool SceneGameplay::Draw(Render* render)
 			render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 			//BACK BUTTON
 			btnBack->Draw(render);
-			render->DrawTexture(backText, 1280 / 2 - 300 / 2, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(backText, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 			render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
 			//SLIDERS AND CHECKBOX
 			render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
