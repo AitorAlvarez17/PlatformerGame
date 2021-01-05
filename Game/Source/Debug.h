@@ -14,7 +14,7 @@ class Debug : public Module
 {
 public:
 
-	Debug(Input* input, App* app);
+	Debug(Input* input, Collisions* collisions,App* app);
 
 	// Destructor
 	virtual ~Debug();
@@ -38,6 +38,7 @@ private:
 
 	Input* input;
 	App* app;
+	Collisions* collisions;
 };
 
 #endif // __DEBUG_H__

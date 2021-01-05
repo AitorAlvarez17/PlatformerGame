@@ -12,6 +12,7 @@
 #include "GuiSlider.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
+#include "Item.h"
 
 class SceneGameplay : public Scene
 {
