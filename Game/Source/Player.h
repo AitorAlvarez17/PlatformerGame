@@ -41,6 +41,8 @@ public:
 
     void OnCollision(Collider* c1, Collider* c2);
 
+    void OnCollision(Collider* c1);
+
 
     SDL_Rect GetBounds();
 

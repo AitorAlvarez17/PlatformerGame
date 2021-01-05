@@ -36,12 +36,17 @@ public:
 	Entity* CreateItem(fPoint origin,ItemType iType);
 	Entity* CreateEnemy(fPoint origin, EnemyType eType);
 
+	void OnCollision(Collider* a, Collider* b);
+
 
 	void DestroyEntity(Entity* entity);
 
 	void AddEntity(Entity* entity);
 
 	bool UpdateAll(float dt, bool doLogic);
+
+	int GetTilePosx(int x);
+	int GetTilePosy(int y);
 
 public:
 
