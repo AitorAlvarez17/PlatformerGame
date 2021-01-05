@@ -30,19 +30,19 @@ SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app, Input* i
     btnExit = new GuiButton(5, { 1280/2 - 300/2, 560, 300, 80 }, "EXIT");
     btnExit->SetObserver(this);
 
-    btnBack = new GuiButton(6, { 1280 / 2 - 300 / 2, 540, 300, 80 }, "BACK");
+    btnBack = new GuiButton(6, { 1280 / 2 - 300 / 2, 520, 300, 80 }, "BACK");
     btnBack->SetObserver(this);
 
-    fullscreen = new GuiCheckBox(7, { 290, 440, 80, 80 }, "fullscreen");
+    fullscreen = new GuiCheckBox(7, { 320, 400, 80, 80 }, "fullscreen");
     fullscreen->SetObserver(this);
 
-    Vsync = new GuiCheckBox(8, { 890, 440, 80, 80 }, "Vsync");
+    Vsync = new GuiCheckBox(8, { 880, 400, 80, 80 }, "Vsync");
     Vsync->SetObserver(this);
 
-    music = new GuiSlider(9, { 1280 / 2 - 600 / 2, 200, 600, 30 }, "music");
+    music = new GuiSlider(9, { 1280 / 2 - 600 / 2, 170, 600, 30 }, "music");
     music->SetObserver(this);
 
-    fxVolume = new GuiSlider(10, { 1280 / 2 - 600 / 2, 300, 600, 30 }, "other");
+    fxVolume = new GuiSlider(10, { 1280 / 2 - 600 / 2, 270, 600, 30 }, "other");
     fxVolume->SetObserver(this);
 
     bgAnim.GenerateAnimation({ 0,0,1280,720 }, 3, 1, 0, 0);
@@ -140,8 +140,8 @@ bool SceneTitle::Draw(Render* render)
         render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
         render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         btnBack->Draw(render);
-        render->DrawTexture(marginsButtonUi, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-        render->DrawTexture(backText, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+        render->DrawTexture(backText, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
         render->DrawTexture(creditsUi, 100, -70, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
        
     }
@@ -153,7 +153,7 @@ bool SceneTitle::Draw(Render* render)
         //BACK
         btnBack->Draw(render);
         render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-        render->DrawTexture(backText, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(backText, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
         //SLIDERS AND CHECK
         render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
         fullscreen->Draw(render);
