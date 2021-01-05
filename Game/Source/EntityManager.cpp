@@ -174,7 +174,7 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 
 void EntityManager::OnCollision(Collider* a, Collider* b)
 {
-	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		Entity* c = entities[i];
 		if (c->hitbox == a && entities[i] != nullptr)
@@ -182,7 +182,7 @@ void EntityManager::OnCollision(Collider* a, Collider* b)
 			c->OnCollision(b);
 		}
 
-	}
+	}*/
 }
 
 int EntityManager::GetTilePosx(int x) {

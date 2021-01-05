@@ -4,16 +4,18 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "Collisions.h"
 
 #include "SDL/include/SDL.h"
 
 
-Debug::Debug(Input* input, App* app) : Module()
+Debug::Debug(Input* input, Collisions* coll, App* app) : Module()
 {
 	name.Create("debug");
 
 	this->input = input;
 	this->app = app;
+	collisions = coll;
 }
 
 // Destructor
@@ -43,6 +45,8 @@ bool Debug::Update(float dt)
 	if (input->GetKey(SDL_SCANCODE_F5) == KEY_REPEAT) app->SaveGameRequest();
 
 	if (input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT) app->LoadGameRequest();
+
+	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) collisions->DebugRequest();
 
 
 	return true;
