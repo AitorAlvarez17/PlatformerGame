@@ -133,7 +133,9 @@ bool SceneTitle::Draw(Render* render)
 {
    // render->DrawRectangle({ 0, 0, 1280, 720 }, { 100, 200, 200, 255 });
     SDL_Rect rect = currentAnim->GetCurrentFrame();
-    render->DrawTexture(bg, 0, 400, &rect);
+    render->camera.x = 0;
+    render->camera.y = 0;
+    render->DrawTexture(bg, 0, 0, &rect);
     
     if (credits)
     {
