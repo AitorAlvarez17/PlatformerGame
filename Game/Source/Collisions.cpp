@@ -6,8 +6,10 @@
 #include "Log.h"
 #include "Render.h"
 
-Collisions::Collisions() : Module()
+Collisions::Collisions(Render* rend) : Module()
 {
+	render = rend;
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
@@ -189,11 +191,11 @@ bool Collisions::Update(float dt)
 
 			if (matrix[c1->type][c2->type] && c1->Intersects(c2->rect))
 			{
-			/*	for (uint i = 0; i < MAX_LISTENERS; ++i)
+				for (uint i = 0; i < MAX_LISTENERS; ++i)
 					if (c1->listeners[i] != nullptr) c1->listeners[i]->OnCollision(c1, c2);
 
 				for (uint i = 0; i < MAX_LISTENERS; ++i)
-					if (c2->listeners[i] != nullptr) c2->listeners[i]->OnCollision(c2, c1);*/
+					if (c2->listeners[i] != nullptr) c2->listeners[i]->OnCollision(c2, c1);
 			}
 
 		}
@@ -205,8 +207,8 @@ bool Collisions::Update(float dt)
 bool Collisions::PostUpdate()
 {
 
-	////if (debug)
-	////	/*DebugDraw();*/
+	if (debug)
+		DebugDraw();
 
 
 		return true;
@@ -256,60 +258,72 @@ void Collisions::RemoveCollider(Collider* collider)
 	}
 }
 
-//void Collisions::DebugDraw()
-//{
-//	Uint8 alpha = 80;
-//	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-//	{
-//		if (colliders[i] == nullptr)
-//			continue;
-//
-//		switch (colliders[i]->type)
-//		{
-//		case Collider::Type::NONE: // white
-//			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
-//			break;
-//
-//		case Collider::Type::FLOOR:
-//			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
-//			break;
-//		case Collider::Type::PLAYER:
-//			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
-//			break;
-//		case Collider::Type::DEATH:
-//			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
-//			break;
-//		case Collider::Type::COIN:
-//			app->render->DrawRectangle(colliders[i]->rect, 255, 207, 64, alpha);
-//			break;
-//		case Collider::Type::HEART:
-//			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 253, alpha);
-//			break;
-//		case Collider::Type::TP:
-//			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
-//			break;
-//		case Collider::Type::SAVEPOINT:
-//			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
-//			break;
-//		case Collider::Type::ENEMY:
-//			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
-//			break;
-//		case Collider::Type::ENEMYWALL:
-//			app->render->DrawRectangle(colliders[i]->rect, 247, 0, 255, alpha);
-//			break;
-//		case Collider::Type::ENDLEVEL:
-//			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 255, alpha);
-//			break;
-//		case Collider::Type::FIREBALL:
-//			app->render->DrawRectangle(colliders[i]->rect, 255, 127, 80, alpha);
-//			break;
-//
-//		}
-//
-//
-//	}
-//
-//}
+void Collisions::DebugDraw()
+{
+	Uint8 alpha = 80;
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (colliders[i] == nullptr)
+			continue;
+
+		switch (colliders[i]->type)
+		{
+		case Collider::Type::NONE: // white
+			render->DrawRectangle(colliders[i]->rect, { 255, 255, 255, 255 });
+
+			break;
+
+		case Collider::Type::FLOOR:
+			render->DrawRectangle(colliders[i]->rect, { 0, 255, 0, 255 });
+
+			break;
+		case Collider::Type::PLAYER:
+			render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
+
+			break;
+		case Collider::Type::DEATH:
+			render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
+
+			break;
+		case Collider::Type::COIN:
+			render->DrawRectangle(colliders[i]->rect, { 255, 207, 64, 255 });
+
+			break;
+		case Collider::Type::HEART:
+			render->DrawRectangle(colliders[i]->rect, { 0, 255, 253, 255 });
+
+			break;
+		case Collider::Type::TP:
+			render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
+
+			break;
+		case Collider::Type::SAVEPOINT:
+			render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+
+			break;
+		case Collider::Type::ENEMY:
+			render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+
+			break;
+		case Collider::Type::ENEMYWALL:
+			render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+
+			break;
+		case Collider::Type::ENDLEVEL:
+			render->DrawRectangle(colliders[i]->rect, { 255, 0, 255, 255 });
+
+			break;
+		case Collider::Type::FIREBALL:
+			render->DrawRectangle(colliders[i]->rect, { 255, 127, 80, 255 });
+
+			break;
+
+		}
+
+
+	}
+
+}
 
 void Collisions::DebugRequest() {
 
