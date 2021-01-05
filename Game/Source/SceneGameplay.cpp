@@ -113,8 +113,6 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->SetTexture(playerText);
 	eManager->CreateItem(fPoint(5 * 16, 17 * 16), ItemType::COIN);
 
-
-	
 	return false;
 }
 
@@ -127,29 +125,17 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
-	//DynArray<iPoint> newpath;
-	//path->GetInstance()->lastPath.Clear();
+	//Create a Path
+	if (pathCreated > 0)
+	{
 
-	// Conversion
-	iPoint dst = { (int)player->position.x,(int)player->position.y + 32 };
-	dst = map->WorldToMap(dst.x, dst.y);
-
-	// Conversion
-	iPoint origin = map->WorldToMap(300, 470);
-	path->GetInstance()->lastPath.Clear();
-	path->GetInstance()->CreatePath(origin, dst);
-	pathCreated = true;
-
-	//// Clear current path
-	//newpath.Clear();
-
-	//// Add eachpath points to our own path dyn array
-	//for (int i = 0; i < path->GetInstance()->GetLastPath()->Count(); ++i)
-	//{
-	//	newpath.PushBack(*path->lastPath.At(i));
-	//}
-	//newpath.Flip();
-
+		// Pathfinding Points
+		iPoint dst = map->WorldToMap((int)player->position.x, (int)player->position.y + 32);
+		iPoint origin = map->WorldToMap(300, 470);
+	
+		path->GetInstance()->lastPath.Clear();
+		path->GetInstance()->CreatePath(origin, dst);
+	}
 
 	if (settings && buffer)
 	{
@@ -271,7 +257,11 @@ bool SceneGameplay::Update(Input* input, float dt)
 		}
 	}
 
-	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP) map->drawColliders = !map->drawColliders;
+	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
+	{
+		map->drawColliders = !map->drawColliders;
+		pathCreated *= -1;
+	}
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 	{
 		if (menu == true)
@@ -333,7 +323,7 @@ bool SceneGameplay::Draw(Render* render)
 	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	render->DrawTexture(one, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);*/
 	//Draw BG
-	render->DrawTexture(background, 0, 0);
+	render->DrawTexture(background, -render->camera.x, -render->camera.y);
 	render->DrawTexture(olympus, 0, 1900);
 	render->DrawTexture(clouds, render->camera.x, 1900);
 
@@ -342,8 +332,11 @@ bool SceneGameplay::Draw(Render* render)
 
 	player->Draw(render);
 
-	if(pathCreated)
-		path->GetInstance()->DrawPath(render);
+
+	if (pathCreated > 0)
+    	path->GetInstance()->DrawPath(render);
+
+
 
 	//MONEY UI
 	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
