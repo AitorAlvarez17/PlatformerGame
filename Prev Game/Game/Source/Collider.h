@@ -1,6 +1,7 @@
 #ifndef __COLLIDER_H__
 #define __COLLIDER_H__
 
+
 #include "SDL/include/SDL_Rect.h"
 
 #define MAX_LISTENERS 100
@@ -46,6 +47,7 @@ struct Collider
 	Type type;
 	Height height;
 	Module* listeners[MAX_LISTENERS] = { nullptr };
+
 };
 
 

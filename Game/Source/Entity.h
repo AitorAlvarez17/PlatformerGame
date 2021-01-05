@@ -32,6 +32,11 @@ public:
 
     }
 
+    virtual void OnCollision(Collider* c1)
+    {
+
+    }
+
 public:
 
     EntityType type;
