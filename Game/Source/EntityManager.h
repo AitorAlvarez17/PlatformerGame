@@ -36,8 +36,6 @@ public:
 	Entity* CreateItem(fPoint origin,ItemType iType);
 	Entity* CreateEnemy(fPoint origin, EnemyType eType);
 
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
 
 	void DestroyEntity(Entity* entity);
 
