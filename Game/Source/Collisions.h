@@ -5,11 +5,12 @@
 
 #include "Module.h"
 #include "Collider.h"
+#include "Render.h"
 
 class Collisions : public Module
 {
 public:
-	Collisions();
+	Collisions(Render* render);
 
 	// Destructor
 	virtual ~Collisions() {}
@@ -36,13 +37,15 @@ public:
 	void RemoveCollider(Collider* collider);
 
 	// Draws all existing colliders with some transparency
-	/*void DebugDraw();*/
+	void DebugDraw();
 	void DebugRequest();
 
 
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];
 
 	Collider* colliders[MAX_COLLIDERS] = { nullptr };
+
+	Render* render;
 private:
 	// All existing colliders in the scene
 	

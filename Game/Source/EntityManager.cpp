@@ -64,6 +64,8 @@ Player* EntityManager::CreatePlayer(fPoint origin)
 		}
 	}
 
+	
+
 	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::PLAYER, this);
 
 	return ret;
@@ -139,7 +141,6 @@ bool EntityManager::Update(float dt)
 		accumulatedTime = 0.0f;
 		doLogic = false;
 	}
-
 	return true;
 }
 
@@ -152,8 +153,15 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 		{
 			if (entities[i] != nullptr)
 			{
+				if (entities[i]->pendingToDelete)
+				{
+					delete entities[i];
+					entities[i] = nullptr;
+				}
+
 				entities[i]->Update(dt);
 			}
+			
 		}
 		
 		// TODO: Update all entities 
@@ -162,4 +170,34 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 	
 
 	return true;
+}
+
+void EntityManager::OnCollision(Collider* a, Collider* b)
+{
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		Entity* c = entities[i];
+		if (c->hitbox == a && entities[i] != nullptr)
+		{
+			c->OnCollision(b);
+		}
+
+	}
+}
+
+int EntityManager::GetTilePosx(int x) {
+
+	int Tx = 0;
+	Tx = x / 8;
+
+
+	return Tx;
+}
+
+int EntityManager::GetTilePosy(int y) {
+
+	int Ty = 0;
+	Ty = y / 8;
+	return Ty;
+
 }

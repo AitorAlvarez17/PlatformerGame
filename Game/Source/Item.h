@@ -29,6 +29,9 @@ public:
 
     void OnCollision(Collider* c1, Collider* c2);
 
+    void OnCollision(Collider* c1);
+
+
 
 private:
     ItemType iType;
