@@ -142,6 +142,8 @@ void Enemy::FixedUpdate(Input* input, float dt)
 		if (eState == EnemyState::DEAD) {}
 
 	}
+	default:
+		break;
 	}
 
 
@@ -150,6 +152,23 @@ void Enemy::FixedUpdate(Input* input, float dt)
 
 void Enemy::UpdateAnim(EnemyState previousState, EnemyState newState)
 {
+	switch (eState)
+	{
+	case EnemyState::IDLE:
+		
+		break;
+	case EnemyState::WALK:
+		if (goingRight) actualAnimation = &runRightAnim;
+		else actualAnimation = &runLeftAnim;
+		break;
+	case EnemyState::HIT:
+		break;
+	case EnemyState::DEAD:
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Enemy::SetTexture(SDL_Texture* tex)
