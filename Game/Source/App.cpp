@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "CheckPoints.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
 #include "Debug.h"
@@ -32,10 +33,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new AudioManager();
 	collisions = new Collisions(render);
 	entityManager = new EntityManager(collisions);
-	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this);
+	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui);
 	debug = new Debug(input, collisions, this);
-	ui = new ModuleUI();
-	
+	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);
+	ui = new ModuleUI(render, tex, sceneManager);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,6 +48,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityManager);
 	AddModule(sceneManager);
 	AddModule(debug);
+	AddModule(checkPoints);
 	AddModule(ui);
 	
 
@@ -219,7 +221,7 @@ void App::FinishUpdate()
 	uint32 framesOnLastUpdate = prevLastSecFrameCount;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u %f ",
+	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u %f",
 			  averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
 	win->SetTitle(title);

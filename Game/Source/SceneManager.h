@@ -13,12 +13,13 @@ class AudioManager;
 class Window;
 class App;
 class EntityManager;
+class ModuleUI;
 
 class SceneManager : public Module
 {
 public:
 
-	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app);
+	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui);
 
 	// Destructor
 	virtual ~SceneManager();
@@ -51,10 +52,11 @@ private:
 	Window* win;
 	App* app;
 	EntityManager* entityManager;
-	
+	ModuleUI* ui;
+public:
 	Scene* current;
 	Scene* next;
-
+private:
 	// Required variables to manage screen transitions (fade-in, fade-out)
 	bool onTransition;
 	bool fadeOutCompleted;
