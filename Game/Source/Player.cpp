@@ -146,7 +146,9 @@ void Player::FixedUpdate(Input* input, float dt)
 	if (godMode < 0)
 	{
 		//Calculate gravity acceleration
+		
 		position.y += (vy * dt);
+		preCalc = (vy * dt);
 		vy += GRAVITY * dt;
 
 		//Get left / right input
