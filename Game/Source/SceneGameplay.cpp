@@ -5,6 +5,7 @@
 
 SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui)
 {
+	name = "GAMEPLAY";
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
 	btnResume->SetObserver(this);
 

@@ -23,6 +23,7 @@ class SceneManager;
 class Debug;
 class ModuleUI;
 class Collisions;
+class CheckPoints;
 
 class App
 {
@@ -97,6 +98,7 @@ public:
 	Debug* debug;
 	ModuleUI* ui;
 	Collisions* collisions;
+	CheckPoints* checkPoints;
 
 private:
 

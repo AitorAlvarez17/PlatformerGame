@@ -4,7 +4,7 @@
 #include "SceneTitle.h"
 #include "SceneGameplay.h"
 #include "SceneEnding.h"
-
+#include "ModuleUI.h"
 #include "Input.h"
 #include "Render.h"
 #include "Textures.h"
@@ -22,7 +22,7 @@
 #define FADEOUT_TRANSITION_SPEED	2.0f
 #define FADEIN_TRANSITION_SPEED		2.0f
 
-SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, EntityManager* entityManager, App* app) : Module()
+SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui) : Module()
 {
 	name.Create("scenemanager");
 
@@ -37,6 +37,7 @@ SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioMan
 	this->win = window;
 	this->app = app;
 	this->entityManager = entityManager;
+	this->ui = ui;
 }
 
 // Destructor
@@ -145,7 +146,7 @@ bool SceneManager::Update(float dt)
 
 	// Draw current scene
 	current->Draw(render);
-
+	
 	// Draw full screen rectangle in front of everything
 	if (onTransition)
 	{
@@ -178,7 +179,7 @@ bool SceneManager::Update(float dt)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
 			case SceneType::TITLE: next = new SceneTitle(aud, win, app, input); break;
-			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win,entityManager, input); break;
+			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win,entityManager, input, ui); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;
 		}
