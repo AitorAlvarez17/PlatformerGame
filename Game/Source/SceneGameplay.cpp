@@ -162,27 +162,30 @@ bool SceneGameplay::Update(Input* input, float dt)
 		buffer = 0;
 	}
 	//-----------
-	if (settings == 0 && credits == 0)
+	if (menu)
 	{
-		btnResume->Update(input, dt);
-		btnSettings->Update(input, dt);
-		btnBackToTitle->Update(input, dt);
-		btnExit->Update(input, dt);
-		btnBack->Update(input, dt);
+		if (settings == 0 && credits == 0)
+		{
+			btnResume->Update(input, dt);
+			btnSettings->Update(input, dt);
+			btnBackToTitle->Update(input, dt);
+			btnExit->Update(input, dt);
+			btnBack->Update(input, dt);
+		}
+		else
+		{
+			btnBack->Update(input, dt);
+			fullscreen->Update(input, dt);
+			Vsync->Update(input, dt);
+			music->Update(input, dt);
+			fxVolume->Update(input, dt);
+		}
 	}
-	else
-	{
-		btnBack->Update(input, dt);
-		fullscreen->Update(input, dt);
-		Vsync->Update(input, dt);
-		music->Update(input, dt);
-		fxVolume->Update(input, dt);
-	}
+	
 
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
 	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
-	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN);
 
 	if (player->godMode < 0)
 	{

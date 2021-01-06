@@ -7,7 +7,7 @@
 
 ModuleUI::ModuleUI(Render* rend, Textures* tex, SceneManager* sManager) : Module()
 {
-	name.Create("debug");
+	name.Create("moduleUI");
 	lifes = 3;
 	drawLifes = 0;
 	this->rend = rend;
@@ -48,6 +48,7 @@ bool ModuleUI::Update(float dt)
 	if (sManager->current->name == "GAMEPLAY")
 	{
 		DrawHealth(rend);
+		WeaponUI(rend);
 	}
 	saveCoroutine += dt;
 
@@ -106,7 +107,7 @@ bool ModuleUI::DrawHealth(Render* render)
 		for (int i = 0; i < maxLifes; i++)
 		{
 			//LOG("lifes loading: %d", i);
-			render->DrawTexture(hearth, (15 + (40*i)) + margin, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(hearth, (5 + (64*i)) + margin, 18, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 
 
 		}
@@ -114,13 +115,13 @@ bool ModuleUI::DrawHealth(Render* render)
 
 	return false;
 }
-/*
+
 void ModuleUI::WeaponUI(Render* render)
 {
 	//HEAL
 	int margin = 3;
-	render->DrawTexture(healHab, (15 + (40)) + margin, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(fireHab, (15 + (40)) + margin, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(healHab, 510, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(fireHab, 610, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	//app->render->DrawTexture(pressH, camaraPosx + margin + 64, camaraPosy + ((app->render->camera.h) / 2.5), 0, 0, 0, 0, 0, false);
 	if (maxLifes)
 	{
@@ -131,7 +132,7 @@ void ModuleUI::WeaponUI(Render* render)
 
 		return;
 	}
-	if (app->player->cooldown < app->player->maxCooldown) // HEAL
+	if (saveCoroutine < 3) // HEAL
 	{
 		float cd = 3;
 		if (cd < 1)
@@ -147,7 +148,7 @@ void ModuleUI::WeaponUI(Render* render)
 			render->DrawTexture(cd3, (15 + (40)) + margin, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
 	}
-	if (app->player->fireCooldown < app->player->fireMaxCooldown)	//FIREBALL
+	/*if (app->player->fireCooldown < app->player->fireMaxCooldown)	//FIREBALL
 	{
 		float fireCd = 5;
 		if (fireCd < 1)
@@ -170,9 +171,9 @@ void ModuleUI::WeaponUI(Render* render)
 		{
 			render->DrawTexture(cd1, (15 + (40)) + margin, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
-	}
+	}*/
 
 
 	
 
-}*/
+}
