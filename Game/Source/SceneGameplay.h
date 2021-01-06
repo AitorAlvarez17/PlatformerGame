@@ -13,12 +13,13 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Item.h"
+#include "ModuleUI.h"
 
 class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input);
+    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -31,7 +32,6 @@ public:
 
     bool OnGuiMouseClickEvent(GuiControl* control);
 
- 
 private:
 
     Map* map;
@@ -53,7 +53,6 @@ private:
     GuiButton* btnBack;
 
     //Parallax BG
-    SDL_Texture* background;
     SDL_Texture* olympus;
     SDL_Texture* clouds;
 
@@ -102,8 +101,10 @@ private:
     AudioManager* aud;
     Window* win;
     Input* input;
+    ModuleUI* ui;
 
     bool pathCreated = false;
+
 };
 
 #endif // __SCENEGAMEPLAY_H__
