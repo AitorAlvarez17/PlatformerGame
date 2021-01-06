@@ -64,7 +64,7 @@ public:
 	SDL_Texture* texture;   // Enemy spritesheet
 
     EnemyType eType = EnemyType::UKNOWN; 
-	EnemyState eState = EnemyState::IDLE;
+	EnemyState eState = EnemyState::WALK;
 	Animation* actualAnimation = nullptr;
 
 private:
@@ -95,6 +95,7 @@ private:
 
 public:
 	const DynArray<iPoint> *newPath;
+	bool goingRight = false;
 };
 
 #endif // __ENEMY_H__

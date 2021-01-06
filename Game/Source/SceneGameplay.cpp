@@ -54,9 +54,9 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	// Create walkability map on map loading
 	if (map->Load("main_level.tmx") == true)
 	{
-		 int w, h;
-		 uchar* data = NULL;
-	
+		int w, h;
+		uchar* data = NULL;
+
 		if (map->CreateWalkabilityMap(w, h, &data))
 		{
 			path->GetInstance()->SetMap(w, h, data);
@@ -118,7 +118,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 
 	eManager->CreateItem(fPoint(200, 500), ItemType::COIN);
-	
+
 	return false;
 }
 
@@ -144,7 +144,21 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 		for (int i = 0; i < path->GetInstance()->lastPath.Count(); i++)
 		{
-			enemy->position.x -= 1;
+			//Only on X 
+			if (dst.x == origin.x) break;
+			else if (origin.x > dst.x)
+			{
+				enemy->position.x -= 1.0f * dt;
+				enemy->goingRight = false;
+				enemy->UpdateAnim(enemy->eState, EnemyState::WALK);
+			}
+			else
+			{
+				enemy->position.x += 1.0f * dt;
+				enemy->goingRight = true;
+				enemy->UpdateAnim(enemy->eState, EnemyState::WALK);
+
+			}
 
 		}
 	}
@@ -153,13 +167,13 @@ bool SceneGameplay::Update(Input* input, float dt)
 	//SET THE SETTINGS TO THE SAME ONES AS MENU
 	if (settings && buffer)
 	{
-		music->slider.x = ((aud->volumeMusic * music->bounds.w/100) + music->bounds.x) - music->bounds.w / 100;
+		music->slider.x = ((aud->volumeMusic * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
 		fxVolume->slider.x = ((aud->volumeFx * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
 		if (aud->fullscreenCheck)
 		{
 			fullscreen->checked = true;
 		}
-		else if(aud->fullscreenCheck == 0)
+		else if (aud->fullscreenCheck == 0)
 		{
 			fullscreen->checked = false;
 		}
@@ -167,7 +181,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 		{
 			Vsync->checked = true;
 		}
-		else if(aud->fullscreenCheck == 0)
+		else if (aud->fullscreenCheck == 0)
 		{
 			Vsync->checked = false;
 		}
@@ -193,7 +207,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 			fxVolume->Update(input, dt);
 		}
 	}
-	
+
 
 	// Check if updated player position collides with next tile
 	// IMPROVEMENT: Just check adyacent tiles to player
@@ -294,7 +308,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
 
 	player->Update(input, dt);
-	
+
 
 	return true;
 }
@@ -304,33 +318,33 @@ bool SceneGameplay::Draw(Render* render)
 	//COINS
 	switch (coins)
 	{
-		case 1:
-			number = one;
-			break;
-		case 2:
-			number = two;
-			break;
-		case 3:
-			number = three;
-			break;
-		case 4:
-			number = four;
-			break;
-		case 5:
-			number = five;
-			break;
-		case 6:
-			number = six;
-			break;
-		case 7:
-			number = seven;
-			break;
-		case 8:
-			number = eight;
-			break;
-		case 9:
-			number = nine;
-			break;
+	case 1:
+		number = one;
+		break;
+	case 2:
+		number = two;
+		break;
+	case 3:
+		number = three;
+		break;
+	case 4:
+		number = four;
+		break;
+	case 5:
+		number = five;
+		break;
+	case 6:
+		number = six;
+		break;
+	case 7:
+		number = seven;
+		break;
+	case 8:
+		number = eight;
+		break;
+	case 9:
+		number = nine;
+		break;
 	default:
 		number = zero;
 		break;
@@ -348,7 +362,7 @@ bool SceneGameplay::Draw(Render* render)
 	enemy->Draw(render);
 
 	if (pathCreated > 0)
-    	path->GetInstance()->DrawPath(render);
+		path->GetInstance()->DrawPath(render);
 
 
 
@@ -450,16 +464,16 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				win->ChangeFullscreen(fullscreen->checked);
 				aud->fullscreenCheck = 1;
-				
+
 			}
 			else
 			{
 				win->ChangeFullscreen(fullscreen->checked);
 				aud->fullscreenCheck = 0;
 				//fullscreen changed to aud->fullscreenCheck);
-				
+
 			}
-			
+
 		}
 		else if (control->id == 12)
 		{
