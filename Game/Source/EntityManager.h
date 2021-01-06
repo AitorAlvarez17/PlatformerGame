@@ -33,8 +33,8 @@ public:
 
 	// Additional methods
 	Player* CreatePlayer(fPoint origin);
-	Entity* CreateItem(fPoint origin,ItemType iType);
-	Entity* CreateEnemy(fPoint origin, EnemyType eType);
+	Item* CreateItem(fPoint origin,ItemType iType);
+	Enemy* CreateEnemy(fPoint origin, EnemyType eType);
 
 	void OnCollision(Collider* a, Collider* b);
 
