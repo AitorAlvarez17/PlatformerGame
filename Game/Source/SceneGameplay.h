@@ -103,7 +103,7 @@ private:
     Input* input;
     ModuleUI* ui;
 
-    bool pathCreated = false;
+    int pathCreated = -1;
 
 };
 
