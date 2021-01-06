@@ -60,7 +60,6 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 		if (map->CreateWalkabilityMap(w, h, &data))
 		{
 			path->GetInstance()->SetMap(w, h, data);
-
 		}
 
 		RELEASE_ARRAY(data);
@@ -113,8 +112,13 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
 	player->position = fPoint(200, 470);
 	player->SetTexture(playerText);
-	eManager->CreateItem(fPoint(200, 500), ItemType::COIN);
 
+	enemy = eManager->CreateEnemy(fPoint(700, 470), EnemyType::WALKING);
+	enemy->SetTexture(playerText);
+	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
+
+	eManager->CreateItem(fPoint(200, 500), ItemType::COIN);
+	
 	return false;
 }
 
@@ -130,14 +134,22 @@ bool SceneGameplay::Update(Input* input, float dt)
 	//Create a Path
 	if (pathCreated > 0)
 	{
-
 		// Pathfinding Points
 		iPoint dst = map->WorldToMap((int)player->position.x, (int)player->position.y + 32);
-		iPoint origin = map->WorldToMap(300, 470);
-	
+		iPoint origin = map->WorldToMap((int)enemy->position.x, (int)enemy->position.y);
+
 		path->GetInstance()->lastPath.Clear();
 		path->GetInstance()->CreatePath(origin, dst);
+		//enemy->path = path->lastPath
+
+		for (int i = 0; i < path->GetInstance()->lastPath.Count(); i++)
+		{
+			enemy->position.x -= 1;
+
+		}
 	}
+
+
 	//SET THE SETTINGS TO THE SAME ONES AS MENU
 	if (settings && buffer)
 	{
@@ -333,6 +345,7 @@ bool SceneGameplay::Draw(Render* render)
 
 	player->Draw(render);
 
+	enemy->Draw(render);
 
 	if (pathCreated > 0)
     	path->GetInstance()->DrawPath(render);

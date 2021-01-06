@@ -2,52 +2,99 @@
 #define __ENEMY_H__
 
 #include "Entity.h"
+#include "Animation.h"
 
 #include "DynArray.h"
 #include "Point.h"
 #include "SString.h"
 #include "Render.h"
 
+#include "Pathfinding.h"
+
 #include "SDL/include/SDL.h"
 
 enum class EnemyType
 {
-    WALKING,
-    FLYING,
-    UKNOWN
+	WALKING,
+	FLYING,
+	UKNOWN
+};
 
+enum class EnemyState
+{
+	IDLE,
+	WALK,
+	HIT,
+	DEAD
 };
 
 class Enemy : public Entity
 {
 public:
 
-    Enemy();
-    Enemy(fPoint origin,EnemyType type);
-    virtual ~Enemy();
+	Enemy();
+	Enemy(fPoint origin, EnemyType type);
 
-    EnemyType GetType();
-    EnemyType SetType(EnemyType type);
+	virtual ~Enemy();
 
-    bool Update(float dt);
+	SDL_Rect GetBounds();
 
-    bool Draw(Render* render);
+	EnemyType GetType();
 
-    void SetTexture(SDL_Texture* tex);
+	EnemyType SetType(EnemyType type);
 
-    void OnCollision(Collider* c1, Collider* c2);
+	bool Update(float dt);
 
-    void OnCollision(Collider* c1);
+	bool Draw(Render* render);
 
+	void SetTexture(SDL_Texture* tex);
 
+	void CreatePath(Map* map, iPoint pos);
+
+	void OnCollision(Collider* c1, Collider* c2);
+
+	void OnCollision(Collider* c1);
+
+	void SetAnim(int i);
+
+	void FixedUpdate(Input* input, float dt);
+
+	void UpdateAnim(EnemyState previousState, EnemyState newState);
+
+	SDL_Texture* texture;   // Enemy spritesheet
+
+    EnemyType eType = EnemyType::UKNOWN; 
+	EnemyState eState = EnemyState::IDLE;
+	Animation* actualAnimation = nullptr;
 
 private:
 
-    DynArray<iPoint>* path;
-    EnemyType eType;
-public:
-    SDL_Texture* texture;
+	//Animations
+	Animation idleAnimR;
+	Animation idleAnimL;
 
+	Animation runRightAnim;
+	Animation runLeftAnim;
+
+	Animation jumpRightAnim;
+	Animation jumpLeftAnim;
+
+	Animation fallRightAnim;
+	Animation fallLeftAnim;
+
+	Animation attackAnimR;
+	Animation attackAnimL;
+
+	Animation damageAnimR;
+	Animation damageAnimL;
+
+	Animation deadAnimR;
+	Animation deadAnimL;
+
+	PathFinding* ePath;
+
+public:
+	const DynArray<iPoint> *newPath;
 };
 
 #endif // __ENEMY_H__
