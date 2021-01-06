@@ -71,7 +71,7 @@ Player* EntityManager::CreatePlayer(fPoint origin)
 	return ret;
 }
 
-Entity* EntityManager::CreateItem(fPoint origin, ItemType iType)
+Item* EntityManager::CreateItem(fPoint origin, ItemType iType)
 {
 	Item* ret = nullptr;
 
@@ -100,7 +100,7 @@ Entity* EntityManager::CreateItem(fPoint origin, ItemType iType)
 	return ret;
 }
 
-Entity* EntityManager::CreateEnemy(fPoint origin, EnemyType eType)
+Enemy* EntityManager::CreateEnemy(fPoint origin, EnemyType eType)
 {
 	Enemy* ret = nullptr;
 
