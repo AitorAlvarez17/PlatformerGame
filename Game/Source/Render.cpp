@@ -49,7 +49,7 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.w = win->screenSurface->w;
 		camera.h = win->screenSurface->h;
 		camera.x = 0;
-		camera.y = -400;
+		camera.y = 0;
 	}
 
 	return ret;
@@ -212,6 +212,34 @@ bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) c
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
 	if(result != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
+bool Render::DrawRectangleCam(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
+{
+	bool ret = true;
+	uint scale = win->GetScale();
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	SDL_Rect rec(rect);
+	if (use_camera)
+	{
+		rec.x = (int)(camera.x + rect.x * scale);
+		rec.y = (int)(camera.y + rect.y * scale);
+		rec.w *= scale;
+		rec.h *= scale;
+	}
+
+	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
+
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;

@@ -113,7 +113,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
 	player->position = fPoint(200, 470);
 	player->SetTexture(playerText);
-	eManager->CreateItem(fPoint(5 * 16, 17 * 16), ItemType::COIN);
+	eManager->CreateItem(fPoint(200, 500), ItemType::COIN);
 
 	return false;
 }
@@ -247,7 +247,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 							//LOG("DOWN");
 						}
-
+						player->hitbox->SetPos(player->position.x, player->position.y);
 
 					}
 

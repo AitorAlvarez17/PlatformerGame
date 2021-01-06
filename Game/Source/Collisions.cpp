@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Log.h"
 #include "Render.h"
+#include "Player.h"
 
 Collisions::Collisions(Render* rend) : Module()
 {
@@ -269,8 +270,7 @@ void Collisions::DebugDraw()
 		switch (colliders[i]->type)
 		{
 		case Collider::Type::NONE: // white
-			render->DrawRectangle(colliders[i]->rect, { 255, 255, 255, 255 });
-
+			/*render->DrawRectangleCam(colliders[i]->rect, 255, 255, 255, alpha,true,false);*/
 			break;
 
 		case Collider::Type::FLOOR:
@@ -279,6 +279,7 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::PLAYER:
 			render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
+			render->DrawRectangleCam(colliders[i]->rect, 0, 0, 255, alpha, true, true);
 
 			break;
 		case Collider::Type::DEATH:
@@ -286,7 +287,8 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::COIN:
-			render->DrawRectangle(colliders[i]->rect, { 255, 207, 64, 255 });
+			//render->DrawRectangleCam({200 + render->camera.x,450,32,32}, 255, 207, 64, alpha, false, true);
+			render->DrawRectangle({ colliders[i]->rect.x ,colliders[i]->rect.y ,32,32 }, { 255, 0, 0, 255 });
 
 			break;
 		case Collider::Type::HEART:

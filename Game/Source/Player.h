@@ -74,6 +74,7 @@ public:
 
 
     fPoint prevPos;
+    int preCalc;
     //PlayerProperties
     int jumps = 2;
     float vy = 0.0f;
