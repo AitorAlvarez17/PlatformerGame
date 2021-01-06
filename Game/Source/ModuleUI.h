@@ -2,13 +2,9 @@
 #define __MODULEUI_H__
 
 #include "Module.h"
+#include "SceneManager.h"
 #include "Textures.h"
 #include "Render.h"
-#include "SceneManager.h"
-#include "SceneGameplay.h"
-#include "Scene.h"
-
-#include "List.h"
 
 class ModuleUI : public Module
 {
@@ -63,8 +59,8 @@ public:
 	SDL_Texture* fireHab;
 
 	SDL_Texture* cantSummonUi;
-private:
 
+private:
 
 	Render* rend;
 	Textures* tex;

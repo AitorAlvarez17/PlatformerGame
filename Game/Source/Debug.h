@@ -4,17 +4,19 @@
 #include "Module.h"
 #include "Input.h"
 #include "App.h"
+#include "ModuleUI.h"
 
 #include "List.h"
 
 class Input;
 class App;
+class ModuleUI;
 
 class Debug : public Module
 {
 public:
 
-	Debug(Input* input, Collisions* collisions,App* app);
+	Debug(Input* input, Collisions* collisions,App* app, ModuleUI* ui);
 
 	// Destructor
 	virtual ~Debug();
@@ -39,6 +41,7 @@ private:
 	Input* input;
 	App* app;
 	Collisions* collisions;
+	ModuleUI* ui;
 };
 
 #endif // __DEBUG_H__
