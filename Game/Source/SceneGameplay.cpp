@@ -1,8 +1,9 @@
 #include "SceneGameplay.h"
+#include "ModuleUI.h"
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui)
 {
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
 	btnResume->SetObserver(this);
@@ -39,6 +40,7 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 	this->win = window;
 	this->eManager = eManager;
 	this->input = input;
+	this->ui = ui;
 }
 
 SceneGameplay::~SceneGameplay()
@@ -75,7 +77,6 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
 
-	background = tex->Load(PATH("Assets/Textures/Maps/", "bg.png"));
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
@@ -87,23 +88,23 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	backText = tex->Load(PATH("Assets/Textures/UI/", "back.png"));
 	backgroundUi = tex->Load(PATH("Assets/Textures/UI/", "background_ui.png"));
 	habUi = tex->Load(PATH("Assets/Textures/UI/", "hab_ui.png"));
-	healthNameUi = tex->Load(PATH("Assets/Textures/UI/", "hearth_ui.png"));
-	healthBackground = tex->Load(PATH("Assets/Textures/UI/", "health_background.png"));
 	moneyBackgroundUi = tex->Load(PATH("Assets/Textures/UI/", "money_background_ui.png"));
 	marginsUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui.png"));
 	marginsButtonUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_button.png"));
 	marginsSlidersUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_music_and_fx.png"));
 	//NUMBERS
-	zero = tex->Load(PATH("Assets/Textures/UI/Numbers", "0.png"));
-	one = tex->Load(PATH("Assets/Textures/UI/Numbers", "1.png"));
-	two = tex->Load(PATH("Assets/Textures/UI/Numbers", "2.png"));
-	three = tex->Load(PATH("Assets/Textures/UI/Numbers", "3.png"));
-	four = tex->Load(PATH("Assets/Textures/UI/Numbers", "4.png"));
-	five = tex->Load(PATH("Assets/Textures/UI/Numbers", "5.png"));
-	six = tex->Load(PATH("Assets/Textures/UI/Numbers", "6.png"));
-	seven = tex->Load(PATH("Assets/Textures/UI/Numbers", "7.png"));
-	eight = tex->Load(PATH("Assets/Textures/UI/Numbers", "8.png"));
-	nine = tex->Load(PATH("Assets/Textures/UI/Numbers", "9.png"));
+	zero = tex->Load(PATH("Assets/Textures/UI/Numbers/", "0.png"));
+	one = tex->Load(PATH("Assets/Textures/UI/Numbers/", "1.png"));
+	two = tex->Load(PATH("Assets/Textures/UI/Numbers/", "2.png"));
+	three = tex->Load(PATH("Assets/Textures/UI/Numbers/", "3.png"));
+	four = tex->Load(PATH("Assets/Textures/UI/Numbers/", "4.png"));
+	five = tex->Load(PATH("Assets/Textures/UI/Numbers/", "5.png"));
+	six = tex->Load(PATH("Assets/Textures/UI/Numbers/", "6.png"));
+	seven = tex->Load(PATH("Assets/Textures/UI/Numbers/", "7.png"));
+	eight = tex->Load(PATH("Assets/Textures/UI/Numbers/", "8.png"));
+	nine = tex->Load(PATH("Assets/Textures/UI/Numbers/", "9.png"));
+
+	x = tex->Load(PATH("Assets/Textures/UI/Numbers/", "money_x.png"));
 
 
 
@@ -136,7 +137,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 		path->GetInstance()->lastPath.Clear();
 		path->GetInstance()->CreatePath(origin, dst);
 	}
-
+	//SET THE SETTINGS TO THE SAME ONES AS MENU
 	if (settings && buffer)
 	{
 		music->slider.x = ((aud->volumeMusic * music->bounds.w/100) + music->bounds.x) - music->bounds.w / 100;
@@ -157,11 +158,9 @@ bool SceneGameplay::Update(Input* input, float dt)
 		{
 			Vsync->checked = false;
 		}
-		//full screen STORED is aud->fullscreenCheck);
-		//full screen checked is fullscreen->checked);
 		buffer = 0;
 	}
-
+	//-----------
 	if (settings == 0 && credits == 0)
 	{
 		btnResume->Update(input, dt);
@@ -287,7 +286,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 bool SceneGameplay::Draw(Render* render)
 {
 	//COINS
-	/*switch (coins)
+	switch (coins)
 	{
 		case 1:
 			number = one;
@@ -320,10 +319,8 @@ bool SceneGameplay::Draw(Render* render)
 		number = zero;
 		break;
 	}
-	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(one, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);*/
 	//Draw BG
-	render->DrawTexture(background, -render->camera.x, -render->camera.y);
+	render->SetBackgroundColor({ 83,217,217, 1 });
 	render->DrawTexture(olympus, 0, 1900);
 	render->DrawTexture(clouds, render->camera.x, 1900);
 
@@ -340,13 +337,10 @@ bool SceneGameplay::Draw(Render* render)
 
 	//MONEY UI
 	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(number, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	//HEALTH BACKGROUND
-	render->DrawTexture(healthBackground, 0, 15, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	//HEARTHS
-	render->DrawTexture(healthNameUi, 15 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(healthNameUi, 55 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(healthNameUi, 95 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(healthNameUi, 135 + 4, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	//ui->DrawHealth(render);
 	//ABILITY UI
 	render->DrawTexture(backgroundUi, 490, 625, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	render->DrawTexture(habUi, 500, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
