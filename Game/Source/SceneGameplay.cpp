@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll)
 {
 	name = "GAMEPLAY";
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
@@ -42,6 +42,7 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 	this->eManager = eManager;
 	this->input = input;
 	this->ui = ui;
+	this->collisions = coll;
 }
 
 SceneGameplay::~SceneGameplay()
@@ -360,6 +361,9 @@ bool SceneGameplay::Draw(Render* render)
 	player->Draw(render);
 
 	enemy->Draw(render);
+
+	collisions->Draw(render);
+
 
 	if (pathCreated > 0)
 		path->GetInstance()->DrawPath(render);

@@ -52,7 +52,7 @@ public:
     // want our Entity class, maybe it's not renderable...
     fPoint position;        // Use a float instead?
     bool renderable = false;
-    //SDL_Texture* texture;
+    SDL_Texture* texture;
 };
 
 #endif // __ENTITY_H__

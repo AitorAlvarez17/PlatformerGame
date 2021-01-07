@@ -14,12 +14,13 @@ class Window;
 class App;
 class EntityManager;
 class ModuleUI;
+class Collisions;
 
 class SceneManager : public Module
 {
 public:
 
-	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui);
+	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll);
 
 	// Destructor
 	virtual ~SceneManager();
@@ -53,6 +54,7 @@ private:
 	App* app;
 	EntityManager* entityManager;
 	ModuleUI* ui;
+	Collisions* collisions;
 public:
 	Scene* current;
 	Scene* next;

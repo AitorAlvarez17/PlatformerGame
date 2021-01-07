@@ -31,9 +31,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(win);
 	tex = new Textures(render);
 	audio = new AudioManager();
-	collisions = new Collisions(render);
+	collisions = new Collisions(render,tex);
 	entityManager = new EntityManager(collisions);
-	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui);
+	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions);
 	debug = new Debug(input, collisions, this, ui);
 	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);
 	ui = new ModuleUI(render, tex, sceneManager);
