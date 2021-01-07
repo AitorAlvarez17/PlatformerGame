@@ -135,7 +135,6 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::FIREBALL][Collider::Type::ENEMYWALL] = false;
 	matrix[Collider::Type::FIREBALL][Collider::Type::ENDLEVEL] = false;
 
-	collTex = tex->Load(PATH("Assets/Textures/Maps/", "collisions.png"));
 }
 
 // Called before render is available
@@ -147,6 +146,8 @@ bool Collisions::Awake(pugi::xml_node&)
 // Called before the first frame
 bool Collisions::Start()
 {
+	collTex = textures->Load("Assets/Textures/Maps/collisions.png");
+
 	return true;
 }
 
@@ -294,8 +295,11 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::COIN:
-			render->DrawRectangleCam({200 + render->camera.x,450,32,32}, 255, 207, 64, alpha, false, true);
-			render->DrawRectangle({ colliders[i]->rect.x ,colliders[i]->rect.y ,32,32 }, { 255, 0, 0, 255 });
+		{
+			SDL_Rect rec = { 32,0,16,16 };
+			render->DrawTexture(collTex, 0, 1900, &rec);
+
+		}
 
 			break;
 		case Collider::Type::HEART:

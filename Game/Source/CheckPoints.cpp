@@ -127,7 +127,7 @@ bool CheckPoints::PostUpdate()
 	{
 		if (onArea1 || onArea2 || onArea3)
 		{   
-			rend->DrawTexture(openPhrase, player->position.x - 42, (player->position.y) - 35);
+			//rend->DrawTexture(openPhrase, player->position.x - 42, (player->position.y) - 35);
 			if (mapOpen)
 			{
 				int camaraPosx = -(rend->camera.x) / 2;
@@ -213,7 +213,7 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 	if (a->type == Collider::TP && b->type == Collider::PLAYER)
 	{
 		onColl = true;
-		rend->DrawTexture(openPhrase, player->position.x - 42, (player->position.y) - 35);
+		//rend->DrawTexture(openPhrase, player->position.x - 42, (player->position.y) - 35);
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
 			if (mapOpen == true)
