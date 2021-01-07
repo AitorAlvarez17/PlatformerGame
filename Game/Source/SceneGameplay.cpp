@@ -121,7 +121,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	enemy = eManager->CreateEnemy(fPoint(1000, 2150), EnemyType::WALKING,2,0);
 	enemy->SetTexture(playerText);
 
-	eManager->CreateItem(fPoint(0, 2150), ItemType::COIN);
+	eManager->CreateItem(fPoint(200, 500), ItemType::COIN);
 
 	return false;
 }

@@ -25,12 +25,6 @@ void Item::OnCollision(Collider* c1, Collider* c2)
 		c2 = c3;
 	}
 
-
-	if (c1->type == Collider::Type::COIN && c2->type == Collider::Type::PLAYER)
-	{
-		pendingToDelete = true;
-		c1->pendingToDelete = true;
-	}
 	//aqui se meterán las comparaciones entre colliders. C1 siempre sera el collider del cpp en el que estas.
 
 
@@ -40,11 +34,7 @@ void Item::OnCollision(Collider* c1)
 {
 
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
-	if (c1->type == Collider::Type::PLAYER)
-	{
-		pendingToDelete = true;
-		hitbox->pendingToDelete = true;
-	}
+
 
 }
 
