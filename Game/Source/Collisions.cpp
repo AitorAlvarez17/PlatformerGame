@@ -297,7 +297,7 @@ void Collisions::DebugDraw()
 		case Collider::Type::COIN:
 		{
 			SDL_Rect rec = { 32,0,16,16 };
-			render->DrawTexture(collTex, 0, 1900, &rec);
+			render->DrawTexture(collTex, colliders[i]->rect.x, colliders[i]->rect.y, &rec);
 
 		}
 
