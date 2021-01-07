@@ -6,11 +6,12 @@
 #include "Module.h"
 #include "Collider.h"
 #include "Render.h"
+#include "Textures.h"
 
 class Collisions : public Module
 {
 public:
-	Collisions(Render* render);
+	Collisions(Render* render, Textures* tex);
 
 	// Destructor
 	virtual ~Collisions() {}
@@ -24,6 +25,7 @@ public:
 	// Called each loop iteration
 	bool PreUpdate();
 	bool Update(float dt);
+	bool Draw(Render* render);
 	bool PostUpdate();
 
 	// Called before quitting
@@ -44,8 +46,10 @@ public:
 	bool matrix[Collider::Type::MAX][Collider::Type::MAX];
 
 	Collider* colliders[MAX_COLLIDERS] = { nullptr };
+	SDL_Texture* collTex;
 
 	Render* render;
+	Textures* textures;
 private:
 	// All existing colliders in the scene
 	

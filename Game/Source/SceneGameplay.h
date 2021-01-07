@@ -13,13 +13,14 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Item.h"
+#include "Collisions.h"
 #include "ModuleUI.h"
 
 class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui);
+    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -39,6 +40,7 @@ private:
     Enemy* enemy;
     EntityManager* eManager;
     PathFinding* path;
+    Collisions* collisions;
     
     SDL_Rect camera;
 

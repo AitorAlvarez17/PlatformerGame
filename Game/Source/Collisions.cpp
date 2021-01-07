@@ -7,10 +7,10 @@
 #include "Render.h"
 #include "Player.h"
 
-Collisions::Collisions(Render* rend) : Module()
+Collisions::Collisions(Render* rend, Textures* tex) : Module()
 {
 	render = rend;
-
+	textures = tex;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
@@ -135,7 +135,7 @@ Collisions::Collisions(Render* rend) : Module()
 	matrix[Collider::Type::FIREBALL][Collider::Type::ENEMYWALL] = false;
 	matrix[Collider::Type::FIREBALL][Collider::Type::ENDLEVEL] = false;
 
-
+	collTex = tex->Load(PATH("Assets/Textures/Maps/", "collisions.png"));
 }
 
 // Called before render is available
@@ -205,12 +205,19 @@ bool Collisions::Update(float dt)
 	return true;
 }
 
-bool Collisions::PostUpdate()
+bool Collisions::Draw(Render* render)
 {
 
 	if (debug)
 		DebugDraw();
 
+
+	return true;
+
+}
+
+bool Collisions::PostUpdate()
+{
 
 		return true;
 }
@@ -287,7 +294,7 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::COIN:
-			//render->DrawRectangleCam({200 + render->camera.x,450,32,32}, 255, 207, 64, alpha, false, true);
+			render->DrawRectangleCam({200 + render->camera.x,450,32,32}, 255, 207, 64, alpha, false, true);
 			render->DrawRectangle({ colliders[i]->rect.x ,colliders[i]->rect.y ,32,32 }, { 255, 0, 0, 255 });
 
 			break;

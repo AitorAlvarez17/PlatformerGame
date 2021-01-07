@@ -61,7 +61,7 @@ public:
 
 	void UpdateAnim(EnemyState previousState, EnemyState newState);
 
-	SDL_Texture* texture;   // Enemy spritesheet
+	//SDL_Texture* texture;   // Enemy spritesheet
 
     EnemyType eType = EnemyType::UKNOWN; 
 	EnemyState eState = EnemyState::WALK;
