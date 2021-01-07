@@ -8,7 +8,6 @@
 #include "Point.h"
 #include "SString.h"
 #include "Render.h"
-#include "Player.h"
 
 #include "Pathfinding.h"
 
@@ -25,8 +24,6 @@ enum class EnemyState
 {
 	IDLE,
 	WALK,
-	JUMP,
-	FALL,
 	HIT,
 	DEAD
 };
@@ -36,39 +33,37 @@ class Enemy : public Entity
 public:
 
 	Enemy();
-	Enemy(fPoint origin, EnemyType type, int life, int anim);
+	Enemy(fPoint origin, EnemyType type);
 
 	virtual ~Enemy();
 
-	bool Update(float dt);
+	SDL_Rect GetBounds();
 
-	void UpdateLogic(float dt);
+	EnemyType GetType();
+
+	EnemyType SetType(EnemyType type);
+
+	bool Update(float dt);
 
 	bool Draw(Render* render);
 
 	void SetTexture(SDL_Texture* tex);
 
-	void UpdatePath(Map* map, Input* input, Player *player, float dt);
+	void CreatePath(Map* map, iPoint pos);
 
 	void OnCollision(Collider* c1, Collider* c2);
 
 	void OnCollision(Collider* c1);
 
-	void UpdateAnim(EnemyState previousState, EnemyState newState);
-
 	void SetAnim(int i);
 
-	SDL_Rect GetBounds();
+	void FixedUpdate(Input* input, float dt);
 
-	EnemyType GetType() { return this->eType; }
-
-	EnemyType SetType(EnemyType type) { eType = type; }
-
-	void UpdateState(iPoint pos);
+	void UpdateAnim(EnemyState previousState, EnemyState newState);
 
 	//SDL_Texture* texture;   // Enemy spritesheet
 
-	EnemyType eType = EnemyType::UKNOWN;
+    EnemyType eType = EnemyType::UKNOWN; 
 	EnemyState eState = EnemyState::WALK;
 	Animation* actualAnimation = nullptr;
 
@@ -98,13 +93,9 @@ private:
 
 	PathFinding* ePath;
 
-	DynArray<iPoint> newPath; // Enemy's Path
-
-	//Enemy Properties
-	int lifes = 1;
-	int counter = 0;
+public:
+	const DynArray<iPoint> *newPath;
 	bool goingRight = false;
-	bool hasPath = false;
 };
 
 #endif // __ENEMY_H__
