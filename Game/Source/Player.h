@@ -7,6 +7,7 @@
 #include "Render.h"
 #include "Audio.h"
 #include "Textures.h"
+#include "Map.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -31,7 +32,7 @@ public:
 
     bool Update(Input* input, float dt);
 
-    bool Draw(Render* render);
+    bool Draw(Render* render, Map* map);
 
     void SetTexture(SDL_Texture* tex);
 
