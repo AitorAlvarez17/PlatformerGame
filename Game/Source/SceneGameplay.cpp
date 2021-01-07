@@ -80,7 +80,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
-	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
+	playerText = tex->Load(PATH("Assets/Textures/Character/", "enemies.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/UI/", "settings.png"));
@@ -111,12 +111,15 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	// Initialize player
 	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
-	player->position = fPoint(200, 470);
+
+	//player->position = fPoint(200, 450);
+
+	player->position = fPoint(1000, 2150);
+
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(fPoint(700, 470), EnemyType::WALKING);
+	enemy = eManager->CreateEnemy(fPoint(1000, 2150), EnemyType::WALKING,2,0);
 	enemy->SetTexture(playerText);
-	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 
 	eManager->CreateItem(fPoint(0, 2150), ItemType::COIN);
 
@@ -132,37 +135,6 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
-	//Create a Path
-	if (pathCreated > 0)
-	{
-		// Pathfinding Points
-		iPoint dst = map->WorldToMap((int)player->position.x, (int)player->position.y + 32);
-		iPoint origin = map->WorldToMap((int)enemy->position.x, (int)enemy->position.y);
-
-		path->GetInstance()->lastPath.Clear();
-		path->GetInstance()->CreatePath(origin, dst);
-		//enemy->path = path->lastPath
-
-		for (int i = 0; i < path->GetInstance()->lastPath.Count(); i++)
-		{
-			//Only on X 
-			if (dst.x == origin.x) break;
-			else if (origin.x > dst.x)
-			{
-				enemy->position.x -= 1.0f * dt;
-				enemy->goingRight = false;
-				enemy->UpdateAnim(enemy->eState, EnemyState::WALK);
-			}
-			else
-			{
-				enemy->position.x += 1.0f * dt;
-				enemy->goingRight = true;
-				enemy->UpdateAnim(enemy->eState, EnemyState::WALK);
-
-			}
-
-		}
-	}
 
 
 	//SET THE SETTINGS TO THE SAME ONES AS MENU
@@ -310,6 +282,8 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 	player->Update(input, dt);
 
+	enemy->UpdatePath(map, input, player, dt);
+
 
 	return true;
 }
@@ -358,16 +332,11 @@ bool SceneGameplay::Draw(Render* render)
 	// Draw map
 	map->Draw(render);
 
-	player->Draw(render);
+	player->Draw(render, map);
 
 	enemy->Draw(render);
 
 	collisions->Draw(render);
-
-
-	if (pathCreated > 0)
-		path->GetInstance()->DrawPath(render);
-
 
 
 	//MONEY UI
