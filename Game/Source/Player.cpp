@@ -81,36 +81,27 @@ bool Player::Update(Input* input, float dt)
 	return true;
 }
 
-bool Player::Draw(Render* render, Map* map)
+bool Player::Draw(Render* render)
 {
 
 	// animation state and animation frame
 	actualAnimation->Update();
-//	render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+	render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 	if (isGoingRight == true)
 	{
 		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-		//render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
-		render->DrawTexture(texture, position.x, position.y, &rec);
+		render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
 	}
 	else
 	{
 		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-		//render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
-		render->DrawTexture(texture, position.x, position.y, &rec);
+		render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
 	}
 
-	iPoint pos = map->WorldToMap((int)position.x, (int)position.y);
-
-	render->camera.x = -(int)pos.x ;
-	render->camera.y = - (int)pos.y - render->camera.h * 2;
-
-
-	//render->camera.x = map->WorldToMap(-(int)position.x , -(int)position.y).x;
-	//render->camera.y = map->WorldToMap(-(int)position.x, -(int)position.y ).y;
-
+	render->camera.x = -(int)position.x * 4 + render->camera.w / 2;
+	render->camera.y = -(int)position.y * 4 + render->camera.h / 2;
 
 	return false;
 }
