@@ -34,7 +34,7 @@ public:
 	// Additional methods
 	Player* CreatePlayer(fPoint origin);
 	Item* CreateItem(fPoint origin,ItemType iType);
-	Enemy* CreateEnemy(fPoint origin, EnemyType eType, int life, int anim);
+	Enemy* CreateEnemy(fPoint origin, EnemyType eType);
 
 	void OnCollision(Collider* a, Collider* b);
 
