@@ -174,12 +174,12 @@ void PathNode::Description(PathNode& node)
 	LOG("f score: %d g: %d h: %d", node.Score(), node.g, node.h);
 }
 
-void PathFinding::DrawPath(Render* render, DynArray<iPoint> path)
+void PathFinding::DrawPath(Render* render)
 {
-	int c = path.Count() ;
+	int c = lastPath.Count() ;
 	for (int i = 0; i < c; i++)
 	{
-		SDL_Rect tmp = { path[i].x * 16,path[i].y * 16 , 16, 16 };
+		SDL_Rect tmp = { lastPath[i].x * 16,lastPath[i].y * 16 , 16, 16 };
 		render->DrawRectangle(tmp, { 255, 0, 0, 255 });
 	}
 
