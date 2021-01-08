@@ -114,7 +114,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = fPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(fPoint(700, 470), EnemyType::WALKING);
+	enemy = eManager->CreateEnemy(fPoint(1407, 2176), EnemyType::WALKING);
 	enemy->SetTexture(playerText);
 	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 
@@ -226,7 +226,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 				if ((map->data.layers[2]->Get(x, y) >= 65) &&
 					CheckCollision(map->GetTilemapRecScaled(x, y), player->GetBounds()))
 				{
-				
+
 					player->position = tempPlayerPosition;
 					player->vy = 0.0f;
 					break;
@@ -234,52 +234,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 			}
 		}
 
-
-					// // nuestra parte, descomenta la de abajo para probarlo.
-
-
-					//int compY = player->position.y - tile.y;
-					//int compX = player->position.x - tile.x;
-					//bool floor = false;
-
-					//if (std::abs(compY) < std::abs(compX))
-					//{
-					//	if (compX > 0) {
-					//		player->position.x = player->prevPos.x;
-
-
-					//		//LOG("LEFT");
-					//	}
-					//	else
-					//	{
-					//		player->position.x = player->prevPos.x;
-
-					//		//LOG("RIGHT");
-					//	}
-					//}
-					//else
-					//{
-					//	if (compY > 0)
-					//	{
-					//		player->position.y = player->prevPos.y;
-
-					//		//LOG("UP");
-					//	}
-					//	else
-					//	{
-					//		//player->position.y = player->prevPos.y;
-					//		player->vy = 0;
-
-					//		//LOG("DOWN");
-					//	}
-					//	player->hitbox->SetPos(player->position.x, player->position.y);
-
-					//}
-
-					////collider->SetPos((int)position.x, (int)position.y);
-
-
-		
 	}
 
 	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
@@ -287,6 +241,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 		map->drawColliders = !map->drawColliders;
 		pathCreated *= 0;
 	}
+
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 	{
 		if (menu == true)
