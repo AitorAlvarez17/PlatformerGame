@@ -46,7 +46,7 @@ public:
 	bool DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
 	bool DrawTextureScaled(SDL_Texture* texture, int x, int y, const SDL_Rect* section,int s) const;
 	bool DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled = true) const;
-	bool DrawRectangleCam(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const;
+	bool DrawRectangleScaled(int s,const SDL_Rect& rect, SDL_Color color, bool filled = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, SDL_Color color) const;
 	bool DrawCircle(int x1, int y1, int redius, SDL_Color color) const;
 
