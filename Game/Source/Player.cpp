@@ -3,15 +3,15 @@
 
 #include "Log.h"
 
-#define PIXELS 32
+#define PIXELS 16
 Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 {
 
 	position = origin;
 	vy = 200.0f;
 
-	width = 32;
-	height = 32;
+	width = 16;
+	height = 16;
 
 	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 
@@ -20,48 +20,48 @@ Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 
 
 	// Define Player animations
-	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);
+	idleAnimL.GenerateAnimation({ 0,96,16,16 }, 0, 3, 0, 0);
 	idleAnimL.loop = true;
 	idleAnimL.speed = 0.1f;
 
-	idleAnimR.GenerateAnimation({ 320,192,32,32 }, 0, 3, 0, 0);
+	idleAnimR.GenerateAnimation({ 160,96,16,16 }, 0, 3, 0, 0);
 	idleAnimR.loop = true;
 	idleAnimR.speed = 0.1f;
 
-	runLeftAnim.GenerateAnimation({ 128,192,32,32 }, 0, 3, 0, 0);
+	runLeftAnim.GenerateAnimation({ 64,96,16,16 }, 0, 3, 0, 0);
 	runLeftAnim.loop = true;
 	runLeftAnim.speed = 0.3f;
 
-	runRightAnim.GenerateAnimation({ 448,192,32,32 }, 0, 3, 0, 0);
+	runRightAnim.GenerateAnimation({ 224,96,16,16 }, 0, 3, 0, 0);
 	runRightAnim.loop = true;
 	runRightAnim.speed = 0.3f;
 
-	jumpLeftAnim.GenerateAnimation({ 0,224,32,32 }, 0, 2, 0, 0);
+	jumpLeftAnim.GenerateAnimation({ 0,112,16,16 }, 0, 2, 0, 0);
 	jumpLeftAnim.loop = false;
 	jumpLeftAnim.speed = 0.1f;
 
-	jumpRightAnim.GenerateAnimation({ 320,224,32,32 }, 0, 2, 0, 0);
+	jumpRightAnim.GenerateAnimation({ 160,112,16,16 }, 0, 2, 0, 0);
 	jumpRightAnim.loop = false;
 	jumpRightAnim.speed = 0.1f;
 
-	fallRightAnim.GenerateAnimation({ 384,224,32,32 }, 0, 0, 0, 0);
+	fallRightAnim.GenerateAnimation({ 192,112,16,16 }, 0, 0, 0, 0);
 	fallRightAnim.loop = false;
 
-	fallLeftAnim.GenerateAnimation({ 64,224,32,32 }, 0, 0, 0, 0);
+	fallLeftAnim.GenerateAnimation({ 32,112,16,16 }, 0, 0, 0, 0);
 	fallLeftAnim.loop = false;
 
-	damageAnimL.GenerateAnimation({ 256,192,32,32 }, 0, 1, 0, 0);
+	damageAnimL.GenerateAnimation({ 128,96,16,16 }, 0, 1, 0, 0);
 	damageAnimL.loop = true;
 	damageAnimL.speed = 0.1f;
 
-	damageAnimR.GenerateAnimation({ 576,192,32,32 }, 0, 1, 0, 0);
+	damageAnimR.GenerateAnimation({ 288,96,16,16 }, 0, 1, 0, 0);
 	damageAnimR.loop = true;
 	damageAnimR.speed = 0.1f;
 
-	deadAnimL.GenerateAnimation({ 256,224,32,32 }, 0, 0, 0, 0);
+	deadAnimL.GenerateAnimation({ 128,112,16,16 }, 0, 0, 0, 0);
 	deadAnimL.loop = false;
 
-	deadAnimR.GenerateAnimation({ 576,224,32,32 }, 0, 0, 0, 0);
+	deadAnimR.GenerateAnimation({ 288,112,16,16 }, 0, 0, 0, 0);
 	deadAnimR.loop = false;
 
 	actualAnimation = &jumpLeftAnim;
@@ -86,22 +86,29 @@ bool Player::Draw(Render* render)
 
 	// animation state and animation frame
 	actualAnimation->Update();
-	render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+	render->scale = 4;
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
-	if (isGoingRight == true)
-	{
-		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-		render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
-	}
-	else
-	{
-		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-		render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
-	}
 
+	render->DrawTexture(texture, 0, 0, &rec);
+
+	//if (isGoingRight == true)
+	//{
+	//	if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
+	//	render->DrawTexture(texture, 0, 0, &rec);
+	//}
+	//else
+	//{
+	//	if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
+	//	render->DrawTexture(texture, position.x, position.y, &rec);
+	//}
+	//render->DrawRectangle({ (int)position.x,(int)position.y,width,height }, { 255, 0, 0, 255 });
+	//render->DrawRectangle({ 0,0,16,16 }, { 255,255,255,255 }, true);
+	render->scale = 1;
 	render->camera.x = -(int)position.x * 4 + render->camera.w / 2;
 	render->camera.y = -(int)position.y * 4 + render->camera.h / 2;
+	
+
 
 	return false;
 }
@@ -135,7 +142,7 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 128.0f
+#define GRAVITY 64.0f
 #define PLAYER_MOVE_SPEED 64.0f
 #define PLAYER_JUMP_SPEED 90.0f
 
@@ -247,10 +254,10 @@ void Player::UpdateAnim(PlayerAnim previousState, PlayerAnim newState)
 
 }
 
-SDL_Rect Player::GetBounds()
+SDL_Rect Player::GetBounds(Map* map)
 {
-
-	return { (int)position.x , (int)position.y, (int)width + PIXELS , (int)height + PIXELS };
+	iPoint offset = map->GetCameraOffset();
+	return { (int)position.x, (int)position.y, (int)width , (int)height  };
 }
 
 

@@ -80,7 +80,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
-	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
+	playerText = tex->Load(PATH("Assets/Textures/Character/", "players16.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/UI/", "settings.png"));
@@ -111,7 +111,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	// Initialize player
 	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
-	player->position = fPoint(200, 470);
+	player->position = fPoint(0, 0);
 	player->SetTexture(playerText);
 
 	enemy = eManager->CreateEnemy(fPoint(700, 470), EnemyType::WALKING);
@@ -221,7 +221,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 			for (int x = 0; x < map->data.width; x++)
 			{
 				if ((map->data.layers[2]->Get(x, y) >= 65) &&
-					CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
+					CheckCollision(map->GetTilemapRec(x, y), player->GetBounds(map)))
 				{
 
 					// parte de ray, comentala hasta el break;
@@ -240,7 +240,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 					 // nuestra parte, descomenta la de abajo para probarlo.
 
 
-					int compY = player->position.y - tile.y - 20;
+					int compY = player->position.y - tile.y;
 					int compX = player->position.x - tile.x;
 					bool floor = false;
 
@@ -290,7 +290,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
 	{
 		map->drawColliders = !map->drawColliders;
-		pathCreated *= -1;
+		pathCreated *= 0;
 	}
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 	{

@@ -302,6 +302,11 @@ SDL_Rect Map::GetTilemapRec(int x, int y) const
 	return rec;
 }
 
+iPoint Map::GetCameraOffset()
+{
+	return camOffset;
+}
+
 // Pick the right Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int id) const
 {
