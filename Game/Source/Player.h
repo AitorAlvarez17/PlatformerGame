@@ -47,6 +47,8 @@ public:
 
     SDL_Rect GetBounds();
 
+    SDL_Rect GetBoundsScaled();
+
     Animation idleAnimR;
     Animation idleAnimL;
 

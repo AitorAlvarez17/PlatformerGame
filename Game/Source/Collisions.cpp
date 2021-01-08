@@ -299,7 +299,7 @@ void Collisions::DebugDraw()
 			SDL_Rect rec = { 0,0,32,32 };
 
 			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,64,64}, { 255,255,255,255 }, true);
-			render->DrawTextureScaled(2,collTex, colliders[i]->rect.x / 2, colliders[i]->rect.y / 2, &rec);
+			render->DrawTextureScaled(2,collTex, colliders[i]->rect.x, colliders[i]->rect.y , &rec);
 			break;
 		}
 

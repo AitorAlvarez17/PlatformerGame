@@ -296,8 +296,21 @@ iPoint Map::WorldToMap(int x, int y) const
 SDL_Rect Map::GetTilemapRec(int x, int y) const
 {
 	iPoint pos = MapToWorld(x, y);
-	SDL_Rect rec = { pos.x * scale + camOffset.x, pos.y * scale + camOffset.y, 
-					 data.tileWidth * scale, data.tileHeight * scale };
+
+	SDL_Rect rec = { pos.x * scale + camOffset.x, pos.y * scale + camOffset.y,
+				 data.tileWidth * scale, data.tileHeight * scale };
+	//SDL_Rect rec = { pos.x * 4 , pos.y * 4 + camOffset.y, 
+	//				 data.tileWidth , data.tileHeight };
+
+	return rec;
+}
+
+SDL_Rect Map::GetTilemapRecScaled(int x, int y) const
+{
+	iPoint pos = MapToWorld(x, y);
+	//LOG("%d,%d", data.tileWidth, data.tileHeight);
+
+	SDL_Rect rec = { pos.x *4 , pos.y *4 , 64, 64 };
 
 	return rec;
 }
