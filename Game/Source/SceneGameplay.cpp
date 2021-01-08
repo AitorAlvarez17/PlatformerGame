@@ -221,7 +221,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 			for (int x = 0; x < map->data.width; x++)
 			{
 				if ((map->data.layers[2]->Get(x, y) >= 65) &&
-					CheckCollision(map->GetTilemapRec(x, y), player->GetBounds(map)))
+					CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
 				{
 
 					// parte de ray, comentala hasta el break;

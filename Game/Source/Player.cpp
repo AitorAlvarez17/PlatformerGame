@@ -88,10 +88,9 @@ bool Player::Draw(Render* render)
 	actualAnimation->Update();
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
-	render->DrawTexture(texture, 0, 0, &rec, 0, 0, 0, 0);
 
 	//render->DrawTextureScaled(texture, 0, 0, &rec, 4);
-	render->DrawRectangleScaled(2,{(int)position.x,(int)position.y,width,height }, { 255, 0, 0, 255 });
+	render->DrawRectangleScaled(2,GetBounds(), { 255, 0, 0, 255 });
 
 	if (isGoingRight == true)
 	{
@@ -105,8 +104,8 @@ bool Player::Draw(Render* render)
 	}
 
 
-	render->camera.x = -(int)position.x * 4 + render->camera.w / 2;
-	render->camera.y = -(int)position.y * 4 + render->camera.h / 2;
+	render->camera.x = -(int)position.x * 2 + render->camera.w / 4;
+	render->camera.y = -(int)position.y * 2 + render->camera.h / 4;
 
 	return false;
 }
@@ -141,7 +140,7 @@ void Player::SetTexture(SDL_Texture* tex)
 void Player::FixedUpdate(Input* input, float dt)
 {
 #define GRAVITY 64.0f
-#define PLAYER_MOVE_SPEED 64.0f
+#define PLAYER_MOVE_SPEED 128.0f
 #define PLAYER_JUMP_SPEED 90.0f
 
 
@@ -252,10 +251,9 @@ void Player::UpdateAnim(PlayerAnim previousState, PlayerAnim newState)
 
 }
 
-SDL_Rect Player::GetBounds(Map* map)
+SDL_Rect Player::GetBounds()
 {
-	iPoint offset = map->GetCameraOffset();
-	return { (int)position.x, (int)position.y, (int)width , (int)height };
+	return {(int)position.x, (int)position.y, (int)width , (int)height };
 }
 
 

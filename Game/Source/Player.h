@@ -45,7 +45,7 @@ public:
     void OnCollision(Collider* c1);
 
 
-    SDL_Rect GetBounds(Map* map);
+    SDL_Rect GetBounds();
 
     Animation idleAnimR;
     Animation idleAnimL;
