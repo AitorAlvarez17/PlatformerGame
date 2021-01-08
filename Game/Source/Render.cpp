@@ -159,7 +159,7 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	return ret;
 }
 
-bool Render::DrawTextureScaled(SDL_Texture* texture, int x, int y, const SDL_Rect* section,int s) const
+bool Render::DrawTextureScaled(int s,SDL_Texture* texture, int x, int y, const SDL_Rect* section) const
 {
 	bool ret = true;
 
