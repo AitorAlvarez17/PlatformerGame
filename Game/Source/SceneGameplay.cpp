@@ -118,7 +118,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	enemy->SetTexture(playerText);
 	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 
-	eManager->CreateItem(fPoint(200, 500), ItemType::COIN);
+	eManager->CreateItem(fPoint(320, 448), ItemType::COIN);
 
 	return false;
 }
