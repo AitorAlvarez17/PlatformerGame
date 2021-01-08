@@ -90,7 +90,7 @@ bool Player::Draw(Render* render)
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
-	render->DrawTexture(texture, 0, 0, &rec);
+	render->DrawTextureScaled(texture, 0, 0, &rec,4);
 
 	//if (isGoingRight == true)
 	//{
