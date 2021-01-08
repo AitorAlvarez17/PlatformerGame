@@ -111,14 +111,14 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	// Initialize player
 	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
-	player->position = fPoint(0, 0);
+	player->position = fPoint(384, 2176);
 	player->SetTexture(playerText);
 
 	enemy = eManager->CreateEnemy(fPoint(700, 470), EnemyType::WALKING);
 	enemy->SetTexture(playerText);
 	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 
-	eManager->CreateItem(fPoint(320, 448), ItemType::COIN);
+	eManager->CreateItem(fPoint(768, 2112), ItemType::COIN);
 
 	return false;
 }
@@ -132,6 +132,7 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
+	iPoint pos = map->MapToWorld(1, 1);
 	//Create a Path
 	if (pathCreated > 0)
 	{
@@ -214,6 +215,8 @@ bool SceneGameplay::Update(Input* input, float dt)
 	// IMPROVEMENT: Just check adyacent tiles to player
 	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
 
+	fPoint tempPlayerPosition = player->position;
+
 	if (player->godMode < 0)
 	{
 		for (int y = 0; y < map->data.height; y++)
@@ -221,70 +224,62 @@ bool SceneGameplay::Update(Input* input, float dt)
 			for (int x = 0; x < map->data.width; x++)
 			{
 				if ((map->data.layers[2]->Get(x, y) >= 65) &&
-					CheckCollision(map->GetTilemapRec(x, y), player->GetBounds()))
+					CheckCollision(map->GetTilemapRecScaled(x, y), player->GetBounds()))
 				{
-
-					// parte de ray, comentala hasta el break;
-
-					SDL_Rect tile = map->GetTilemapRec(x, y);
-					// player->position = tempPlayerPosition;
-					 //player->onGround = true;
-					 //player->max = 0;
-					 ////player->ChangeState(WALK);
-					 ////create a function that changes the player's state to a new one from the one before.
-					 //player->vy = 0.0f;
-					 //break;
-
-
-
-					 // nuestra parte, descomenta la de abajo para probarlo.
-
-
-					int compY = player->position.y - tile.y;
-					int compX = player->position.x - tile.x;
-					bool floor = false;
-
-					if (std::abs(compY) < std::abs(compX))
-					{
-						if (compX > 0) {
-							player->position.x = player->prevPos.x;
-
-
-							//LOG("LEFT");
-						}
-						else
-						{
-							player->position.x = player->prevPos.x;
-
-							//LOG("RIGHT");
-						}
-					}
-					else
-					{
-						if (compY > 0)
-						{
-							player->position.y = player->prevPos.y;
-
-							//LOG("UP");
-						}
-						else
-						{
-							//player->position.y = player->prevPos.y;
-							player->vy = 0;
-
-							//LOG("DOWN");
-						}
-						player->hitbox->SetPos(player->position.x, player->position.y);
-
-					}
-
-					//collider->SetPos((int)position.x, (int)position.y);
-
-
+				
+					player->position = tempPlayerPosition;
+					player->vy = 0.0f;
+					break;
 				}
-
 			}
 		}
+
+
+					// // nuestra parte, descomenta la de abajo para probarlo.
+
+
+					//int compY = player->position.y - tile.y;
+					//int compX = player->position.x - tile.x;
+					//bool floor = false;
+
+					//if (std::abs(compY) < std::abs(compX))
+					//{
+					//	if (compX > 0) {
+					//		player->position.x = player->prevPos.x;
+
+
+					//		//LOG("LEFT");
+					//	}
+					//	else
+					//	{
+					//		player->position.x = player->prevPos.x;
+
+					//		//LOG("RIGHT");
+					//	}
+					//}
+					//else
+					//{
+					//	if (compY > 0)
+					//	{
+					//		player->position.y = player->prevPos.y;
+
+					//		//LOG("UP");
+					//	}
+					//	else
+					//	{
+					//		//player->position.y = player->prevPos.y;
+					//		player->vy = 0;
+
+					//		//LOG("DOWN");
+					//	}
+					//	player->hitbox->SetPos(player->position.x, player->position.y);
+
+					//}
+
+					////collider->SetPos((int)position.x, (int)position.y);
+
+
+		
 	}
 
 	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
@@ -316,6 +311,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 bool SceneGameplay::Draw(Render* render)
 {
+
 	//COINS
 	switch (coins)
 	{

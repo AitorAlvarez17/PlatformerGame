@@ -73,7 +73,6 @@ bool Player::Update(Input* input, float dt)
 {
 	prevPos = position;
 	FixedUpdate(input, dt);
-
 	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
@@ -104,8 +103,8 @@ bool Player::Draw(Render* render)
 	}
 
 
-	render->camera.x = -(int)position.x * 2 + render->camera.w / 4;
-	render->camera.y = -(int)position.y * 2 + render->camera.h / 4;
+	render->camera.x = -(int)position.x + render->camera.w / 4;
+	render->camera.y = -(int)position.y + render->camera.h / 2 + 64;
 
 	return false;
 }
@@ -139,9 +138,9 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 64.0f
-#define PLAYER_MOVE_SPEED 128.0f
-#define PLAYER_JUMP_SPEED 90.0f
+#define GRAVITY 128.0f
+#define PLAYER_MOVE_SPEED 256.0f
+#define PLAYER_JUMP_SPEED 198.0f
 
 
 
@@ -253,7 +252,12 @@ void Player::UpdateAnim(PlayerAnim previousState, PlayerAnim newState)
 
 SDL_Rect Player::GetBounds()
 {
-	return {(int)position.x, (int)position.y, (int)width , (int)height };
+	return { (int)position.x, (int)position.y, (int)width , (int)height };
+}
+
+SDL_Rect Player::GetBoundsScaled()
+{
+	return { (int)position.x , (int)position.y , (int)width , (int)height};
 }
 
 

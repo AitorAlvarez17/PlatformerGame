@@ -170,8 +170,8 @@ bool Render::DrawTextureScaled(int s,SDL_Texture* texture, int x, int y, const S
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * s;
-	rect.y = (int)(camera.y * speed) + y * s;
+	rect.x = (int)(camera.x * speed) + x ;
+	rect.y = (int)(camera.y * speed) + y ;
 
 	if (section != NULL)
 	{
@@ -240,8 +240,8 @@ bool Render::DrawRectangleScaled(int s,const SDL_Rect& rect, SDL_Color color, bo
 
 	SDL_Rect rec(rect);
 
-		rec.x = (int)(camera.x + rect.x * s);
-		rec.y = (int)(camera.y + rect.y * s);
+		rec.x = (int)(camera.x + rect.x );
+		rec.y = (int)(camera.y + rect.y );
 		rec.w *= s;
 		rec.h *= s;
 
