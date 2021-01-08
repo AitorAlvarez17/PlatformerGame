@@ -146,7 +146,7 @@ bool Collisions::Awake(pugi::xml_node&)
 // Called before the first frame
 bool Collisions::Start()
 {
-	collTex = textures->Load("Assets/Textures/Maps/collisions.png");
+	collTex = textures->Load("Assets/Textures/Items/cherry.png");
 
 	return true;
 }
@@ -282,22 +282,24 @@ void Collisions::DebugDraw()
 			break;
 
 		case Collider::Type::FLOOR:
-			render->DrawRectangle(colliders[i]->rect, { 0, 255, 0, 255 });
+			//render->DrawRectangle(colliders[i]->rect, { 0, 255, 0, 255 });
 
 			break;
 		case Collider::Type::PLAYER:
-			render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
+		//	render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
 			//render->DrawRectangleCam(colliders[i]->rect, { 0, 0, 255, 255 },true);
 
 			break;
 		case Collider::Type::DEATH:
-			render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
+			//render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
 
 			break;
 		case Collider::Type::COIN:
 		{
-			SDL_Rect rec = { 32,0,16,16 };
-			render->DrawTexture(collTex, 0, 1900, &rec);
+			SDL_Rect rec = { 0,0,32,32 };
+
+			render->DrawRectangleScaled(1, {320,448,64,64}, { 255,255,255,255 }, true);
+			render->DrawTextureScaled(2,collTex, 160, 224, &rec);
 
 		}
 
@@ -307,27 +309,27 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::TP:
-			render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
+		//	render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
 
 			break;
 		case Collider::Type::SAVEPOINT:
-			render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+			//render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENEMY:
-			render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+			//render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENEMYWALL:
-			render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+			//render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENDLEVEL:
-			render->DrawRectangle(colliders[i]->rect, { 255, 0, 255, 255 });
+			//render->DrawRectangle(colliders[i]->rect, { 255, 0, 255, 255 });
 
 			break;
 		case Collider::Type::FIREBALL:
-			render->DrawRectangle(colliders[i]->rect, { 255, 127, 80, 255 });
+		//	render->DrawRectangle(colliders[i]->rect, { 255, 127, 80, 255 });
 
 			break;
 
