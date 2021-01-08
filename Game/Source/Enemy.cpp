@@ -37,7 +37,7 @@ bool Enemy::Draw(Render* render)
 	render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
-	render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
+	//render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
 	return false;
 }
 
