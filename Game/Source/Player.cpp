@@ -95,12 +95,12 @@ bool Player::Draw(Render* render)
 	if (isGoingRight == true)
 	{
 		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-		render->DrawTextureScaled(texture, (int)position.x,(int)position.y, &rec,2);
+		render->DrawTextureScaled(2,texture, (int)position.x,(int)position.y, &rec);
 	}
 	else
 	{
 		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-		render->DrawTextureScaled(texture, (int)position.x, (int)position.y, &rec,2);
+		render->DrawTextureScaled(2,texture, (int)position.x, (int)position.y, &rec);
 	}
 
 
