@@ -80,7 +80,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
-	playerText = tex->Load(PATH("Assets/Textures/Character/", "players16.png"));
+	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/UI/", "settings.png"));

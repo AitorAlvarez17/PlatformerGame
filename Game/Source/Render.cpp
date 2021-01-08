@@ -231,22 +231,20 @@ bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) c
 	return ret;
 }
 
-bool Render::DrawRectangleCam(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
+bool Render::DrawRectangleScaled(int s,const SDL_Rect& rect, SDL_Color color, bool filled) const
 {
 	bool ret = true;
-	uint scale = win->GetScale();
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
 	SDL_Rect rec(rect);
-	if (use_camera)
-	{
-		rec.x = (int)(camera.x + rect.x * scale);
-		rec.y = (int)(camera.y + rect.y * scale);
-		rec.w *= scale;
-		rec.h *= scale;
-	}
+
+		rec.x = (int)(camera.x + rect.x * s);
+		rec.y = (int)(camera.y + rect.y * s);
+		rec.w *= s;
+		rec.h *= s;
+
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
