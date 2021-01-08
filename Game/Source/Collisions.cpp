@@ -287,7 +287,7 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::PLAYER:
 			render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
-			render->DrawRectangleCam(colliders[i]->rect, 0, 0, 255, alpha, true, true);
+			//render->DrawRectangleCam(colliders[i]->rect, { 0, 0, 255, 255 },true);
 
 			break;
 		case Collider::Type::DEATH:

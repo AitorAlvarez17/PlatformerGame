@@ -7,6 +7,7 @@
 #include "Render.h"
 #include "Audio.h"
 #include "Textures.h"
+#include "Map.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -44,7 +45,7 @@ public:
     void OnCollision(Collider* c1);
 
 
-    SDL_Rect GetBounds();
+    SDL_Rect GetBounds(Map* map);
 
     Animation idleAnimR;
     Animation idleAnimL;
