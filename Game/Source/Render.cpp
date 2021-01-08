@@ -240,8 +240,8 @@ bool Render::DrawRectangleScaled(int s,const SDL_Rect& rect, SDL_Color color, bo
 
 	SDL_Rect rec(rect);
 
-		rec.x = (int)(camera.x + rect.x );
-		rec.y = (int)(camera.y + rect.y );
+		rec.x = (int)(camera.x + rect.x);
+		rec.y = (int)(camera.y + rect.y);
 		rec.w *= s;
 		rec.h *= s;
 

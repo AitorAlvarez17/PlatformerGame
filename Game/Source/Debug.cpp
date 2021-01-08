@@ -47,7 +47,8 @@ bool Debug::Update(float dt)
 
 	if (input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT) app->LoadGameRequest();
 
-	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) collisions->DebugRequest();
+	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
+		collisions->DebugRequest();
 
 	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) ui->saveCoroutine = 0;
 

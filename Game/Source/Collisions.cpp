@@ -194,10 +194,12 @@ bool Collisions::Update(float dt)
 			if (matrix[c1->type][c2->type] && c1->Intersects(c2->rect))
 			{
 				for (uint i = 0; i < MAX_LISTENERS; ++i)
-					if (c1->listeners[i] != nullptr) c1->listeners[i]->OnCollision(c1, c2);
+					if (c1->listeners[i] != nullptr) 
+						c1->listeners[i]->OnCollision(c1, c2);
 
 				for (uint i = 0; i < MAX_LISTENERS; ++i)
-					if (c2->listeners[i] != nullptr) c2->listeners[i]->OnCollision(c2, c1);
+					if (c2->listeners[i] != nullptr) 
+						c2->listeners[i]->OnCollision(c2, c1);
 			}
 
 		}
@@ -317,7 +319,7 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::ENEMY:
-			//render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+			render->DrawRectangleScaled(2,colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENEMYWALL:

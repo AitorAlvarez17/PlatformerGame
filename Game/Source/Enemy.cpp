@@ -34,10 +34,10 @@ bool Enemy::Draw(Render* render)
 {
 	// animation state and animation frame
 	actualAnimation->Update();
-	render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+	//render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
-	//render->DrawTexturePlayer(texture, position.x, position.y, &rec, 0, 0, 0, 0);
+	render->DrawTextureScaled(2,texture, GetBounds().x, GetBounds().y, &rec);
 	return false;
 }
 
