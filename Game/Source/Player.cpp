@@ -88,9 +88,10 @@ bool Player::Draw(Render* render)
 	actualAnimation->Update();
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
+	render->DrawTexture(texture, 0, 0, &rec, 0, 0, 0, 0);
 
 	//render->DrawTextureScaled(texture, 0, 0, &rec, 4);
-	render->DrawRectangle({ (int)position.x,(int)position.y,width,height }, { 255, 0, 0, 255 });
+	render->DrawRectangleScaled(2,{(int)position.x,(int)position.y,width,height }, { 255, 0, 0, 255 });
 
 	if (isGoingRight == true)
 	{
