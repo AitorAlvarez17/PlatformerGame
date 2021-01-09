@@ -65,17 +65,25 @@ void Enemy::UpdateLogic(float dt)
 			UpdateAnim(EnemyState::DEAD);
 			//DELETE ENEMY
 		}
+		break;
 	}
 	case EnemyType::FLYING:
 	{
 		if (eState == EnemyState::IDLE)
 		{
-
+			UpdateAnim(EnemyState::IDLE);
 		}
-		if (eState == EnemyState::WALK) {}
+		if (eState == EnemyState::WALK)
+		{
+			if (goingRight) position.x += 60.0f * dt;
+			else position.x -= 60.0f * dt;
+
+			if (goingDown) position.y += 60.0f * dt;
+			else position.y -= 60.0f * dt;
+		}
 		if (eState == EnemyState::HIT) {}
 		if (eState == EnemyState::DEAD) {}
-
+		break;
 	}
 	default:
 		break;
@@ -90,9 +98,12 @@ bool Enemy::Draw(Render* render)
 	// animation state and animation frame
 	actualAnimation->Update();
 
-
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
-	render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
+
+	if (eType == EnemyType::WALKING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
+	if (eType == EnemyType::FLYING) render->DrawTextureScaled(4, texture, position.x, position.y, &rec);
+
+
 	render->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
 
 	if(hasPath >  0)
@@ -131,21 +142,29 @@ void Enemy::UpdateAnim(EnemyState newState)
 		switch (newState)
 		{
 		case EnemyState::IDLE:
+		{
 			if (goingRight) actualAnimation = &idleAnimR;
 			else actualAnimation = &idleAnimL;
 			break;
+		}
 		case EnemyState::WALK:
+		{
 			if (goingRight) actualAnimation = &runRightAnim;
 			else actualAnimation = &runLeftAnim;
 			break;
+		}
 		case EnemyState::HIT:
+		{
 			if (goingRight) actualAnimation = &damageAnimR;
 			else actualAnimation = &damageAnimL;
 			break;
+		}
 		case EnemyState::DEAD:
+		{
 			if (goingRight) actualAnimation = &deadAnimR;
 			else actualAnimation = &deadAnimL;
 			break;
+		}
 		default:
 			break;
 		}
@@ -155,9 +174,17 @@ void Enemy::UpdateAnim(EnemyState newState)
 		switch (newState)
 		{
 		case EnemyState::IDLE:
+		{
+			if (goingRight) actualAnimation = &idleAnimR;
+			else actualAnimation = &idleAnimL;
 			break;
+		}
 		case EnemyState::WALK:
+		{
+			if (goingRight) actualAnimation = &runRightAnim;
+			else actualAnimation = &runLeftAnim;
 			break;
+		}	
 		case EnemyState::JUMP:
 			break;
 		case EnemyState::FALL:
@@ -180,7 +207,7 @@ void Enemy::SetAnim(int i)
 	{
 	case EnemyType::WALKING:
 	{
-		// Define Player animations
+		// Define Enemy animations
 		idleAnimL.GenerateAnimation({ 0, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
 		idleAnimL.loop = true;
 		idleAnimL.speed = 0.1f;
@@ -237,7 +264,24 @@ void Enemy::SetAnim(int i)
 		break;
 	}
 	case EnemyType::FLYING:
+	{
+		idleAnimL.GenerateAnimation({ 0, 0, 32, 32 }, 0, 0, 0, 0);
+
+		idleAnimR.GenerateAnimation({ 0, 0, 32, 32 }, 0, 0, 0, 0);
+
+		runLeftAnim.GenerateAnimation({ 32, 0 , 32, 32 }, 0, 2, 0, 0);
+		runLeftAnim.loop = true;
+		runLeftAnim.speed = 0.1f;
+
+		runRightAnim.GenerateAnimation({ 32, 32, 32, 32 }, 0, 2, 0, 0);
+		runRightAnim.loop = true;
+		runRightAnim.speed = 0.1f;
+
+		actualAnimation = &idleAnimL;
+
 		break;
+	}
+
 	case EnemyType::UKNOWN:
 		break;
 	default:
@@ -300,6 +344,39 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	}
 	case EnemyType::FLYING:
 	{
+		//LOGIC
+		if (newPath.Count() > 14)
+		{
+			newPath.Clear();
+			UpdateAnim(EnemyState::IDLE);
+			UpdateLogic(dt);
+			break;
+
+		}
+		if (player->position.x > position.x)
+		{
+			goingRight = true;
+			UpdateAnim(EnemyState::WALK);
+			UpdateLogic(dt);
+		}
+		if (player->position.x < position.x)
+		{
+			goingRight = false;
+			UpdateAnim(EnemyState::WALK);
+			UpdateLogic(dt);
+		}
+		if (player->position.y > position.y)
+		{
+			goingDown = true;
+			UpdateAnim(EnemyState::WALK);
+			UpdateLogic(dt);
+		}
+		if (player->position.y < position.y)
+		{
+			goingDown = false;
+			UpdateAnim(EnemyState::WALK);
+			UpdateLogic(dt);
+		}
 		break;
 	}
 
