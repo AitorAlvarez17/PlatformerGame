@@ -55,7 +55,6 @@ Player* EntityManager::CreatePlayer(iPoint origin)
 	Rect.h = ret->height;
 
 	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::PLAYER, this);
-	ret->texture = tex->Load("");
 	
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
@@ -88,7 +87,9 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 
 
 	if (iType == ItemType::COIN)
-	{
+	{	
+		ret->texture = tex->Load("Assets/Textures/Items/cherry.png");
+
 		ret->hitbox = collisions->AddCollider(Rect, Collider::Type::COIN, this);
 
 	}

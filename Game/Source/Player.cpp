@@ -222,6 +222,8 @@ void Player::FixedUpdate(Input* input, float dt)
 		if (input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) position.y += (PLAYER_JUMP_SPEED * dt);
 	}
 
+	hitbox->rect = { position.x,position.y,width,height };
+
 }
 
 void Player::UpdateAnim(PlayerAnim previousState, PlayerAnim newState)

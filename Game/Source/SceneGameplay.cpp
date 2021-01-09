@@ -239,7 +239,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 							player->vy = 0;
 							//LOG("DOWN");
 						}
-						player->hitbox->SetPos(player->position.x, player->position.y);
 					}
 					break;
 				}
