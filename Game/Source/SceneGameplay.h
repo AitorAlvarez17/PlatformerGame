@@ -29,6 +29,14 @@ public:
 
     bool Draw(Render* render);
 
+    bool DrawWand(Render* render);
+
+    bool DrawMoney(Render* render);
+
+    bool DrawMenu(Render* render);
+
+    bool DrawHealth(Render* render);
+
     bool Unload();
 
     bool OnGuiMouseClickEvent(GuiControl* control);
@@ -73,6 +81,10 @@ private:
     SDL_Texture* marginsUi;
     SDL_Texture* marginsButtonUi;
     SDL_Texture* marginsSlidersUi;
+    SDL_Texture* healHab;
+    SDL_Texture* fireHab;
+    SDL_Texture* hearth;
+    SDL_Texture* cantSummonUi;
    
 
     SDL_Texture* healthBackground;
@@ -89,6 +101,10 @@ private:
     SDL_Texture* eight;
     SDL_Texture* nine;
     SDL_Texture* x;
+
+    SDL_Texture* cd1;
+    SDL_Texture* cd2;
+    SDL_Texture* cd3;
 
     SDL_Texture* number;
 

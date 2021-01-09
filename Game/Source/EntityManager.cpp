@@ -135,7 +135,7 @@ bool EntityManager::Update(float dt)
 	if (accumulatedTime >= updateMsCycle) doLogic = true;
 
 	UpdateAll(dt, doLogic);
-
+	
 	if (doLogic == true)
 	{
 		accumulatedTime = 0.0f;
@@ -190,7 +190,7 @@ int EntityManager::GetTilePosx(int x) {
 	int Tx = 0;
 	Tx = x / 8;
 
-
+	
 	return Tx;
 }
 
