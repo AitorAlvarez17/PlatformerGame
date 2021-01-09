@@ -24,7 +24,7 @@ void Item::OnCollision(Collider* c1, Collider* c2)
 		c1 = c2;
 		c2 = c3;
 	}
-
+	OnCollision(c2);
 	//aqui se meterán las comparaciones entre colliders. C1 siempre sera el collider del cpp en el que estas.
 
 

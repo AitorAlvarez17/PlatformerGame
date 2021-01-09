@@ -300,8 +300,8 @@ void Collisions::DebugDraw()
 		{
 			SDL_Rect rec = { 0,0,32,32 };
 
-			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,64,64}, { 255,255,255,255 }, true);
-			render->DrawTextureScaled(2,collTex, colliders[i]->rect.x, colliders[i]->rect.y , &rec);
+			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h}, { 255,255,255,255 }, true);
+			render->DrawTextureScaled(1,collTex, colliders[i]->rect.x, colliders[i]->rect.y , &rec);
 			break;
 		}
 
