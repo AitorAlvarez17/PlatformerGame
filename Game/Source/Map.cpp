@@ -273,8 +273,8 @@ iPoint Map::WorldToMap(int x, int y) const
 	//Add the case for isometric maps to WorldToMap
 	if (data.type == MAPTYPE_ORTHOGONAL)
 	{
-		ret.x = x / data.tileWidth;
-		ret.y = y / data.tileHeight;
+		ret.x = x / (data.tileWidth * scale);
+		ret.y = y / (data.tileHeight * scale);
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{

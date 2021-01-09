@@ -123,9 +123,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = fPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(fPoint(1407, 2176), EnemyType::WALKING);
+	enemy = eManager->CreateEnemy(fPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 	enemy->SetTexture(playerText);
-	enemy->SetAnim(4); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 
 	eManager->CreateItem(fPoint(768, 2112), ItemType::COIN);
 
@@ -141,39 +140,6 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
-	iPoint pos = map->MapToWorld(1, 1);
-	//Create a Path
-	if (pathCreated > 0)
-	{
-		// Pathfinding Points
-		iPoint dst = map->WorldToMap((int)player->position.x, (int)player->position.y + 32);
-		iPoint origin = map->WorldToMap((int)enemy->position.x, (int)enemy->position.y);
-
-		path->GetInstance()->lastPath.Clear();
-		path->GetInstance()->CreatePath(origin, dst);
-		//enemy->path = path->lastPath
-
-		for (int i = 0; i < path->GetInstance()->lastPath.Count(); i++)
-		{
-			//Only on X 
-			if (dst.x == origin.x) break;
-			else if (origin.x > dst.x)
-			{
-				enemy->position.x -= 1.0f * dt;
-				enemy->goingRight = false;
-				enemy->UpdateAnim(enemy->eState, EnemyState::WALK);
-			}
-			else
-			{
-				enemy->position.x += 1.0f * dt;
-				enemy->goingRight = true;
-				enemy->UpdateAnim(enemy->eState, EnemyState::WALK);
-
-			}
-
-		}
-	}
-
 
 	//SET THE SETTINGS TO THE SAME ONES AS MENU
 	if (settings && buffer)
@@ -248,7 +214,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
 	{
 		map->drawColliders = !map->drawColliders;
-		pathCreated *= 0;
+		enemy->hasPath = true;
 	}
 
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
@@ -269,6 +235,8 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 	player->Update(input, dt);
 
+	if (enemy->hasPath)
+		enemy->UpdatePath(map, input, player, dt);
 
 	return true;
 }
@@ -289,9 +257,6 @@ bool SceneGameplay::Draw(Render* render)
 
 	collisions->Draw(render);
 
-
-	if (pathCreated > 0)
-		path->GetInstance()->DrawPath(render);
 
 	DrawMenu(render);
 	DrawHealth(render);

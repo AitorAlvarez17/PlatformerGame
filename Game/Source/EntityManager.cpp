@@ -100,11 +100,11 @@ Item* EntityManager::CreateItem(fPoint origin, ItemType iType)
 	return ret;
 }
 
-Enemy* EntityManager::CreateEnemy(fPoint origin, EnemyType eType)
+Enemy* EntityManager::CreateEnemy(fPoint origin, EnemyType eType, int life, int anim)
 {
 	Enemy* ret = nullptr;
 
-	ret = new Enemy(origin, eType);
+	ret = new Enemy(origin, eType, life,anim);
 
 	SDL_Rect Rect;
 	Rect.x = origin.x;

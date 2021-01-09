@@ -121,9 +121,6 @@ private:
     Window* win;
     Input* input;
     ModuleUI* ui;
-
-    int pathCreated = -1;
-    SDL_Rect prueba;
 };
 
 #endif // __SCENEGAMEPLAY_H__
