@@ -167,8 +167,10 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 	{
 		for (uint i = 0; i < MAX_ENTITIES; ++i)
 		{
-			if (entities[i] != nullptr)
+			if (entities[i] != NULL)
 			{
+				
+				entities[i]->Update(dt);
 				if (entities[i]->pendingToDelete)
 				{
 
@@ -176,8 +178,6 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 					delete entities[i];
 					entities[i] = nullptr;
 				}
-
-				entities[i]->Update(dt);
 			}
 			
 		}
@@ -208,15 +208,15 @@ bool EntityManager::Draw(Render * render)
 
 void EntityManager::OnCollision(Collider* a, Collider* b)
 {
-	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		Entity* c = entities[i];
-		if (c->hitbox == a && entities[i] != nullptr)
+		if (entities[i] != nullptr && c->hitbox == a)
 		{
 			c->OnCollision(b);
 		}
 
-	}*/
+	}
 }
 
 int EntityManager::GetTilePosx(int x) {
