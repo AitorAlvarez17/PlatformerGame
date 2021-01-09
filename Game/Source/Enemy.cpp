@@ -38,28 +38,29 @@ void Enemy::UpdateLogic(float dt)
 {
 
 	//Start Idle
-	UpdateAnim(eState, EnemyState::IDLE);
+	if (lifes == 0) eState == EnemyState::DEAD;
 
 	switch (eType)
 	{
 	case EnemyType::WALKING:
 	{
-		if (lifes == 0) eState == EnemyState::DEAD;
-		if (eState == EnemyState::IDLE) {}
+		if (eState == EnemyState::IDLE)
+		{
+			UpdateAnim(EnemyState::IDLE);
+		}
 		if (eState == EnemyState::WALK)
 		{
 			if (goingRight) position.x += 60.0f * dt;
 			else position.x -= 60.0f * dt;
-
 		}
 		if (eState == EnemyState::HIT)
 		{
-			UpdateAnim(eState, EnemyState::HIT);
+			UpdateAnim(EnemyState::HIT);
 			--lifes;
 		}
 		if (eState == EnemyState::DEAD)
 		{
-			UpdateAnim(eState, EnemyState::DEAD);
+			UpdateAnim(EnemyState::DEAD);
 			//DELETE ENEMY
 		}
 	}
@@ -83,12 +84,13 @@ bool Enemy::Draw(Render* render)
 {
 	// animation state and animation frame
 	actualAnimation->Update();
-	//render->DrawRectangle(GetBounds(), { 255, 0, 0, 255 });
+
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 	render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
+	render->DrawRectangleScaled(1,GetBounds(), { 255, 255, 255, 255 }, true);
 
-	if(hasPath)
+	if (hasPath)
 		ePath->DrawPath(render, newPath);
 
 
@@ -117,9 +119,9 @@ void Enemy::OnCollision(Collider* c1)
 
 }
 
-void Enemy::UpdateAnim(EnemyState previousState, EnemyState newState)
+void Enemy::UpdateAnim(EnemyState newState)
 {
-	switch (eState)
+	switch (newState)
 	{
 	case EnemyState::IDLE:
 		if (goingRight) actualAnimation = &idleAnimR;
@@ -141,6 +143,7 @@ void Enemy::UpdateAnim(EnemyState previousState, EnemyState newState)
 		break;
 	}
 
+	eState = newState;
 }
 
 void Enemy::SetAnim(int i)
@@ -213,65 +216,48 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	{
 		if (eType == EnemyType::WALKING)
 		{
-
 			ePath->lastPath.Clear();
 
-			iPoint d = { (int)player->position.x + 32,(int)player->position.y };
+			iPoint d = { (int)player->position.x ,(int)player->position.y };
 			d = map->WorldToMap(d.x, d.y);
 
 			iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y);
 			ePath->CreatePath(o, d);
 
 			newPath.Clear();
-
 			for (int i = 0; i < ePath->lastPath.Count(); ++i)
 			{
 				newPath.PushBack(*ePath->lastPath.At(i));
+				//LOG("%d, %d", newPath[i].x, newPath[i].x);
+
 			}
 			newPath.Flip();
 
-			//for (int i = 0; i < newPath.Count(); ++i)
-			//{
-			//	if(newPath[i].x < newPath[i-1].x)
-			//	{ 
-			//		LOG("LEFT");
-			//		position.x -= 1.0f;
-			//	}
-			//	else { position.x += 1.0f; }
-			//}
 
-
-			if (newPath.Count() > 0)
+			//LOGIC
+			if (newPath.Count() > 9)
 			{
-				iPoint nextPosition;
-				if (eState == EnemyState::IDLE)
-				{
-					if (newPath.Pop(nextPosition))
-					{
-						//if idle, get direction
-						UpdateState(map->MapToWorld(nextPosition.x, nextPosition.y));
-					}
-				}
+				newPath.Clear();
+				UpdateAnim(EnemyState::IDLE);
+				UpdateLogic(dt);
 
-				// Walk
-				if (eState != EnemyState::IDLE)
-				{
-					UpdateState(map->MapToWorld(nextPosition.x, nextPosition.y));
-					UpdateLogic(dt);
-					counter += 1.0f * dt;
-				}
-
-				// After time set idle
-				if (counter >= 0.8f) // 1.0f too long
-				{
-					eState = EnemyState::IDLE;
-					counter = 0.0f;
-				}
+			}
+			else if (player->position.x > position.x )
+			{
+				goingRight = true;
+				UpdateAnim(EnemyState::WALK);
+				UpdateLogic(dt);
+			}
+			else if (player->position.x < position.x)
+			{
+				goingRight = false;
+				UpdateAnim(EnemyState::WALK);
+				UpdateLogic(dt);
 			}
 		}
 	}
-}
 
+}
 void Enemy::DrawPath()
 {
 
