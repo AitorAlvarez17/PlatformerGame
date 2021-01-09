@@ -4,14 +4,14 @@
 #include "Log.h"
 
 #define PIXELS 32
-Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
+Player::Player(iPoint origin) : Entity(EntityType::PLAYER)
 {
 	delayUi = 2.0f;
 	position = origin;
 	vy = 200.0f;
 
-	width = 32;
-	height = 32;
+	width = 64;
+	height = 64;
 
 	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 

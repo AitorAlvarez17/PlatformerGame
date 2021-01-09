@@ -1,6 +1,6 @@
 #include "Item.h"
 
-Item::Item(fPoint origin,ItemType type) : Entity(EntityType::ITEM)
+Item::Item(iPoint origin,ItemType type) : Entity(EntityType::ITEM)
 {
 	position = origin;
 	iType = type;

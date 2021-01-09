@@ -50,7 +50,7 @@ public:
 
     // Possible properties, it depends on how generic we
     // want our Entity class, maybe it's not renderable...
-    fPoint position;        // Use a float instead?
+    iPoint position;        // Use a float instead?
     bool renderable = false;
     SDL_Texture* texture;
 };

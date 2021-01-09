@@ -36,7 +36,7 @@ class Enemy : public Entity
 public:
 
 	Enemy();
-	Enemy(fPoint origin, EnemyType type, int life, int anim);
+	Enemy(iPoint origin, EnemyType type, int life, int anim);
 
 	virtual ~Enemy();
 

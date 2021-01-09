@@ -28,7 +28,7 @@ class Player: public Entity
 {
 public:
 
-    Player(fPoint origin);
+    Player(iPoint origin);
 
     bool Update(Input* input, float dt);
 
@@ -77,7 +77,7 @@ public:
     Animation* actualAnimation = nullptr;//diferentiate --- THIS IS THE ANIMATION!!
 
 
-    fPoint prevPos;
+    iPoint prevPos;
     int preCalc;
     int maxLifes = 4;
     //PlayerProperties

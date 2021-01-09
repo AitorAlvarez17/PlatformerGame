@@ -5,7 +5,7 @@
 #define DEFAULT_PATH_LENGTH 50
 #define PIXELS 32
 
-Enemy::Enemy(fPoint origin, EnemyType type, int life, int anim) : Entity(EntityType::ENEMY)
+Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim) : Entity(EntityType::ENEMY)
 {
 	// path = PathFinding::GetInstance()->CreatePath(iPoint(0, 0), iPoint(0, 0));
 	position = origin;
