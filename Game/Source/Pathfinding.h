@@ -35,7 +35,7 @@ public:
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
 
-	void DrawPath(Render* render);
+	void DrawPath(Render* render, DynArray<iPoint>& path);
 
 	// Main function to request a path from A to B
 	int CreatePath(const iPoint& origin, const iPoint& destination);
