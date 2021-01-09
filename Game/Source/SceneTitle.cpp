@@ -49,7 +49,10 @@ SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app, Input* i
     bgAnim.loop = true;
     bgAnim.speed = 0.03f;
    
-   
+    if (app->firstSaved != true)
+    {
+        btnContinue->Deactivate();
+    }
 
     buffer = true;
     this->aud = manager;
@@ -212,11 +215,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
         if (control->id == 1) TransitionToScene(SceneType::GAMEPLAY);
         else if (control->id == 2)
         {
-            if (SAVE_STATE_FILENAME != NULL)
-            {
-                app->LoadGameRequest();
-                TransitionToScene(SceneType::GAMEPLAY);
-            }
+            TransitionToScene(SceneType::GAMEPLAY);
         }
         else if (control->id == 3)
         {

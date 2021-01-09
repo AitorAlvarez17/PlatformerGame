@@ -46,7 +46,7 @@ bool GuiButton::Draw(Render* render)
     // Draw the right button depending on state
     switch (state)
     {
-    case GuiControlState::DISABLED: render->DrawRectangle(bounds, { 100, 100, 100, 255 });
+    case GuiControlState::DISABLED: render->DrawRectangle(bounds, { 46, 108, 107, 100 });
         break;
     case GuiControlState::NORMAL: render->DrawRectangle(bounds, { 46, 108, 107, 255 });
         break;
@@ -59,6 +59,13 @@ bool GuiButton::Draw(Render* render)
     default:
         break;
     }
+
+    return false;
+}
+
+bool GuiButton::Deactivate()
+{
+    state = GuiControlState::DISABLED;
 
     return false;
 }

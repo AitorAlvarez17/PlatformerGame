@@ -212,3 +212,25 @@ bool SceneManager::CleanUp()
 
 	return true;
 }
+
+bool SceneManager::LoadState(pugi::xml_node& data)
+{
+	LOG(" Entity loaded");
+
+	current->name = data.child("currentScene").attribute("name.x").as_float();
+
+	return true;
+}
+
+// L02: DONE 8: Create a method to save the state of the renderer
+// Save Game State
+bool SceneManager::SaveState(pugi::xml_node& data) const
+{
+	LOG(" Entity saved");
+	pugi::xml_node currentScene = data.append_child("currentScene");
+
+	currentScene.append_attribute("sceneName") = current->name.GetString();
+
+
+	return true;
+}
