@@ -290,7 +290,7 @@ void Collisions::DebugDraw()
 		case Collider::Type::PLAYER:
 		//	render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
 			//render->DrawRectangleCam(colliders[i]->rect, { 0, 0, 255, 255 },true);
-
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,64,64 }, { 255,0,0,255 }, true);
 			break;
 		case Collider::Type::DEATH:
 			//render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
@@ -319,7 +319,7 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::ENEMY:
-			render->DrawRectangleScaled(2,colliders[i]->rect, { 247, 0, 255, 255 });
+			render->DrawRectangleScaled(1,colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENEMYWALL:

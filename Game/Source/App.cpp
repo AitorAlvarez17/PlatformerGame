@@ -32,7 +32,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures(render);
 	audio = new AudioManager();
 	collisions = new Collisions(render,tex);
-	entityManager = new EntityManager(collisions);
+	entityManager = new EntityManager(collisions, tex);
 	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions);
 	debug = new Debug(input, collisions, this, ui);
 	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);

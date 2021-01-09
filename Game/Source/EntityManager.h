@@ -18,7 +18,7 @@ public:
 
 	EntityManager();
 
-	EntityManager(Collisions* coll);
+	EntityManager(Collisions* coll, Textures* texture);
 
 	// Destructor
 	virtual ~EntityManager();
@@ -27,6 +27,8 @@ public:
 	bool Awake(pugi::xml_node&);
 
 	bool Update(float dt);
+
+	bool Draw(Render* render);
 
 	// Called before quitting
 	bool CleanUp();
@@ -55,6 +57,8 @@ public:
 
 
 	Collisions* collisions;
+	Textures* tex;
+
 	Entity* entities[MAX_ENTITIES] = { nullptr };
 
 	float accumulatedTime = 0.0f;

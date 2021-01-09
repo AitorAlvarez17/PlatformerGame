@@ -113,7 +113,7 @@ bool Player::Draw(Render* render)
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
 	//render->DrawTextureScaled(texture, 0, 0, &rec, 4);
-	render->DrawRectangleScaled(2,GetBounds(), { 255, 0, 0, 255 });
+	//render->DrawRectangleScaled(2,GetBounds(), { 255, 0, 0, 255 });
 
 	if (isGoingRight == true)
 	{
