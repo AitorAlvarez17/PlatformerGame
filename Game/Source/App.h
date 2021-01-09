@@ -111,6 +111,7 @@ private:
 	pugi::xml_node au;//load the audio
 	pugi::xml_node pl;//load the player
 	pugi::xml_node en;//load the enemy
+	pugi::xml_node ent;//load the entities of the map
 
 	int argc;
 	char** args;

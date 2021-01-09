@@ -13,6 +13,9 @@ Player::Player(iPoint origin) : Entity(EntityType::PLAYER)
 	width = 64;
 	height = 64;
 
+	lifes = 3;
+	godMode = -1;
+
 	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 
 	/*hitbox = Collisions::AddCollider(size, Collider::Type::PLAYER,this);*/
