@@ -302,7 +302,7 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	iPoint d = { (int)player->position.x ,(int)player->position.y };
 	d = map->WorldToMap(d.x, d.y);
 
-	iPoint o = map->WorldToMap(GetBounds().x + 64, GetBounds().y);
+	iPoint o = map->WorldToMap(GetBounds().x , GetBounds().y);
 	ePath->CreatePath(o, d);
 
 	newPath.Clear();
@@ -378,7 +378,7 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 					UpdateLogic(dt);*/
 					position.x += 60* dt;
 				}
-				if (pos.y < nextPos.y)
+				else if (pos.y < nextPos.y)
 				{
 				/*	goingDown = true;
 					UpdateAnim(EnemyState::WALK);
