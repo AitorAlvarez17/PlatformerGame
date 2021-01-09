@@ -75,11 +75,11 @@ void Enemy::UpdateLogic(float dt)
 		}
 		if (eState == EnemyState::WALK)
 		{
-			if (goingRight) position.x += 60.0f * dt;
+			/*if (goingRight) position.x += 60.0f * dt;
 			else position.x -= 60.0f * dt;
 
 			if (goingDown) position.y += 60.0f * dt;
-			else position.y -= 60.0f * dt;
+			else position.y -= 60.0f * dt;*/
 		}
 		if (eState == EnemyState::HIT) {}
 		if (eState == EnemyState::DEAD) {}
@@ -101,7 +101,7 @@ bool Enemy::Draw(Render* render)
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
 	if (eType == EnemyType::WALKING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
-	if (eType == EnemyType::FLYING) render->DrawTextureScaled(4, texture, position.x, position.y, &rec);
+	if (eType == EnemyType::FLYING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
 
 
 	render->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
@@ -368,7 +368,7 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 				/*	goingRight = false;
 					UpdateAnim(EnemyState::WALK);
 					UpdateLogic(dt);*/
-					position.x -= 0.5 * dt;
+					position.x -= 1* dt;
 
 				}
 				 else if (pos.x > nextPos.x)
