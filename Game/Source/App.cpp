@@ -457,6 +457,8 @@ bool App::SaveGame() const
 {
 	bool ret = true;
 	
+	firstSaved = true;
+
 	pugi::xml_document save;
 	if (save == NULL)
 	{
@@ -479,6 +481,8 @@ bool App::SaveGame() const
 
 		pugi::xml_node e = node.append_child("enemy");
 
+		pugi::xml_node s = node.append_child("scene");
+		sceneManager->SaveState(s);
 		save.save_file("save_game.xml");
 	}
 

@@ -100,6 +100,8 @@ public:
 	Collisions* collisions;
 	CheckPoints* checkPoints;
 
+	mutable bool firstSaved = false;
+
 private:
 
 	pugi::xml_document saveGame;
@@ -128,6 +130,7 @@ private:
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
+	
 
 	// L07: DONE 4: Calculate some timing measures
 	// required variables are provided:
