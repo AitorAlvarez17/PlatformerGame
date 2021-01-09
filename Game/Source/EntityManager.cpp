@@ -3,16 +3,18 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Item.h"
+#include "Entity.h"
 
 #include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-EntityManager::EntityManager(Collisions* coll) : Module()
+EntityManager::EntityManager(Collisions* coll, Textures* texture) : Module()
 {
 	name.Create("entitymanager");
 	collisions = coll;
+	tex = texture;
 
 }
 
@@ -52,8 +54,9 @@ Player* EntityManager::CreatePlayer(iPoint origin)
 	Rect.w = ret->width;
 	Rect.h = ret->height;
 
-	// Created entities are added to the list
-	/*if (ret != nullptr) entities.Add(ret);*/
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::PLAYER, this);
+	ret->texture = tex->Load("");
+	
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
@@ -84,6 +87,19 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 	Rect.h = ret->height;
 
 
+	if (iType == ItemType::COIN)
+	{
+		ret->hitbox = collisions->AddCollider(Rect, Collider::Type::COIN, this);
+
+	}
+
+	if (iType == ItemType::HEART)
+	{
+		ret->hitbox = collisions->AddCollider(Rect, Collider::Type::HEART, this);
+
+	}
+
+
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] == nullptr)
@@ -92,10 +108,7 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 			break;
 		}
 	}
-	/*if (ret != nullptr) entities.Add(ret);*/
-
-	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::COIN, this);
-	
+	/*if (ret != nullptr) entities.Add(ret);*/	
 
 	return ret;
 }
@@ -111,6 +124,9 @@ Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int 
 	Rect.y = origin.y;
 	Rect.w = ret->width;
 	Rect.h = ret->height;
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::ENEMY, this);
+
 	
 	/*if (ret != nullptr) entities.Add(ret);*/
 
@@ -123,7 +139,6 @@ Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int 
 		}
 	}
 
-	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::ENEMY, this);
 
 	return ret;
 }
@@ -155,6 +170,8 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 			{
 				if (entities[i]->pendingToDelete)
 				{
+
+					entities[i]->hitbox->pendingToDelete = true;
 					delete entities[i];
 					entities[i] = nullptr;
 				}
@@ -163,14 +180,30 @@ bool EntityManager::UpdateAll(float dt, bool doLogic)
 			}
 			
 		}
-		
-		// TODO: Update all entities 
+	
 	}
 
 	
 
 	return true;
 }
+
+bool EntityManager::Draw(Render * render)
+{
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		entities[i];
+		if (entities[i] != nullptr && entities[i]->type == EntityType::ITEM)
+		{
+			SDL_Rect rec = { 0,0,32,32 };
+			render->DrawTextureScaled(1, entities[i]->texture, entities[i]->position.x, entities[i]->position.y, &rec);
+		}
+	}
+
+	return true;
+
+}
+
 
 void EntityManager::OnCollision(Collider* a, Collider* b)
 {

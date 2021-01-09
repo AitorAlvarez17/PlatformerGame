@@ -127,7 +127,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 	enemy->SetTexture(enemyText);
 
-	eManager->CreateItem(iPoint(768, 2112), ItemType::COIN);
+	eManager->CreateItem(iPoint(768, 2124), ItemType::COIN);
 
 	return false;
 }
@@ -284,6 +284,10 @@ bool SceneGameplay::Draw(Render* render)
 
 	// Draw map
 	map->Draw(render);
+
+	collisions->Draw(render);
+
+	eManager->Draw(render);
 
 	player->Draw(render);
 
