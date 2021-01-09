@@ -175,8 +175,7 @@ void Enemy::UpdateAnim(EnemyState newState)
 		{
 		case EnemyState::IDLE:
 		{
-			if (goingRight) actualAnimation = &idleAnimR;
-			else actualAnimation = &idleAnimL;
+			actualAnimation = &idleAnimL;
 			break;
 		}
 		case EnemyState::WALK:
@@ -269,7 +268,7 @@ void Enemy::SetAnim(int i)
 
 		idleAnimR.GenerateAnimation({ 0, 0, 32, 32 }, 0, 0, 0, 0);
 
-		runLeftAnim.GenerateAnimation({ 32, 0 , 32, 32 }, 0, 2, 0, 0);
+		runLeftAnim.GenerateAnimation({ 32, 96 , 32, 32 }, 0, 2, 0, 0);
 		runLeftAnim.loop = true;
 		runLeftAnim.speed = 0.1f;
 
