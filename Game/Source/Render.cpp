@@ -215,18 +215,15 @@ bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) c
 
 	SDL_Rect rec(rect);
 
-	rec.x = (int)(camera.x + rect.x * scale);
-	rec.y = (int)(camera.y + rect.y * scale);
-	rec.w *= scale;
-	rec.h *= scale;
-
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
 	}
+
+	return ret;
 
 	return ret;
 }
