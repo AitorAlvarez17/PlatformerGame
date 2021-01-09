@@ -310,7 +310,7 @@ SDL_Rect Map::GetTilemapRecScaled(int x, int y) const
 	iPoint pos = MapToWorld(x, y);
 	//LOG("%d,%d", data.tileWidth, data.tileHeight);
 
-	SDL_Rect rec = { pos.x *4 , pos.y *4 , 64, 64 };
+	SDL_Rect rec = { pos.x *4 , pos.y *4 -  32, 64, 64 };
 
 	return rec;
 }
