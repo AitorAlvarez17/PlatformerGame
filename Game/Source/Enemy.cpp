@@ -10,10 +10,12 @@ Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim) : Entity(EntityT
 	// path = PathFinding::GetInstance()->CreatePath(iPoint(0, 0), iPoint(0, 0));
 	position = origin;
 	lifes = life;
+	this->eType = type;
 	//set the width and the height to the requested value depending on the Enemy etc...
 
 	width = 32;
 	height = 32;
+
 
 	//Set the Animation 0, 2, 4, 6... only pair numbers
 	SetAnim(anim);
@@ -23,7 +25,7 @@ Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim) : Entity(EntityT
 	//hitbox->rect.w = width;
 	//hitbox->rect.h = height;
 
-	this->eType = type;
+
 	ePath = ePath->GetInstance();
 }
 
@@ -66,7 +68,10 @@ void Enemy::UpdateLogic(float dt)
 	}
 	case EnemyType::FLYING:
 	{
-		if (eState == EnemyState::IDLE) {}
+		if (eState == EnemyState::IDLE)
+		{
+
+		}
 		if (eState == EnemyState::WALK) {}
 		if (eState == EnemyState::HIT) {}
 		if (eState == EnemyState::DEAD) {}
@@ -88,9 +93,9 @@ bool Enemy::Draw(Render* render)
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 	render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
-	render->DrawRectangleScaled(1,GetBounds(), { 255, 255, 255, 255 }, true);
+	render->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
 
-	if (hasPath)
+	if(hasPath >  0)
 		ePath->DrawPath(render, newPath);
 
 
@@ -121,87 +126,124 @@ void Enemy::OnCollision(Collider* c1)
 
 void Enemy::UpdateAnim(EnemyState newState)
 {
-	switch (newState)
+	if (eType == EnemyType::WALKING)
 	{
-	case EnemyState::IDLE:
-		if (goingRight) actualAnimation = &idleAnimR;
-		else actualAnimation = &idleAnimL;
-		break;
-	case EnemyState::WALK:
-		if (goingRight) actualAnimation = &runRightAnim;
-		else actualAnimation = &runLeftAnim;
-		break;
-	case EnemyState::HIT:
-		if (goingRight) actualAnimation = &damageAnimR;
-		else actualAnimation = &damageAnimL;
-		break;
-	case EnemyState::DEAD:
-		if (goingRight) actualAnimation = &deadAnimR;
-		else actualAnimation = &deadAnimL;
-		break;
-	default:
-		break;
+		switch (newState)
+		{
+		case EnemyState::IDLE:
+			if (goingRight) actualAnimation = &idleAnimR;
+			else actualAnimation = &idleAnimL;
+			break;
+		case EnemyState::WALK:
+			if (goingRight) actualAnimation = &runRightAnim;
+			else actualAnimation = &runLeftAnim;
+			break;
+		case EnemyState::HIT:
+			if (goingRight) actualAnimation = &damageAnimR;
+			else actualAnimation = &damageAnimL;
+			break;
+		case EnemyState::DEAD:
+			if (goingRight) actualAnimation = &deadAnimR;
+			else actualAnimation = &deadAnimL;
+			break;
+		default:
+			break;
+		}
 	}
+	if (eType == EnemyType::FLYING)
+	{
+		switch (newState)
+		{
+		case EnemyState::IDLE:
+			break;
+		case EnemyState::WALK:
+			break;
+		case EnemyState::JUMP:
+			break;
+		case EnemyState::FALL:
+			break;
+		case EnemyState::HIT:
+			break;
+		case EnemyState::DEAD:
+			break;
+		default:
+			break;
+		}
 
+	}
 	eState = newState;
 }
 
 void Enemy::SetAnim(int i)
 {
-	// Define Player animations
-	idleAnimL.GenerateAnimation({ 0, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
-	idleAnimL.loop = true;
-	idleAnimL.speed = 0.1f;
+	switch (eType)
+	{
+	case EnemyType::WALKING:
+	{
+		// Define Player animations
+		idleAnimL.GenerateAnimation({ 0, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
+		idleAnimL.loop = true;
+		idleAnimL.speed = 0.1f;
 
-	idleAnimR.GenerateAnimation({ 320, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
-	idleAnimR.loop = true;
-	idleAnimR.speed = 0.1f;
+		idleAnimR.GenerateAnimation({ 320, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
+		idleAnimR.loop = true;
+		idleAnimR.speed = 0.1f;
 
-	runLeftAnim.GenerateAnimation({ 128, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
-	runLeftAnim.loop = true;
-	runLeftAnim.speed = 0.1f;
+		runLeftAnim.GenerateAnimation({ 128, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
+		runLeftAnim.loop = true;
+		runLeftAnim.speed = 0.1f;
 
-	runRightAnim.GenerateAnimation({ 448, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
-	runRightAnim.loop = true;
-	runRightAnim.speed = 0.1f;
+		runRightAnim.GenerateAnimation({ 448, 0 + (32 * i), 32, 32 }, 0, 3, 0, 0);
+		runRightAnim.loop = true;
+		runRightAnim.speed = 0.1f;
 
-	jumpLeftAnim.GenerateAnimation({ 0, 0 + (32 * (i + 1)), 32, 32 }, 0, 2, 0, 0);
-	jumpLeftAnim.loop = true;
-	jumpLeftAnim.speed = 0.1f;
+		jumpLeftAnim.GenerateAnimation({ 0, 0 + (32 * (i + 1)), 32, 32 }, 0, 2, 0, 0);
+		jumpLeftAnim.loop = true;
+		jumpLeftAnim.speed = 0.1f;
 
-	jumpRightAnim.GenerateAnimation({ 320, 0 + (32 * (i + 1)), 32, 32 }, 0, 2, 0, 0);
-	jumpRightAnim.loop = true;
-	jumpRightAnim.speed = 0.1f;
+		jumpRightAnim.GenerateAnimation({ 320, 0 + (32 * (i + 1)), 32, 32 }, 0, 2, 0, 0);
+		jumpRightAnim.loop = true;
+		jumpRightAnim.speed = 0.1f;
 
-	fallRightAnim.GenerateAnimation({ 384,0 + (32 * (i + 1)), 32, 32 }, 0, 0, 0, 0);
-	fallRightAnim.loop = false;
+		fallRightAnim.GenerateAnimation({ 384,0 + (32 * (i + 1)), 32, 32 }, 0, 0, 0, 0);
+		fallRightAnim.loop = false;
 
-	fallLeftAnim.GenerateAnimation({ 64,0 + (32 * (i + 1)), 32, 32 }, 0, 0, 0, 0);
-	fallLeftAnim.loop = false;
+		fallLeftAnim.GenerateAnimation({ 64,0 + (32 * (i + 1)), 32, 32 }, 0, 0, 0, 0);
+		fallLeftAnim.loop = false;
 
-	attackAnimL.GenerateAnimation({ 128, 0 + (32 * (i + 1)), 32, 32 }, 0, 3, 0, 0);
-	attackAnimL.loop = true;
-	attackAnimL.speed = 0.07f;
+		attackAnimL.GenerateAnimation({ 128, 0 + (32 * (i + 1)), 32, 32 }, 0, 3, 0, 0);
+		attackAnimL.loop = true;
+		attackAnimL.speed = 0.07f;
 
-	attackAnimR.GenerateAnimation({ 448, 0 + (32 * (i + 1)), 32, 32 }, 0, 3, 0, 0);
-	attackAnimR.loop = true;
-	attackAnimR.speed = 0.07f;
+		attackAnimR.GenerateAnimation({ 448, 0 + (32 * (i + 1)), 32, 32 }, 0, 3, 0, 0);
+		attackAnimR.loop = true;
+		attackAnimR.speed = 0.07f;
 
-	damageAnimL.GenerateAnimation({ 256,0 + (32 * i),32,32 }, 0, 1, 0, 0);
-	damageAnimL.loop = false;
-	damageAnimL.speed = 0.1f;
+		damageAnimL.GenerateAnimation({ 256,0 + (32 * i),32,32 }, 0, 1, 0, 0);
+		damageAnimL.loop = false;
+		damageAnimL.speed = 0.1f;
 
-	damageAnimR.GenerateAnimation({ 576, 0 + (32 * i),32,32 }, 0, 1, 0, 0);
-	damageAnimR.loop = false;
-	damageAnimR.speed = 0.1f;
+		damageAnimR.GenerateAnimation({ 576, 0 + (32 * i),32,32 }, 0, 1, 0, 0);
+		damageAnimR.loop = false;
+		damageAnimR.speed = 0.1f;
 
-	deadAnimL.GenerateAnimation({ 256, 0 + (32 * (i + 1)),32,32 }, 0, 0, 0, 0);
-	deadAnimL.loop = false;
+		deadAnimL.GenerateAnimation({ 256, 0 + (32 * (i + 1)),32,32 }, 0, 0, 0, 0);
+		deadAnimL.loop = false;
 
-	deadAnimR.GenerateAnimation({ 576,0 + (32 * (i + 1)),32,32 }, 0, 0, 0, 0);
-	deadAnimR.loop = false;
+		deadAnimR.GenerateAnimation({ 576,0 + (32 * (i + 1)),32,32 }, 0, 0, 0, 0);
+		deadAnimR.loop = false;
 
-	actualAnimation = &attackAnimR;
+		actualAnimation = &attackAnimR;
+		break;
+	}
+	case EnemyType::FLYING:
+		break;
+	case EnemyType::UKNOWN:
+		break;
+	default:
+		break;
+	}
+
 
 }
 
@@ -212,50 +254,62 @@ void Enemy::SetTexture(SDL_Texture* tex)
 
 void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 {
-	if (hasPath)
+	ePath->lastPath.Clear();
+
+	iPoint d = { (int)player->position.x ,(int)player->position.y };
+	d = map->WorldToMap(d.x, d.y);
+
+	iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y);
+	ePath->CreatePath(o, d);
+
+	newPath.Clear();
+	for (int i = 0; i < ePath->lastPath.Count(); ++i)
 	{
-		if (eType == EnemyType::WALKING)
-		{
-			ePath->lastPath.Clear();
+		newPath.PushBack(*ePath->lastPath.At(i));
+		//LOG("%d, %d", newPath[i].x, newPath[i].x);
 
-			iPoint d = { (int)player->position.x ,(int)player->position.y };
-			d = map->WorldToMap(d.x, d.y);
-
-			iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y);
-			ePath->CreatePath(o, d);
-
-			newPath.Clear();
-			for (int i = 0; i < ePath->lastPath.Count(); ++i)
-			{
-				newPath.PushBack(*ePath->lastPath.At(i));
-				//LOG("%d, %d", newPath[i].x, newPath[i].x);
-
-			}
-			newPath.Flip();
-
-
-			//LOGIC
-			if (newPath.Count() > 9)
-			{
-				newPath.Clear();
-				UpdateAnim(EnemyState::IDLE);
-				UpdateLogic(dt);
-
-			}
-			else if (player->position.x > position.x )
-			{
-				goingRight = true;
-				UpdateAnim(EnemyState::WALK);
-				UpdateLogic(dt);
-			}
-			else if (player->position.x < position.x)
-			{
-				goingRight = false;
-				UpdateAnim(EnemyState::WALK);
-				UpdateLogic(dt);
-			}
-		}
 	}
+	newPath.Flip();
+
+	switch (eType)
+	{
+	case EnemyType::WALKING:
+	{
+
+		//LOGIC
+		if (newPath.Count() > 9)
+		{
+			newPath.Clear();
+			UpdateAnim(EnemyState::IDLE);
+			UpdateLogic(dt);
+
+		}
+		else if (player->position.x > position.x)
+		{
+			goingRight = true;
+			UpdateAnim(EnemyState::WALK);
+			UpdateLogic(dt);
+		}
+		else if (player->position.x < position.x)
+		{
+			goingRight = false;
+			UpdateAnim(EnemyState::WALK);
+			UpdateLogic(dt);
+		}
+		break;
+	}
+	case EnemyType::FLYING:
+	{
+		break;
+	}
+
+
+	case EnemyType::UKNOWN:
+		break;
+	default:
+		break;
+	}
+
 
 }
 void Enemy::DrawPath()

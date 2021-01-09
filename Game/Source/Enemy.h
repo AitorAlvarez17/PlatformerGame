@@ -74,7 +74,7 @@ public:
 	EnemyState eState = EnemyState::WALK;
 	Animation* actualAnimation = nullptr;
 
-	bool hasPath = false;
+	int hasPath = -1;
 private:
 
 	//Animations
