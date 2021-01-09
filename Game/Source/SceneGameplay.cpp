@@ -93,6 +93,9 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	marginsUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui.png"));
 	marginsButtonUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_button.png"));
 	marginsSlidersUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_music_and_fx.png"));
+	hearth = tex->Load(PATH("Assets/Textures/UI/", "hearth_ui.png"));
+	healthBackground = tex->Load(PATH("Assets/Textures/UI/", "health_background.png"));
+	cantSummonUi = tex->Load(PATH("Assets/Textures/UI/", "cant.png"));
 	//NUMBERS
 	zero = tex->Load(PATH("Assets/Textures/UI/Numbers/", "0.png"));
 	one = tex->Load(PATH("Assets/Textures/UI/Numbers/", "1.png"));
@@ -105,8 +108,14 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	eight = tex->Load(PATH("Assets/Textures/UI/Numbers/", "8.png"));
 	nine = tex->Load(PATH("Assets/Textures/UI/Numbers/", "9.png"));
 
+	cd1 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_1.png"));
+	cd2 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_2.png"));
+	cd3 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_3.png"));
+
 	x = tex->Load(PATH("Assets/Textures/UI/Numbers/", "money_x.png"));
 
+	healHab = tex->Load(PATH("Assets/Textures/UI/", "heal_gui.png"));
+	fireHab = tex->Load(PATH("Assets/Textures/UI/", "fireball_gui.png"));
 
 
 	// Initialize player
@@ -266,41 +275,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 bool SceneGameplay::Draw(Render* render)
 {
-
-	//COINS
-	switch (coins)
-	{
-	case 1:
-		number = one;
-		break;
-	case 2:
-		number = two;
-		break;
-	case 3:
-		number = three;
-		break;
-	case 4:
-		number = four;
-		break;
-	case 5:
-		number = five;
-		break;
-	case 6:
-		number = six;
-		break;
-	case 7:
-		number = seven;
-		break;
-	case 8:
-		number = eight;
-		break;
-	case 9:
-		number = nine;
-		break;
-	default:
-		number = zero;
-		break;
-	}
 	//Draw BG
 	render->SetBackgroundColor({ 83,217,217, 1 });
 	render->DrawTexture(olympus, 0, 1900);
@@ -319,64 +293,10 @@ bool SceneGameplay::Draw(Render* render)
 	if (pathCreated > 0)
 		path->GetInstance()->DrawPath(render);
 
-
-
-	//MONEY UI
-	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(number, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	//HEALTH BACKGROUND
-	//ui->DrawHealth(render);
-	//ABILITY UI
-	render->DrawTexture(backgroundUi, 490, 625, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(habUi, 500, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(habUi, 600, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-
-	if (menu)
-	{
-		if (settings)
-		{
-			//BG
-			render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
-			render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			//BACK BUTTON
-			btnBack->Draw(render);
-			render->DrawTexture(backText, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-			//SLIDERS AND CHECKBOX
-			render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
-			fullscreen->Draw(render);
-			render->DrawRectangle({ Vsync->bounds.x - 2, Vsync->bounds.y - 2, Vsync->bounds.w + 4, Vsync->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
-			Vsync->Draw(render);
-			music->Draw(render);
-			render->DrawTexture(marginsSlidersUi, music->bounds.x - 20, music->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-			fxVolume->Draw(render);
-			render->DrawTexture(marginsSlidersUi, fxVolume->bounds.x - 20, fxVolume->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-		}
-		else
-		{
-			//BG
-			render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
-			render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			//RESUME BUTTON
-			btnResume->Draw(render);
-			render->DrawTexture(playText, 490, 155, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			render->DrawTexture(marginsButtonUi, btnResume->bounds.x, btnResume->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-			//SETTINGS BUTTON
-			btnSettings->Draw(render);
-			render->DrawTexture(settingsText, 490, 275, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			render->DrawTexture(marginsButtonUi, btnSettings->bounds.x, btnSettings->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-			//BACK TO TITLE BUTTON
-			btnBackToTitle->Draw(render);
-			render->DrawTexture(title, 490, 395, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			render->DrawTexture(marginsButtonUi, btnBackToTitle->bounds.x, btnBackToTitle->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-			//EXIT BUTTON
-			btnExit->Draw(render);
-			render->DrawTexture(exitText, 490, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-			render->DrawTexture(marginsButtonUi, btnExit->bounds.x, btnExit->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-		}
-
-	}
+	DrawMenu(render);
+	DrawHealth(render);
+	DrawMoney(render);
+	DrawWand(render);
 
 	return false;
 }
@@ -467,4 +387,153 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 	}
 
 	return true;
+}
+
+bool SceneGameplay::DrawWand(Render* render)
+{
+	render->DrawTexture(backgroundUi, 490, 625, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(habUi, 500, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(habUi, 600, 630, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+
+	render->DrawTexture(healHab, 510, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(fireHab, 610, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	if (player->lifes == player->maxLifes)
+	{
+		if (player->delayUi < 1.0f)
+		{
+			render->DrawTexture(cantSummonUi, 510, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+		}
+	}
+	if (player->cooldown < 3) // HEAL
+	{
+		if (player->cooldown < 1)
+		{
+			render->DrawTexture(cd3, 511, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+		}
+		else if (player->cooldown < 2 && player->cooldown > 1)
+		{
+			render->DrawTexture(cd2, 511, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+		}
+		else if (player->cooldown < 3 && player->cooldown > 2)
+		{
+			render->DrawTexture(cd1, 511, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+		}
+	}
+
+	return false;
+}
+
+bool SceneGameplay::DrawMoney(Render* render)
+{
+	switch (coins)
+	{
+	case 1:
+		number = one;
+		break;
+	case 2:
+		number = two;
+		break;
+	case 3:
+		number = three;
+		break;
+	case 4:
+		number = four;
+		break;
+	case 5:
+		number = five;
+		break;
+	case 6:
+		number = six;
+		break;
+	case 7:
+		number = seven;
+		break;
+	case 8:
+		number = eight;
+		break;
+	case 9:
+		number = nine;
+		break;
+	default:
+		number = zero;
+		break;
+	}
+	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(number, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+
+
+	return false;
+}
+
+bool SceneGameplay::DrawHealth(Render* render)
+{
+	int margin = 4;
+
+	render->DrawTexture(healthBackground, 0, 15, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	if (player->lifes != 0)
+	{
+		int maxLifes = player->lifes;
+		for (int i = 0; i < maxLifes; i++)
+		{
+			//LOG("lifes loading: %d", i);
+			render->DrawTexture(hearth, (5 + (64 * i)) + margin, 18, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+
+
+		}
+	}
+
+
+	return false;
+}
+
+bool SceneGameplay::DrawMenu(Render* render)
+{
+	if (menu)
+	{
+		if (settings)
+		{
+			//BG
+			render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
+			render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			//BACK BUTTON
+			btnBack->Draw(render);
+			render->DrawTexture(backText, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+			//SLIDERS AND CHECKBOX
+			render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
+			fullscreen->Draw(render);
+			render->DrawRectangle({ Vsync->bounds.x - 2, Vsync->bounds.y - 2, Vsync->bounds.w + 4, Vsync->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
+			Vsync->Draw(render);
+			music->Draw(render);
+			render->DrawTexture(marginsSlidersUi, music->bounds.x - 20, music->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+			fxVolume->Draw(render);
+			render->DrawTexture(marginsSlidersUi, fxVolume->bounds.x - 20, fxVolume->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+		}
+		else
+		{
+			//BG
+			render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
+			render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			//RESUME BUTTON
+			btnResume->Draw(render);
+			render->DrawTexture(playText, 490, 155, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(marginsButtonUi, btnResume->bounds.x, btnResume->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+			//SETTINGS BUTTON
+			btnSettings->Draw(render);
+			render->DrawTexture(settingsText, 490, 275, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(marginsButtonUi, btnSettings->bounds.x, btnSettings->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+			//BACK TO TITLE BUTTON
+			btnBackToTitle->Draw(render);
+			render->DrawTexture(title, 490, 395, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(marginsButtonUi, btnBackToTitle->bounds.x, btnBackToTitle->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+			//EXIT BUTTON
+			btnExit->Draw(render);
+			render->DrawTexture(exitText, 490, 515, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+			render->DrawTexture(marginsButtonUi, btnExit->bounds.x, btnExit->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+		}
+
+	}
+
+	return false;
 }

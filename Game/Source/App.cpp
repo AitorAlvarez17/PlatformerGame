@@ -36,7 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions);
 	debug = new Debug(input, collisions, this, ui);
 	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);
-	ui = new ModuleUI(render, tex, sceneManager);
+	ui = new ModuleUI(render, tex, sceneManager, entityManager);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -46,10 +46,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(collisions);
 	AddModule(entityManager);
+	AddModule(ui);
 	AddModule(sceneManager);
 	AddModule(debug);
 	AddModule(checkPoints);
-	AddModule(ui);
+	
 	
 
 	// Render last to swap buffer

@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "SceneManager.h"
+#include "EntityManager.h"
 #include "Textures.h"
 #include "Render.h"
 
@@ -10,7 +11,7 @@ class ModuleUI : public Module
 {
 public:
 
-	ModuleUI(Render* rend, Textures* tex, SceneManager* sManager);
+	ModuleUI(Render* rend, Textures* tex, SceneManager* sManager, EntityManager* eManager);
 
 	// Destructor
 	virtual ~ModuleUI();
@@ -55,16 +56,16 @@ public:
 	SDL_Texture* cd4;
 	SDL_Texture* cd5;
 
-	SDL_Texture* healHab;
-	SDL_Texture* fireHab;
-
 	SDL_Texture* cantSummonUi;
+
+	Player* player;
 
 private:
 
 	Render* rend;
 	Textures* tex;
 	SceneManager* sManager;
+	EntityManager* eManager;
 };
 
 #endif // __MODULEUI_H__

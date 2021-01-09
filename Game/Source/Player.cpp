@@ -6,7 +6,7 @@
 #define PIXELS 32
 Player::Player(fPoint origin) : Entity(EntityType::PLAYER)
 {
-
+	delayUi = 2.0f;
 	position = origin;
 	vy = 200.0f;
 
@@ -73,7 +73,29 @@ bool Player::Update(Input* input, float dt)
 {
 	prevPos = position;
 	FixedUpdate(input, dt);
-	// if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) position.x -= (PLAYER_MOVE_SPEED * dt);
+
+	if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+	{
+		if (cooldown == 3)
+		{
+			HealAbility();
+		}
+	}
+
+	cooldown += dt;
+	saveCoroutine += dt;
+	delayUi += dt;
+
+	LOG("%f", delayUi);
+	if (cooldown > 3.0f)
+		cooldown = 3.0f;
+
+	if (saveCoroutine > 3.0f)
+		saveCoroutine = 3.0f;
+
+	if (delayUi > 1.0f)
+		delayUi = 1.0f;
+	
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
 
@@ -82,7 +104,6 @@ bool Player::Update(Input* input, float dt)
 
 bool Player::Draw(Render* render)
 {
-
 	// animation state and animation frame
 	actualAnimation->Update();
 
@@ -129,6 +150,19 @@ void Player::OnCollision(Collider* c1)
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
 
 
+}
+
+void Player::HealAbility()
+{
+	if (lifes < maxLifes)
+	{
+		lifes++;
+		cooldown = 0;
+	}
+	else
+	{
+		delayUi = 0;
+	}
 }
 
 void Player::SetTexture(SDL_Texture* tex)

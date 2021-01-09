@@ -44,6 +44,7 @@ public:
 
     void OnCollision(Collider* c1);
 
+    void HealAbility();
 
     SDL_Rect GetBounds();
 
@@ -78,10 +79,15 @@ public:
 
     fPoint prevPos;
     int preCalc;
+    int maxLifes = 4;
     //PlayerProperties
     int jumps = 2;
+    float delayUi = 2;
+    int lifes = 3;
     float vy = 0.0f;
     int max = 0;
+    float cooldown;
+    float saveCoroutine;
     
     int godMode = -1;
 
