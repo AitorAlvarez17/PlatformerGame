@@ -56,7 +56,7 @@ public:
 
 	void OnCollision(Collider* c1);
 
-	void UpdateAnim(EnemyState previousState, EnemyState newState);
+	void UpdateAnim(EnemyState newState);
 
 	void SetAnim(int i);
 
