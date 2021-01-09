@@ -234,7 +234,6 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 			newPath.Flip();
 
 
-			if(player.)
 			//LOGIC
 			if (newPath.Count() > 9)
 			{
