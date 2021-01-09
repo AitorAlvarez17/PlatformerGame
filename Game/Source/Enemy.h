@@ -107,6 +107,7 @@ private:
 	int lifes = 1;
 	int counter = 0;
 	bool goingRight = false;
+	bool goingDown = false;
 
 };
 

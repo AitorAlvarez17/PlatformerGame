@@ -81,6 +81,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
+	enemyText = tex->Load(PATH("Assets/Textures/Character/", "bat.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/UI/", "settings.png"));
@@ -123,8 +124,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
-	enemy->SetTexture(playerText);
+	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
+	enemy->SetTexture(enemyText);
 
 	eManager->CreateItem(iPoint(768, 2112), ItemType::COIN);
 
