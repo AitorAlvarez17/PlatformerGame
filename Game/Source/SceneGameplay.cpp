@@ -247,7 +247,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
 	{
 		map->drawColliders = !map->drawColliders;
-		enemy->hasPath = true;
+		enemy->hasPath *= -1;
 	}
 
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
@@ -268,8 +268,8 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 	player->Update(input, dt);
 
-	if (enemy->hasPath)
-		enemy->UpdatePath(map, input, player, dt);
+
+	enemy->UpdatePath(map, input, player, dt);
 
 	return true;
 }
