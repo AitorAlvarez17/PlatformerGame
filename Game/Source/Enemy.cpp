@@ -106,7 +106,7 @@ bool Enemy::Draw(Render* render)
 
 	render->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
 
-	if(hasPath >  0)
+	if (hasPath > 0)
 		ePath->DrawPath(render, newPath);
 
 
@@ -183,7 +183,7 @@ void Enemy::UpdateAnim(EnemyState newState)
 			if (goingRight) actualAnimation = &runRightAnim;
 			else actualAnimation = &runLeftAnim;
 			break;
-		}	
+		}
 		case EnemyState::JUMP:
 			break;
 		case EnemyState::FALL:
@@ -264,9 +264,9 @@ void Enemy::SetAnim(int i)
 	}
 	case EnemyType::FLYING:
 	{
-		idleAnimL.GenerateAnimation({ 0, 0, 32, 32 }, 0, 0, 0, 0);
-
-		idleAnimR.GenerateAnimation({ 0, 0, 32, 32 }, 0, 0, 0, 0);
+		idleAnimL.GenerateAnimation({ 32, 0, 32, 32 }, 0, 2, 0, 0);
+		idleAnimL.loop = true;
+		idleAnimL.speed = 0.05f;
 
 		runLeftAnim.GenerateAnimation({ 32, 96 , 32, 32 }, 0, 2, 0, 0);
 		runLeftAnim.loop = true;
@@ -302,7 +302,7 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	iPoint d = { (int)player->position.x ,(int)player->position.y };
 	d = map->WorldToMap(d.x, d.y);
 
-	iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y);
+	iPoint o = map->WorldToMap(GetBounds().x + 64, GetBounds().y);
 	ePath->CreatePath(o, d);
 
 	newPath.Clear();
@@ -318,7 +318,6 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	{
 	case EnemyType::WALKING:
 	{
-
 		//LOGIC
 		if (newPath.Count() > 9)
 		{
@@ -344,38 +343,62 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	case EnemyType::FLYING:
 	{
 		//LOGIC
-		if (newPath.Count() > 14)
+		int c = newPath.Count() - 1;
+		//if (c > 14)
+		//{
+		//	newPath.Clear();
+		//	UpdateAnim(EnemyState::IDLE);
+		//	UpdateLogic(dt);
+		//	break;
+
+		//}
+		if (c < 14)
 		{
-			newPath.Clear();
-			UpdateAnim(EnemyState::IDLE);
-			UpdateLogic(dt);
-			break;
+			iPoint pos;
+			iPoint nextPos;
+			for (int i = 1; i < c; i++)
+			{
+				pos.x = newPath[i].x;
+				pos.y = newPath[i].y;
+				nextPos.x = newPath[i + 1].x;
+				nextPos.y = newPath[i + 1].y;
+
+				if (pos.x < nextPos.x)
+				{
+				/*	goingRight = false;
+					UpdateAnim(EnemyState::WALK);
+					UpdateLogic(dt);*/
+					position.x -= 0.5 * dt;
+
+				}
+				 else if (pos.x > nextPos.x)
+				{
+				/*	goingRight = true;
+					UpdateAnim(EnemyState::WALK);
+					UpdateLogic(dt);*/
+					position.x += 60* dt;
+				}
+				if (pos.y < nextPos.y)
+				{
+				/*	goingDown = true;
+					UpdateAnim(EnemyState::WALK);
+					UpdateLogic(dt);*/
+				
+					position.y -= 60 * dt;
+				}
+				else if (pos.y > nextPos.y)
+				{
+			/*	goingDown = false;
+					UpdateAnim(EnemyState::WALK);
+					UpdateLogic(dt);*/
+   					position.y += 60 * dt;
+				}
+			}
 
 		}
-		if (player->position.x > position.x)
-		{
-			goingRight = true;
-			UpdateAnim(EnemyState::WALK);
-			UpdateLogic(dt);
-		}
-		if (player->position.x < position.x)
-		{
-			goingRight = false;
-			UpdateAnim(EnemyState::WALK);
-			UpdateLogic(dt);
-		}
-		if (player->position.y > position.y)
-		{
-			goingDown = true;
-			UpdateAnim(EnemyState::WALK);
-			UpdateLogic(dt);
-		}
-		if (player->position.y < position.y)
-		{
-			goingDown = false;
-			UpdateAnim(EnemyState::WALK);
-			UpdateLogic(dt);
-		}
+
+
+
 		break;
 	}
 
