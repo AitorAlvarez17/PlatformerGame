@@ -32,9 +32,9 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Player* CreatePlayer(fPoint origin);
-	Item* CreateItem(fPoint origin,ItemType iType);
-	Enemy* CreateEnemy(fPoint origin, EnemyType eType, int life, int anim);
+	Player* CreatePlayer(iPoint origin);
+	Item* CreateItem(iPoint origin,ItemType iType);
+	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim);
 
 	void OnCollision(Collider* a, Collider* b);
 

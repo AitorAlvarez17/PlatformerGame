@@ -119,14 +119,14 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 
 	// Initialize player
-	player = eManager->CreatePlayer(fPoint(5 * 16, 17 * 16));
-	player->position = fPoint(384, 2176);
+	player = eManager->CreatePlayer(iPoint(5 * 16, 17 * 16));
+	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(fPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
+	enemy = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 	enemy->SetTexture(playerText);
 
-	eManager->CreateItem(fPoint(768, 2112), ItemType::COIN);
+	eManager->CreateItem(iPoint(768, 2112), ItemType::COIN);
 
 	return false;
 }
@@ -190,7 +190,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	// IMPROVEMENT: Just check adyacent tiles to player
 	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
 
-	fPoint tempPlayerPosition = player->position;
+	iPoint tempPlayerPosition = player->position;
 
 	if (player->godMode < 0)
 	{
@@ -201,9 +201,42 @@ bool SceneGameplay::Update(Input* input, float dt)
 				if ((map->data.layers[2]->Get(x, y) >= 65) &&
 					CheckCollision(map->GetTilemapRecScaled(x, y), player->GetBounds()))
 				{
+					SDL_Rect tile = map->GetTilemapRecScaled(x, y);
 
-					player->position = tempPlayerPosition;
-					player->vy = 0.0f;
+					/*player->position = tempPlayerPosition;
+					player->vy = 0.0f;*/
+					int compY = player->position.y - tile.y;
+					int compX = player->position.x - tile.x;
+					bool floor = false;
+
+					if (std::abs(compY) < std::abs(compX))
+					{
+						if (compX > 0) {
+							player->position.x = player->prevPos.x;
+
+						}
+						else
+						{
+							player->position.x = player->prevPos.x;
+						}
+					}
+					else
+					{
+						if (compY > 0)
+						{
+							player->position.y = player->prevPos.y;
+							//LOG("UP");
+						}
+						else
+						{
+							// Comparativa con jumping en player. nueva variable.
+
+							player->position.y = player->prevPos.y;
+							player->vy = 0;
+							//LOG("DOWN");
+						}
+						player->hitbox->SetPos(player->position.x, player->position.y);
+					}
 					break;
 				}
 			}

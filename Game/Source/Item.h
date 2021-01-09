@@ -20,7 +20,7 @@ class Item : public Entity
 public:
 
     Item();
-    Item(fPoint origin, ItemType type);
+    Item(iPoint origin, ItemType type);
 
     virtual ~Item();
 

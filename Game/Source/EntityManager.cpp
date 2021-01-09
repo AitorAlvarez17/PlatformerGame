@@ -39,7 +39,7 @@ bool EntityManager::CleanUp()
 }
 
 
-Player* EntityManager::CreatePlayer(fPoint origin)
+Player* EntityManager::CreatePlayer(iPoint origin)
 {
 	Player* ret = nullptr;
 
@@ -71,7 +71,7 @@ Player* EntityManager::CreatePlayer(fPoint origin)
 	return ret;
 }
 
-Item* EntityManager::CreateItem(fPoint origin, ItemType iType)
+Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 {
 	Item* ret = nullptr;
 
@@ -100,7 +100,7 @@ Item* EntityManager::CreateItem(fPoint origin, ItemType iType)
 	return ret;
 }
 
-Enemy* EntityManager::CreateEnemy(fPoint origin, EnemyType eType, int life, int anim)
+Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int anim)
 {
 	Enemy* ret = nullptr;
 
