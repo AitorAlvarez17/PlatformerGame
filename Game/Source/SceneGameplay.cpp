@@ -127,6 +127,9 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 	enemy->SetTexture(enemyText);
 
+	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
+	enemy2->SetTexture(playerText);
+
 	eManager->CreateItem(iPoint(768, 2124), ItemType::COIN);
 
 	return false;
@@ -249,6 +252,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	{
 		map->drawColliders = !map->drawColliders;
 		enemy->hasPath *= -1;
+		enemy2->hasPath *= -1;
 	}
 
 	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
@@ -271,6 +275,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 
 	enemy->UpdatePath(map, input, player, dt);
+	enemy2->UpdatePath(map, input, player, dt);
 
 	return true;
 }
@@ -292,6 +297,7 @@ bool SceneGameplay::Draw(Render* render)
 	player->Draw(render);
 
 	enemy->Draw(render);
+	enemy2->Draw(render);
 
 	collisions->Draw(render);
 

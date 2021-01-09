@@ -46,6 +46,7 @@ private:
     Map* map;
     Player* player;
     Enemy* enemy;
+    Enemy* enemy2;
     EntityManager* eManager;
     PathFinding* path;
     Collisions* collisions;

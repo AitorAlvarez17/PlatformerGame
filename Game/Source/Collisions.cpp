@@ -319,7 +319,7 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::ENEMY:
-			render->DrawRectangleScaled(1,colliders[i]->rect, { 247, 0, 255, 255 });
+			//render->DrawRectangleScaled(1,colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENEMYWALL:
