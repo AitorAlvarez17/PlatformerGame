@@ -192,6 +192,11 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 	fPoint tempPlayerPosition = player->position;
 
+	if (player->grounded == true)
+	{
+		player->vy = 0;
+		player->jumps = 0;
+	}
 	if (player->godMode < 0)
 	{
 		for (int y = 0; y < map->data.height; y++)
@@ -203,7 +208,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 				{
 
 					player->position = tempPlayerPosition;
-					player->vy = 0.0f;
+ 					player->grounded = true;
 					break;
 				}
 			}
@@ -211,6 +216,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 	}
 
+	
 	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
 	{
 		map->drawColliders = !map->drawColliders;
