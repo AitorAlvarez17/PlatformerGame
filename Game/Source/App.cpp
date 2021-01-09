@@ -427,10 +427,10 @@ bool App::LoadGame()
 			LOG("window not loading");
 		}
 
-		pl = saveState.child("player");
-		if (pl == NULL)
+		ent = saveState.child("entities");
+		if (ent == NULL)
 		{
-			LOG("player not loading");
+			LOG("entities not loading");
 		}
 
 		en = saveState.child("enemy");
@@ -444,7 +444,8 @@ bool App::LoadGame()
 	audio->LoadState(au);
 	input->LoadState(inp);
 	render->LoadState(rend);
-	entityManager->LoadState(pl);
+	entityManager->LoadState(ent);
+
 
 	loadGameRequested = false;
 	LOG("game loaded");
@@ -473,8 +474,8 @@ bool App::SaveGame() const
 
 		pugi::xml_node t = node.append_child("textures");
 		pugi::xml_node w = node.append_child("window");
-
-		
+		pugi::xml_node ent = node.append_child("entities");
+		entityManager->SaveState(ent);
 
 		pugi::xml_node e = node.append_child("enemy");
 

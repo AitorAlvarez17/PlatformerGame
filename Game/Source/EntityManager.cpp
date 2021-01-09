@@ -201,3 +201,39 @@ int EntityManager::GetTilePosy(int y) {
 	return Ty;
 
 }
+
+bool EntityManager::LoadState(pugi::xml_node& data)
+{
+	LOG(" Entity loaded");
+
+	entities[0]->position.x = data.child("player").attribute("position.x").as_float();
+	entities[0]->position.y = data.child("player").attribute("position.y").as_float();
+	entities[0]->lifes = data.child("player").attribute("lifes").as_int();
+	entities[0]->cooldown = data.child("player").attribute("cooldown").as_float();
+	entities[0]->godMode = data.child("player").attribute("godMode").as_int();
+	entities[1]->position.x = data.child("enemy").attribute("position.x").as_float();
+	entities[1]->position.y = data.child("enemy").attribute("position.y").as_float();
+
+	return true;
+}
+
+// L02: DONE 8: Create a method to save the state of the renderer
+// Save Game State
+bool EntityManager::SaveState(pugi::xml_node& data) const
+{
+	LOG(" Entity saved");
+	pugi::xml_node nodeEntities = data.append_child("enemy");
+	pugi::xml_node other = data.append_child("player");
+	/*for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{*/
+	other.append_attribute("position.x") = entities[0]->position.x;
+	other.append_attribute("position.y") = entities[0]->position.y;
+	other.append_attribute("lifes") = entities[0]->lifes;
+	other.append_attribute("cooldown") = entities[0]->cooldown;
+	other.append_attribute("godMode") = entities[0]->godMode;
+	nodeEntities.append_attribute("position.x") = entities[1]->position.x;
+	nodeEntities.append_attribute("position.y") = entities[1]->position.y;
+	//}
+
+	return true;
+}
