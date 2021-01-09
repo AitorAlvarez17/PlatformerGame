@@ -86,6 +86,7 @@ bool Player::Update(Input* input, float dt)
 	saveCoroutine += dt;
 	delayUi += dt;
 
+	LOG("%f", delayUi);
 	if (cooldown > 3.0f)
 		cooldown = 3.0f;
 
@@ -171,19 +172,21 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 40.0f
-#define PLAYER_MOVE_SPEED 320.0f
-#define PLAYER_JUMP_SPEED 800.0f
+#define GRAVITY 128.0f
+#define PLAYER_MOVE_SPEED 256.0f
+#define PLAYER_JUMP_SPEED 198.0f
 
-	
+
 
 	//Start Idle
 	UpdateAnim(currentAnim, IDLE);
 	if (godMode < 0)
 	{
-		position.y -= (vy * dt);
+		//Calculate gravity acceleration
+
+		position.y += (vy * dt);
 		preCalc = (vy * dt);
-		vy = vy - GRAVITY;
+		vy += GRAVITY * dt;
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -200,12 +203,9 @@ void Player::FixedUpdate(Input* input, float dt)
 			UpdateAnim(currentAnim, WALK);
 
 		}
-		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && jumps < 2)
+		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			jumps++;
-			grounded = false;
-			vy = PLAYER_JUMP_SPEED;
-			//position.y += -PLAYER_JUMP_SPEED * dt;
+			position.y += -PLAYER_JUMP_SPEED * dt;
 			UpdateAnim(currentAnim, JUMP);
 
 		}

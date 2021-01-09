@@ -81,7 +81,7 @@ public:
     int preCalc;
     int maxLifes = 4;
     //PlayerProperties
-    int jumps = 0;
+    int jumps = 2;
     float delayUi = 2;
     int lifes = 3;
     float vy = 0.0f;
@@ -92,7 +92,7 @@ public:
     int godMode = -1;
 
     bool isGoingRight = false;
-    bool grounded = true;
+
  
 
 };
