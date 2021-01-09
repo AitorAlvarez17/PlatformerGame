@@ -46,6 +46,10 @@ public:
     //SString name;         // Entity name identifier?
     //uint32 id;            // Entity identifier?
 
+    int lifes;
+    float cooldown;
+    int godMode;
+
     Collider* hitbox;
 
     // Possible properties, it depends on how generic we

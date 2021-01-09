@@ -45,6 +45,9 @@ public:
 
 	bool UpdateAll(float dt, bool doLogic);
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 	int GetTilePosx(int x);
 	int GetTilePosy(int y);
 
