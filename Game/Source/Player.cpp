@@ -135,8 +135,30 @@ void Player::Draw(Render* render)
 	}
 
 
-	render->camera.x = -(int)position.x + render->camera.w / 4;
-	render->camera.y = -(int)position.y + render->camera.h / 2 + 64;
+	//Camera Limits
+	//if (render->camera.x >= -704)
+	//{
+	//	render->camera.x = -704;
+	//}
+
+
+	if (position.x > 3761)
+	{
+	}
+	else if (position.x < 320)
+	{
+	}
+	else if (position.y > 2256)
+	{
+	}
+	else
+	{
+		render->camera.x = -(int)position.x + render->camera.w / 4;
+		render->camera.y = -(int)position.y + render->camera.h / 2 + 64;
+	}
+
+
+
 }
 
 void Player::OnCollision(Collider* c1, Collider* c2)
