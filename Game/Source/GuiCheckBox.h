@@ -11,19 +11,16 @@ class GuiCheckBox : public GuiControl
 {
 public:
 
-    GuiCheckBox(uint32 id, SDL_Rect bounds, const char *text);
-    virtual ~GuiCheckBox();
+	GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text);
+	virtual ~GuiCheckBox();
 
-    bool Update(Input* input, float dt);
-    bool Draw(Render* render);
+	bool Update(Input* input, float dt);
+	bool Draw(Render* render);
 
-    bool checked;
+	bool checked;
+
 private:
-
-    // GuiCheckBox specific properties
-    // Maybe some animation properties for state change?
-   
-    SDL_Rect checkedBounds;
+	SDL_Rect checkedBounds;
 };
 
 #endif // __GUICHECKBOX_H__

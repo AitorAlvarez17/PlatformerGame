@@ -7,7 +7,6 @@
 
 Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager) : Entity(EntityType::ENEMY)
 {
-	// path = PathFinding::GetInstance()->CreatePath(iPoint(0, 0), iPoint(0, 0));
 	player = ePlayer;
 	map = eMap;
 	aud = manager;
@@ -23,11 +22,6 @@ Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Playe
 
 	//Set the Animation 0, 2, 4, 6... only pair numbers
 	SetAnim(anim);
-
-	//hitbox->rect.x = origin.x;
-	//hitbox->rect.y = origin.y;
-	//hitbox->rect.w = width;
-	//hitbox->rect.h = height;
 
 
 	ePath = ePath->GetInstance();
@@ -125,11 +119,7 @@ void Enemy::UpdateLogic(float dt)
 		}
 		if (eState == EnemyState::WALK)
 		{
-			/*if (goingRight) position.x += 60.0f * dt;
-			else position.x -= 60.0f * dt;
-
-			if (goingDown) position.y += 60.0f * dt;
-			else position.y -= 60.0f * dt;*/
+			
 		}
 		if (eState == EnemyState::HIT) {}
 		if (eState == EnemyState::DEAD) {}
@@ -152,8 +142,6 @@ void Enemy::Draw(Render* render)
 	if (eType == EnemyType::WALKING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
 	if (eType == EnemyType::FLYING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
 
-
-	//ender->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
 
 	if (hasPath > 0)
 		ePath->DrawPath(render, newPath);
@@ -359,7 +347,6 @@ bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 	for (int i = 0; i < ePath->lastPath.Count(); ++i)
 	{
 		newPath.PushBack(*ePath->lastPath.At(i));
-		//LOG("%d, %d", newPath[i].x, newPath[i].x);
 
 	}
 	newPath.Flip();
@@ -415,43 +402,25 @@ bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 
 				if (pos.x < nextPos.x)
 				{
-					/*	goingRight = false;
-						UpdateAnim(EnemyState::WALK);
-						UpdateLogic(dt);*/
 					position.x -= 1 * dt;
-
 				}
 				else if (pos.x > nextPos.x)
 				{
-					/*	goingRight = true;
-						UpdateAnim(EnemyState::WALK);
-						UpdateLogic(dt);*/
 					position.x += 60 * dt;
 				}
 				else if (pos.y < nextPos.y)
 				{
-					/*	goingDown = true;
-						UpdateAnim(EnemyState::WALK);
-						UpdateLogic(dt);*/
-
 					position.y -= 60 * dt;
 				}
 				else if (pos.y > nextPos.y)
 				{
-					/*	goingDown = false;
-							UpdateAnim(EnemyState::WALK);
-							UpdateLogic(dt);*/
 					position.y += 60 * dt;
 				}
 			}
 
 		}
-
-
-
 		break;
 	}
-
 
 	case EnemyType::UKNOWN:
 		break;

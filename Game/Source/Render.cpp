@@ -31,15 +31,15 @@ bool Render::Awake(pugi::xml_node& config)
 
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	if (config.child("vsync").attribute("value").as_bool(true) == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 		LOG("Using vsync");
 	}
 
 	renderer = SDL_CreateRenderer(win->window, -1, flags);
-	
-	if(renderer == NULL)
+
+	if (renderer == NULL)
 	{
 		LOG("Could not create the renderer! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -61,7 +61,7 @@ bool Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
-	//SDL_RenderSetLogicalSize(renderer, camera.w , camera.h - 100);
+
 	return true;
 }
 
@@ -127,7 +127,7 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
 
-	if(section != NULL)
+	if (section != NULL)
 	{
 		rect.w = section->w;
 		rect.h = section->h;
@@ -143,14 +143,14 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 
-	if(pivotX != INT_MAX && pivotY != INT_MAX)
+	if (pivotX != INT_MAX && pivotY != INT_MAX)
 	{
 		pivot.x = pivotX;
 		pivot.y = pivotY;
 		p = &pivot;
 	}
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
@@ -159,7 +159,7 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	return ret;
 }
 
-bool Render::DrawTextTexture(int s,SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY, SDL_RendererFlip flip) const
+bool Render::DrawTextTexture(int s, SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY, SDL_RendererFlip flip) const
 {
 	bool ret = true;
 
@@ -200,7 +200,7 @@ bool Render::DrawTextTexture(int s,SDL_Texture* texture, int x, int y, const SDL
 	return ret;
 }
 
-bool Render::DrawTextureScaled(int s,SDL_Texture* texture, int x, int y, const SDL_Rect* section) const
+bool Render::DrawTextureScaled(int s, SDL_Texture* texture, int x, int y, const SDL_Rect* section) const
 {
 	bool ret = true;
 
@@ -211,8 +211,8 @@ bool Render::DrawTextureScaled(int s,SDL_Texture* texture, int x, int y, const S
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x ;
-	rect.y = (int)(camera.y * speed) + y ;
+	rect.x = (int)(camera.x * speed) + x;
+	rect.y = (int)(camera.y * speed) + y;
 
 	if (section != NULL)
 	{
@@ -269,7 +269,7 @@ bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) c
 	return ret;
 }
 
-bool Render::DrawRectangleScaled(int s,const SDL_Rect& rect, SDL_Color color, bool filled) const
+bool Render::DrawRectangleScaled(int s, const SDL_Rect& rect, SDL_Color color, bool filled) const
 {
 	bool ret = true;
 
@@ -278,10 +278,10 @@ bool Render::DrawRectangleScaled(int s,const SDL_Rect& rect, SDL_Color color, bo
 
 	SDL_Rect rec(rect);
 
-		rec.x = (int)(camera.x + rect.x);
-		rec.y = (int)(camera.y + rect.y);
-		rec.w *= s;
-		rec.h *= s;
+	rec.x = (int)(camera.x + rect.x);
+	rec.y = (int)(camera.y + rect.y);
+	rec.w *= s;
+	rec.h *= s;
 
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
@@ -304,9 +304,9 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, SDL_Color color) const
 
 	int result = -1;
 
-	result = SDL_RenderDrawLine(renderer, x1 * scale , y1 * scale , x2 * scale , y2 * scale );
+	result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -327,7 +327,7 @@ bool Render::DrawCircle(int x, int y, int radius, SDL_Color color) const
 
 	float factor = (float)M_PI / 180.0f;
 
-	for(uint i = 0; i < 360; ++i)
+	for (uint i = 0; i < 360; ++i)
 	{
 		points[i].x = (int)(x + radius * cos(i * factor));
 		points[i].y = (int)(y + radius * sin(i * factor));
@@ -335,7 +335,7 @@ bool Render::DrawCircle(int x, int y, int radius, SDL_Color color) const
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
@@ -344,7 +344,7 @@ bool Render::DrawCircle(int x, int y, int radius, SDL_Color color) const
 	return ret;
 }
 
-bool Render::DrawText(Font* font, const char* text, int x, int y, int scale,bool freeze)
+bool Render::DrawText(Font* font, const char* text, int x, int y, int scale, bool freeze)
 {
 	SDL_Rect spriteRect;
 	uint len = strlen(text);
@@ -384,9 +384,9 @@ bool Render::DrawText(Font* font, const char* text, int x, int y, int scale,bool
 		else
 		{
 			if (i == 0)
-				DrawTextTexture(scale,font->texture, x, y, &spriteRect);
+				DrawTextTexture(scale, font->texture, x, y, &spriteRect);
 			else
-				DrawTextTexture(scale,font->texture, x + offset * i, y, &spriteRect);
+				DrawTextTexture(scale, font->texture, x + offset * i, y, &spriteRect);
 		}
 
 
