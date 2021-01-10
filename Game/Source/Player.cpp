@@ -223,12 +223,12 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 5.0f
+#define GRAVITY 20.0f
 #define PLAYER_MOVE_SPEED 256.0f
-#define PLAYER_JUMP_SPEED 198.0f
+#define PLAYER_JUMP_SPEED 240.0f
 
 
-
+	LOG("%f", vy);
 	//Start Idle
 	UpdateAnim(currentAnim, IDLE);
 	if (godMode < 0)
@@ -237,7 +237,7 @@ void Player::FixedUpdate(Input* input, float dt)
 
 		position.y += (vy * dt);
 		preCalc = (vy * dt);
-		vy += GRAVITY;
+		vy = vy + GRAVITY;
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -256,8 +256,12 @@ void Player::FixedUpdate(Input* input, float dt)
 		}
 		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			vy += -PLAYER_JUMP_SPEED;
-			UpdateAnim(currentAnim, JUMP);
+			if (jumps > 0)
+			{
+				jumps--;
+				vy += -PLAYER_JUMP_SPEED;
+				UpdateAnim(currentAnim, JUMP);
+			}
 
 		}
 
