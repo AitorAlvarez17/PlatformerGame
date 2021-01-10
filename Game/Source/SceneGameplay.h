@@ -24,146 +24,146 @@ class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check, Debug* debug);
-    virtual ~SceneGameplay();
+	SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check, Debug* debug);
+	virtual ~SceneGameplay();
 
-    bool Load(Textures* tex);
+	bool Load(Textures* tex);
 
-    bool PreUpdate();
+	bool PreUpdate();
 
-    bool Update(Input* input, float dt);
+	bool Update(Input* input, float dt);
 
-    bool PostUpdate(Input* input, float dt);
+	bool PostUpdate(Input* input, float dt);
 
-    bool Draw(Render* render);
+	bool Draw(Render* render);
 
-    bool DrawWand(Render* render);
+	bool DrawWand(Render* render);
 
-    bool DrawMoney(Render* render);
+	bool DrawMoney(Render* render);
 
-    bool DrawMenu(Render* render);
+	bool DrawMenu(Render* render);
 
-    bool DrawHealth(Render* render);
+	bool DrawHealth(Render* render);
 
-    bool DrawTp(Render* render);
+	bool DrawTp(Render* render);
 
-    bool Unload();
+	bool Unload();
 
-    bool CleanUp();
+	bool CleanUp();
 
-    void DebugCheckPoints(int debug);
+	void DebugCheckPoints(int debug);
 
-    bool OnGuiMouseClickEvent(GuiControl* control);
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 private:
 
-    Map* map;
-    Player* player;
-    Win* end;
-    Enemy* enemy;
-    Enemy* enemy2;
-    Fireball* fireball;
-    EntityManager* eManager;
-    PathFinding* path;
-    Collisions* collisions;
-    App* app;
-    CheckPoints* check;
-    Tp* tp;
-    Tp* tp2;
-    Tp* tp3;
-    SavePoint* save;
-    Debug* debug;
-    
-    SDL_Rect camera;
+	Map* map;
+	Player* player;
+	Win* end;
+	Enemy* enemyWalking;
+	Enemy* enemyFlying;
+	Fireball* fireball;
+	EntityManager* eManager;
+	PathFinding* path;
+	Collisions* collisions;
+	App* app;
+	CheckPoints* check;
+	Tp* tp;
+	Tp* tp2;
+	Tp* tp3;
+	SavePoint* save;
+	Debug* debug;
 
-    bool menu;
-    bool settings;
-    bool credits;
-    bool buffer; //for load and save sliders
+	SDL_Rect camera;
 
-    GuiButton* btnResume;
-    GuiButton* btnSettings;
-    GuiButton* btnBackToTitle;
-    GuiButton* btnExit;
-    GuiButton* btnBack;
+	bool menu;
+	bool settings;
+	bool credits;
+	bool buffer; //for load and save sliders
 
-    //Parallax BG
-    SDL_Texture* olympus;
-    SDL_Texture* clouds;
+	GuiButton* btnResume;
+	GuiButton* btnSettings;
+	GuiButton* btnBackToTitle;
+	GuiButton* btnExit;
+	GuiButton* btnBack;
 
-    //GUI
-    SDL_Texture* playerText;
-    SDL_Texture* enemyText;
-    SDL_Texture* playText;
-    SDL_Texture* fireballTex;
-    SDL_Texture* continueText;
-    SDL_Texture* settingsText;
-    SDL_Texture* title;
-    SDL_Texture* exitText;
-    SDL_Texture* backText;
-    SDL_Texture* habUi;
-    SDL_Texture* backgroundUi;
-    SDL_Texture* healthNameUi;
-    SDL_Texture* marginsUi;
-    SDL_Texture* marginsButtonUi;
-    SDL_Texture* marginsSlidersUi;
-    SDL_Texture* healHab;
-    SDL_Texture* fireHab;
-    SDL_Texture* hearth;
-    SDL_Texture* cantSummonUi;
-    SDL_Texture* saveFeedback;
-    SDL_Texture* coinUi;
+	//Parallax BG
+	SDL_Texture* olympus;
+	SDL_Texture* clouds;
 
-    SDL_Texture* renderedOption;
+	//GUI
+	SDL_Texture* playerText;
+	SDL_Texture* enemyText;
+	SDL_Texture* playText;
+	SDL_Texture* fireballTex;
+	SDL_Texture* continueText;
+	SDL_Texture* settingsText;
+	SDL_Texture* title;
+	SDL_Texture* exitText;
+	SDL_Texture* backText;
+	SDL_Texture* habUi;
+	SDL_Texture* backgroundUi;
+	SDL_Texture* healthNameUi;
+	SDL_Texture* marginsUi;
+	SDL_Texture* marginsButtonUi;
+	SDL_Texture* marginsSlidersUi;
+	SDL_Texture* healHab;
+	SDL_Texture* fireHab;
+	SDL_Texture* hearth;
+	SDL_Texture* cantSummonUi;
+	SDL_Texture* saveFeedback;
+	SDL_Texture* coinUi;
 
-    SDL_Texture* tp1IDLE;
-    SDL_Texture* tp1To2;
-    SDL_Texture* tp1To3;
+	SDL_Texture* renderedOption;
 
-    SDL_Texture* tp2IDLE;
-    SDL_Texture* tp2To1;
-    SDL_Texture* tp2To3;
+	SDL_Texture* tp1IDLE;
+	SDL_Texture* tp1To2;
+	SDL_Texture* tp1To3;
 
-    SDL_Texture* tp3IDLE;
-    SDL_Texture* tp3To1;
-    SDL_Texture* tp3To2;
+	SDL_Texture* tp2IDLE;
+	SDL_Texture* tp2To1;
+	SDL_Texture* tp2To3;
 
-    SDL_Texture* openPhrase;
-    SDL_Texture* teleportPhrase;
+	SDL_Texture* tp3IDLE;
+	SDL_Texture* tp3To1;
+	SDL_Texture* tp3To2;
 
-    SDL_Texture* healthBackground;
-    SDL_Texture* moneyBackgroundUi;
+	SDL_Texture* openPhrase;
+	SDL_Texture* teleportPhrase;
 
-    SDL_Texture* wint;
-    SDL_Texture* lose;
+	SDL_Texture* healthBackground;
+	SDL_Texture* moneyBackgroundUi;
+
+	SDL_Texture* wint;
+	SDL_Texture* lose;
 
 
-    SDL_Texture* x;
+	SDL_Texture* x;
 
-    SDL_Texture* cd1;
-    SDL_Texture* cd2;
-    SDL_Texture* cd3;
+	SDL_Texture* cd1;
+	SDL_Texture* cd2;
+	SDL_Texture* cd3;
 
-    SDL_Texture* number;
+	SDL_Texture* number;
 
-    SDL_Texture* font1Tex;
-    Font* font1;
+	SDL_Texture* font1Tex;
+	Font* font1;
 
-    int coins;
-    int debugCheckPoints;
+	int coins;
+	int debugCheckPoints;
 
-    int capped = -1;
+	int capped = -1;
 
-    GuiCheckBox* fullscreen;
-    GuiCheckBox* Vsync;
+	GuiCheckBox* fullscreen;
+	GuiCheckBox* Vsync;
 
-    GuiSlider* music;
-    GuiSlider* fxVolume;
+	GuiSlider* music;
+	GuiSlider* fxVolume;
 
-    AudioManager* aud;
-    Window* win;
-    Input* input;
-    ModuleUI* ui;
+	AudioManager* aud;
+	Window* win;
+	Input* input;
+	ModuleUI* ui;
 };
 
 #endif // __SCENEGAMEPLAY_H__

@@ -38,7 +38,7 @@ class Enemy : public Entity
 public:
 
 	Enemy();
-	Enemy(iPoint origin, EnemyType type, int life, int anim, Map* emap, Player* ePlayer, AudioManager* manager);
+	Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager);
 
 	virtual ~Enemy();
 

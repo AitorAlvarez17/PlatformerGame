@@ -1,7 +1,6 @@
 #ifndef __PATHFINDING_H__
 #define __PATHFINDING_H__
 
-#include "Module.h"
 #include "Map.h"
 
 #include "Point.h"
@@ -10,12 +9,6 @@
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
-
-// --------------------------------------------------
-// Recommended reading:
-// Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
-// Details: http://theory.stanford.edu/~amitp/GameProgramming/
-// --------------------------------------------------
 
 class PathFinding
 {

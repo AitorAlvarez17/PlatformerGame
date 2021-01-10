@@ -18,9 +18,7 @@ Player::Player(iPoint origin, AudioManager* manager) : Entity(EntityType::PLAYER
 	godMode = -1;
 
 	coins = 0;
-	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 
-	/*hitbox = Collisions::AddCollider(size, Collider::Type::PLAYER,this);*/
 
 	// Define Player animations
 	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);
@@ -107,8 +105,6 @@ bool Player::Update(Input* input, float dt)
 	if (delayUi > 1.0f)
 		delayUi = 1.0f;
 
-	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
-	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
 
 	return true;
 }
@@ -120,8 +116,6 @@ void Player::Draw(Render* render)
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
-	//render->DrawTextureScaled(texture, 0, 0, &rec, 4);
-	//render->DrawRectangleScaled(2,GetBounds(), { 255, 0, 0, 255 });
 
 	if (isGoingRight == true)
 	{
@@ -134,12 +128,6 @@ void Player::Draw(Render* render)
 		render->DrawTextureScaled(2, texture, (int)position.x, (int)position.y, &rec);
 	}
 
-
-	//Camera Limits
-	//if (render->camera.x >= -704)
-	//{
-	//	render->camera.x = -704;
-	//}
 
 
 	if (position.x > 3761)
@@ -202,13 +190,6 @@ void Player::OnCollision(Collider* c1)
 			lifes = 0;
 			isDead = true;
 
-		}
-		if (c1->type == Collider::SAVEPOINT)
-		{
-			//saveCoroutine = 0;
-
-			//app->audio->PlayFx(2, 0);
-			//active = false;
 		}
 		if (c1->type == Collider::TP)
 		{

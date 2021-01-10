@@ -9,10 +9,6 @@ Tp::Tp(iPoint origin, int n) : Entity(EntityType::TP)
 
 	tpIndex = n;
 
-	/*hitbox->rect.x = origin.x;
-	hitbox->rect.y = origin.y;
-	hitbox->rect.w = width;
-	hitbox->rect.h = height;*/
 }
 
 void Tp::OnCollision(Collider* c1, Collider* c2)
