@@ -41,7 +41,7 @@ public:
 	// Additional methods
 	Player* CreatePlayer(iPoint origin);
 	Item* CreateItem(iPoint origin,ItemType iType);
-	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer);
+	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager);
 	Death* CreateDeath(iPoint origin);
 	Win* CreateWin(iPoint origin);
 	Tp* CreateTp(iPoint origin, int n);

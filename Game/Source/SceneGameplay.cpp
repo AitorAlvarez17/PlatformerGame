@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check, Debug* debug)
 {
 	name = "GAMEPLAY";
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
@@ -113,10 +113,10 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	tp3To1 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "3_to_1.png"));
 	tp3To2 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "3_to_2.png"));
-	
+
 	openPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "open_menu.png"));
 	teleportPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "teleport_menu.png"));
-	
+
 	//NUMBERS
 
 	cd1 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_1.png"));
@@ -136,10 +136,10 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0, map, player); // ONLY ANIM = 0 for now.
+	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0, map, player, aud); // ONLY ANIM = 0 for now.
 	enemy->SetTexture(enemyText);
 
-	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0, map, player); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
+	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0, map, player, aud); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
 	enemy2->SetTexture(playerText);
 
 	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
@@ -157,7 +157,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	for (int i = 0; i <= 7; i++)
 	{
-		eManager->CreateDeath(iPoint(40*64 + 64 * i, 39 * 64));
+		eManager->CreateDeath(iPoint(40 * 64 + 64 * i, 39 * 64));
 	}
 
 	for (int i = 0; i <= 10; i++)
@@ -285,6 +285,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 		// Check if updated player position collides with next tile
 		// IMPROVEMENT: Just check adyacent tiles to player
 		if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
+		if (input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) DebugCheckPoints();
 
 		iPoint tempPlayerPosition = player->position;
 
@@ -303,7 +304,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 						player->vy = 0.0f;*/
 						int compY = player->position.y - tile.y;
 						int compX = player->position.x - tile.x;
-						bool floor = false;
+						player->floor = false;
 
 						if (std::abs(compY) < std::abs(compX))
 						{
@@ -326,9 +327,9 @@ bool SceneGameplay::Update(Input* input, float dt)
 							else
 							{
 								// Comparativa con jumping en player. nueva variable.
-
 								player->position.y = player->prevPos.y;
 								player->vy = 0;
+								player->floor = true;
 								player->jumps = 2;
 								//LOG("DOWN");
 							}
@@ -363,22 +364,27 @@ bool SceneGameplay::Update(Input* input, float dt)
 		//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) app->LoadGameRequest();
 		//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
 
-		if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_H) == KeyState::KEY_DOWN)
 		{
 			if (player->cooldown == 3)
 			{
 				player->HealAbility();
+				aud->PlayFx(5, 0);
 			}
+			else aud->PlayFx(9, 0);
+
 		}
-		if (input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_J) == KeyState::KEY_DOWN)
 		{
 			if (player->firecooldown == 2)
 			{
 				player->FireballAbility();
 				fireball = eManager->CreateFireball(player->position, 5, player->isGoingRight);
 				fireball->SetTexture(fireballTex);
+				aud->PlayFx(3, 0);
 
 			}
+			else aud->PlayFx(9, 0);
 		}
 		player->Update(input, dt);
 	}
@@ -430,6 +436,9 @@ bool SceneGameplay::Draw(Render* render)
 		render->SetBackgroundColor({ 83,217,217, 1 });
 		render->DrawTexture(olympus, 0, 1900);
 		render->DrawTexture(clouds, render->camera.x, 1900);
+		render->DrawTexture(clouds, render->camera.x / 4 + 500, 1900);
+		render->DrawTexture(clouds, render->camera.x/4 + 500, 576);
+		render->DrawTexture(clouds, render->camera.x/2 + 4500, 1216);
 
 		// Draw map
 		map->Draw(render);
@@ -449,7 +458,7 @@ bool SceneGameplay::Draw(Render* render)
 		DrawTp(render);
 
 		render->DrawText(font1, "WELCOME TO TEMPLARIA!", 620, 2150, 2, false);
-		
+
 	}
 	else if ( player->isDead == true)
 	{
@@ -473,7 +482,7 @@ bool SceneGameplay::Unload()
 {
 	// TODO: Unload all resources
 
-		eManager->CleanUp();
+	eManager->CleanUp();
 
 	return false;
 }
@@ -611,7 +620,7 @@ bool SceneGameplay::DrawMoney(Render* render)
 {
 
 	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTextTexture(3,coinUi, 1170, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTextTexture(3, coinUi, 1170, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	switch (player->coins)
 	{
@@ -621,42 +630,42 @@ bool SceneGameplay::DrawMoney(Render* render)
 		break;
 	case 1:
 		render->DrawText(font1, "1", 1185, 98, 4, true);
-		
+
 		break;
 	case 2:
 		render->DrawText(font1, "2", 1185, 98, 3, true);
-		
+
 		break;
 	case 3:
 		render->DrawText(font1, "3", 1185, 98, 3, true);
-		
+
 		break;
 	case 4:
 		render->DrawText(font1, "4", 1185, 98, 3, true);
-		
+
 		break;
 	case 5:
 		render->DrawText(font1, "5", 1185, 98, 3, true);
-		
+
 		break;
 	case 6:
 		render->DrawText(font1, "6", 1185, 98, 3, true);
-		
+
 		break;
 	case 7:
 		render->DrawText(font1, "7", 1185, 98, 3, true);
-		
+
 		break;
 	case 8:
 		render->DrawText(font1, "8", 1185, 98, 3, true);
 		break;
 	case 9:
 		render->DrawText(font1, "9", 1185, 98, 3, true);
-		
+
 		break;
 	default:
 		render->DrawText(font1, "10", 1185, 98, 3, true);
-		
+
 		break;
 	}
 
@@ -845,7 +854,6 @@ bool SceneGameplay::DrawTp(Render* render)
 				}
 				break;
 			}
-
 		}
 		if (player->onArea1 || player->onArea2 || player->onArea3)
 		{
@@ -889,5 +897,24 @@ bool SceneGameplay::CleanUp()
 
 	eManager->CleanUp();
 	return true;
+}
+
+void SceneGameplay::DebugCheckPoints()
+{
+	switch (debug->debugCheckPoints)
+	{
+	case 1:
+		player->position.x = 456;
+		player->position.y = 2176;
+	case 2:
+		player->position.x = 3697;
+		player->position.y = 1974;
+	case 3:
+		player->position.x = 960;
+		player->position.y = 550;
+	default:
+		break;
+	}
+
 }
 
