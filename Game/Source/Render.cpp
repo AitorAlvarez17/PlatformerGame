@@ -326,11 +326,17 @@ bool Render::DrawText(Font* font, const char* text, int x, int y, int scale)
 			}
 		}
 
+		int offset = (scale * 2) * scale;
 		// Retrieve the position of the current character in the sprite
+
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		DrawTextureScaled(scale,font->texture, x, y,&spriteRect);
+		if(i == 0)
+			DrawTextureScaled(scale,font->texture, x, y,&spriteRect);
+		else
+			DrawTextureScaled(scale, font->texture, x + offset*i, y, &spriteRect);
+
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

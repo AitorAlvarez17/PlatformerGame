@@ -403,7 +403,7 @@ bool SceneGameplay::Draw(Render* render)
 	DrawWand(render);
 	DrawTp(render);
 
-	render->DrawText(font1, "HOLA 12", 600, 2050, 3);
+	render->DrawText(font1, "HOLA 12", 600, 2050, 4);
 
 	return false;
 }
