@@ -5,7 +5,6 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
-#include "CheckPoints.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
 #include "Debug.h"
@@ -35,7 +34,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager(collisions, tex);
 	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions, checkPoints, debug);
 	debug = new Debug(input, collisions, this, ui, entityManager);
-	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);
 	ui = new ModuleUI(render, tex, sceneManager, entityManager);
 
 	// Ordered for awake / Start / Update
@@ -49,7 +47,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(ui);
 	AddModule(sceneManager);
 	AddModule(debug);
-	AddModule(checkPoints);
 	
 	
 	// Render last to swap buffer

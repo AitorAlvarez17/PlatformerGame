@@ -23,7 +23,7 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::WIN] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::FIREBALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
-	
+
 
 
 	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
@@ -208,7 +208,7 @@ bool Collisions::Draw(Render* render)
 bool Collisions::PostUpdate()
 {
 
-		return true;
+	return true;
 }
 
 // Called before quitting
@@ -283,7 +283,7 @@ void Collisions::DebugDraw()
 		{
 			SDL_Rect rec = { 0,0,32,32 };
 
-			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h}, { 255,204,0,170 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,204,0,170 }, true);
 			break;
 		}
 		case Collider::Type::HEART:
@@ -300,8 +300,6 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::ENEMY:
 			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,0,170 }, true);
-
-			break;
 
 			break;
 		case Collider::Type::WIN:

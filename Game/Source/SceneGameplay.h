@@ -17,7 +17,6 @@
 #include "App.h"
 #include "Collisions.h"
 #include "ModuleUI.h"
-#include "CheckPoints.h"
 #include "Debug.h"
 #include "Font.h"
 
