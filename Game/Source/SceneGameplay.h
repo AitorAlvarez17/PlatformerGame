@@ -13,6 +13,7 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Item.h"
+#include "Fireball.h"
 #include "App.h"
 #include "Collisions.h"
 #include "ModuleUI.h"
@@ -55,6 +56,7 @@ private:
     Player* player;
     Enemy* enemy;
     Enemy* enemy2;
+    Fireball* fireball;
     EntityManager* eManager;
     PathFinding* path;
     Collisions* collisions;
@@ -86,6 +88,7 @@ private:
     SDL_Texture* playerText;
     SDL_Texture* enemyText;
     SDL_Texture* playText;
+    SDL_Texture* fireballTex;
     SDL_Texture* continueText;
     SDL_Texture* settingsText;
     SDL_Texture* title;

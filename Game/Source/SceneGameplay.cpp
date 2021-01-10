@@ -83,6 +83,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
 	enemyText = tex->Load(PATH("Assets/Textures/Character/", "bat.png"));
+	fireballTex = tex->Load(PATH("Assets/Textures/Items/", "fireball.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/UI/", "settings.png"));
@@ -139,10 +140,10 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
+	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0); // ONLY ANIM = 0 for now.
 	enemy->SetTexture(enemyText);
 
-	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
+	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
 	enemy2->SetTexture(playerText);
 
 	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
@@ -334,8 +335,23 @@ bool SceneGameplay::Update(Input* input, float dt)
 	//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) app->LoadGameRequest();
 	//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
 
-	player->Update(input, dt);
+	if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+	{
+		if (player->cooldown == 3)
+		{
+			player->HealAbility();
+		}
+	}
+	if (input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)
+	{
+		if (player->cooldown == 3)
+		{
+			fireball = eManager->CreateFireball(player->position, player->isGoingRight);
+			fireball->SetTexture(fireballTex);
 
+		}
+	}
+	player->Update(input, dt);
 
 	enemy->UpdatePath(map, input, player, dt);
 	enemy2->UpdatePath(map, input, player, dt);
