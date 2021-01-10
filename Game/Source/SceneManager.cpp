@@ -25,7 +25,7 @@
 #define FADEIN_TRANSITION_SPEED		2.0f
 
 
-SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll, CheckPoints* check) : Module()
+SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll, CheckPoints* check, Debug* debug) : Module()
 {
 	name.Create("scenemanager");
 
@@ -43,6 +43,7 @@ SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioMan
 	this->ui = ui;
 	this->collisions = coll;
 	this->check = check;
+	this->debug = debug;
 }
 
 // Destructor
@@ -188,7 +189,7 @@ bool SceneManager::Update(float dt)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
 			case SceneType::TITLE: next = new SceneTitle(aud, win, app, input, entityManager); break;
-			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win, entityManager, input, ui,collisions, app, check); break;
+			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win, entityManager, input, ui,collisions, app, check, debug); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;
 		}
