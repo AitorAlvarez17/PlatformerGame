@@ -244,7 +244,7 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 17
+#define GRAVITY 18
 #define PLAYER_MOVE_SPEED 256
 #define PLAYER_JUMP_SPEED 550
 
@@ -254,8 +254,9 @@ void Player::FixedUpdate(Input* input, float dt)
 	{
 		//Calculate gravity acceleration
 		position.y += (vy * dt);
-		vy = vy + GRAVITY;
-		if (vy > 400) vy = 400;
+
+		if (floor == false) vy = vy + GRAVITY;
+		if (vy > 300) vy = 300;
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -277,7 +278,8 @@ void Player::FixedUpdate(Input* input, float dt)
 			if (jumps > 0)
 			{
 				jumps--;
-				vy += -PLAYER_JUMP_SPEED;
+				vy = vy - PLAYER_JUMP_SPEED;
+				floor = false;
 				UpdateAnim(currentAnim, JUMP);
 				aud->PlayFx(6, 0);
 

@@ -55,17 +55,17 @@ bool AudioManager::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	LoadFx(PATH("Assets/Audio/Fx/", "auto_save.ogg"));//1
-	LoadFx(PATH("Assets/Audio/Fx/", "dying.ogg"));//2
-	LoadFx(PATH("Assets/Audio/Fx/", "fireball.ogg"));//3
-	LoadFx(PATH("Assets/Audio/Fx/", "footsteps.ogg"));//4
-	LoadFx(PATH("Assets/Audio/Fx/", "health.ogg"));//5
-	LoadFx(PATH("Assets/Audio/Fx/", "jump.ogg"));//6
-	LoadFx(PATH("Assets/Audio/Fx/", "coin.ogg"));//7
-	LoadFx(PATH("Assets/Audio/Fx/", "select_menu.ogg"));//8
-	LoadFx(PATH("Assets/Audio/Fx/", "cooldown.ogg"));//9
-	LoadFx(PATH("Assets/Audio/Fx/", "win.ogg"));//10
-	LoadFx(PATH("Assets/Audio/Fx/", "knock.ogg"));//11
+	LoadFx(PATH("Assets/Audio/Fx/", "auto_save.wav"));//1
+	LoadFx(PATH("Assets/Audio/Fx/", "dying.wav"));//2
+	LoadFx(PATH("Assets/Audio/Fx/", "fireball.wav"));//3
+	LoadFx(PATH("Assets/Audio/Fx/", "footsteps.wav"));//4
+	LoadFx(PATH("Assets/Audio/Fx/", "health.wav"));//5
+	LoadFx(PATH("Assets/Audio/Fx/", "jump.wav"));//6
+	LoadFx(PATH("Assets/Audio/Fx/", "coin.wav"));//7
+	LoadFx(PATH("Assets/Audio/Fx/", "select_menu.wav"));//8
+	LoadFx(PATH("Assets/Audio/Fx/", "cooldown.wav"));//9
+	LoadFx(PATH("Assets/Audio/Fx/", "win.wav"));//10
+	LoadFx(PATH("Assets/Audio/Fx/", "knock.wav"));//11
 
 	return ret;
 }
