@@ -301,7 +301,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 						player->vy = 0.0f;*/
 						int compY = player->position.y - tile.y;
 						int compX = player->position.x - tile.x;
-						bool floor = false;
+						player->floor = false;
 
 						if (std::abs(compY) < std::abs(compX))
 						{
@@ -324,9 +324,9 @@ bool SceneGameplay::Update(Input* input, float dt)
 							else
 							{
 								// Comparativa con jumping en player. nueva variable.
-
 								player->position.y = player->prevPos.y;
 								player->vy = 0;
+								player->floor = true;
 								player->jumps = 2;
 								//LOG("DOWN");
 							}
