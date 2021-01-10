@@ -153,6 +153,8 @@ private:
     int coins;
     int debugCheckPoints;
 
+    int capped = -1;
+
     GuiCheckBox* fullscreen;
     GuiCheckBox* Vsync;
 

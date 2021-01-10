@@ -1,11 +1,10 @@
 <!-- Config file for the game -->
 <!-- L01: DONE 1: Create configuration file-->
 <config>
-  <app>
+ <app framerate_cap="60">
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
   </app>
-
   <renderer>
     <vsync value="true"/>
   </renderer>

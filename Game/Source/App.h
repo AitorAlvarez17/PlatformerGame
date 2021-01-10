@@ -103,6 +103,8 @@ public:
 	mutable bool firstSaved = false;
 	bool newGame;
 
+	int	cappedMs = -1;
+
 private:
 
 	pugi::xml_document saveGame;
@@ -146,8 +148,6 @@ private:
 	uint32 lastSecFrameCount = 0;
 	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
-
-	int	cappedMs = -1;
 };
 
 #endif	// __APP_H__

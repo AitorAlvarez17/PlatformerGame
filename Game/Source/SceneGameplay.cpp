@@ -375,6 +375,12 @@ bool SceneGameplay::Update(Input* input, float dt)
 			enemy->hasPath *= -1;
 			enemy2->hasPath *= -1;
 		}
+		if (input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_UP)
+		{
+			capped *= -1;
+			if (capped > 0) app->cappedMs = 1000 / 30;
+			else app->cappedMs = 1000 / 60;
+		}
 
 		if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 		{
