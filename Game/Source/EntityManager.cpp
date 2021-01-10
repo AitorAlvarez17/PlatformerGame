@@ -125,11 +125,11 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 	return ret;
 }
 
-Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer)
+Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager)
 {
 	Enemy* ret = nullptr;
 
-	ret = new Enemy(origin, eType, life, anim, eMap, ePlayer);
+	ret = new Enemy(origin, eType, life, anim, eMap, ePlayer, manager);
 
 	SDL_Rect Rect;
 	Rect.x = origin.x;

@@ -5,11 +5,12 @@
 #define DEFAULT_PATH_LENGTH 50
 #define PIXELS 32
 
-Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Player* ePlayer) : Entity(EntityType::ENEMY)
+Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager) : Entity(EntityType::ENEMY)
 {
 	// path = PathFinding::GetInstance()->CreatePath(iPoint(0, 0), iPoint(0, 0));
 	player = ePlayer;
 	map = eMap;
+	aud = manager;
 	position = origin;
 	lifes = life;
 	spawnPos.y = origin.y;
@@ -38,6 +39,7 @@ bool Enemy::Update(float dt)
 	{
 		actualAnimation = &deadAnimL;
 		pendingToDelete = true;
+		aud->PlayFx(2, 0);
 	}
 
 	//Path Limits

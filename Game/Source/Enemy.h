@@ -10,6 +10,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Map.h"
+#include "Audio.h"
 
 #include "Pathfinding.h"
 
@@ -37,7 +38,7 @@ class Enemy : public Entity
 public:
 
 	Enemy();
-	Enemy(iPoint origin, EnemyType type, int life, int anim, Map* emap, Player* ePlayer);
+	Enemy(iPoint origin, EnemyType type, int life, int anim, Map* emap, Player* ePlayer, AudioManager* manager);
 
 	virtual ~Enemy();
 
@@ -79,6 +80,7 @@ public:
 
 	Map* map;
 	Player* player;
+	AudioManager* aud;
 private:
 
 	//Animations
