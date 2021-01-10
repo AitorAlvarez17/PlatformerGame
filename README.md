@@ -3,7 +3,7 @@
 ## Description
 
 We are Nirvana team and this is our 2D platformer video game prototype made by students from the CITM University on Barcelona. It is developed in c++ on visual studio using SDL library. Hope you enjoy it!
- ![](Screenshots/screenshot_gameplay.png)
+ ![](Screenshots/gameplay.png)
  
 ## Key Features
  - Load/Save game state using XML file
