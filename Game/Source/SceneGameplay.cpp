@@ -350,7 +350,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	{
 		if (player->cooldown == 3)
 		{
-			fireball = eManager->CreateFireball(player->position, player->isGoingRight);
+			fireball = eManager->CreateFireball(player->position, 200, player->isGoingRight);
 			fireball->SetTexture(fireballTex);
 
 		}

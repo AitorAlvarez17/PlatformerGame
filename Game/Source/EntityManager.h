@@ -42,7 +42,7 @@ public:
 	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim);
 	Tp* CreateTp(iPoint origin, int n);
 	SavePoint* CreateSavePoint(iPoint origin);
-	Fireball* CreateFireball(iPoint origin, bool dir);
+	Fireball* CreateFireball(iPoint origin, int range, bool dir);
 
 	void OnCollision(Collider* a, Collider* b);
 
