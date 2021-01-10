@@ -352,7 +352,7 @@ bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 	iPoint d = { (int)player->position.x ,(int)player->position.y };
 	d = map->WorldToMap(d.x, d.y);
 
-	iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y);
+	iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y - 64);
 	ePath->CreatePath(o, d);
 
 	newPath.Clear();
