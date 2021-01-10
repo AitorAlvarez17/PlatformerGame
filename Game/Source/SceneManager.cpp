@@ -96,7 +96,10 @@ bool SceneManager::PreUpdate()
 		}
 	}
 	*/
-
+	if (!onTransition)
+	{
+		current->PreUpdate();
+	}
 	return true;
 }
 
@@ -200,9 +203,14 @@ bool SceneManager::Update(float dt)
 }
 
 // Called each loop iteration
-bool SceneManager::PostUpdate()
+bool SceneManager::PostUpdate(float dt)
 {
 	bool ret = true;
+
+	if (!onTransition)
+	{
+		current->PostUpdate(input, dt);
+	}
 
 	return ret;
 }

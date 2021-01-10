@@ -145,9 +145,9 @@ bool SceneTitle::Draw(Render* render)
         render->DrawRectangle({ 100, 50, 1080, 620 }, { 100, 200, 200, 255 });
         render->DrawTexture(marginsUi, 100, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         btnBack->Draw(render);
-        render->DrawTexture(marginsButtonUi, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
-        render->DrawTexture(backText, 490, 540, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-        render->DrawTexture(creditsUi, 100, -70, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+        render->DrawTexture(marginsButtonUi, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
+        render->DrawTexture(backText, btnBack->bounds.x, btnBack->bounds.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+        render->DrawTexture(creditsUi, 93, -70, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
        
     }
     else if (settings)

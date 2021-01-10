@@ -69,6 +69,7 @@ Player::Player(iPoint origin) : Entity(EntityType::PLAYER)
 
 	actualAnimation = &jumpLeftAnim;
 
+	int tpCounter = 1;
 }
 
 
@@ -156,7 +157,18 @@ void Player::OnCollision(Collider* c1)
 		lifes--;
 
 	}
+	if (c1->type == Collider::SAVEPOINT)
+	{
+		//saveCoroutine = 0;
 
+		//app->audio->PlayFx(2, 0);
+		//active = false;
+	}
+	if (c1->type == Collider::TP)
+	{
+		onColl = true;
+		LOG("tp checked");
+	}
 
 
 }

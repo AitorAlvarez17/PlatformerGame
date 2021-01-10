@@ -46,7 +46,6 @@ public:
 
 	SDL_Texture* background_ui;
 	SDL_Texture* hab_ui;
-	SDL_Texture* save_feedback;
 	SDL_Texture* hearth;
 	SDL_Texture* healthBackground;
 

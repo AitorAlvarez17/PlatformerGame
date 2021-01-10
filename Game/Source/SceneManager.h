@@ -39,7 +39,7 @@ public:
 	bool Update(float dt);
 
 	// Called before all Updates
-	bool PostUpdate();
+	bool PostUpdate(float dt);
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
