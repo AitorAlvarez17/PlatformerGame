@@ -3,16 +3,17 @@
 
 #include "Player.h"
 #include "Input.h"
+#include "Entity.h"
 
 #include "SDL/include/SDL.h"
 
 class Textures;
 
-class Wand 
+class Fireball : public Entity
 {
 public:
 
-    Wand(Player* player);
+    Fireball(iPoint origin, bool isRight);
 
     bool Update(float dt, Input* input);
 
@@ -32,8 +33,6 @@ public:
 
     int lifes;
     int maxLifes;
-
-    Player* wandPlayer;
 
     bool isGoingRight = true;
 };

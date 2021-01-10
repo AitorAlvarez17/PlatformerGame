@@ -1,11 +1,14 @@
-#include "Wand.h"
+#include "Fireball.h"
 
-Wand::Wand(Player* player)
+Fireball::Fireball(iPoint origin, bool isRight) : Entity(EntityType::FIREBALL)
 {
-	wandPlayer = player;
+	position = origin;
+
+	isGoingRight = isRight;
+
 }
 
-bool Wand::Update(float dt, Input* input)
+bool Fireball::Update(float dt, Input* input)
 {
 #define ATTACK_MAX_COOLDOWN 3
 #define ABILITY_MAX_COOLDOWN 5
@@ -32,7 +35,7 @@ bool Wand::Update(float dt, Input* input)
 	return true;
 }
 
-void Wand::Ability()
+void Fireball::Ability()
 {
 	if (abilityCool == ABILITY_MAX_COOLDOWN)
 	{
@@ -54,22 +57,22 @@ void Wand::Ability()
 	}
 }
 
-void Wand::Attack()
+void Fireball::Attack()
 {
 	if (attackCool == ATTACK_MAX_COOLDOWN)
 	{
-		//CREATE FIREBALL
-		if (wandPlayer->isGoingRight)
-		{
-			//app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, 1);
-		}
-		else
-		{
-			//app->audio->PlayFx(4, 0);
-			//app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, -1);
+		////CREATE FIREBALL
+		//if (wandPlayer->isGoingRight)
+		//{
+		//	//app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, 1);
+		//}
+		//else
+		//{
+		//	//app->audio->PlayFx(4, 0);
+		//	//app->oManager->AddObject(ObjType::FIREBALL, position.x, position.y, -1);
 
-		}
-		attackCool = 0;
+		//}
+		//attackCool = 0;
 	}
 	else
 	{
