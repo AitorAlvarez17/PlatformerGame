@@ -46,6 +46,8 @@ public:
 
     void HealAbility();
 
+    void Fireball();
+
     SDL_Rect GetBounds();
 
     SDL_Rect GetBoundsScaled();

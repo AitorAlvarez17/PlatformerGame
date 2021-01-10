@@ -184,6 +184,10 @@ void Player::HealAbility()
 	}
 }
 
+void Player::Fireball()
+{
+}
+
 void Player::SetTexture(SDL_Texture* tex)
 {
 	texture = tex;
