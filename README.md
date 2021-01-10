@@ -3,7 +3,8 @@
 ## Description
 
 We are Nirvana team and this is our 2D platformer video game prototype made by students from the CITM University on Barcelona. It is developed in c++ on visual studio using SDL library. Hope you enjoy it!
-
+ ![](Screenshots/screenshot_gameplay.png)
+ 
 ## Key Features
  - Load/Save game state using XML file
  - Tiled TMX map loading and drawing (orthographic)
@@ -65,6 +66,7 @@ This project is licensed under an unmodified MIT license, which is an OSI-certif
  
 This project has used the website notion.so to apply the Kanban working method and thus be able to organize and fulfill correctly established goals.
 
- ![](Images/kanban.png)
+ ![](Screenshots/kanban.png)
 
 
+ ![](Screenshots/kanban_gitfiles.png)
