@@ -65,6 +65,7 @@ bool AudioManager::Awake(pugi::xml_node& config)
 	LoadFx(PATH("Assets/Audio/Fx/", "select_menu.ogg"));//8
 	LoadFx(PATH("Assets/Audio/Fx/", "cooldown.ogg"));//9
 	LoadFx(PATH("Assets/Audio/Fx/", "win.ogg"));//10
+	LoadFx(PATH("Assets/Audio/Fx/", "knock.ogg"));//11
 
 	return ret;
 }
