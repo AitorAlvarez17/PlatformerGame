@@ -209,11 +209,11 @@ SavePoint* EntityManager::CreateSavePoint(iPoint origin)
 	return ret;
 }
 
-Fireball* EntityManager::CreateFireball(iPoint origin, bool dir)
+Fireball* EntityManager::CreateFireball(iPoint origin, int range, bool dir)
 {
 	Fireball* ret = nullptr;
 
-	ret = new Fireball(origin, dir);
+	ret = new Fireball(origin, range, dir);
 
 	SDL_Rect Rect;
 	Rect.x = origin.x;

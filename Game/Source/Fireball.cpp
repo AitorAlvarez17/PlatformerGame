@@ -1,12 +1,16 @@
 #include "Fireball.h"
 
-Fireball::Fireball(iPoint origin, bool dir) : Entity(EntityType::FIREBALL)
+#define DEFAULT_RANGE 50
+Fireball::Fireball(iPoint origin, int rang, bool dir) : Entity(EntityType::FIREBALL)
 {
 	direction = dir;
-	
+	range = rang;
 	//Set Properties
 	if (dir) position.x = origin.x + 64;
 	else position.x = origin.x - 32;
+
+	if (rang != 0) range = rang;
+	else range = DEFAULT_RANGE;
 
 	position.y = origin.y;
 
@@ -29,6 +33,12 @@ bool Fireball::Update(float dt)
 {
 
 #define SPEED 120.0f
+	if (counter >= range)
+	{
+		pendingToDelete = true;
+		return true;
+	
+	}
 
 	if (direction)
 	{
@@ -41,7 +51,7 @@ bool Fireball::Update(float dt)
 		currentAnim = &leftAnim;
 	}
 
-
+	counter += 1 ;
 	hitbox->rect = { position.x,position.y,width,height };
 	return true;
 }

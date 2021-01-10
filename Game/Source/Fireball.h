@@ -13,7 +13,7 @@ class Fireball : public Entity
 {
 public:
 
-    Fireball(iPoint origin, bool dir); // Right = true, Left = false.
+    Fireball(iPoint origin, int rang, bool dir); // Right = true, Left = false.
 
     bool Update(float dt);
 
@@ -35,5 +35,7 @@ private:
 
     //Properties
     bool direction = false; 
+    int range = 0;
+    int counter = 0;
 };
 #endif // __WAND_H__
