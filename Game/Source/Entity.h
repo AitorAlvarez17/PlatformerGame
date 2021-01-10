@@ -16,6 +16,8 @@ enum class EntityType
     MAP,
     FIREBALL,
     TP,
+    SAVEPOINT,
+
     UNKNOWN
 };
 
