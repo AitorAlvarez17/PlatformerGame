@@ -77,14 +77,6 @@ bool Player::Update(Input* input, float dt)
 	prevPos = position;
 	FixedUpdate(input, dt);
 
-	if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
-	{
-		if (cooldown == 3)
-		{
-			HealAbility();
-		}
-	}
-
 	cooldown += dt;
 	delayUi += dt;
 
@@ -182,8 +174,9 @@ void Player::HealAbility()
 	}
 }
 
-void Player::Fireball()
+void Player::FireballAbility()
 {
+	
 }
 
 void Player::SetTexture(SDL_Texture* tex)

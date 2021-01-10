@@ -46,7 +46,7 @@ public:
 
     void HealAbility();
 
-    void Fireball();
+    void FireballAbility();
 
     SDL_Rect GetBounds();
 

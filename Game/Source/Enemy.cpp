@@ -13,8 +13,8 @@ Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim) : Entity(EntityT
 	this->eType = type;
 	//set the width and the height to the requested value depending on the Enemy etc...
 
-	width = 32;
-	height = 32;
+	width = 64;
+	height = 64;
 
 
 	//Set the Animation 0, 2, 4, 6... only pair numbers
@@ -31,7 +31,13 @@ Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim) : Entity(EntityT
 
 bool Enemy::Update(float dt)
 {
+	if (lifes == 0)
+	{
+		actualAnimation = &deadAnimL;
+		pendingToDelete = true;
+	}
 
+	hitbox->rect = { position.x,position.y,width,height };
 
 	return true;
 }
@@ -90,7 +96,6 @@ void Enemy::UpdateLogic(float dt)
 	}
 
 
-
 }
 
 void Enemy::Draw(Render* render)
@@ -100,11 +105,11 @@ void Enemy::Draw(Render* render)
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
-	if (eType == EnemyType::WALKING) render->DrawTextureScaled(4, texture, position.x, position.y, &rec);
-	if (eType == EnemyType::FLYING) render->DrawTextureScaled(4, texture, position.x, position.y, &rec);
+	if (eType == EnemyType::WALKING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
+	if (eType == EnemyType::FLYING) render->DrawTextureScaled(2, texture, position.x , position.y, &rec);
 
 
-	render->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
+	//ender->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
 
 	if (hasPath > 0)
 		ePath->DrawPath(render, newPath);
@@ -126,7 +131,10 @@ void Enemy::OnCollision(Collider* c1, Collider* c2)
 
 void Enemy::OnCollision(Collider* c1)
 {
-
+	if (c1->type == Collider::Type::FIREBALL)
+	{
+		lifes--;
+	}
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
 
 
