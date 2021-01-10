@@ -22,7 +22,7 @@ struct Collider
 		ENEMY,
 		FIREBALL,
 		WIN,
-		
+
 		MAX
 	};
 
