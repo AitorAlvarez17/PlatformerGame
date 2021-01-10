@@ -9,6 +9,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "CheckPoints.h"
 #include "Window.h"
 #include "EntityManager.h"
 
@@ -16,13 +17,15 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "SString.h"
 
 #include "SDL/include/SDL.h"
 
 #define FADEOUT_TRANSITION_SPEED	2.0f
 #define FADEIN_TRANSITION_SPEED		2.0f
 
-SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll) : Module()
+
+SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioManager* manager, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll, CheckPoints* check) : Module()
 {
 	name.Create("scenemanager");
 
@@ -39,6 +42,7 @@ SceneManager::SceneManager(Input* input, Render* render, Textures* tex, AudioMan
 	this->entityManager = entityManager;
 	this->ui = ui;
 	this->collisions = coll;
+	this->check = check;
 }
 
 // Destructor
@@ -180,7 +184,7 @@ bool SceneManager::Update(float dt)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
 			case SceneType::TITLE: next = new SceneTitle(aud, win, app, input); break;
-			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win,entityManager, input, ui,collisions); break;
+			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win, entityManager, input, ui,collisions, app, check); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;
 		}
@@ -215,10 +219,17 @@ bool SceneManager::CleanUp()
 
 bool SceneManager::LoadState(pugi::xml_node& data)
 {
-	LOG(" Entity loaded");
+	LOG("Scenes loaded");
+	int lvl = data.child("currentScene").attribute("sceneNumber").as_int();
+	Scene* scene = current;
+	
+	if (lvl == 2)
+	{
+		
+	}
 
-	current->name = data.child("currentScene").attribute("name.x").as_float();
-
+	//Scene * scene;
+	//scene->TransitionToScene();
 	return true;
 }
 
@@ -226,11 +237,15 @@ bool SceneManager::LoadState(pugi::xml_node& data)
 // Save Game State
 bool SceneManager::SaveState(pugi::xml_node& data) const
 {
-	LOG(" Entity saved");
+	LOG("Scenes saved");
 	pugi::xml_node currentScene = data.append_child("currentScene");
-
-	currentScene.append_attribute("sceneName") = current->name.GetString();
-
+	
+	if (current->name == "GAMEPLAY")
+	{
+		int level = 2;
+		currentScene.append_attribute("sceneNumber") = level;
+	}
+	
 
 	return true;
 }

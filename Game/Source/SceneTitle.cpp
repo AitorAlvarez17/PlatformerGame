@@ -212,7 +212,11 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
     case GuiControlType::BUTTON:
     {
         aud->PlayFx(8, 0);
-        if (control->id == 1) TransitionToScene(SceneType::GAMEPLAY);
+        if (control->id == 1)
+        {
+            app->newGame = true;
+            TransitionToScene(SceneType::GAMEPLAY);
+        }
         else if (control->id == 2)
         {
             TransitionToScene(SceneType::GAMEPLAY);

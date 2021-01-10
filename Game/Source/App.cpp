@@ -33,7 +33,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new AudioManager();
 	collisions = new Collisions(render,tex);
 	entityManager = new EntityManager(collisions, tex);
-	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions);
+	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions, checkPoints);
 	debug = new Debug(input, collisions, this, ui);
 	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);
 	ui = new ModuleUI(render, tex, sceneManager, entityManager);
@@ -52,7 +52,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(checkPoints);
 	
 	
-
 	// Render last to swap buffer
 	AddModule(render);
 	
@@ -135,6 +134,10 @@ bool App::Start()
 	PERF_START(ptimer);
 	
 	bool ret = true;
+	
+	pugi::xml_parse_result resultSave = save.load_file(SAVE_STATE_FILENAME);
+	if (resultSave != NULL)firstSaved = true;
+
 	ListItem<Module*>* item;
 	item = modules.start;
 
@@ -445,7 +448,7 @@ bool App::LoadGame()
 	input->LoadState(inp);
 	render->LoadState(rend);
 	entityManager->LoadState(ent);
-
+	sceneManager->LoadState(sce);
 
 	loadGameRequested = false;
 	LOG("game loaded");
@@ -458,7 +461,6 @@ bool App::SaveGame() const
 	bool ret = true;
 	
 	firstSaved = true;
-
 	pugi::xml_document save;
 	if (save == NULL)
 	{
@@ -483,6 +485,7 @@ bool App::SaveGame() const
 
 		pugi::xml_node s = node.append_child("scene");
 		sceneManager->SaveState(s);
+
 		save.save_file("save_game.xml");
 	}
 

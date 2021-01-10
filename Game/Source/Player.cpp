@@ -86,15 +86,11 @@ bool Player::Update(Input* input, float dt)
 	}
 
 	cooldown += dt;
-	saveCoroutine += dt;
 	delayUi += dt;
 
 	LOG("%f", delayUi);
 	if (cooldown > 3.0f)
 		cooldown = 3.0f;
-
-	if (saveCoroutine > 3.0f)
-		saveCoroutine = 3.0f;
 
 	if (delayUi > 1.0f)
 		delayUi = 1.0f;

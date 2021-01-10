@@ -118,6 +118,10 @@ bool CheckPoints::Update(float dt)
 
 	}
 
+	saveCoroutine += dt;
+
+	if (saveCoroutine > 2.0f)
+		saveCoroutine = 2.0f;
 	return true;
 }
 
@@ -202,11 +206,8 @@ void CheckPoints::OnCollision(Collider* a, Collider* b) {
 
 	if (a->type == Collider::SAVEPOINT && b->type == Collider::PLAYER)
 	{
-		ui->saveCoroutine = 0;
-		if (ui->saveCoroutine < 3)
-		{
-			ui->Draw(rend);
-		}
+		saveCoroutine = 0;
+		
 		app->audio->PlayFx(2, 0);
 		active = false;
 	}

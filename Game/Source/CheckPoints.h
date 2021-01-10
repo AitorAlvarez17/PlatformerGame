@@ -70,6 +70,8 @@ public:
 	int winWidth;
 	int winHeigh;
 
+	float saveCoroutine;
+
 	Render* rend;
 	Input* input;
 	Collisions* col;

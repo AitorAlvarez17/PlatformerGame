@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check)
 {
 	name = "GAMEPLAY";
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
@@ -43,6 +43,7 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 	this->input = input;
 	this->ui = ui;
 	this->collisions = coll;
+	this->app = app;
 }
 
 SceneGameplay::~SceneGameplay()
@@ -132,6 +133,13 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	eManager->CreateItem(iPoint(768, 2124), ItemType::COIN);
 
+	if (app->newGame != true)
+	{
+		if (app->firstSaved == true)
+		{
+			app->LoadGameRequest();
+		}
+	}
 	return false;
 }
 
@@ -332,7 +340,11 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			Vsync->Start();//set vsync value ---- read it from file and set it to the current state
 			fullscreen->Start();//set fullscreen value ---- read it from file and set it to the current state
 		}
-		else if (control->id == 8) TransitionToScene(SceneType::TITLE);
+		else if (control->id == 8)
+		{
+			eManager->CleanUp();
+			TransitionToScene(SceneType::TITLE);
+		}
 		else if (control->id == 9) input->windowEvents[WE_QUIT] = 1;
 		else if (control->id == 10) settings = 0;
 
