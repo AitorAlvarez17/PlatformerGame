@@ -24,7 +24,9 @@ Debug::Debug(Input* input, Collisions* coll, App* app, ModuleUI* ui, EntityManag
 
 // Destructor
 Debug::~Debug()
-{}
+{
+
+}
 
 // Called before render is available
 bool Debug::Awake(pugi::xml_node& config)
@@ -63,16 +65,16 @@ bool Debug::Update(float dt)
 
 	if (input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT) app->LoadGameRequest();
 
-	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
+	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		collisions->DebugRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
-		
+
 	}
 	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) ui->saveCoroutine = 0;
-		
-	
+
+
 	return true;
 }
 

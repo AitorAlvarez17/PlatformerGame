@@ -54,53 +54,32 @@ bool ModuleUI::Update(float dt)
 
 	}
 
-	/*if (cantSummon <= 1.5)
-	{
-		cantSummon += dt;
-	}
-	if (cantSummon > 1.5)
-	{
-		cantSummon = 1.5;
-	}*/
-
-	
 	return true;
 }
 
 bool ModuleUI::Load(Textures* tex)
 {
-	//background_ui = tex->Load(PATH("Assets/Textures/", "hab_ui.png"));
-	//hab_ui = tex->Load(PATH("Assets/Textures/", "background_ui.png"));
-
-	cd1 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_1.png"));
-	cd2 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_2.png"));
-	cd3 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_3.png"));
-	cd4 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_4.png"));
-	cd5 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_5.png"));
-
-	cantSummonUi = tex->Load(PATH("Assets/Textures/UI/", "cant.png"));
-
+	
 	return false;
 }
 
 bool ModuleUI::Draw(Render* render)
 {
-	//render->DrawTexture(background_ui, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	//render->DrawTexture(hab_ui, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	
 
 	return false;
 }
 
 bool ModuleUI::DrawHealth(Render* render)
 {
-	
+
 
 	return false;
 }
 
 void ModuleUI::WeaponUI(Render* render)
 {
-	//HEAL
-	int margin = 3;
 	
+	
+
 }

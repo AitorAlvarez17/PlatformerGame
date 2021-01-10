@@ -3,13 +3,13 @@
 	<input />
 	<audio />
 	<render>
-		<camera x="-166" y="-1752" />
+		<camera x="-1222" y="-1630" />
 	</render>
 	<textures />
 	<window />
 	<entities>
-		<enemy position.x="745" position.y="2036" />
-		<player position.x="486" position.y="2176" lifes="0" cooldown="0" godMode="0" />
+		<enemy position.x="1389" position.y="1985" position2.x="1350" position2.y="2176" />
+		<player position.x="1542" position.y="2054" lifes="0" cooldown="0" godMode="0" />
 	</entities>
 	<enemy />
 	<scene>

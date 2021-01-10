@@ -7,7 +7,7 @@
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
-struct _Mix_Music;
+struct _Mix_Music;//NAMING CONVENTION NOT CHANGED BEACUSE IT WAS FROM SDL MIXER, not our code
 struct Mix_Chunk;
 
 class AudioManager : public Module
@@ -48,7 +48,7 @@ public:
 private:
 
 	_Mix_Music* music;
-	List<Mix_Chunk *> fx;
+	List<Mix_Chunk*> fx;
 };
 
 #endif // __AUDIO_H__

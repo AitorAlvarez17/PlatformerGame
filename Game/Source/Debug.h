@@ -20,7 +20,7 @@ class Debug : public Module
 {
 public:
 
-	Debug(Input* input, Collisions* collisions,App* app, ModuleUI* ui, EntityManager* entity);
+	Debug(Input* input, Collisions* collisions, App* app, ModuleUI* ui, EntityManager* entity);
 
 	// Destructor
 	virtual ~Debug();
@@ -43,7 +43,7 @@ public:
 	bool doLogic = false;
 	int bufferPlayer;
 
-	int GravBuffer;
+	int gravBuffer;
 	int frCapBuffer;
 	bool frCap = true;
 
