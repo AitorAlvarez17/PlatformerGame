@@ -44,6 +44,10 @@ public:
 	int debugCheckPoints;
 	int bufferPlayer;
 
+	int GravBuffer;
+	int frCapBuffer;
+	bool frCap = true;
+
 private:
 
 	Input* input;

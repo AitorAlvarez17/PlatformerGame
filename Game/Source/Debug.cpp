@@ -76,6 +76,10 @@ bool Debug::Update(float dt)
 	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 		collisions->DebugRequest();
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		
+	}
 	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) ui->saveCoroutine = 0;
 		
 	
