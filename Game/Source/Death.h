@@ -11,16 +11,14 @@ class Death : public Entity
 {
 public:
 
-    Death();
-    Death(iPoint origin);
+	Death();
+	Death(iPoint origin);
 
-    virtual ~Death();
+	virtual ~Death();
 
-    //ItemType SetType(ItemType type);
+	void OnCollision(Collider* c1, Collider* c2);
 
-    void OnCollision(Collider* c1, Collider* c2);
-
-    void OnCollision(Collider* c1);
+	void OnCollision(Collider* c1);
 
 
 

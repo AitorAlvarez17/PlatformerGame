@@ -4,7 +4,7 @@
 Fireball::Fireball(iPoint origin, int rang, bool dir) : Entity(EntityType::FIREBALL)
 {
 	direction = dir;
-	
+
 	//Set Properties
 	if (dir) position.x = origin.x + 64;
 	else position.x = origin.x - 32;
@@ -63,7 +63,7 @@ void Fireball::Draw(Render* render)
 
 	SDL_Rect rec = currentAnim->GetCurrentFrame();
 
-	if (direction == true) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);	
+	if (direction == true) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
 	else render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
 
 	render->DrawRectangle({ position.x,position.y, 32,32 }, { 255,255,255,255 }, true);

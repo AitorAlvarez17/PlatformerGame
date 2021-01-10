@@ -33,8 +33,6 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 	fxVolume = new GuiSlider(14, { 1280 / 2 - 600 / 2, 270, 600, 30 }, "other");
 	fxVolume->SetObserver(this);
 
-
-
 	buffer = true;
 
 	this->aud = manager;
@@ -47,7 +45,9 @@ SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManage
 }
 
 SceneGameplay::~SceneGameplay()
-{}
+{
+
+}
 
 bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 {
@@ -67,30 +67,24 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 		RELEASE_ARRAY(data);
 	}
 
-	// Load music
-	//AudioManager::PlayMusic("Assets/Audio/Music/music_spy.ogg");
-
-	// Load game entities
-	//Player* player = (Player*)entityManager->CreateEntity(EntityType::PLAYER);
-	//player->SetTexture(tex->Load("Assets/Textures/player.png"));
-	//entityManager->CreateEntity(EntityType::ENEMY);
-	//entityManager->CreateEntity(EntityType::ENEMY);
-	//entityManager->CreateEntity(EntityType::ITEM);
-	//entityManager->CreateEntity(EntityType::ITEM);
-	//entityManager->CreateEntity(EntityType::ITEM);
-	coinUi = tex->Load(PATH("Assets/Textures/Items/", "coin.png"));
+	// Background
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
+
+	// Entities
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
 	enemyText = tex->Load(PATH("Assets/Textures/Character/", "bat.png"));
 	fireballTex = tex->Load(PATH("Assets/Textures/Items/", "fireball.png"));
+	coinUi = tex->Load(PATH("Assets/Textures/Items/", "coin.png"));
+
+	//Ui
+	backgroundUi = tex->Load(PATH("Assets/Textures/UI/", "background_ui.png"));
 	playText = tex->Load(PATH("Assets/Textures/Ui/", "play.png"));
 	continueText = tex->Load(PATH("Assets/Textures/UI/", "continue.png"));
 	settingsText = tex->Load(PATH("Assets/Textures/UI/", "settings.png"));
 	title = tex->Load(PATH("Assets/Textures/UI/", "title.png"));
 	exitText = tex->Load(PATH("Assets/Textures/UI/", "exit.png"));
 	backText = tex->Load(PATH("Assets/Textures/UI/", "back.png"));
-	backgroundUi = tex->Load(PATH("Assets/Textures/UI/", "background_ui.png"));
 	habUi = tex->Load(PATH("Assets/Textures/UI/", "hab_ui.png"));
 	moneyBackgroundUi = tex->Load(PATH("Assets/Textures/UI/", "money_background_ui.png"));
 	marginsUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui.png"));
@@ -101,10 +95,11 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	cantSummonUi = tex->Load(PATH("Assets/Textures/UI/", "cant.png"));
 	saveFeedback = tex->Load(PATH("Assets/Textures/UI/", "autosave_feedback.png"));
 	x = tex->Load(PATH("Assets/Textures/UI/Details/", "money_x.png"));
+
 	wint = tex->Load(PATH("Assets/Textures/UI/", "win.png"));
 	lose = tex->Load(PATH("Assets/Textures/UI/", "lose.png"));
 
-
+	// Tp
 	tp1To2 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_2.png"));
 	tp1To3 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_3.png"));
 
@@ -117,31 +112,33 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	openPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "open_menu.png"));
 	teleportPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "teleport_menu.png"));
 
-	//NUMBERS
-
+	// Cooldown UI
 	cd1 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_1.png"));
 	cd2 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_2.png"));
 	cd3 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_3.png"));
 
-	x = tex->Load(PATH("Assets/Textures/UI/Details/", "money_x.png"));
-
+	// Weapon
 	healHab = tex->Load(PATH("Assets/Textures/UI/", "heal_gui.png"));
 	fireHab = tex->Load(PATH("Assets/Textures/UI/", "fireball_gui.png"));
+	x = tex->Load(PATH("Assets/Textures/UI/Details/", "money_x.png"));
 
 	font1Tex = tex->Load(PATH("Assets/Textures/Fonts/", "font.png"));
 
 	debugCheckPoints = 1;
-	// Initialize player
+
+	// Initialize entities
 	player = eManager->CreatePlayer(iPoint(5 * 16, 17 * 16), aud);
 	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0, map, player, aud); // ONLY ANIM = 0 for now.
-	enemy->SetTexture(enemyText);
+	// Enemies
+	enemyWalking = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0, map, player, aud); // ONLY ANIM = 0 for now.
+	enemyWalking->SetTexture(enemyText);
 
-	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0, map, player, aud); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
-	enemy2->SetTexture(playerText);
+	enemyFlying = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0, map, player, aud); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
+	enemyFlying->SetTexture(playerText);
 
+	// COINS
 	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
 	eManager->CreateItem(iPoint(820, 2124), ItemType::COIN);
 	eManager->CreateItem(iPoint(43 * 64 + 20, 30 * 64), ItemType::COIN);
@@ -152,14 +149,13 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	eManager->CreateItem(iPoint(58 * 64 + 20, 14 * 64), ItemType::COIN);
 	eManager->CreateItem(iPoint(35 * 64 + 20, 10 * 64), ItemType::COIN);
 
-
-
-
+	// TPS
 	tp = eManager->CreateTp(iPoint(456, 2176), 0);
 	tp2 = eManager->CreateTp(iPoint(3697, 31 * 64), 0);
 	tp3 = eManager->CreateTp(iPoint(960, 9 * 64), 0);
 	save = eManager->CreateSavePoint(iPoint(500, 2176));
 
+	// DEAD COLLIDERS
 	for (int i = 0; i <= 10; i++)
 	{
 		eManager->CreateDeath(iPoint(-64 - 64 * i, 39 * 64));
@@ -212,7 +208,6 @@ bool SceneGameplay::PreUpdate()
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
-	//easter egg
 
 	if (player->godMode == -1)
 		collisions->godMode = false;
@@ -293,17 +288,16 @@ bool SceneGameplay::Update(Input* input, float dt)
 			}
 		}
 
-
-		// Check if updated player position collides with next tile
-		// IMPROVEMENT: Just check adyacent tiles to player
 		if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
 		if (input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 		{
 			debugCheckPoints++;
+
 			if (debugCheckPoints > 3)
 			{
 				debugCheckPoints = 1;
 			}
+
 			DebugCheckPoints(debugCheckPoints);
 		}
 		if (input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -311,7 +305,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 			player->position.x = 384;
 			player->position.y = 2176;
 		}
-
 
 		iPoint tempPlayerPosition = player->position;
 
@@ -325,9 +318,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 						CheckCollision(map->GetTilemapRecScaled(x, y), player->GetBounds()))
 					{
 						SDL_Rect tile = map->GetTilemapRecScaled(x, y);
-
-						/*player->position = tempPlayerPosition;
-						player->vy = 0.0f;*/
 						int compY = player->position.y - tile.y;
 						int compX = player->position.x - tile.x;
 						player->floor = false;
@@ -348,21 +338,17 @@ bool SceneGameplay::Update(Input* input, float dt)
 							if (compY > 0)
 							{
 								player->position.y = player->prevPos.y;
-								//LOG("UP");
 							}
 							else
 							{
-								// Comparativa con jumping en player. nueva variable.
 								player->position.y = player->prevPos.y;
 								player->vy = 0;
 								player->floor = true;
 								player->jumps = 2;
-								//LOG("DOWN");
 							}
 							player->floor = false;
 						}
 						break;
-
 					}
 				}
 			}
@@ -371,12 +357,15 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 		if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
 		{
+			// Draw Map Colliders
 			map->drawColliders = !map->drawColliders;
-			enemy->hasPath *= -1;
-			enemy2->hasPath *= -1;
+			// DrawPath Enemies
+			enemyWalking->hasPath *= -1;
+			enemyFlying->hasPath *= -1;
 		}
 		if (input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_UP)
 		{
+			// Cap FPS to 30
 			capped *= -1;
 			if (capped > 0) app->cappedMs = 1000 / 30;
 			else app->cappedMs = 1000 / 60;
@@ -394,10 +383,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 				menu = true;
 			}
 		}
-		// L02: DONE 3: Request Load / Save when pressing L/S
-		//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) app->LoadGameRequest();
-		//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
-
 		if (input->GetKey(SDL_SCANCODE_H) == KeyState::KEY_DOWN)
 		{
 			if (player->cooldown == 3)
@@ -425,7 +410,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 		player->Update(input, dt);
 	}
-	else if(player->isDead == true)
+	else if (player->isDead == true)
 	{
 
 		if (input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
@@ -438,13 +423,12 @@ bool SceneGameplay::Update(Input* input, float dt)
 	else if (end->active == true)
 	{
 
-	if (input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
-	{
-		TransitionToScene(SceneType::TITLE);
-	}
+		if (input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
+		{
+			TransitionToScene(SceneType::TITLE);
+		}
 
 	}
-
 
 	return true;
 }
@@ -466,16 +450,15 @@ bool SceneGameplay::PostUpdate(Input* input, float dt)
 
 bool SceneGameplay::Draw(Render* render)
 {
-
-	//Draw BG
 	if (player->isDead == false && end->active == false)
 	{
+		//Draw BG
 		render->SetBackgroundColor({ 83,217,217, 1 });
 		render->DrawTexture(olympus, 0, 1900);
 		render->DrawTexture(clouds, render->camera.x, 1900);
 		render->DrawTexture(clouds, render->camera.x / 4 + 500, 1900);
-		render->DrawTexture(clouds, render->camera.x/4 + 500, 576);
-		render->DrawTexture(clouds, render->camera.x/2 + 4500, 1216);
+		render->DrawTexture(clouds, render->camera.x / 4 + 500, 576);
+		render->DrawTexture(clouds, render->camera.x / 2 + 4500, 1216);
 
 		// Draw map
 		map->Draw(render);
@@ -485,8 +468,6 @@ bool SceneGameplay::Draw(Render* render)
 		eManager->Draw(render);
 
 		player->Draw(render);
-
-
 
 		DrawHealth(render);
 		DrawMoney(render);
@@ -498,20 +479,18 @@ bool SceneGameplay::Draw(Render* render)
 		DrawMenu(render);
 
 	}
-	else if ( player->isDead == true)
+	else if (player->isDead == true)
 	{
 		SDL_Rect rec = { 0,0,1280,720 };
-		render->DrawTextTexture(1,lose, 0, 0, &rec);
+		render->DrawTextTexture(1, lose, 0, 0, &rec);
 		render->DrawText(font1, "PRESS ENTER TO CONTINUE!", 750, 500, 2, true);
 	}
 	else if (end->active == true)
 	{
 		SDL_Rect rec = { 0,0,1280,720 };
-		render->DrawTextTexture(1, wint, 0, 0, &rec);		
+		render->DrawTextTexture(1, wint, 0, 0, &rec);
 		render->DrawText(font1, "PRESS ENTER TO CONTINUE!", 750, 500, 2, true);
 	}
-	
-
 
 	return false;
 }
@@ -519,7 +498,6 @@ bool SceneGameplay::Draw(Render* render)
 bool SceneGameplay::Unload()
 {
 	// TODO: Unload all resources
-
 	eManager->CleanUp();
 
 	return false;
@@ -559,7 +537,6 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				win->ChangeFullscreen(fullscreen->checked);
 				aud->fullscreenCheck = 1;
-
 			}
 			else
 			{
@@ -577,13 +554,11 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				SDL_GL_SetSwapInterval(1);
 				aud->vsyncCheck = 1;
-				//LOG("ON");
 			}
 			else
 			{
 				SDL_GL_SetSwapInterval(0);
 				aud->vsyncCheck = 0;
-				//LOG("OFF");
 			}
 		};
 	}
@@ -617,6 +592,7 @@ bool SceneGameplay::DrawWand(Render* render)
 
 	render->DrawTexture(healHab, 510, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	render->DrawTexture(fireHab, 610, 640, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+
 	if (player->lifes == player->maxLifes)
 	{
 		if (player->delayUi < 1.0f)
@@ -707,7 +683,6 @@ bool SceneGameplay::DrawMoney(Render* render)
 		break;
 	}
 
-
 	return false;
 }
 
@@ -727,7 +702,6 @@ bool SceneGameplay::DrawHealth(Render* render)
 
 		}
 	}
-
 
 	return false;
 }

@@ -72,30 +72,7 @@ bool SceneManager::Start()
 // Called each loop iteration
 bool SceneManager::PreUpdate()
 {
-	/*
-	// L12b: Debug pathfing
-	static iPoint origin;
-	static bool originSelected = false;
 
-	int mouseX, mouseY;
-	app->input->GetMousePosition(mouseX, mouseY);
-	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-	p = app->map->WorldToMap(p.x, p.y);
-
-	if(app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if(originSelected == true)
-		{
-			app->pathFinding->CreatePath(origin, p);
-			originSelected = false;
-		}
-		else
-		{
-			origin = p;
-			originSelected = true;
-		}
-	}
-	*/
 	if (!onTransition)
 	{
 		current->PreUpdate();
@@ -108,11 +85,7 @@ bool SceneManager::Update(float dt)
 {
 	if (!onTransition)
 	{
-		
-		//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) render->camera.y -= 1;
-		//if (input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) render->camera.y += 1;
-		//if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) render->camera.x -= 1;
-		//if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) render->camera.x += 1;
+	
 
 		current->Update(input, dt);
 	}
@@ -123,7 +96,7 @@ bool SceneManager::Update(float dt)
 			transitionAlpha += (FADEOUT_TRANSITION_SPEED * dt);
 
 			// NOTE: Due to float internal representation, condition jumps on 1.0f instead of 1.05f
-			// For that reason we compare against 1.01f, to avoid last frame loading stop
+
 			if (transitionAlpha > 1.01f)
 			{
 				transitionAlpha = 1.0f;
@@ -162,21 +135,7 @@ bool SceneManager::Update(float dt)
 		render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, (unsigned char)(255.0f * transitionAlpha) });
 	}
 
-	// L12b: Debug pathfinding
-	/*
-	app->input->GetMousePosition(mouseX, mouseY);
-	iPoint p = app->render->ScreenToWorld(mouseX, mouseY);
-	p = app->map->WorldToMap(p.x, p.y);
-	p = app->map->MapToWorld(p.x, p.y);
 
-	const DynArray<iPoint>* path = app->pathFinding->GetLastPath();
-
-	for(uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(debugTex, pos.x, pos.y);
-	}
-	*/
 
 	if (current->transitionRequired)
 	{
@@ -196,8 +155,6 @@ bool SceneManager::Update(float dt)
 		current->transitionRequired = false;
 	}
 
-	
-	//if (input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && exitDemand == true) return false;
 	
 	
 	return true;
@@ -237,12 +194,10 @@ bool SceneManager::LoadState(pugi::xml_node& data)
 		
 	}
 
-	//Scene * scene;
-	//scene->TransitionToScene();
+
 	return true;
 }
 
-// L02: DONE 8: Create a method to save the state of the renderer
 // Save Game State
 bool SceneManager::SaveState(pugi::xml_node& data) const
 {

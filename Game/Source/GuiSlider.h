@@ -11,24 +11,24 @@ class GuiSlider : public GuiControl
 {
 public:
 
-    GuiSlider(uint32 id, SDL_Rect bounds, const char *text);
-    virtual ~GuiSlider();
+	GuiSlider(uint32 id, SDL_Rect bounds, const char* text);
+	virtual ~GuiSlider();
 
-    bool Start();
-    bool Update(Input* input, float dt);
-    bool Draw(Render* render);
+	bool Start();
+	bool Update(Input* input, float dt);
+	bool Draw(Render* render);
 
-    int value;
-    SDL_Rect slider;
-    int unit;
+	int value;
+	SDL_Rect slider;
+	int unit;
 private:
 
-    // GuiSlider specific properties
-    // Maybe some animation properties for state change?
+	// GuiSlider specific properties
+	// Maybe some animation properties for state change?
 
-    AudioManager * aud;
-    int minValue;
-    int maxValue;
+	AudioManager* aud;
+	int minValue;
+	int maxValue;
 
 };
 
