@@ -169,7 +169,8 @@ void Player::OnCollision(Collider* c1)
 	}
 	if (c1->type == Collider::Type::DEATH)
 	{
-		lifes--;
+		lifes = 0;
+		isDead = true;
 
 	}
 	if (c1->type == Collider::SAVEPOINT)

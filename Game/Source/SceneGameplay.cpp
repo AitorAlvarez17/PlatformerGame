@@ -156,6 +156,26 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	tp3 = eManager->CreateTp(iPoint(960, 550), 0);
 	save = eManager->CreateSavePoint(iPoint(500, 2176));
 
+	for (int i = 0; i <= 10; i++)
+	{
+		eManager->CreateDeath(iPoint(-64 - 64 * i, 39 * 64));
+	}
+
+	for (int i = 0; i <= 7; i++)
+	{
+		eManager->CreateDeath(iPoint(40*64 + 64 * i, 39 * 64));
+	}
+
+	for (int i = 0; i <= 10; i++)
+	{
+		eManager->CreateDeath(iPoint(60 * 64 + 64 * i, 39 * 64));
+	}
+
+	for (int i = 0; i <= 3; i++)
+	{
+		eManager->CreateDeath(iPoint(25 * 64 + 64 * i, 13 * 64 - 3));
+	}
+
 	font1 = new Font(font1Tex, 45, 3, 16, { 144,24 }, "0123456789.,'!´-@ABCDEFGHIJKLMNOPQRSTUVWXYZ. ");
 
 	if (app->newGame != true)

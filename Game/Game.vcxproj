@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="..\Prev Game\Game\Source\Collider.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
+    <ClCompile Include="Source\Death.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="..\Prev Game\Game\Source\Collider.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Collisions.h" />
+    <ClInclude Include="Source\Death.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
