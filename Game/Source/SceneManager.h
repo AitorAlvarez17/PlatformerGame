@@ -16,12 +16,13 @@ class EntityManager;
 class ModuleUI;
 class Collisions;
 class CheckPoints;
+class Debug;
 
 class SceneManager : public Module
 {
 public:
 
-	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll, CheckPoints* check);
+	SceneManager(Input* input, Render* render, Textures* tex, AudioManager* audio, Window* window, EntityManager* entityManager, App* app, ModuleUI* ui, Collisions* coll, CheckPoints* check, Debug* debug);
 
 	// Destructor
 	virtual ~SceneManager();
@@ -59,6 +60,7 @@ private:
 	ModuleUI* ui;
 	Collisions* collisions;
 	CheckPoints* check;
+	Debug* debug;
 public:
 	Scene* current;
 	Scene* next;
