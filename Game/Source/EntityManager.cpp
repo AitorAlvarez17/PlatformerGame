@@ -55,7 +55,6 @@ Player* EntityManager::CreatePlayer(iPoint origin)
 {
 	Player* ret = nullptr;
 
-	
 	ret = new Player(origin);
 	
 	SDL_Rect Rect;
@@ -195,6 +194,8 @@ SavePoint* EntityManager::CreateSavePoint(iPoint origin)
 	Rect.y = origin.y;
 	Rect.w = ret->width;
 	Rect.h = ret->height;
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::SAVEPOINT, this);
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{

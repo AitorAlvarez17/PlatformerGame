@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "GuiButton.h"
 #include "GuiCheckBox.h"
+#include "EntityManager.h"
 #include "Input.h"
 #include "GuiSlider.h"
 #include "App.h"
@@ -16,7 +17,7 @@ class SceneTitle : public Scene
 {
 public:
 
-    SceneTitle(AudioManager* manager, Window* window, App* app, Input* input);
+    SceneTitle(AudioManager* manager, Window* window, App* app, Input* input, EntityManager* eManager);
     virtual ~SceneTitle();
 
     bool Load(Textures* tex);
@@ -77,6 +78,7 @@ private:
     Window* win;
     App* app;
     Input* input;
+    EntityManager* eManager;
 };
 
 #endif // __SCENETITLE_H__

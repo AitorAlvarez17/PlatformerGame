@@ -155,6 +155,7 @@ bool SceneManager::Update(float dt)
 	// Draw current scene
 	current->Draw(render);
 	
+	
 	// Draw full screen rectangle in front of everything
 	if (onTransition)
 	{
@@ -186,7 +187,7 @@ bool SceneManager::Update(float dt)
 		switch (current->nextScene)
 		{
 			case SceneType::LOGO: next = new SceneLogo(); break;
-			case SceneType::TITLE: next = new SceneTitle(aud, win, app, input); break;
+			case SceneType::TITLE: next = new SceneTitle(aud, win, app, input, entityManager); break;
 			case SceneType::GAMEPLAY: next = new SceneGameplay(aud, win, entityManager, input, ui,collisions, app, check); break;
 			case SceneType::ENDING: next = new SceneEnding(); break;
 			default: break;
