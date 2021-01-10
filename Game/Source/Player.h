@@ -32,7 +32,7 @@ public:
 
     bool Update(Input* input, float dt);
 
-    bool Draw(Render* render);
+    void Draw(Render* render);
 
     void SetTexture(SDL_Texture* tex);
 

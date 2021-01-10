@@ -42,6 +42,11 @@ public:
 
     }
 
+    virtual void Draw(Render* render)
+    {
+       
+    }
+
 public:
 
     EntityType type;

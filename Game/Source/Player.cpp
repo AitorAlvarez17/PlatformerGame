@@ -101,7 +101,7 @@ bool Player::Update(Input* input, float dt)
 	return true;
 }
 
-bool Player::Draw(Render* render)
+void Player::Draw(Render* render)
 {
 	// animation state and animation frame
 	actualAnimation->Update();
@@ -125,8 +125,6 @@ bool Player::Draw(Render* render)
 
 	render->camera.x = -(int)position.x + render->camera.w / 4;
 	render->camera.y = -(int)position.y + render->camera.h / 2 + 64;
-
-	return false;
 }
 
 void Player::OnCollision(Collider* c1, Collider* c2)
