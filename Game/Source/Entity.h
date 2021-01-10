@@ -15,6 +15,8 @@ enum class EntityType
     DEATH,
     MAP,
     TP,
+    SAVEPOINT,
+
     UNKNOWN
 };
 

@@ -182,6 +182,31 @@ Tp* EntityManager::CreateTp(iPoint origin, int n)
 	return ret;
 }
 
+SavePoint* EntityManager::CreateSavePoint(iPoint origin)
+{
+	SavePoint* ret = nullptr;
+
+	ret = new SavePoint(origin);
+
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	return ret;
+}
+
 
 bool EntityManager::Update(float dt)
 {
