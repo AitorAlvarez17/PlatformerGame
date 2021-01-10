@@ -159,6 +159,47 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	return ret;
 }
 
+bool Render::DrawTextTexture(int s,SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY, SDL_RendererFlip flip) const
+{
+	bool ret = true;
+
+	SDL_Rect rect;
+
+	rect.x = x;
+	rect.y = y;
+
+	if (section != NULL)
+	{
+		rect.w = section->w;
+		rect.h = section->h;
+	}
+	else
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+
+	rect.w *= s;
+	rect.h *= s;
+
+	SDL_Point* p = NULL;
+	SDL_Point pivot;
+
+	if (pivotX != INT_MAX && pivotY != INT_MAX)
+	{
+		pivot.x = pivotX;
+		pivot.y = pivotY;
+		p = &pivot;
+	}
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
 bool Render::DrawTextureScaled(int s,SDL_Texture* texture, int x, int y, const SDL_Rect* section) const
 {
 	bool ret = true;
@@ -303,7 +344,7 @@ bool Render::DrawCircle(int x, int y, int radius, SDL_Color color) const
 	return ret;
 }
 
-bool Render::DrawText(Font* font, const char* text, int x, int y, int scale)
+bool Render::DrawText(Font* font, const char* text, int x, int y, int scale,bool freeze)
 {
 	SDL_Rect spriteRect;
 	uint len = strlen(text);
@@ -332,10 +373,21 @@ bool Render::DrawText(Font* font, const char* text, int x, int y, int scale)
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		if(i == 0)
-			DrawTextureScaled(scale,font->texture, x, y,&spriteRect);
+
+		if (freeze == false)
+		{
+			if (i == 0)
+				DrawTextureScaled(scale, font->texture, x, y, &spriteRect);
+			else
+				DrawTextureScaled(scale, font->texture, x + offset * i, y, &spriteRect);
+		}
 		else
-			DrawTextureScaled(scale, font->texture, x + offset*i, y, &spriteRect);
+		{
+			if (i == 0)
+				DrawTextTexture(scale,font->texture, x, y, &spriteRect);
+			else
+				DrawTextTexture(scale,font->texture, x + offset * i, y, &spriteRect);
+		}
 
 
 		// Advance the position where we blit the next character
