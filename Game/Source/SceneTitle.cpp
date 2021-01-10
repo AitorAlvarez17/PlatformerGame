@@ -77,7 +77,11 @@ bool SceneTitle::Load(Textures* tex)
     marginsUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui.png"));
     marginsButtonUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_button.png"));
     marginsSlidersUi = tex->Load(PATH("Assets/Textures/UI/", "margins_ui_music_and_fx.png"));
-    
+    font1Tex = tex->Load(PATH("Assets/Textures/Fonts/", "font.png"));
+
+
+    font1 = new Font(font1Tex, 45, 3, 16, { 144,24 }, "0123456789.,'!´-@ABCDEFGHIJKLMNOPQRSTUVWXYZ. ");
+
     currentAnim = &bgAnim;
     return false;
 }
@@ -161,12 +165,16 @@ bool SceneTitle::Draw(Render* render)
         //SLIDERS AND CHECK
         render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
         fullscreen->Draw(render);
+        render->DrawText(font1, "FULLSCREEN", fullscreen->bounds.x - 50, fullscreen->bounds.y - 25, 2, true);
         render->DrawRectangle({ Vsync->bounds.x - 2, Vsync->bounds.y - 2, Vsync->bounds.w + 4, Vsync->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
         Vsync->Draw(render);
+        render->DrawText(font1, "VSYNC", Vsync->bounds.x, Vsync->bounds.y - 25, 2, true);
         //SLIDERS
         music->Draw(render);
+        render->DrawText(font1, "MUSIC", music->bounds.x + (music->bounds.w / 2) - 65, music->bounds.y - 50, 3, true);
         render->DrawTexture(marginsSlidersUi, music->bounds.x - 20, music->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
         fxVolume->Draw(render);
+        render->DrawText(font1, "FX", fxVolume->bounds.x + (fxVolume->bounds.w / 2) - 25, fxVolume->bounds.y - 47, 3, true);
         render->DrawTexture(marginsSlidersUi, fxVolume->bounds.x - 20, fxVolume->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
     }
     else

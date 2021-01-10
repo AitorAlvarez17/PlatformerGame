@@ -62,6 +62,8 @@ private:
     SDL_Texture* marginsButtonUi;
     SDL_Texture* marginsSlidersUi;
 
+    SDL_Texture* font1Tex;
+    Font* font1;
 
     Animation* currentAnim = nullptr;
     Animation bgAnim;

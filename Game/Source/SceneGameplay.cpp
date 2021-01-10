@@ -350,8 +350,9 @@ bool SceneGameplay::Update(Input* input, float dt)
 		}
 		if (input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)
 		{
-			if (player->cooldown == 3)
+			if (player->firecooldown == 2)
 			{
+				player->FireballAbility();
 				fireball = eManager->CreateFireball(player->position, 5, player->isGoingRight);
 				fireball->SetTexture(fireballTex);
 
@@ -548,6 +549,17 @@ bool SceneGameplay::DrawWand(Render* render)
 		else if (player->cooldown < 3 && player->cooldown > 2)
 		{
 			render->DrawTexture(cd1, 511, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+		}
+	}
+	if (player->firecooldown < 2) // HEAL
+	{
+		if (player->firecooldown < 1)
+		{
+			render->DrawTexture(cd2, 610, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+		}
+		else if (player->firecooldown < 2 && player->firecooldown > 1)
+		{
+			render->DrawTexture(cd1, 610, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
 	}
 
