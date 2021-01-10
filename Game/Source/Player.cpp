@@ -247,9 +247,9 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 20.0f
+#define GRAVITY 9.0f
 #define PLAYER_MOVE_SPEED 256.0f
-#define PLAYER_JUMP_SPEED 240.0f
+#define PLAYER_JUMP_SPEED 350.0f
 
 
 	//Start Idle
