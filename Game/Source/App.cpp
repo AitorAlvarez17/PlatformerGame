@@ -33,8 +33,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new AudioManager();
 	collisions = new Collisions(render,tex);
 	entityManager = new EntityManager(collisions, tex);
-	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions, checkPoints);
-	debug = new Debug(input, collisions, this, ui);
+	sceneManager = new SceneManager(input, render, tex, audio, win, entityManager, this, ui,collisions, checkPoints, debug);
+	debug = new Debug(input, collisions, this, ui, entityManager);
 	checkPoints = new CheckPoints(input, render, collisions, audio, this, entityManager, ui);
 	ui = new ModuleUI(render, tex, sceneManager, entityManager);
 

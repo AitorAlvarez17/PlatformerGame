@@ -5,18 +5,22 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Collisions.h"
+#include "EntityManager.h"
 
 #include "SDL/include/SDL.h"
 
 
-Debug::Debug(Input* input, Collisions* coll, App* app, ModuleUI* ui) : Module()
+Debug::Debug(Input* input, Collisions* coll, App* app, ModuleUI* ui, EntityManager* entity) : Module()
 {
 	name.Create("debug");
 
 	this->input = input;
 	this->app = app;
 	this->ui = ui;
+	this->eManager = entity;
 	collisions = coll;
+	debugCheckPoints = 1;
+	bufferPlayer = 0;
 }
 
 // Destructor
@@ -32,6 +36,19 @@ bool Debug::Awake(pugi::xml_node& config)
 	return ret;
 }
 
+bool Debug::Start()
+{
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (eManager->entities[i] != nullptr)
+		{
+			eManager->entities[i]->type == EntityType::PLAYER;
+			bufferPlayer = i;
+		}
+	}
+
+	return true;
+}
 // Called before quitting
 bool Debug::CleanUp()
 {
@@ -42,17 +59,26 @@ bool Debug::CleanUp()
 
 bool Debug::Update(float dt)
 {
-	
+
 	if (input->GetKey(SDL_SCANCODE_F5) == KEY_REPEAT) app->SaveGameRequest();
 
 	if (input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT) app->LoadGameRequest();
+
+	if (input->GetKey(SDL_SCANCODE_F7) == KEY_REPEAT)
+	{
+		if (debugCheckPoints > 3)
+		{
+			debugCheckPoints = 1;
+		}
+		debugCheckPoints++;
+	}
 
 	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 		collisions->DebugRequest();
 
 	if (input->GetKey(SDL_SCANCODE_C) == KEY_DOWN) ui->saveCoroutine = 0;
-
-
+		
+	
 	return true;
 }
 
