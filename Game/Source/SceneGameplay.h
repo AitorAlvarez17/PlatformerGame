@@ -131,6 +131,10 @@ private:
     SDL_Texture* healthBackground;
     SDL_Texture* moneyBackgroundUi;
 
+    SDL_Texture* wint;
+    SDL_Texture* lose;
+
+
     SDL_Texture* x;
 
     SDL_Texture* cd1;

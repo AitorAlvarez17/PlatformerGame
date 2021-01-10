@@ -101,6 +101,9 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	cantSummonUi = tex->Load(PATH("Assets/Textures/UI/", "cant.png"));
 	saveFeedback = tex->Load(PATH("Assets/Textures/UI/", "autosave_feedback.png"));
 	x = tex->Load(PATH("Assets/Textures/UI/Details/", "money_x.png"));
+	wint = tex->Load(PATH("Assets/Textures/UI/", "win.png"));
+	lose = tex->Load(PATH("Assets/Textures/UI/", "lose.png"));
+
 
 	tp1To2 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_2.png"));
 	tp1To3 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_3.png"));
@@ -450,11 +453,15 @@ bool SceneGameplay::Draw(Render* render)
 	}
 	else if ( player->isDead == true)
 	{
-		render->DrawText(font1, "GAME OVER!", 325, 300, 5, true);
+		SDL_Rect rec = { 0,0,1280,720 };
+		render->DrawTextTexture(1,lose, 0, 0, &rec);
+		//render->DrawText(font1, "GAME OVER!", 325, 300, 5, true);
 	}
 	else if (end->active == true)
 	{
-		render->DrawText(font1, "YOU WIN!", 375, 320, 5, true);
+		SDL_Rect rec = { 0,0,1280,720 };
+		render->DrawTextTexture(1, wint, 0, 0, &rec);		
+		//render->DrawText(font1, "YOU WIN!", 375, 320, 5, true);
 	}
 	
 
