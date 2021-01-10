@@ -192,7 +192,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
 
-
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
 
@@ -201,8 +200,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 	PathList open;
 	PathList closed;
-
-	//PathNode originNode = PathNode(0, origin.DistanceTo(destination), origin, nullptr);
 	PathNode originNode = PathNode(0, origin.DistanceManhattan(destination), origin, nullptr);
 	open.list.Add(originNode);
 
@@ -214,16 +211,16 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		closed.list.Add(lowestScore);
 		//lowestScore.Description(lowestScore);
 
-		if (closed.list.end->data.pos == destination) // We have reached the end
+		if (closed.list.end->data.pos == destination) 
 		{
-			PathNode backtrack = closed.list.end->data;
-			lastPath.PushBack(backtrack.pos);
+			PathNode b = closed.list.end->data;
+			lastPath.PushBack(b.pos);
 
-			while (backtrack.parent != nullptr)
+			while (b.parent != nullptr)
 			{
-				if (backtrack.parent != NULL)
-					backtrack = closed.Find(backtrack.parent->pos)->data;
-				lastPath.PushBack(backtrack.pos);
+				if (b.parent != NULL)
+					b = closed.Find(b.parent->pos)->data;
+				lastPath.PushBack(b.pos);
 			}
 
 			lastPath.Flip();
@@ -240,15 +237,13 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			{
 				continue;
 			}
-			else if (open.Find(list->data.pos) != NULL) //NOT FOUND
+			else if (open.Find(list->data.pos) != NULL) 
 			{
-				/*int F = list->data.CalculateF(destination);
-				open.list.Add(list->data);*/
-				PathNode tmp = open.Find(list->data.pos)->data;
+				PathNode n = open.Find(list->data.pos)->data;
 				list->data.CalculateF(destination);
-				if (list->data.g < tmp.g)
+				if (list->data.g < n.g)
 				{
-					tmp.parent = list->data.parent;
+					n.parent = list->data.parent;
 				}
 			}
 			else
