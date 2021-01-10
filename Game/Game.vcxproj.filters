@@ -81,9 +81,6 @@
     <ClCompile Include="Source\Debug.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\Prev Game\Game\Source\Collider.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Collisions.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -106,6 +103,9 @@
       <Filter>Entities</Filter>
     </ClCompile>
     <ClCompile Include="Source\Win.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collider.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
@@ -228,9 +228,6 @@
     <ClInclude Include="Source\Debug.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Prev Game\Game\Source\Collider.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Collisions.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -253,6 +250,9 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Win.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collider.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
