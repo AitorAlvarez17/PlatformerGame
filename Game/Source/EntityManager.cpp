@@ -266,6 +266,33 @@ Death* EntityManager::CreateDeath(iPoint origin)
 	return ret;
 }
 
+Win* EntityManager::CreateWin(iPoint origin)
+{
+	Win* ret = nullptr;
+
+	ret = new Win(origin);
+
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::WIN, this);
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	return ret;
+}
+
 bool EntityManager::Update(float dt)
 {
 	accumulatedTime += dt;

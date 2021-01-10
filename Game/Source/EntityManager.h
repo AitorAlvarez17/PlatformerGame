@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Item.h"
 #include "Enemy.h"
+#include "Win.h"
 #include "Fireball.h"
 #include "Player.h"
 #include "Collisions.h"
@@ -42,6 +43,7 @@ public:
 	Item* CreateItem(iPoint origin,ItemType iType);
 	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer);
 	Death* CreateDeath(iPoint origin);
+	Win* CreateWin(iPoint origin);
 	Tp* CreateTp(iPoint origin, int n);
 	SavePoint* CreateSavePoint(iPoint origin);
 	Fireball* CreateFireball(iPoint origin, int range, bool dir);
