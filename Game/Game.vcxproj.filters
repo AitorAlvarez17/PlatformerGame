@@ -105,6 +105,9 @@
     <ClCompile Include="Source\Death.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Win.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -247,6 +250,9 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Death.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Win.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>

@@ -62,8 +62,6 @@ Player* EntityManager::CreatePlayer(iPoint origin)
 	Rect.y = origin.y;
 	Rect.w = ret->width;
 	Rect.h = ret->height;
-
-	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::PLAYER, this);
 	
 	ret->lifes = 3;
 
@@ -168,6 +166,9 @@ Tp* EntityManager::CreateTp(iPoint origin, int n)
 	Rect.y = origin.y;
 	Rect.w = ret->width;
 	Rect.h = ret->height;
+
+	ret->texture = tex->Load("Assets/Textures/Maps/token_tp.png");
+
 
 	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::TP, this);
 
@@ -327,6 +328,12 @@ bool EntityManager::Draw(Render * render)
 		if (entities[i] != nullptr && entities[i]->type == EntityType::FIREBALL)
 		{
 			entities[i]->Draw(render);
+		}
+		if (entities[i] != nullptr && entities[i]->type == EntityType::TP)
+		{
+			SDL_Rect rec = { 0,0,32,32 };
+			render->DrawTextureScaled(2, entities[i]->texture, entities[i]->position.x, entities[i]->position.y, &rec);
+
 		}
 
 	}
