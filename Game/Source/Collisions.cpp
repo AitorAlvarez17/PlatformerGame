@@ -284,62 +284,50 @@ void Collisions::DebugDraw()
 			break;
 
 		case Collider::Type::FLOOR:
-			//render->DrawRectangle(colliders[i]->rect, { 0, 255, 0, 255 });
 
 			break;
 		case Collider::Type::PLAYER:
-		//	render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, 255 });
-			//render->DrawRectangleCam(colliders[i]->rect, { 0, 0, 255, 255 },true);
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,64,64 }, { 255,0,0,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,64,64 }, { 0,0,255,255 }, true);
 			break;
 		case Collider::Type::DEATH:
-			//render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 204,0,0,255 }, true);
 
 			break;
 		case Collider::Type::COIN:
 		{
 			SDL_Rect rec = { 0,0,32,32 };
 
-			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h}, { 255,255,255,255 }, true);
-			render->DrawTextureScaled(1,collTex, colliders[i]->rect.x, colliders[i]->rect.y , &rec);
+			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h}, { 255,204,0,255 }, true);
 			break;
 		}
-
-
 		case Collider::Type::HEART:
-			render->DrawRectangle(colliders[i]->rect, { 0, 255, 253, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,102,255 }, true);
 
 			break;
 		case Collider::Type::TP:
-		//	render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 204,102,255,255 }, true);
 
 			break;
 		case Collider::Type::SAVEPOINT:
-			//render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 51,102,255,255 }, true);
 
 			break;
 		case Collider::Type::ENEMY:
-			//render->DrawRectangleScaled(1,colliders[i]->rect, { 247, 0, 255, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,0,255 }, true);
 
 			break;
-		case Collider::Type::ENEMYWALL:
-			//render->DrawRectangle(colliders[i]->rect, { 247, 0, 255, 255 });
 
 			break;
 		case Collider::Type::ENDLEVEL:
-			//render->DrawRectangle(colliders[i]->rect, { 255, 0, 255, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 102,255,51,255 }, true);
 
 			break;
 		case Collider::Type::FIREBALL:
-		//	render->DrawRectangle(colliders[i]->rect, { 255, 127, 80, 255 });
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,102,0,255 }, true);
 
 			break;
-
 		}
-
-
 	}
-
 }
 
 void Collisions::DebugRequest() {

@@ -88,7 +88,7 @@ bool Player::Update(Input* input, float dt)
 	cooldown += dt;
 	delayUi += dt;
 
-	LOG("%f", delayUi);
+	
 	if (cooldown > 3.0f)
 		cooldown = 3.0f;
 
@@ -146,7 +146,26 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 void Player::OnCollision(Collider* c1)
 {
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
+	if (c1->type == Collider::Type::HEART)
+	{
+		lifes++;
 
+	}
+	if (c1->type == Collider::Type::COIN)
+	{
+		coins++;
+
+	}
+	if (c1->type == Collider::Type::ENEMY)
+	{
+		lifes--;
+
+	}
+	if (c1->type == Collider::Type::DEATH)
+	{
+		lifes--;
+
+	}
 
 
 
