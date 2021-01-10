@@ -20,7 +20,6 @@ struct Collider
 		TP,
 		SAVEPOINT,
 		ENEMY,
-		ENEMYWALL,
 		ENDLEVEL,
 		FIREBALL,
 		

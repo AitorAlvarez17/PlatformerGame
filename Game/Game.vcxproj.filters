@@ -81,9 +81,6 @@
     <ClCompile Include="Source\Debug.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Wand.cpp">
-      <Filter>Entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\Prev Game\Game\Source\Collider.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
@@ -95,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="Source\ModuleUI.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Fireball.cpp">
+      <Filter>Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +216,6 @@
     <ClInclude Include="Source\Debug.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Wand.h">
-      <Filter>Entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\Prev Game\Game\Source\Collider.h">
       <Filter>Entities</Filter>
     </ClInclude>
@@ -230,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Source\ModuleUI.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fireball.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

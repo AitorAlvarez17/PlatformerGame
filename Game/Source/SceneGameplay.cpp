@@ -307,8 +307,6 @@ bool SceneGameplay::Draw(Render* render)
 	enemy->Draw(render);
 	enemy2->Draw(render);
 
-	collisions->Draw(render);
-
 
 	DrawMenu(render);
 	DrawHealth(render);
