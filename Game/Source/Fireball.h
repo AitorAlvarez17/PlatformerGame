@@ -19,11 +19,10 @@ public:
 
     bool Load(Textures* tex);
 
-    bool Draw(Render* render);
+    void Draw(Render* render);
 
-    void Ability();
+    void SetTexture(SDL_Texture* tex);
 
-    void Attack();
 
 public:
 

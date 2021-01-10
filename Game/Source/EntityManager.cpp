@@ -262,6 +262,12 @@ bool EntityManager::Draw(Render * render)
 			SDL_Rect rec = { 0,0,32,32 };
 			render->DrawTextureScaled(1, entities[i]->texture, entities[i]->position.x, entities[i]->position.y, &rec);
 		}
+		
+		if (entities[i] != nullptr && entities[i]->type == EntityType::ENEMY)
+		{
+			entities[i]->Draw(render);
+		}
+	
 	}
 
 	return true;

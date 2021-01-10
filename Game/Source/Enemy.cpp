@@ -93,7 +93,7 @@ void Enemy::UpdateLogic(float dt)
 
 }
 
-bool Enemy::Draw(Render* render)
+void Enemy::Draw(Render* render)
 {
 	// animation state and animation frame
 	actualAnimation->Update();
@@ -109,9 +109,6 @@ bool Enemy::Draw(Render* render)
 	if (hasPath > 0)
 		ePath->DrawPath(render, newPath);
 
-
-
-	return false;
 }
 
 void Enemy::OnCollision(Collider* c1, Collider* c2)
