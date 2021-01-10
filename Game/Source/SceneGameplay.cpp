@@ -186,176 +186,188 @@ bool SceneGameplay::PreUpdate()
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
-	if (player->position.x > tp->position.x && player->position.x < tp->position.x + tp->width)
+	if (player->isDead == false)
 	{
-		player->onArea1 = true;
-		player->outArea = false;
-	}
-	else
-	{
-		player->onArea1 = false;
-	}
-	if (player->position.x > tp2->position.x && player->position.x < tp2->position.x + tp2->width)
-	{
-		player->onArea2 = true;
-		player->outArea = false;
-	}
-	else
-	{
-		player->onArea2 = false;
-	}
-	if (player->position.x > tp3->position.x && player->position.x < tp3->position.x + tp3->width)
-	{
-		player->onArea3 = true;
-		player->outArea = false;
-	}
-	else
-	{
-		player->onArea3 = false;
-	}
-
-	//SET THE SETTINGS TO THE SAME ONES AS MENU
-	if (settings && buffer)
-	{
-		music->slider.x = ((aud->volumeMusic * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
-		fxVolume->slider.x = ((aud->volumeFx * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
-		if (aud->fullscreenCheck)
+		if (player->position.x > tp->position.x && player->position.x < tp->position.x + tp->width)
 		{
-			fullscreen->checked = true;
-		}
-		else if (aud->fullscreenCheck == 0)
-		{
-			fullscreen->checked = false;
-		}
-		if (aud->vsyncCheck)
-		{
-			Vsync->checked = true;
-		}
-		else if (aud->fullscreenCheck == 0)
-		{
-			Vsync->checked = false;
-		}
-		buffer = 0;
-	}
-	//-----------
-	if (menu)
-	{
-		if (settings == 0 && credits == 0)
-		{
-			btnResume->Update(input, dt);
-			btnSettings->Update(input, dt);
-			btnBackToTitle->Update(input, dt);
-			btnExit->Update(input, dt);
-			btnBack->Update(input, dt);
+			player->onArea1 = true;
+			player->outArea = false;
 		}
 		else
 		{
-			btnBack->Update(input, dt);
-			fullscreen->Update(input, dt);
-			Vsync->Update(input, dt);
-			music->Update(input, dt);
-			fxVolume->Update(input, dt);
+			player->onArea1 = false;
 		}
-	}
-
-
-	// Check if updated player position collides with next tile
-	// IMPROVEMENT: Just check adyacent tiles to player
-	if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
-
-	iPoint tempPlayerPosition = player->position;
-
-	if (player->godMode < 0)
-	{
-		for (int y = 0; y < map->data.height; y++)
+		if (player->position.x > tp2->position.x && player->position.x < tp2->position.x + tp2->width)
 		{
-			for (int x = 0; x < map->data.width; x++)
+			player->onArea2 = true;
+			player->outArea = false;
+		}
+		else
+		{
+			player->onArea2 = false;
+		}
+		if (player->position.x > tp3->position.x && player->position.x < tp3->position.x + tp3->width)
+		{
+			player->onArea3 = true;
+			player->outArea = false;
+		}
+		else
+		{
+			player->onArea3 = false;
+		}
+
+		//SET THE SETTINGS TO THE SAME ONES AS MENU
+		if (settings && buffer)
+		{
+			music->slider.x = ((aud->volumeMusic * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
+			fxVolume->slider.x = ((aud->volumeFx * music->bounds.w / 100) + music->bounds.x) - music->bounds.w / 100;
+			if (aud->fullscreenCheck)
 			{
-				if ((map->data.layers[2]->Get(x, y) >= 65) &&
-					CheckCollision(map->GetTilemapRecScaled(x, y), player->GetBounds()))
-				{
-					SDL_Rect tile = map->GetTilemapRecScaled(x, y);
-
-					/*player->position = tempPlayerPosition;
-					player->vy = 0.0f;*/
-					int compY = player->position.y - tile.y;
-					int compX = player->position.x - tile.x;
-					bool floor = false;
-
-					if (std::abs(compY) < std::abs(compX))
-					{
-						if (compX > 0) {
-							player->position.x = player->prevPos.x;
-
-						}
-						else
-						{
-							player->position.x = player->prevPos.x;
-						}
-					}
-					else
-					{
-						if (compY > 0)
-						{
-							player->position.y = player->prevPos.y;
-							//LOG("UP");
-						}
-						else
-						{
-							// Comparativa con jumping en player. nueva variable.
-
-							player->position.y = player->prevPos.y;
-							player->vy = 0;
-							//LOG("DOWN");
-						}
-					}
-					break;
-				}
+				fullscreen->checked = true;
+			}
+			else if (aud->fullscreenCheck == 0)
+			{
+				fullscreen->checked = false;
+			}
+			if (aud->vsyncCheck)
+			{
+				Vsync->checked = true;
+			}
+			else if (aud->fullscreenCheck == 0)
+			{
+				Vsync->checked = false;
+			}
+			buffer = 0;
+		}
+		//-----------
+		if (menu)
+		{
+			if (settings == 0 && credits == 0)
+			{
+				btnResume->Update(input, dt);
+				btnSettings->Update(input, dt);
+				btnBackToTitle->Update(input, dt);
+				btnExit->Update(input, dt);
+				btnBack->Update(input, dt);
+			}
+			else
+			{
+				btnBack->Update(input, dt);
+				fullscreen->Update(input, dt);
+				Vsync->Update(input, dt);
+				music->Update(input, dt);
+				fxVolume->Update(input, dt);
 			}
 		}
 
-	}
 
-	if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
-	{
-		map->drawColliders = !map->drawColliders;
-		enemy->hasPath *= -1;
-		enemy2->hasPath *= -1;
-	}
+		// Check if updated player position collides with next tile
+		// IMPROVEMENT: Just check adyacent tiles to player
+		if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
 
-	if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
-	{
-		if (menu == true)
+		iPoint tempPlayerPosition = player->position;
+
+		if (player->godMode < 0)
 		{
-			menu = false;
+			for (int y = 0; y < map->data.height; y++)
+			{
+				for (int x = 0; x < map->data.width; x++)
+				{
+					if ((map->data.layers[2]->Get(x, y) >= 65) &&
+						CheckCollision(map->GetTilemapRecScaled(x, y), player->GetBounds()))
+					{
+						SDL_Rect tile = map->GetTilemapRecScaled(x, y);
+
+						/*player->position = tempPlayerPosition;
+						player->vy = 0.0f;*/
+						int compY = player->position.y - tile.y;
+						int compX = player->position.x - tile.x;
+						bool floor = false;
+
+						if (std::abs(compY) < std::abs(compX))
+						{
+							if (compX > 0) {
+								player->position.x = player->prevPos.x;
+
+							}
+							else
+							{
+								player->position.x = player->prevPos.x;
+							}
+						}
+						else
+						{
+							if (compY > 0)
+							{
+								player->position.y = player->prevPos.y;
+								//LOG("UP");
+							}
+							else
+							{
+								// Comparativa con jumping en player. nueva variable.
+
+								player->position.y = player->prevPos.y;
+								player->vy = 0;
+								//LOG("DOWN");
+							}
+						}
+						break;
+					}
+				}
+			}
 
 		}
-		else
-		{
-			menu = true;
-		}
-	}
-	// L02: DONE 3: Request Load / Save when pressing L/S
-	//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) app->LoadGameRequest();
-	//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
 
-	if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
-	{
-		if (player->cooldown == 3)
+		if (input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_UP)
 		{
-			player->HealAbility();
+			map->drawColliders = !map->drawColliders;
+			enemy->hasPath *= -1;
+			enemy2->hasPath *= -1;
 		}
-	}
-	if (input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)
-	{
-		if (player->cooldown == 3)
-		{
-			fireball = eManager->CreateFireball(player->position, 200, player->isGoingRight);
-			fireball->SetTexture(fireballTex);
 
+		if (input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
+		{
+			if (menu == true)
+			{
+				menu = false;
+
+			}
+			else
+			{
+				menu = true;
+			}
 		}
+		// L02: DONE 3: Request Load / Save when pressing L/S
+		//if (input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) app->LoadGameRequest();
+		//if (input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) app->SaveGameRequest();
+
+		if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+		{
+			if (player->cooldown == 3)
+			{
+				player->HealAbility();
+			}
+		}
+		if (input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)
+		{
+			if (player->cooldown == 3)
+			{
+				fireball = eManager->CreateFireball(player->position, 5, player->isGoingRight);
+				fireball->SetTexture(fireballTex);
+
+			}
+		}
+		player->Update(input, dt);
 	}
-	player->Update(input, dt);
+	else
+	{
+
+		if (input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
+		{
+			TransitionToScene(SceneType::TITLE);
+		}
+
+	}
 
 
 	return true;
@@ -380,29 +392,37 @@ bool SceneGameplay::Draw(Render* render)
 {
 
 	//Draw BG
-	render->SetBackgroundColor({ 83,217,217, 1 });
-	render->DrawTexture(olympus, 0, 1900);
-	render->DrawTexture(clouds, render->camera.x, 1900);
+	if (player->isDead == false)
+	{
+		render->SetBackgroundColor({ 83,217,217, 1 });
+		render->DrawTexture(olympus, 0, 1900);
+		render->DrawTexture(clouds, render->camera.x, 1900);
 
-	// Draw map
-	map->Draw(render);
+		// Draw map
+		map->Draw(render);
 
-	collisions->Draw(render);
+		collisions->Draw(render);
 
-	eManager->Draw(render);
+		eManager->Draw(render);
 
-	player->Draw(render);
+		player->Draw(render);
 
-	
-	
-	DrawMenu(render);
-	DrawHealth(render);
-	DrawMoney(render);
-	DrawWand(render);
-	DrawTp(render);
 
-	render->DrawText(font1, "HOLA 12", 600, 2050, 4,false);
-	render->DrawText(font1, "ADIOS .", 100, 100, 3, true);
+
+		DrawMenu(render);
+		DrawHealth(render);
+		DrawMoney(render);
+		DrawWand(render);
+		DrawTp(render);
+
+		render->DrawText(font1, "HOLA 12", 600, 2050, 4, false);
+		render->DrawText(font1, "ADIOS .", 100, 100, 3, true);
+	}
+	else
+	{
+		render->DrawText(font1, "ADIOS .", 500, 200, 5, true);
+	}
+
 
 	return false;
 }
