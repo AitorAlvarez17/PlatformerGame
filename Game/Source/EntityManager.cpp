@@ -51,11 +51,11 @@ bool EntityManager::CleanUp()
 }
 
 
-Player* EntityManager::CreatePlayer(iPoint origin)
+Player* EntityManager::CreatePlayer(iPoint origin, AudioManager* manager)
 {
 	Player* ret = nullptr;
 
-	ret = new Player(origin);
+	ret = new Player(origin, manager);
 	
 	SDL_Rect Rect;
 	Rect.x = origin.x;
