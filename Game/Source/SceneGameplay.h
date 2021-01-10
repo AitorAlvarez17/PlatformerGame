@@ -18,6 +18,7 @@
 #include "Collisions.h"
 #include "ModuleUI.h"
 #include "CheckPoints.h"
+#include "Font.h"
 
 class SceneGameplay : public Scene
 {
@@ -143,6 +144,9 @@ private:
     SDL_Texture* cd3;
 
     SDL_Texture* number;
+
+    SDL_Texture* font1Tex;
+    Font* font1;
 
     int coins;
 

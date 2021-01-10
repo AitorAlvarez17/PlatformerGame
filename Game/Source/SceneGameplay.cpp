@@ -134,6 +134,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	healHab = tex->Load(PATH("Assets/Textures/UI/", "heal_gui.png"));
 	fireHab = tex->Load(PATH("Assets/Textures/UI/", "fireball_gui.png"));
 
+	font1Tex = tex->Load(PATH("Assets/Textures/Fonts/", "font.png"));
+
 
 	// Initialize player
 	player = eManager->CreatePlayer(iPoint(5 * 16, 17 * 16));
@@ -153,6 +155,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	tp2 = eManager->CreateTp(iPoint(3697, 1974), 0);
 	tp3 = eManager->CreateTp(iPoint(960, 550), 0);
 	save = eManager->CreateSavePoint(iPoint(500, 2176));
+
+	font1 = new Font(font1Tex, 45, 3, 16, { 144,24 }, "0123456789.,'!´-@ABCDEFGHIJKLMNOPQRSTUVWXYZ. ");
 
 	if (app->newGame != true)
 	{
@@ -391,13 +395,15 @@ bool SceneGameplay::Draw(Render* render)
 
 	player->Draw(render);
 
-
+	
 	
 	DrawMenu(render);
 	DrawHealth(render);
 	DrawMoney(render);
 	DrawWand(render);
 	DrawTp(render);
+
+	render->DrawText(font1, "HOLA 12", 600, 2050, 3);
 
 	return false;
 }
