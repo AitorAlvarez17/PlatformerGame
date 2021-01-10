@@ -131,7 +131,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Player 1: 0, Player 2: 2, Player 3: 4... + 2
 	enemy2->SetTexture(playerText);
 
-	eManager->CreateItem(iPoint(768, 2124), ItemType::COIN);
+	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
+	eManager->CreateItem(iPoint(820, 2124), ItemType::COIN);
 
 	if (app->newGame != true)
 	{
