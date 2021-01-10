@@ -202,6 +202,9 @@ bool SceneGameplay::PreUpdate()
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
+	//easter egg
+	if (player->position.x == 384) aud->PlayFx(11, 0);
+
 	if (player->godMode == -1)
 		collisions->godMode = false;
 	if (player->godMode != -1)
