@@ -4,8 +4,8 @@ Tp::Tp(iPoint origin, int n) : Entity(EntityType::TP)
 {
 	position = origin;
 	//set the width and the height to the requested value depending on the item etc...
-	width = 32;
-	height = 32;
+	width = 64;
+	height = 64;
 
 	tpIndex = n;
 
