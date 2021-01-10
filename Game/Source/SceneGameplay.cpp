@@ -213,7 +213,6 @@ bool SceneGameplay::PreUpdate()
 bool SceneGameplay::Update(Input* input, float dt)
 {
 	//easter egg
-	if (player->position.x == 384) aud->PlayFx(11, 0);
 
 	if (player->godMode == -1)
 		collisions->godMode = false;
@@ -399,6 +398,9 @@ bool SceneGameplay::Update(Input* input, float dt)
 			}
 			else aud->PlayFx(9, 0);
 		}
+		if (input->GetKey(SDL_SCANCODE_P))
+			aud->PlayFx(11, 0);
+
 		player->Update(input, dt);
 	}
 	else if(player->isDead == true)
