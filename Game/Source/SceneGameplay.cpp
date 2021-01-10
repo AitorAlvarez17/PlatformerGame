@@ -464,13 +464,13 @@ bool SceneGameplay::Draw(Render* render)
 	{
 		SDL_Rect rec = { 0,0,1280,720 };
 		render->DrawTextTexture(1,lose, 0, 0, &rec);
-		//render->DrawText(font1, "GAME OVER!", 325, 300, 5, true);
+		render->DrawText(font1, "PRESS ENTER TO CONTINUE!", 750, 500, 2, true);
 	}
 	else if (end->active == true)
 	{
 		SDL_Rect rec = { 0,0,1280,720 };
 		render->DrawTextTexture(1, wint, 0, 0, &rec);		
-		//render->DrawText(font1, "YOU WIN!", 375, 320, 5, true);
+		render->DrawText(font1, "PRESS ENTER TO CONTINUE!", 750, 500, 2, true);
 	}
 	
 
