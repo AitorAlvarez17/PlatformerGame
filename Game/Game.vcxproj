@@ -122,6 +122,7 @@
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\CheckPoints.cpp" />
     <ClCompile Include="Source\Tp.cpp" />
+    <ClCompile Include="Source\Win.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="..\Prev Game\Game\Source\Collider.h" />
     <ClInclude Include="Source\Animation.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\CheckPoints.h" />
     <ClInclude Include="Source\Tp.h" />
+    <ClInclude Include="Source\Win.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />
     <ClInclude Include="Source\List.h" />
