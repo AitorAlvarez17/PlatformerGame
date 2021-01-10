@@ -132,7 +132,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 
 	// Initialize player
-	player = eManager->CreatePlayer(iPoint(5 * 16, 17 * 16));
+	player = eManager->CreatePlayer(iPoint(5 * 16, 17 * 16), aud);
 	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 

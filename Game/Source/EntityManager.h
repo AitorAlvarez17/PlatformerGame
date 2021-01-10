@@ -39,7 +39,7 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Player* CreatePlayer(iPoint origin);
+	Player* CreatePlayer(iPoint origin, AudioManager* manager);
 	Item* CreateItem(iPoint origin,ItemType iType);
 	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager);
 	Death* CreateDeath(iPoint origin);

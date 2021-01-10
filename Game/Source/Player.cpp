@@ -4,8 +4,9 @@
 #include "Log.h"
 
 #define PIXELS 32
-Player::Player(iPoint origin) : Entity(EntityType::PLAYER)
+Player::Player(iPoint origin, AudioManager* manager) : Entity(EntityType::PLAYER)
 {
+	aud = manager;
 	delayUi = 2.0f;
 	position = origin;
 	vy = 200.0f;
@@ -20,8 +21,6 @@ Player::Player(iPoint origin) : Entity(EntityType::PLAYER)
 	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 
 	/*hitbox = Collisions::AddCollider(size, Collider::Type::PLAYER,this);*/
-
-
 
 	// Define Player animations
 	idleAnimL.GenerateAnimation({ 0,192,32,32 }, 0, 3, 0, 0);
@@ -85,7 +84,10 @@ bool Player::Update(Input* input, float dt)
 
 
 	if (lifes == 0)
+	{
 		isDead = true;
+		aud->PlayFx(2, 0);
+	}
 
 	if (hitted)
 		hitCooldown += dt;
@@ -259,6 +261,7 @@ void Player::FixedUpdate(Input* input, float dt)
 		{
 			if (jumps > 0)
 			{
+				aud->PlayFx(6, 0);
 				floor = false;
 				jumps--;
 				vy += -PLAYER_JUMP_SPEED;

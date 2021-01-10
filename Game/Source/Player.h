@@ -28,7 +28,7 @@ class Player: public Entity
 {
 public:
 
-    Player(iPoint origin);
+    Player(iPoint origin, AudioManager* manager);
 
     bool Update(Input* input, float dt);
 
@@ -70,6 +70,7 @@ public:
     Animation deadAnimR;
     Animation deadAnimL;
 
+    AudioManager* aud;
 public:
 
     SDL_Texture* texture;   // Player spritesheet
