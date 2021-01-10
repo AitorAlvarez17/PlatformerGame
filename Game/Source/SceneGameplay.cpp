@@ -326,6 +326,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 								player->position.y = player->prevPos.y;
 								player->vy = 0;
+								player->jumps = 2;
 								//LOG("DOWN");
 							}
 						}
