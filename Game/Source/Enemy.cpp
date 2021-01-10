@@ -38,7 +38,6 @@ bool Enemy::Update(float dt)
 	}
 
 	hitbox->rect = { position.x,position.y,width,height };
-
 	return true;
 }
 
