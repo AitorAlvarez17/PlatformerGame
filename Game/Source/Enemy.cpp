@@ -12,6 +12,7 @@ Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Playe
 	map = eMap;
 	position = origin;
 	lifes = life;
+	spawnPos.y = origin.y;
 	this->eType = type;
 	//set the width and the height to the requested value depending on the Enemy etc...
 
@@ -39,11 +40,48 @@ bool Enemy::Update(float dt)
 		pendingToDelete = true;
 	}
 
-	UpdatePath(map, player, dt);
+	//Path Limits
+	if (eType == EnemyType::WALKING)
+	{
+		if (player->position.y > 2240)
+		{
+			return true;
+		}
+		if (spawnPos.y > 1344 && player->position.y < 1344)
+		{
+			pendingToDelete = true;
+			return true;
+		}
+		if (spawnPos.y > 1344 && player->position.x > 3000)
+		{
+			position = spawnPos;
+		}
+		else { UpdatePath(map, player, dt); }
+	}
+
+	if (eType == EnemyType::FLYING)
+	{
+		if (player->position.y > 2240)
+		{
+			return true;
+		}
+		if (spawnPos.y > 1344 && player->position.y < 1344)
+		{
+			pendingToDelete = true;
+			return true;
+		}
+		if (spawnPos.y > 1344 && player->position.x > 3000)
+		{
+			position.x -= 1 * dt;
+		}
+		else { UpdatePath(map, player, dt); }
+	}
+
+
 	hitbox->rect = { position.x,position.y,width,height };
-	
+
 	return true;
-	
+
 }
 
 void Enemy::UpdateLogic(float dt)
@@ -110,7 +148,7 @@ void Enemy::Draw(Render* render)
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
 	if (eType == EnemyType::WALKING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
-	if (eType == EnemyType::FLYING) render->DrawTextureScaled(2, texture, position.x , position.y, &rec);
+	if (eType == EnemyType::FLYING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
 
 
 	//ender->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
@@ -268,7 +306,7 @@ void Enemy::SetAnim(int i)
 		deadAnimR.GenerateAnimation({ 576,0 + (32 * (i + 1)),32,32 }, 0, 0, 0, 0);
 		deadAnimR.loop = false;
 
-		actualAnimation = &attackAnimR;
+		actualAnimation = &idleAnimL;
 		break;
 	}
 	case EnemyType::FLYING:
@@ -306,12 +344,13 @@ void Enemy::SetTexture(SDL_Texture* tex)
 
 bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 {
+
 	ePath->lastPath.Clear();
 
 	iPoint d = { (int)player->position.x ,(int)player->position.y };
 	d = map->WorldToMap(d.x, d.y);
 
-	iPoint o = map->WorldToMap(GetBounds().x , GetBounds().y);
+	iPoint o = map->WorldToMap(GetBounds().x, GetBounds().y);
 	ePath->CreatePath(o, d);
 
 	newPath.Clear();
@@ -331,6 +370,7 @@ bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 		if (newPath.Count() >= 9)
 		{
 			newPath.Clear();
+			ePath->lastPath.Clear();
 			UpdateAnim(EnemyState::IDLE);
 			return true;
 
@@ -356,6 +396,7 @@ bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 		if (c > 14)
 		{
 			newPath.Clear();
+			ePath->lastPath.Clear();
 			UpdateAnim(EnemyState::IDLE);
 			return true;
 		}
@@ -372,33 +413,33 @@ bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 
 				if (pos.x < nextPos.x)
 				{
-				/*	goingRight = false;
-					UpdateAnim(EnemyState::WALK);
-					UpdateLogic(dt);*/
-					position.x -= 1* dt;
+					/*	goingRight = false;
+						UpdateAnim(EnemyState::WALK);
+						UpdateLogic(dt);*/
+					position.x -= 1 * dt;
 
 				}
-				 else if (pos.x > nextPos.x)
+				else if (pos.x > nextPos.x)
 				{
-				/*	goingRight = true;
-					UpdateAnim(EnemyState::WALK);
-					UpdateLogic(dt);*/
-					position.x += 60* dt;
+					/*	goingRight = true;
+						UpdateAnim(EnemyState::WALK);
+						UpdateLogic(dt);*/
+					position.x += 60 * dt;
 				}
 				else if (pos.y < nextPos.y)
 				{
-				/*	goingDown = true;
-					UpdateAnim(EnemyState::WALK);
-					UpdateLogic(dt);*/
-				
+					/*	goingDown = true;
+						UpdateAnim(EnemyState::WALK);
+						UpdateLogic(dt);*/
+
 					position.y -= 60 * dt;
 				}
 				else if (pos.y > nextPos.y)
 				{
-			/*	goingDown = false;
-					UpdateAnim(EnemyState::WALK);
-					UpdateLogic(dt);*/
-   					position.y += 60 * dt;
+					/*	goingDown = false;
+							UpdateAnim(EnemyState::WALK);
+							UpdateLogic(dt);*/
+					position.y += 60 * dt;
 				}
 			}
 

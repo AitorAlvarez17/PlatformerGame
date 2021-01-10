@@ -112,7 +112,7 @@ private:
 	int counter = 0;
 	bool goingRight = false;
 	bool goingDown = false;
-
+	iPoint spawnPos;
 };
 
 #endif // __ENEMY_H__
