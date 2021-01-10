@@ -248,6 +248,8 @@ void Player::FixedUpdate(Input* input, float dt)
 			position.x -= PLAYER_MOVE_SPEED * dt;
 			isGoingRight = false;
 			UpdateAnim(currentAnim, WALK);
+			aud->PlayFx(4, 0);
+
 
 		}
 		if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -255,17 +257,19 @@ void Player::FixedUpdate(Input* input, float dt)
 			position.x += PLAYER_MOVE_SPEED * dt;
 			isGoingRight = true;
 			UpdateAnim(currentAnim, WALK);
+			aud->PlayFx(4, 0);
 
 		}
 		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			if (jumps > 0)
 			{
-				aud->PlayFx(6, 0);
 				floor = false;
 				jumps--;
 				vy += -PLAYER_JUMP_SPEED;
 				UpdateAnim(currentAnim, JUMP);
+				aud->PlayFx(6, 0);
+
 			}
 
 		}

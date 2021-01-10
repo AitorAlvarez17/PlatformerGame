@@ -55,15 +55,16 @@ bool AudioManager::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	LoadFx(PATH("Assets/Audio/Fx/", "auto_save_feedback.ogg"));//1
+	LoadFx(PATH("Assets/Audio/Fx/", "auto_save.ogg"));//1
 	LoadFx(PATH("Assets/Audio/Fx/", "dying.ogg"));//2
 	LoadFx(PATH("Assets/Audio/Fx/", "fireball.ogg"));//3
-	LoadFx(PATH("Assets/Audio/Fx/", "footsteps_feedback.ogg"));//4
-	LoadFx(PATH("Assets/Audio/Fx/", "health_feedback.ogg"));//5
+	LoadFx(PATH("Assets/Audio/Fx/", "footsteps.ogg"));//4
+	LoadFx(PATH("Assets/Audio/Fx/", "health.ogg"));//5
 	LoadFx(PATH("Assets/Audio/Fx/", "jump.ogg"));//6
-	LoadFx(PATH("Assets/Audio/Fx/", "money_till_i_die.ogg"));//7
+	LoadFx(PATH("Assets/Audio/Fx/", "coin.ogg"));//7
 	LoadFx(PATH("Assets/Audio/Fx/", "select_menu.ogg"));//8
 	LoadFx(PATH("Assets/Audio/Fx/", "cooldown.ogg"));//9
+	LoadFx(PATH("Assets/Audio/Fx/", "win.ogg"));//10
 
 	return ret;
 }
