@@ -5,9 +5,11 @@
 #define DEFAULT_PATH_LENGTH 50
 #define PIXELS 32
 
-Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim) : Entity(EntityType::ENEMY)
+Enemy::Enemy(iPoint origin, EnemyType type, int life, int anim, Map* eMap, Player* ePlayer) : Entity(EntityType::ENEMY)
 {
 	// path = PathFinding::GetInstance()->CreatePath(iPoint(0, 0), iPoint(0, 0));
+	player = ePlayer;
+	map = eMap;
 	position = origin;
 	lifes = life;
 	this->eType = type;
@@ -37,8 +39,11 @@ bool Enemy::Update(float dt)
 		pendingToDelete = true;
 	}
 
+	UpdatePath(map, player, dt);
 	hitbox->rect = { position.x,position.y,width,height };
+	
 	return true;
+	
 }
 
 void Enemy::UpdateLogic(float dt)
@@ -299,7 +304,7 @@ void Enemy::SetTexture(SDL_Texture* tex)
 	texture = tex;
 }
 
-void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
+bool Enemy::UpdatePath(Map* map, Player* player, float dt)
 {
 	ePath->lastPath.Clear();
 
@@ -323,11 +328,11 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	case EnemyType::WALKING:
 	{
 		//LOGIC
-		if (newPath.Count() > 9)
+		if (newPath.Count() >= 9)
 		{
 			newPath.Clear();
 			UpdateAnim(EnemyState::IDLE);
-			UpdateLogic(dt);
+			return true;
 
 		}
 		else if (player->position.x > position.x)
@@ -348,14 +353,12 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	{
 		//LOGIC
 		int c = newPath.Count() - 1;
-		//if (c > 14)
-		//{
-		//	newPath.Clear();
-		//	UpdateAnim(EnemyState::IDLE);
-		//	UpdateLogic(dt);
-		//	break;
-
-		//}
+		if (c > 14)
+		{
+			newPath.Clear();
+			UpdateAnim(EnemyState::IDLE);
+			return true;
+		}
 		if (c < 14)
 		{
 			iPoint pos;
@@ -412,7 +415,7 @@ void Enemy::UpdatePath(Map* map, Input* input, Player* player, float dt)
 	default:
 		break;
 	}
-
+	return true;
 
 }
 void Enemy::DrawPath()
