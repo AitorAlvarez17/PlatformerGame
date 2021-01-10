@@ -144,6 +144,16 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
 	eManager->CreateItem(iPoint(820, 2124), ItemType::COIN);
+	eManager->CreateItem(iPoint(43 * 64 + 20, 30 * 64), ItemType::COIN);
+	eManager->CreateItem(iPoint(57 * 64 + 20, 27 * 64), ItemType::COIN);
+	eManager->CreateItem(iPoint(52 * 64 + 20, 24 * 64), ItemType::COIN);
+	eManager->CreateItem(iPoint(58 * 64 + 20, 20 * 64), ItemType::COIN);
+	eManager->CreateItem(iPoint(52 * 64 + 20, 17 * 64), ItemType::COIN);
+	eManager->CreateItem(iPoint(58 * 64 + 20, 14 * 64), ItemType::COIN);
+	eManager->CreateItem(iPoint(35 * 64 + 20, 10 * 64), ItemType::COIN);
+
+
+
 
 	tp = eManager->CreateTp(iPoint(456, 2176), 0);
 	tp2 = eManager->CreateTp(iPoint(3697, 31 * 64), 0);
