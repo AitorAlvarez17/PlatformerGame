@@ -98,7 +98,7 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 
 	if (iType == ItemType::COIN)
 	{	
-		ret->texture = tex->Load("Assets/Textures/Items/cherry.png");
+		ret->texture = tex->Load("Assets/Textures/Items/coin.png");
 
 		ret->hitbox = collisions->AddCollider(Rect, Collider::Type::COIN, this);
 
@@ -106,6 +106,9 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 
 	if (iType == ItemType::HEART)
 	{
+		ret->texture = tex->Load("Assets/Textures/Items/heart.png");
+
+
 		ret->hitbox = collisions->AddCollider(Rect, Collider::Type::HEART, this);
 
 	}
