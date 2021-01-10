@@ -6,29 +6,34 @@ We are Nirvana team and this is our 2D platformer video game prototype made by s
  ![](Screenshots/ingame.png)
  
 ## Key Features
- - Load/Save game state using XML file
- - Tiled TMX map loading and drawing (orthographic)
- - Map collisions detection (platforms)
- - Map navigation: player movement and jumping
- - Ending screen (on dying)
- - Title screen (press ENTER to start)
- - Player walk/jump/die animations
- - Ending screen (on dying)
- - Logo screen
- - Frame Time Control
- - Deltatime on Move
- - Destrucible Enemies (WIP).
- - Game Items: Health / Lives
- - Collectable Items: Coins / Hearts
+ - Load/Save game state using XML file.
+ - Tiled TMX map loading and drawing (orthographic).
+ - Map collisions detection (platforms).
+ - Map navigation: player movement and jumping.
+ - Ending screen (on dying).
+ - Title screen (press ENTER to start).
+ - Player walk/jump/die animations.
+ - 1 second invulnerability frame.
+ - Heal and Fireball player abilities.
+ - Ending screen (on dying).
+ - Win screen on winning.
+ - Logo screen.
+ - Frame Time Control.
+ - Deltatime on Move.
+ - Destrucible Enemies.
+ - Game Items: Health / Lives.
+ - Collectable Items: Coins / Hearts.
  - Double jump.
- - Frame Time Control
+ - Frame Time Control.
  - Checkpoints autosaves the game
  - Checkpoints Teleports
  - Player Weapon
- - Cooldown Skills included on Player Weapon
+ - Cooldown Skills.
  - Audio Feedback
  - Entity system already implemented, used to create all the objects and enemies as well as the firebolt, but we are having some trouble with this last one's collider.
  - Level 2 is already created and implemented but still too buggy, so we decided not to give access to it just yet.
+ - Visual full GUI with information.
+ - Functional GUI with settings, continue, play, exit and credits.
 
  
 ## Controls
@@ -37,8 +42,8 @@ We are Nirvana team and this is our 2D platformer video game prototype made by s
  - Weapon: Mouse Right Click to change a coin with an extra live. Limited to 5.
  - E: Open teleport menu and Arrows to move arround. Press T to telepor to the selected location.
  - SPACE for jumping
- - Left mouse click to fire a fireball, no collider yet, but implemented.
- - Right click to use the healing ability, it gives you one heart.
+ - H to heal the player, it has cooldown.
+ - Jto shoot a fire ball, it also has cooldown
  - F1/F2 Start from the first/second level.
  - F3 Start from the beginning of the current level.
  - F5 Save the current game state.
