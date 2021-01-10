@@ -13,26 +13,27 @@ class Fireball : public Entity
 {
 public:
 
-    Fireball(iPoint origin, bool isRight);
+    Fireball(iPoint origin, bool dir); // Right = true, Left = false.
 
-    bool Update(float dt, Input* input);
-
-    bool Load(Textures* tex);
+    bool Update(float dt);
 
     void Draw(Render* render);
 
     void SetTexture(SDL_Texture* tex);
 
+    void OnCollision(Collider* c1, Collider* c2);
 
-public:
+    void OnCollision(Collider* c1);
 
-    //WandProperties
-    float abilityCool = 0.0f;
-    float attackCool = 0.0f;
+private:
 
-    int lifes;
-    int maxLifes;
+    //Animation
+    Animation* currentAnim;
 
-    bool isGoingRight = true;
+    Animation rightAnim;
+    Animation leftAnim;
+
+    //Properties
+    bool direction = false; 
 };
 #endif // __WAND_H__
