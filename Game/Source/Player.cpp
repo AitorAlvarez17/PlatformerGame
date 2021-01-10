@@ -80,6 +80,8 @@ bool Player::Update(Input* input, float dt)
 
 	cooldown += dt;
 	delayUi += dt;
+	firecooldown += dt;
+
 
 	if (lifes == 0)
 		isDead = true;
@@ -95,6 +97,9 @@ bool Player::Update(Input* input, float dt)
 	
 	if (cooldown > 3.0f)
 		cooldown = 3.0f;
+
+	if (firecooldown > 2.0f)
+		firecooldown = 2.0f;
 
 	if (delayUi > 1.0f)
 		delayUi = 1.0f;
@@ -204,7 +209,7 @@ void Player::HealAbility()
 
 void Player::FireballAbility()
 {
-	
+	firecooldown = 0;
 }
 
 void Player::SetTexture(SDL_Texture* tex)
