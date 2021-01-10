@@ -52,7 +52,7 @@ public:
 
     bool CleanUp();
 
-    void DebugCheckPoints();
+    void DebugCheckPoints(int debug);
 
     bool OnGuiMouseClickEvent(GuiControl* control);
 
@@ -151,7 +151,7 @@ private:
     Font* font1;
 
     int coins;
-
+    int debugCheckPoints;
 
     GuiCheckBox* fullscreen;
     GuiCheckBox* Vsync;

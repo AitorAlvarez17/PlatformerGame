@@ -79,20 +79,20 @@ public:
     PlayerAnim currentAnim = PlayerAnim::IDLE;//diferentiate --- THIS IS THE STATE!
     Animation* actualAnimation = nullptr;//diferentiate --- THIS IS THE ANIMATION!!
 
-
-    iPoint prevPos;
-    int preCalc;
-    int maxLifes = 4;
     //PlayerProperties
+    iPoint prevPos;
+
+    int maxLifes = 4;
     int jumps = 2;
     float delayUi = 2;
     int lifes = 3;
     int coins = 0;;
-    float vy = 0.0f;
+    int vy = 0;
     int max = 0;
+
     float cooldown;
     float hitCooldown;
-    float firecooldown;
+    float fireCooldown;
 
     int godMode = -1;
     int tpIndex;
@@ -112,8 +112,6 @@ public:
     bool outArea;
 
     bool isGoingRight = false;
-
- 
 
 };
 
