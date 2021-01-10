@@ -7,16 +7,17 @@ class SceneEnding : public Scene
 {
 public:
 
-    SceneEnding();
-    virtual ~SceneEnding();
+	SceneEnding();
 
-    bool Load(Textures* tex);
+	virtual ~SceneEnding();
 
-    bool Update(Input* input, float dt);
+	bool Load(Textures* tex);
 
-    bool Draw(Render* render);
+	bool Update(Input* input, float dt);
 
-    bool Unload();
+	bool Draw(Render* render);
+
+	bool Unload();
 
 private:
 };
