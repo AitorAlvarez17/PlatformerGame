@@ -1,9 +1,11 @@
-# THE TEMPLE
+# TEMPLARIA
 
+
+ ![](Screenshots/ingame.png)
+ 
 ## Description
 
-We are Nirvana team and this is our 2D platformer video game prototype made by students from the CITM University on Barcelona. It is developed in c++ on visual studio using SDL library. Hope you enjoy it!
- ![](Screenshots/ingame.png)
+ We are team Nirvana and this is our 2D platformer video game prototype made by students from the CITM University on Barcelona. It is developed in c++ on visual studio using SDL library. Hope you enjoy it!
  
 ## Key Features
  - Load/Save game state using XML file.
