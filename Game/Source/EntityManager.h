@@ -8,6 +8,7 @@
 #include "Fireball.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "Death.h"
 #include "SavePoint.h"
 
 #include "List.h"
@@ -40,6 +41,7 @@ public:
 	Player* CreatePlayer(iPoint origin);
 	Item* CreateItem(iPoint origin,ItemType iType);
 	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer);
+	Death* CreateDeath(iPoint origin);
 	Tp* CreateTp(iPoint origin, int n);
 	SavePoint* CreateSavePoint(iPoint origin);
 	Fireball* CreateFireball(iPoint origin, int range, bool dir);
