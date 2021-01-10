@@ -5,14 +5,13 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Window.h"
-#include "App.h"
-
 #include "EntityManager.h"
+#include "App.h"
 #include "Log.h"
 #include "SDL/include/SDL.h"
 
 
-SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app, Input* input)
+SceneTitle::SceneTitle(AudioManager* manager, Window* window, App* app, Input* input, EntityManager* eManager)
 {
     // GUI: Initialize required controls for the screen
     btnStart = new GuiButton(1, { 1280/2 - 300/2, 80, 300, 80 }, "START");
