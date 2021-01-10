@@ -100,8 +100,8 @@ bool Enemy::Draw(Render* render)
 
 	SDL_Rect rec = actualAnimation->GetCurrentFrame();
 
-	if (eType == EnemyType::WALKING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
-	if (eType == EnemyType::FLYING) render->DrawTextureScaled(2, texture, position.x, position.y, &rec);
+	if (eType == EnemyType::WALKING) render->DrawTextureScaled(4, texture, position.x, position.y, &rec);
+	if (eType == EnemyType::FLYING) render->DrawTextureScaled(4, texture, position.x, position.y, &rec);
 
 
 	render->DrawRectangleScaled(1, GetBounds(), { 255, 255, 255, 255 }, true);
