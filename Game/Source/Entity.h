@@ -14,6 +14,7 @@ enum class EntityType
     ITEM,   //coin o lo que sea, se cambaiara en el momento.
     DEATH,
     MAP,
+    FIREBALL,
     TP,
     SAVEPOINT,
 
