@@ -101,10 +101,12 @@ public:
 	CheckPoints* checkPoints;
 
 	mutable bool firstSaved = false;
+	bool newGame;
 
 private:
 
 	pugi::xml_document saveGame;
+	pugi::xml_document save;
 	pugi::xml_node saveState;
 	pugi::xml_node rend;//load the render
 	pugi::xml_node inp;//load the input
@@ -117,6 +119,7 @@ private:
 
 	int argc;
 	char** args;
+	
 	SString title;
 	SString organization;
 

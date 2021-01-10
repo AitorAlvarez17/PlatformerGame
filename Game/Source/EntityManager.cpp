@@ -39,10 +39,12 @@ bool EntityManager::CleanUp()
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
-		entities[i]->hitbox->pendingToDelete = true;
-		delete entities[i];
-		entities[i] = nullptr;
-
+		if (entities[i] != nullptr)
+		{
+			entities[i]->hitbox->pendingToDelete = true;
+			delete entities[i];
+			entities[i] = nullptr;
+		}
 	}
 
 	return true;
@@ -248,13 +250,13 @@ bool EntityManager::LoadState(pugi::xml_node& data)
 {
 	LOG(" Entity loaded");
 
-	entities[0]->position.x = data.child("player").attribute("position.x").as_float();
-	entities[0]->position.y = data.child("player").attribute("position.y").as_float();
+	entities[0]->position.x = data.child("player").attribute("position.x").as_int();
+	entities[0]->position.y = data.child("player").attribute("position.y").as_int();
 	entities[0]->lifes = data.child("player").attribute("lifes").as_int();
 	entities[0]->cooldown = data.child("player").attribute("cooldown").as_float();
 	entities[0]->godMode = data.child("player").attribute("godMode").as_int();
-	entities[1]->position.x = data.child("enemy").attribute("position.x").as_float();
-	entities[1]->position.y = data.child("enemy").attribute("position.y").as_float();
+	entities[1]->position.x = data.child("enemy").attribute("position.x").as_int();
+	entities[1]->position.y = data.child("enemy").attribute("position.y").as_int();
 
 	return true;
 }

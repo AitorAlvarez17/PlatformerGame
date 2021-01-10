@@ -71,7 +71,6 @@ bool ModuleUI::Load(Textures* tex)
 {
 	//background_ui = tex->Load(PATH("Assets/Textures/", "hab_ui.png"));
 	//hab_ui = tex->Load(PATH("Assets/Textures/", "background_ui.png"));
-	save_feedback = tex->Load(PATH("Assets/Textures/UI/", "autosave_feedback.png"));
 
 	cd1 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_1.png"));
 	cd2 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_2.png"));
@@ -86,7 +85,6 @@ bool ModuleUI::Load(Textures* tex)
 
 bool ModuleUI::Draw(Render* render)
 {
-	render->DrawTexture(save_feedback, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	//render->DrawTexture(background_ui, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 	//render->DrawTexture(hab_ui, 490, 560, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 

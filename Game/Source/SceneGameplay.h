@@ -13,14 +13,16 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Item.h"
+#include "App.h"
 #include "Collisions.h"
 #include "ModuleUI.h"
+#include "CheckPoints.h"
 
 class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll);
+    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -50,6 +52,8 @@ private:
     EntityManager* eManager;
     PathFinding* path;
     Collisions* collisions;
+    App* app;
+    CheckPoints* check;
     
     SDL_Rect camera;
 
@@ -87,6 +91,7 @@ private:
     SDL_Texture* fireHab;
     SDL_Texture* hearth;
     SDL_Texture* cantSummonUi;
+    SDL_Texture* save_feedback;
    
 
     SDL_Texture* healthBackground;

@@ -87,7 +87,6 @@ public:
     float vy = 0.0f;
     int max = 0;
     float cooldown;
-    float saveCoroutine;
     
     int godMode = -1;
 
