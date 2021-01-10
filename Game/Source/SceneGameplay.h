@@ -18,13 +18,14 @@
 #include "Collisions.h"
 #include "ModuleUI.h"
 #include "CheckPoints.h"
+#include "Debug.h"
 #include "Font.h"
 
 class SceneGameplay : public Scene
 {
 public:
 
-    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check);
+    SceneGameplay(AudioManager* manager, Window* win, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check, Debug* debug);
     virtual ~SceneGameplay();
 
     bool Load(Textures* tex);
@@ -51,6 +52,8 @@ public:
 
     bool CleanUp();
 
+    void DebugCheckPoints();
+
     bool OnGuiMouseClickEvent(GuiControl* control);
 
 private:
@@ -69,6 +72,7 @@ private:
     Tp* tp2;
     Tp* tp3;
     SavePoint* save;
+    Debug* debug;
     
     SDL_Rect camera;
 
