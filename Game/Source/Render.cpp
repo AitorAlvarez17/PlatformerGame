@@ -303,9 +303,38 @@ bool Render::DrawCircle(int x, int y, int radius, SDL_Color color) const
 	return ret;
 }
 
-bool Render::DrawText(Font font, const char* text, int x, int y, int size, int spacing, SDL_Color tint)
+bool Render::DrawText(Font* font, const char* text, int x, int y, int scale)
 {
+	SDL_Rect spriteRect;
+	uint len = strlen(text);
 
+	spriteRect.w = font->charW;
+	spriteRect.h = font->charH;
+
+	for (uint i = 0; i < len; ++i)
+	{
+		// TODO 2: Find the character in the table and its position in the texture, then Blit
+		uint charIndex = 0;
+
+		// Find the location of the current character in the lookup table
+		for (uint j = 0; j < font->totalLength; ++j)
+		{
+			if (font->table[j] == text[i])
+			{
+				charIndex = j;
+				break;
+			}
+		}
+
+		// Retrieve the position of the current character in the sprite
+		spriteRect.x = spriteRect.w * (charIndex % font->columns);
+		spriteRect.y = spriteRect.h * (charIndex / font->columns);
+
+		DrawTextureScaled(scale,font->texture, x, y,&spriteRect);
+
+		// Advance the position where we blit the next character
+		x += spriteRect.w;
+	}
 
 	return false;
 }
