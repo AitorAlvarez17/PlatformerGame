@@ -107,7 +107,8 @@ private:
     SDL_Texture* fireHab;
     SDL_Texture* hearth;
     SDL_Texture* cantSummonUi;
-    SDL_Texture* save_feedback;
+    SDL_Texture* saveFeedback;
+    SDL_Texture* coinUi;
 
     SDL_Texture* renderedOption;
 
@@ -129,16 +130,6 @@ private:
     SDL_Texture* healthBackground;
     SDL_Texture* moneyBackgroundUi;
 
-    SDL_Texture* zero;
-    SDL_Texture* one;
-    SDL_Texture* two;
-    SDL_Texture* three;
-    SDL_Texture* four;
-    SDL_Texture* five;
-    SDL_Texture* six;
-    SDL_Texture* seven;
-    SDL_Texture* eight;
-    SDL_Texture* nine;
     SDL_Texture* x;
 
     SDL_Texture* cd1;

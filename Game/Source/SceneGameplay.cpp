@@ -78,7 +78,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
 	//entityManager->CreateEntity(EntityType::ITEM);
-
+	coinUi = tex->Load(PATH("Assets/Textures/Items/", "coin.png"));
 	olympus = tex->Load(PATH("Assets/Textures/Maps/", "olympus.png"));
 	clouds = tex->Load(PATH("Assets/Textures/Maps/", "clouds.png"));
 	playerText = tex->Load(PATH("Assets/Textures/Character/", "players.png"));
@@ -99,6 +99,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	hearth = tex->Load(PATH("Assets/Textures/UI/", "hearth_ui.png"));
 	healthBackground = tex->Load(PATH("Assets/Textures/UI/", "health_background.png"));
 	cantSummonUi = tex->Load(PATH("Assets/Textures/UI/", "cant.png"));
+	saveFeedback = tex->Load(PATH("Assets/Textures/UI/", "autosave_feedback.png"));
+	x = tex->Load(PATH("Assets/Textures/UI/Details/", "money_x.png"));
 
 	tp1To2 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_2.png"));
 	tp1To3 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_3.png"));
@@ -112,24 +114,13 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	openPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "open_menu.png"));
 	teleportPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "teleport_menu.png"));
 	
-	save_feedback = tex->Load(PATH("Assets/Textures/UI/", "autosave_feedback.png"));
 	//NUMBERS
-	zero = tex->Load(PATH("Assets/Textures/UI/Numbers/", "0.png"));
-	one = tex->Load(PATH("Assets/Textures/UI/Numbers/", "1.png"));
-	two = tex->Load(PATH("Assets/Textures/UI/Numbers/", "2.png"));
-	three = tex->Load(PATH("Assets/Textures/UI/Numbers/", "3.png"));
-	four = tex->Load(PATH("Assets/Textures/UI/Numbers/", "4.png"));
-	five = tex->Load(PATH("Assets/Textures/UI/Numbers/", "5.png"));
-	six = tex->Load(PATH("Assets/Textures/UI/Numbers/", "6.png"));
-	seven = tex->Load(PATH("Assets/Textures/UI/Numbers/", "7.png"));
-	eight = tex->Load(PATH("Assets/Textures/UI/Numbers/", "8.png"));
-	nine = tex->Load(PATH("Assets/Textures/UI/Numbers/", "9.png"));
 
 	cd1 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_1.png"));
 	cd2 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_2.png"));
 	cd3 = tex->Load(PATH("Assets/Textures/UI/", "cooldown_3.png"));
 
-	x = tex->Load(PATH("Assets/Textures/UI/Numbers/", "money_x.png"));
+	x = tex->Load(PATH("Assets/Textures/UI/Details/", "money_x.png"));
 
 	healHab = tex->Load(PATH("Assets/Textures/UI/", "heal_gui.png"));
 	fireHab = tex->Load(PATH("Assets/Textures/UI/", "fireball_gui.png"));
@@ -441,8 +432,8 @@ bool SceneGameplay::Draw(Render* render)
 		DrawWand(render);
 		DrawTp(render);
 
-		render->DrawText(font1, "HOLA 12", 600, 2050, 4, false);
-		render->DrawText(font1, "ADIOS .", 100, 100, 3, true);
+		render->DrawText(font1, "WELCOME TO TEMPLARIA!", 620, 2150, 2, false);
+		
 	}
 	else
 	{
@@ -593,42 +584,56 @@ bool SceneGameplay::DrawWand(Render* render)
 
 bool SceneGameplay::DrawMoney(Render* render)
 {
-	switch (coins)
+
+	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTextTexture(3,coinUi, 1170, 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	switch (player->coins)
 	{
+	case 0:
+		render->DrawText(font1, "0", 1185, 98, 4, true);
+
+		break;
 	case 1:
-		number = one;
+		render->DrawText(font1, "1", 1185, 98, 4, true);
+		
 		break;
 	case 2:
-		number = two;
+		render->DrawText(font1, "2", 1185, 98, 3, true);
+		
 		break;
 	case 3:
-		number = three;
+		render->DrawText(font1, "3", 1185, 98, 3, true);
+		
 		break;
 	case 4:
-		number = four;
+		render->DrawText(font1, "4", 1185, 98, 3, true);
+		
 		break;
 	case 5:
-		number = five;
+		render->DrawText(font1, "5", 1185, 98, 3, true);
+		
 		break;
 	case 6:
-		number = six;
+		render->DrawText(font1, "6", 1185, 98, 3, true);
+		
 		break;
 	case 7:
-		number = seven;
+		render->DrawText(font1, "7", 1185, 98, 3, true);
+		
 		break;
 	case 8:
-		number = eight;
+		render->DrawText(font1, "8", 1185, 98, 3, true);
 		break;
 	case 9:
-		number = nine;
+		render->DrawText(font1, "9", 1185, 98, 3, true);
+		
 		break;
 	default:
-		number = zero;
+		render->DrawText(font1, "10", 1185, 98, 3, true);
+		
 		break;
 	}
-	render->DrawTexture(moneyBackgroundUi, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(number, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
-	render->DrawTexture(x, 1150, 0, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 
 
 	return false;
