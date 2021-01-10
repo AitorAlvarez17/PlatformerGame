@@ -91,7 +91,8 @@ public:
     int max = 0;
     float cooldown;
     float hitCooldown;
-    
+    float firecooldown;
+
     int godMode = -1;
     int tpIndex;
 
