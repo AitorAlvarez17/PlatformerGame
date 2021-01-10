@@ -35,7 +35,15 @@ bool EntityManager::Awake(pugi::xml_node& config)
 // Called before quitting
 bool EntityManager::CleanUp()
 {
-	if (!active) return true;
+	/*if (!active) return true;*/
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		entities[i]->hitbox->pendingToDelete = true;
+		delete entities[i];
+		entities[i] = nullptr;
+
+	}
 
 	return true;
 }
