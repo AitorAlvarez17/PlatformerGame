@@ -143,8 +143,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	eManager->CreateItem(iPoint(820, 2124), ItemType::COIN);
 
 	tp = eManager->CreateTp(iPoint(456, 2176), 0);
-	tp2 = eManager->CreateTp(iPoint(3697, 1974), 0);
-	tp3 = eManager->CreateTp(iPoint(960, 550), 0);
+	tp2 = eManager->CreateTp(iPoint(3697, 31 * 64), 0);
+	tp3 = eManager->CreateTp(iPoint(960, 9 * 64), 0);
 	save = eManager->CreateSavePoint(iPoint(500, 2176));
 
 	for (int i = 0; i <= 10; i++)
@@ -176,6 +176,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 			app->LoadGameRequest();
 		}
 	}
+	end = eManager->CreateWin({ 1 * 64,8 * 68 });
+
 	app->newGame = false;
 
 	return false;
@@ -202,7 +204,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 	if (player->godMode != -1)
 		collisions->godMode = true;
 
-	if (player->isDead == false)
+	if (player->isDead == false && end->active == false)
 	{
 		if (player->position.x > tp->position.x && player->position.x < tp->position.x + tp->width)
 		{
@@ -324,6 +326,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 
 								player->position.y = player->prevPos.y;
 								player->vy = 0;
+								player->jumps = 2;
 								//LOG("DOWN");
 							}
 						}
@@ -381,13 +384,23 @@ bool SceneGameplay::Update(Input* input, float dt)
 		}
 		player->Update(input, dt);
 	}
-	else
+	else if(player->isDead == true)
 	{
 
 		if (input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
 		{
 			TransitionToScene(SceneType::TITLE);
 		}
+
+	}
+
+	else if (end->active == true)
+	{
+
+	if (input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
+	{
+		TransitionToScene(SceneType::TITLE);
+	}
 
 	}
 
@@ -414,7 +427,7 @@ bool SceneGameplay::Draw(Render* render)
 {
 
 	//Draw BG
-	if (player->isDead == false)
+	if (player->isDead == false && end->active == false)
 	{
 		render->SetBackgroundColor({ 83,217,217, 1 });
 		render->DrawTexture(olympus, 0, 1900);
@@ -443,10 +456,15 @@ bool SceneGameplay::Draw(Render* render)
 		render->DrawText(font1, "WELCOME TO TEMPLARIA!", 620, 2150, 2, false);
 
 	}
-	else
+	else if ( player->isDead == true)
 	{
-		render->DrawText(font1, "ADIOS .", 500, 200, 5, true);
+		render->DrawText(font1, "GAME OVER!", 325, 300, 5, true);
 	}
+	else if (end->active == true)
+	{
+		render->DrawText(font1, "YOU WIN!", 375, 320, 5, true);
+	}
+	
 
 
 	return false;
