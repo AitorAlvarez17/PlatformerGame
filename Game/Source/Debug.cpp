@@ -19,7 +19,6 @@ Debug::Debug(Input* input, Collisions* coll, App* app, ModuleUI* ui, EntityManag
 	this->ui = ui;
 	this->eManager = entity;
 	collisions = coll;
-	debugCheckPoints = 1;
 	bufferPlayer = 0;
 }
 
@@ -63,15 +62,6 @@ bool Debug::Update(float dt)
 	if (input->GetKey(SDL_SCANCODE_F5) == KEY_REPEAT) app->SaveGameRequest();
 
 	if (input->GetKey(SDL_SCANCODE_F6) == KEY_REPEAT) app->LoadGameRequest();
-
-	if (input->GetKey(SDL_SCANCODE_F7) == KEY_REPEAT)
-	{
-		if (debugCheckPoints > 3)
-		{
-			debugCheckPoints = 1;
-		}
-		debugCheckPoints++;
-	}
 
 	if (input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) 
 		collisions->DebugRequest();

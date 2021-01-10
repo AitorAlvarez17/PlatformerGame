@@ -41,7 +41,6 @@ public:
 	float accumulatedTime = 0.0f;
 	float updateMsCycle = 0.0f;
 	bool doLogic = false;
-	int debugCheckPoints;
 	int bufferPlayer;
 
 	int GravBuffer;
