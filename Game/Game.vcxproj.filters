@@ -96,6 +96,9 @@
     <ClCompile Include="Source\ModuleUI.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Tp.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App.h" />
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="Source\ModuleUI.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tp.h">
+      <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

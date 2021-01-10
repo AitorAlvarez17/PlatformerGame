@@ -154,6 +154,31 @@ Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int 
 	return ret;
 }
 
+Tp* EntityManager::CreateTp(iPoint origin, int n)
+{
+	Tp* ret = nullptr;
+
+	ret = new Tp(origin, n);
+
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	return ret;
+}
+
 
 bool EntityManager::Update(float dt)
 {

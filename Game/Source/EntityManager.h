@@ -9,6 +9,7 @@
 #include "Collisions.h"
 
 #include "List.h"
+#include "Tp.h"
 
 #define MAX_ENTITIES 100
 
@@ -37,6 +38,7 @@ public:
 	Player* CreatePlayer(iPoint origin);
 	Item* CreateItem(iPoint origin,ItemType iType);
 	Enemy* CreateEnemy(iPoint origin, EnemyType eType, int life, int anim);
+	Tp* CreateTp(iPoint origin, int n);
 
 	void OnCollision(Collider* a, Collider* b);
 
