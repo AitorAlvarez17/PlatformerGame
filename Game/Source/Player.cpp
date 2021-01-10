@@ -81,6 +81,17 @@ bool Player::Update(Input* input, float dt)
 	cooldown += dt;
 	delayUi += dt;
 
+	if (lifes == 0)
+		isDead = true;
+
+	if (hitted)
+		hitCooldown += dt;
+
+	if (hitCooldown >= 1.0f)
+	{
+		hitted = false;
+		hitCooldown = 0;
+	}
 	
 	if (cooldown > 3.0f)
 		cooldown = 3.0f;
@@ -149,7 +160,11 @@ void Player::OnCollision(Collider* c1)
 	}
 	if (c1->type == Collider::Type::ENEMY)
 	{
-		lifes--;
+
+		if(hitted == false)
+			lifes--;
+
+		hitted = true;
 
 	}
 	if (c1->type == Collider::Type::DEATH)

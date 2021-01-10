@@ -65,6 +65,7 @@ Player* EntityManager::CreatePlayer(iPoint origin)
 
 	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::PLAYER, this);
 	
+	ret->lifes = 3;
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{

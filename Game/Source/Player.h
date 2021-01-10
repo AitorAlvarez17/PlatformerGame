@@ -90,6 +90,7 @@ public:
     float vy = 0.0f;
     int max = 0;
     float cooldown;
+    float hitCooldown;
     
     int godMode = -1;
     int tpIndex;
@@ -97,6 +98,8 @@ public:
     bool onColl = false;
     bool onTp = true;
     bool mapOpen = false;
+    bool hitted = false;
+    bool isDead = false;
 
     int tpCounter = 1;
 
