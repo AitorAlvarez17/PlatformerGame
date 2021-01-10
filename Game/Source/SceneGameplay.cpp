@@ -142,10 +142,10 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	player->position = iPoint(384, 2176);
 	player->SetTexture(playerText);
 
-	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0); // ONLY ANIM = 0 for now.
+	enemy = eManager->CreateEnemy(iPoint(1407, 1920), EnemyType::FLYING, 2, 0, map, player); // ONLY ANIM = 0 for now.
 	enemy->SetTexture(enemyText);
 
-	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
+	enemy2 = eManager->CreateEnemy(iPoint(1407, 2176), EnemyType::WALKING, 2, 0, map, player); // Enemy 1: 0, Enemy 2: 2, Enemy 3: 4... + 2
 	enemy2->SetTexture(playerText);
 
 	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
@@ -357,8 +357,6 @@ bool SceneGameplay::Update(Input* input, float dt)
 	}
 	player->Update(input, dt);
 
-	enemy->UpdatePath(map, input, player, dt);
-	enemy2->UpdatePath(map, input, player, dt);
 
 	return true;
 }

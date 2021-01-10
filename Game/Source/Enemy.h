@@ -9,6 +9,7 @@
 #include "SString.h"
 #include "Render.h"
 #include "Player.h"
+#include "Map.h"
 
 #include "Pathfinding.h"
 
@@ -36,7 +37,7 @@ class Enemy : public Entity
 public:
 
 	Enemy();
-	Enemy(iPoint origin, EnemyType type, int life, int anim);
+	Enemy(iPoint origin, EnemyType type, int life, int anim, Map* emap, Player* ePlayer);
 
 	virtual ~Enemy();
 
@@ -48,7 +49,7 @@ public:
 
 	void SetTexture(SDL_Texture* tex);
 
-	void UpdatePath(Map* map, Input* input, Player* player, float dt);
+	bool UpdatePath(Map* map, Player* player, float dt);
 
 	void DrawPath();
 
@@ -75,6 +76,9 @@ public:
 	Animation* actualAnimation = nullptr;
 
 	int hasPath = -1;
+
+	Map* map;
+	Player* player;
 private:
 
 	//Animations
