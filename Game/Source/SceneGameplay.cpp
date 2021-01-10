@@ -359,8 +359,10 @@ bool SceneGameplay::Update(Input* input, float dt)
 								player->jumps = 2;
 								//LOG("DOWN");
 							}
+							player->floor = false;
 						}
 						break;
+
 					}
 				}
 			}
