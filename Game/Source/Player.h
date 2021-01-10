@@ -86,7 +86,7 @@ public:
     int jumps = 2;
     float delayUi = 2;
     int lifes = 3;
-    int coins = 0;
+    int coins = 0;;
     float vy = 0.0f;
     int max = 0;
     float cooldown;
