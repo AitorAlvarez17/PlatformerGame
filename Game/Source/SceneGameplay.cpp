@@ -206,6 +206,11 @@ bool SceneGameplay::PreUpdate()
 
 bool SceneGameplay::Update(Input* input, float dt)
 {
+	if (player->godMode == -1)
+		collisions->godMode = false;
+	if (player->godMode != -1)
+		collisions->godMode = true;
+
 	if (player->isDead == false)
 	{
 		if (player->position.x > tp->position.x && player->position.x < tp->position.x + tp->width)

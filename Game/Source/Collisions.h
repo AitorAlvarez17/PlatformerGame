@@ -50,6 +50,8 @@ public:
 
 	Render* render;
 	Textures* textures;
+	bool godMode = false;
+
 private:
 	// All existing colliders in the scene
 	
