@@ -228,16 +228,17 @@ void Player::FixedUpdate(Input* input, float dt)
 #define PLAYER_JUMP_SPEED 240.0f
 
 
-	LOG("%f", vy);
 	//Start Idle
 	UpdateAnim(currentAnim, IDLE);
 	if (godMode < 0)
 	{
 		//Calculate gravity acceleration
-
+		
 		position.y += (vy * dt);
-		preCalc = (vy * dt);
-		vy = vy + GRAVITY;
+		if (floor == false)
+		{
+			vy = vy + GRAVITY;
+		}
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -258,6 +259,7 @@ void Player::FixedUpdate(Input* input, float dt)
 		{
 			if (jumps > 0)
 			{
+				floor = false;
 				jumps--;
 				vy += -PLAYER_JUMP_SPEED;
 				UpdateAnim(currentAnim, JUMP);
