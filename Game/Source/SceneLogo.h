@@ -2,7 +2,6 @@
 #define __SCENELOGO_H__
 
 #include "Scene.h"
-#include "Audio.h"
 
 #include "SDL/include/SDL.h"
 
@@ -11,6 +10,7 @@ class SceneLogo : public Scene
 public:
 
 	SceneLogo();
+
 	virtual ~SceneLogo();
 
 	bool Load(Textures* tex);
@@ -25,7 +25,7 @@ private:
 
 	SDL_Rect logo;
 	SDL_Texture* logoTexture;
-	SDL_Texture* logo_ui;
+	SDL_Texture* logoUi;
 
 	int state;
 
