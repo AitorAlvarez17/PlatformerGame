@@ -216,7 +216,6 @@ void Player::OnCollision(Collider* c1)
 		}
 	}
 
-
 }
 
 void Player::HealAbility()
@@ -256,7 +255,7 @@ void Player::FixedUpdate(Input* input, float dt)
 		position.y += (vy * dt);
 
 		if (floor == false) vy = vy + GRAVITY;
-		if (vy > 300) vy = 300;
+		if (vy > 200) vy = 200;
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -278,7 +277,7 @@ void Player::FixedUpdate(Input* input, float dt)
 			if (jumps > 0)
 			{
 				jumps--;
-				vy = vy - PLAYER_JUMP_SPEED;
+				vy = vy - (PLAYER_JUMP_SPEED);
 				floor = false;
 				UpdateAnim(currentAnim, JUMP);
 				aud->PlayFx(6, 0);
@@ -357,6 +356,7 @@ void Player::UpdateAnim(PlayerAnim previousState, PlayerAnim newState)
 		}
 
 	}
+
 	}
 
 	currentAnim = newState;
