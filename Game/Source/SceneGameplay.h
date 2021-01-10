@@ -60,6 +60,7 @@ private:
 
     Map* map;
     Player* player;
+    Win* end;
     Enemy* enemy;
     Enemy* enemy2;
     Fireball* fireball;

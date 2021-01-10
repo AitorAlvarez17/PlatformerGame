@@ -125,11 +125,11 @@ Item* EntityManager::CreateItem(iPoint origin, ItemType iType)
 	return ret;
 }
 
-Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer)
+Enemy* EntityManager::CreateEnemy(iPoint origin, EnemyType eType, int life, int anim, Map* eMap, Player* ePlayer, AudioManager* manager)
 {
 	Enemy* ret = nullptr;
 
-	ret = new Enemy(origin, eType, life, anim, eMap, ePlayer);
+	ret = new Enemy(origin, eType, life, anim, eMap, ePlayer, manager);
 
 	SDL_Rect Rect;
 	Rect.x = origin.x;
@@ -252,6 +252,33 @@ Death* EntityManager::CreateDeath(iPoint origin)
 	Rect.h = ret->height;
 
 	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::DEATH, this);
+
+	for (uint i = 0; i < MAX_ENTITIES; ++i)
+	{
+		if (entities[i] == nullptr)
+		{
+			entities[i] = ret;
+			break;
+		}
+	}
+	/*if (ret != nullptr) entities.Add(ret);*/
+
+	return ret;
+}
+
+Win* EntityManager::CreateWin(iPoint origin)
+{
+	Win* ret = nullptr;
+
+	ret = new Win(origin);
+
+	SDL_Rect Rect;
+	Rect.x = origin.x;
+	Rect.y = origin.y;
+	Rect.w = ret->width;
+	Rect.h = ret->height;
+
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::WIN, this);
 
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
