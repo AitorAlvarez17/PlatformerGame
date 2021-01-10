@@ -75,7 +75,6 @@ public:
 
     SDL_Texture* texture;   // Player spritesheet
 
-    // TODO: Define all animation properties
     PlayerAnim currentAnim = PlayerAnim::IDLE;//diferentiate --- THIS IS THE STATE!
     Animation* actualAnimation = nullptr;//diferentiate --- THIS IS THE ANIMATION!!
 

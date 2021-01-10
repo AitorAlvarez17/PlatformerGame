@@ -5,7 +5,6 @@
 #include "Log.h"
 
 #include "SDL_image/include/SDL_image.h"
-//#pragma comment(lib, "../Game/Source/External/SDL_image/libx86/SDL2_image.lib")
 
 Textures::Textures(Render* render) : Module()
 {
@@ -25,8 +24,8 @@ bool Textures::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	// Load support for the PNG image format
-	int flags = IMG_INIT_PNG;
-	int init = IMG_Init(flags);
+	int flags = IMG_INIT_PNG; 
+	int init = IMG_Init(flags); //not changed because the variable was external
 
 	if((init & flags) != flags)
 	{

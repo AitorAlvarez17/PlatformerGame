@@ -236,7 +236,9 @@ void App::FinishUpdate()
 		// L08: DONE 3: Measure accurately the amount of time SDL_Delay actually waits compared to what was expected
 		PerfTimer pt;
 		SDL_Delay(cappedMs - lastFrameMs);
-		LOG("We waited for %d milliseconds and got back in %f", cappedMs - lastFrameMs, pt.ReadMs());
+		//LOG("We waited for %d milliseconds and got back in %f", cappedMs - lastFrameMs, pt.ReadMs());
+
+		//comented because we wanted to keep the exit clean before release.
 	}
 }
 

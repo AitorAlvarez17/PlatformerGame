@@ -44,154 +44,6 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
-// L12a: Methods not required anymore -> Using PathFinding class
-/*
-bool Map::Start()
-{
-	tileX = app->tex->Load("Assets/maps/x.png");
-
-	return true;
-}
-
-void Map::ResetPath(iPoint start)
-{
-	frontier.Clear();
-	visited.Clear();
-    breadcrumbs.Clear();
-    
-	frontier.Push(start, 0);
-	visited.Add(start);
-    breadcrumbs.Add(start);
-
-	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
-}
-
-void Map::DrawPath()
-{
-	iPoint point;
-
-	// Draw visited
-	ListItem<iPoint>* item = visited.start;
-
-	while(item)
-	{
-		point = item->data;
-		TileSet* tileset = GetTilesetFromTileId(26);
-
-		SDL_Rect rec = tileset->GetTileRect(26);
-		iPoint pos = MapToWorld(point.x, point.y);
-
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
-
-		item = item->next;
-	}
-
-	// Draw frontier
-	for (uint i = 0; i < frontier.Count(); ++i)
-	{
-		point = *(frontier.Peek(i));
-		TileSet* tileset = GetTilesetFromTileId(25);
-
-		SDL_Rect rec = tileset->GetTileRect(25);
-		iPoint pos = MapToWorld(point.x, point.y);
-
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
-	}
-    
-    // Draw path
-	for (uint i = 0; i < path.Count(); ++i)
-	{
-		iPoint pos = MapToWorld(path[i].x, path[i].y);
-		app->render->DrawTexture(tileX, pos.x, pos.y);
-	}
-}
-
-int Map::MovementCost(int x, int y) const
-{
-	int ret = -1;
-
-	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
-	{
-		int id = data.layers.start->next->data->Get(x, y);
-
-		if (id == 0) ret = 3;
-		else ret = 0;
-	}
-
-	return ret;
-}
-
-void Map::ComputePath(int x, int y)
-{
-	path.Clear();
-	iPoint goal = WorldToMap(x, y);
-
-	// L11: DONE 2: Follow the breadcrumps to goal back to the origin
-	// add each step into "path" dyn array (it will then draw automatically)
-	path.PushBack(goal);
-	int index = visited.Find(goal);
-
-	while ((index >= 0) && (goal != breadcrumbs[index]))
-	{
-		goal = breadcrumbs[index];
-		path.PushBack(goal);
-		index = visited.Find(goal);
-	}
-}
-
-void Map::ComputePathAStar(int x, int y)
-{
-	// L12a: Compute AStart pathfinding
-}
-
-
-void Map::PropagateBFS()
-{
-	// L10: DONE 1: If frontier queue contains elements
-	// pop the last one and calculate its 4 neighbors
-	iPoint curr;
-	if (frontier.Pop(curr))
-	{
-		// L10: DONE 2: For each neighbor, if not visited, add it
-		// to the frontier queue and visited list
-		iPoint neighbors[4];
-		neighbors[0].Create(curr.x + 1, curr.y + 0);
-		neighbors[1].Create(curr.x + 0, curr.y + 1);
-		neighbors[2].Create(curr.x - 1, curr.y + 0);
-		neighbors[3].Create(curr.x + 0, curr.y - 1);
-
-		for (uint i = 0; i < 4; ++i)
-		{
-			if (MovementCost(neighbors[i].x, neighbors[i].y) > 0)
-			{
-				if (visited.Find(neighbors[i]) == -1)
-				{
-					frontier.Push(neighbors[i], 0);
-					visited.Add(neighbors[i]);
-
-					// L11: DONE 1: Record the direction to the previous node 
-					// with the new list "breadcrumps"
-					breadcrumbs.Add(curr);
-				}
-			}
-		}
-	}
-}
-
-void Map::PropagateDijkstra()
-{
-	// L11: TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm
-	// use the 2 dimensional array "costSoFar" to track the accumulated costs
-	// on each cell (is already reset to 0 automatically)
-}
-
-void Map::PropagateAStar(int heuristic)
-{
-	// L12a: TODO 2: Implement AStar algorythm
-	// Consider the different heuristics
-}
-*/
-
 // Draw the map (all requried layers)
 void Map::Draw(Render* render)
 {
@@ -299,8 +151,7 @@ SDL_Rect Map::GetTilemapRec(int x, int y) const
 
 	SDL_Rect rec = { pos.x * scale + camOffset.x, pos.y * scale + camOffset.y,
 				 data.tileWidth * scale, data.tileHeight * scale };
-	//SDL_Rect rec = { pos.x * 4 , pos.y * 4 + camOffset.y, 
-	//				 data.tileWidth , data.tileHeight };
+	
 
 	return rec;
 }
@@ -308,7 +159,6 @@ SDL_Rect Map::GetTilemapRec(int x, int y) const
 SDL_Rect Map::GetTilemapRecScaled(int x, int y) const
 {
 	iPoint pos = MapToWorld(x, y);
-	//LOG("%d,%d", data.tileWidth, data.tileHeight);
 
 	SDL_Rect rec = { pos.x *4 , pos.y *4, 64, 64 };
 
@@ -494,26 +344,7 @@ bool Map::LoadMap()
 		data.backgroundColor.g = 0;
 		data.backgroundColor.b = 0;
 		data.backgroundColor.a = 0;
-		/*
-		if (bg_color.Length() > 0)
-		{
-			SString red, green, blue;
-			bg_color.SubString(1, 2, red);
-			bg_color.SubString(3, 4, green);
-			bg_color.SubString(5, 6, blue);
-
-			int v = 0;
-
-			sscanf_s(red.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.backgroundColor.r = v;
-
-			sscanf_s(green.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.backgroundColor.g = v;
-
-			sscanf_s(blue.GetString(), "%x", &v);
-			if (v >= 0 && v <= 255) data.backgroundColor.b = v;
-		}
-		*/
+		
 
 		SString orientation(map.attribute("orientation").as_string());
 
@@ -542,8 +373,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 
 	if (offset != NULL)
 	{
-		//set->offsetX = offset.attribute("x").as_int();
-		//set->offsetY = offset.attribute("y").as_int();
+		
 	}
 	else
 	{
@@ -652,7 +482,6 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	return ret;
 }
 
-// L12b: Create walkability map for pathfinding
 bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {
 	bool ret = false;
