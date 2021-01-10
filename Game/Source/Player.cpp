@@ -16,6 +16,7 @@ Player::Player(iPoint origin) : Entity(EntityType::PLAYER)
 	lifes = 3;
 	godMode = -1;
 
+	coins = 0;
 	/*SDL_Rect size = { origin.x, origin.y,width,height };*/
 
 	/*hitbox = Collisions::AddCollider(size, Collider::Type::PLAYER,this);*/
@@ -222,7 +223,7 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 128.0f
+#define GRAVITY 5.0f
 #define PLAYER_MOVE_SPEED 256.0f
 #define PLAYER_JUMP_SPEED 198.0f
 
@@ -236,7 +237,7 @@ void Player::FixedUpdate(Input* input, float dt)
 
 		position.y += (vy * dt);
 		preCalc = (vy * dt);
-		vy += GRAVITY * dt;
+		vy += GRAVITY;
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -253,9 +254,9 @@ void Player::FixedUpdate(Input* input, float dt)
 			UpdateAnim(currentAnim, WALK);
 
 		}
-		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			position.y += -PLAYER_JUMP_SPEED * dt;
+			vy += -PLAYER_JUMP_SPEED;
 			UpdateAnim(currentAnim, JUMP);
 
 		}
