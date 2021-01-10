@@ -98,6 +98,20 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	hearth = tex->Load(PATH("Assets/Textures/UI/", "hearth_ui.png"));
 	healthBackground = tex->Load(PATH("Assets/Textures/UI/", "health_background.png"));
 	cantSummonUi = tex->Load(PATH("Assets/Textures/UI/", "cant.png"));
+
+	tp1To2 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_2.png"));
+	tp1To3 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "1_to_3.png"));
+
+	tp2To1 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "2_to_1.png"));
+	tp2To3 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "2_to_3.png"));
+
+	tp3To1 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "3_to_1.png"));
+	tp3To2 = tex->Load(PATH("Assets/Textures/Maps/Tp/", "3_to_2.png"));
+	
+	openPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "open_menu.png"));
+	teleportPhrase = tex->Load(PATH("Assets/Textures/Dialogue/", "teleport_menu.png"));
+	
+	save_feedback = tex->Load(PATH("Assets/Textures/UI/", "autosave_feedback.png"));
 	//NUMBERS
 	zero = tex->Load(PATH("Assets/Textures/UI/Numbers/", "0.png"));
 	one = tex->Load(PATH("Assets/Textures/UI/Numbers/", "1.png"));
@@ -134,6 +148,11 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 	eManager->CreateItem(iPoint(768, 2124), ItemType::HEART);
 	eManager->CreateItem(iPoint(820, 2124), ItemType::COIN);
 
+	tp = eManager->CreateTp(iPoint(456, 2176), 0);
+	tp2 = eManager->CreateTp(iPoint(3697, 1974), 0);
+	tp3 = eManager->CreateTp(iPoint(960, 550), 0);
+	save = eManager->CreateSavePoint(iPoint(500, 2176));
+
 	if (app->newGame != true)
 	{
 		if (app->firstSaved == true)
@@ -141,6 +160,8 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 			app->LoadGameRequest();
 		}
 	}
+	app->newGame = false;
+
 	return false;
 }
 
@@ -151,8 +172,42 @@ inline bool CheckCollision(SDL_Rect rec1, SDL_Rect rec2)
 	else return false;
 }
 
+bool SceneGameplay::PreUpdate()
+{
+	player->onColl = false;
+
+	return true;
+}
+
 bool SceneGameplay::Update(Input* input, float dt)
 {
+	if (player->position.x > tp->position.x && player->position.x < tp->position.x + tp->width)
+	{
+		player->onArea1 = true;
+		player->outArea = false;
+	}
+	else
+	{
+		player->onArea1 = false;
+	}
+	if (player->position.x > tp2->position.x && player->position.x < tp2->position.x + tp2->width)
+	{
+		player->onArea2 = true;
+		player->outArea = false;
+	}
+	else
+	{
+		player->onArea2 = false;
+	}
+	if (player->position.x > tp3->position.x && player->position.x < tp3->position.x + tp3->width)
+	{
+		player->onArea3 = true;
+		player->outArea = false;
+	}
+	else
+	{
+		player->onArea3 = false;
+	}
 
 	//SET THE SETTINGS TO THE SAME ONES AS MENU
 	if (settings && buffer)
@@ -288,8 +343,24 @@ bool SceneGameplay::Update(Input* input, float dt)
 	return true;
 }
 
+bool SceneGameplay::PostUpdate(Input* input, float dt)
+{
+	if (save->saveActive == true)
+	{
+
+	}
+	if (save->saveActive == false)
+	{
+		app->SaveGameRequest();
+		save->pendingToDelete = true;
+	}
+	return true;
+
+}
+
 bool SceneGameplay::Draw(Render* render)
 {
+
 	//Draw BG
 	render->SetBackgroundColor({ 83,217,217, 1 });
 	render->DrawTexture(olympus, 0, 1900);
@@ -304,14 +375,13 @@ bool SceneGameplay::Draw(Render* render)
 
 	player->Draw(render);
 
-	enemy->Draw(render);
-	enemy2->Draw(render);
 
-
+	
 	DrawMenu(render);
 	DrawHealth(render);
 	DrawMoney(render);
 	DrawWand(render);
+	DrawTp(render);
 
 	return false;
 }
@@ -556,3 +626,152 @@ bool SceneGameplay::DrawMenu(Render* render)
 
 	return false;
 }
+
+bool SceneGameplay::DrawTp(Render* render)
+{
+	if (save->saveCoroutine < 2.0f)
+	{
+		//render->DrawTexture(save_feedback, player->position.x, player->position.y, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+	}
+	if (player->onColl == true)
+	{
+		if (input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		{
+			if (player->mapOpen == true)
+			{
+				aud->PlayFx(8, 0);
+				player->mapOpen = false;
+
+			}
+			else
+			{
+				aud->PlayFx(8, 0);
+				player->mapOpen = true;
+
+			}
+		}
+		if (player->onArea1 && player->mapOpen == true)
+		{
+			switch (player->tpCounter)
+			{
+			case 1:
+				renderedOption = tp1To2;
+				if (input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					aud->PlayFx(8, 0);
+					player->position.x = tp2->position.x;
+					player->position.y = tp2->position.y;
+
+					player->mapOpen = false;
+				}
+				break;
+			case 2:
+				renderedOption = tp1To3;
+				if (input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					aud->PlayFx(8, 0);
+					player->position.x = tp3->position.x;
+					player->position.y = tp3->position.y;
+
+					player->mapOpen = false;
+				}
+				break;
+			}
+
+		}
+		if (player->onArea2 && player->mapOpen == true)
+		{
+			switch (player->tpCounter)
+			{
+			case 1:
+				renderedOption = tp2To1;
+				if (input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					aud->PlayFx(8, 0);
+					player->position.x = tp->position.x;
+					player->position.y = tp->position.y;
+
+					player->mapOpen = false;
+				}
+
+				break;
+			case 2:
+				renderedOption = tp2To3;
+				if (input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					aud->PlayFx(8, 0);
+					player->position.x = tp3->position.x;
+					player->position.y = tp3->position.y;
+
+					player->mapOpen = false;
+				}
+				break;
+			}
+
+		}
+		if (player->onArea3 && player->mapOpen == true)
+		{
+			switch (player->tpCounter)
+			{
+			case 1:
+				renderedOption = tp3To1;
+				if (input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					aud->PlayFx(8, 0);
+					player->position.x = tp->position.x;
+					player->position.y = tp->position.y;
+
+					player->mapOpen = false;
+				}
+				break;
+			case 2:
+				renderedOption = tp3To2;
+				if (input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+				{
+					aud->PlayFx(8, 0);
+					player->position.x = tp2->position.x;
+					player->position.y = tp2->position.y;
+
+					player->mapOpen = false;
+				}
+				break;
+			}
+
+		}
+		if (player->onArea1 || player->onArea2 || player->onArea3)
+		{
+			render->DrawTexture(openPhrase, player->position.x, (player->position.y) - 35);
+			if (player->mapOpen)
+			{
+				render->DrawRectangle({ 0,0,1800, 720 }, { 0,0,0,200 }, true);
+				render->DrawTexture(renderedOption, 200, 50, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
+				render->DrawTexture(teleportPhrase, 577, 75, 0, 0, 0, 0, SDL_FLIP_NONE);
+			}
+
+		}
+		if (input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		{
+			player->tpCounter--;
+			aud->PlayFx(8, 0);
+			if (player->tpCounter == 0)
+			{
+				player->tpCounter = 2;
+			}
+
+		}
+		if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		{
+			player->tpCounter++;
+			aud->PlayFx(8, 0);
+			if (player->tpCounter == 3)
+			{
+				player->tpCounter = 1;
+			}
+
+		}
+
+	}
+
+	return false;
+}
+

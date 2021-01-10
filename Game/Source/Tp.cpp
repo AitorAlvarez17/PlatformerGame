@@ -7,7 +7,7 @@ Tp::Tp(iPoint origin, int n) : Entity(EntityType::TP)
 	width = 32;
 	height = 32;
 
-
+	tpIndex = n;
 
 	/*hitbox->rect.x = origin.x;
 	hitbox->rect.y = origin.y;
@@ -31,13 +31,15 @@ void Tp::OnCollision(Collider* c1, Collider* c2)
 
 void Tp::OnCollision(Collider* c1)
 {
-	if (c1->type == Collider::Type::PLAYER)
-	{
-		pendingToDelete = true;
-	}
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
 
 
+}
+
+int Tp::GetIndex()
+{
+
+	return tpIndex;
 }
 
 Tp::~Tp()

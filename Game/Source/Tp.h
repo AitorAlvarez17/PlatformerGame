@@ -19,7 +19,9 @@ public:
 
     void OnCollision(Collider* c1);
 
+    int GetIndex();
 
+    int tpIndex;
 
 private:
 };

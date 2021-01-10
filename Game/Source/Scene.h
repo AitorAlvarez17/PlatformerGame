@@ -31,7 +31,17 @@ public:
         return true;
     }
 
+    virtual bool PreUpdate()
+    {
+        return true;
+    }
+
     virtual bool Update(Input* input, float dt)
+    {
+        return true;
+    }
+
+    virtual bool PostUpdate(Input* input, float dt)
     {
         return true;
     }

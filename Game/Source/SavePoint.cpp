@@ -7,12 +7,20 @@ SavePoint::SavePoint(iPoint origin) : Entity(EntityType::SAVEPOINT)
 	width = 32;
 	height = 32;
 
-
+	saveActive = true;
 
 	/*hitbox->rect.x = origin.x;
 	hitbox->rect.y = origin.y;
 	hitbox->rect.w = width;
 	hitbox->rect.h = height;*/
+}
+
+void SavePoint::Update(Input* input, float dt)
+{
+	saveCoroutine += dt;
+
+	if (saveCoroutine > 2.0f)
+		saveCoroutine = 2.0f;
 }
 
 void SavePoint::OnCollision(Collider* c1, Collider* c2)
@@ -33,7 +41,8 @@ void SavePoint::OnCollision(Collider* c1)
 {
 	if (c1->type == Collider::Type::PLAYER)
 	{
-		pendingToDelete = true;
+		saveActive = false;
+		saveCoroutine = 0;
 	}
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
 

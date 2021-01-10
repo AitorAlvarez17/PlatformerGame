@@ -27,7 +27,11 @@ public:
 
     bool Load(Textures* tex);
 
+    bool PreUpdate();
+
     bool Update(Input* input, float dt);
+
+    bool PostUpdate(Input* input, float dt);
 
     bool Draw(Render* render);
 
@@ -38,6 +42,8 @@ public:
     bool DrawMenu(Render* render);
 
     bool DrawHealth(Render* render);
+
+    bool DrawTp(Render* render);
 
     bool Unload();
 
@@ -54,6 +60,10 @@ private:
     Collisions* collisions;
     App* app;
     CheckPoints* check;
+    Tp* tp;
+    Tp* tp2;
+    Tp* tp3;
+    SavePoint* save;
     
     SDL_Rect camera;
 
@@ -92,7 +102,23 @@ private:
     SDL_Texture* hearth;
     SDL_Texture* cantSummonUi;
     SDL_Texture* save_feedback;
-   
+
+    SDL_Texture* renderedOption;
+
+    SDL_Texture* tp1IDLE;
+    SDL_Texture* tp1To2;
+    SDL_Texture* tp1To3;
+
+    SDL_Texture* tp2IDLE;
+    SDL_Texture* tp2To1;
+    SDL_Texture* tp2To3;
+
+    SDL_Texture* tp3IDLE;
+    SDL_Texture* tp3To1;
+    SDL_Texture* tp3To2;
+
+    SDL_Texture* openPhrase;
+    SDL_Texture* teleportPhrase;
 
     SDL_Texture* healthBackground;
     SDL_Texture* moneyBackgroundUi;

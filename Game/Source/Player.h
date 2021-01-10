@@ -92,6 +92,18 @@ public:
     float cooldown;
     
     int godMode = -1;
+    int tpIndex;
+
+    bool onColl = false;
+    bool onTp = true;
+    bool mapOpen = false;
+
+    int tpCounter = 1;
+
+    bool onArea1;
+    bool onArea2;
+    bool onArea3;
+    bool outArea;
 
     bool isGoingRight = false;
 

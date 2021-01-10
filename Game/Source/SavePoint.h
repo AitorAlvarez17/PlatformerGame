@@ -15,11 +15,15 @@ public:
 
     virtual ~SavePoint();
 
+    void Update(Input* input, float dt);
+
     void OnCollision(Collider* c1, Collider* c2);
 
     void OnCollision(Collider* c1);
 
+    bool saveActive = true;
 
+    float saveCoroutine;
 
 private:
 };

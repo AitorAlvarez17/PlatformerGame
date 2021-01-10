@@ -305,7 +305,7 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::TP:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 204,102,255,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 0,102,255,255 }, true);
 
 			break;
 		case Collider::Type::SAVEPOINT:

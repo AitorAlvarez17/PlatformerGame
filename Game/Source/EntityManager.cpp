@@ -169,6 +169,8 @@ Tp* EntityManager::CreateTp(iPoint origin, int n)
 	Rect.w = ret->width;
 	Rect.h = ret->height;
 
+	ret->hitbox = collisions->AddCollider(Rect, Collider::Type::TP, this);
+
 	for (uint i = 0; i < MAX_ENTITIES; ++i)
 	{
 		if (entities[i] == nullptr)
