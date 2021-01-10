@@ -145,8 +145,9 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 void Player::OnCollision(Collider* c1)
 {
-
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
+
+
 
 
 }
