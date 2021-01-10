@@ -49,6 +49,8 @@ public:
 
     bool Unload();
 
+    bool CleanUp();
+
     bool OnGuiMouseClickEvent(GuiControl* control);
 
 private:

@@ -411,6 +411,8 @@ bool SceneGameplay::Unload()
 {
 	// TODO: Unload all resources
 
+		eManager->CleanUp();
+
 	return false;
 }
 
@@ -432,7 +434,6 @@ bool SceneGameplay::OnGuiMouseClickEvent(GuiControl* control)
 		}
 		else if (control->id == 8)
 		{
-			eManager->CleanUp();
 			TransitionToScene(SceneType::TITLE);
 		}
 		else if (control->id == 9) input->windowEvents[WE_QUIT] = 1;
@@ -794,5 +795,12 @@ bool SceneGameplay::DrawTp(Render* render)
 	}
 
 	return false;
+}
+
+bool SceneGameplay::CleanUp()
+{
+
+	eManager->CleanUp();
+	return true;
 }
 

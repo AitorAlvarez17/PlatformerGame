@@ -56,6 +56,11 @@ public:
         return true;
     }
 
+    virtual bool CleanUp()
+    {
+        return true;
+    }
+
     void TransitionToScene(SceneType scene)
     {
         transitionRequired = true;
