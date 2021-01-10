@@ -13,6 +13,7 @@ enum class EntityType
     ENEMY,
     ITEM,   //coin o lo que sea, se cambaiara en el momento.
     DEATH,
+    WIN,
     MAP,
     FIREBALL,
     TP,

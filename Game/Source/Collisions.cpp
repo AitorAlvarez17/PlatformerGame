@@ -20,10 +20,10 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::COIN] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::TP] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::SAVEPOINT] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::ENDLEVEL] = true;
+	matrix[Collider::Type::PLAYER][Collider::Type::WIN] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::FIREBALL] = true;
 	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::PLAYER][Collider::Type::ENEMYWALL] = false;
+	
 
 
 	matrix[Collider::Type::DEATH][Collider::Type::PLAYER] = true;
@@ -32,10 +32,10 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::DEATH][Collider::Type::COIN] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::TP] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::DEATH][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::DEATH][Collider::Type::WIN] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::FIREBALL] = false;
 	matrix[Collider::Type::DEATH][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::DEATH][Collider::Type::ENEMYWALL] = false;
+
 
 
 	matrix[Collider::Type::HEART][Collider::Type::PLAYER] = true;
@@ -44,10 +44,10 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::HEART][Collider::Type::COIN] = false;
 	matrix[Collider::Type::HEART][Collider::Type::TP] = false;
 	matrix[Collider::Type::HEART][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::HEART][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::HEART][Collider::Type::WIN] = false;
 	matrix[Collider::Type::HEART][Collider::Type::FIREBALL] = false;
 	matrix[Collider::Type::HEART][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::HEART][Collider::Type::ENEMYWALL] = false;
+
 
 
 	matrix[Collider::Type::COIN][Collider::Type::PLAYER] = true;
@@ -56,10 +56,10 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::COIN][Collider::Type::COIN] = false;
 	matrix[Collider::Type::COIN][Collider::Type::TP] = false;
 	matrix[Collider::Type::COIN][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::COIN][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::COIN][Collider::Type::WIN] = false;
 	matrix[Collider::Type::COIN][Collider::Type::FIREBALL] = false;
 	matrix[Collider::Type::COIN][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::COIN][Collider::Type::ENEMYWALL] = false;
+
 
 
 	matrix[Collider::Type::TP][Collider::Type::PLAYER] = true;
@@ -68,10 +68,10 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::TP][Collider::Type::COIN] = false;
 	matrix[Collider::Type::TP][Collider::Type::TP] = false;
 	matrix[Collider::Type::TP][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::TP][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::TP][Collider::Type::WIN] = false;
 	matrix[Collider::Type::TP][Collider::Type::FIREBALL] = false;
 	matrix[Collider::Type::TP][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::TP][Collider::Type::ENEMYWALL] = false;
+
 
 
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::PLAYER] = true;
@@ -80,10 +80,9 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::COIN] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::TP] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::SAVEPOINT][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::SAVEPOINT][Collider::Type::WIN] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::FIREBALL] = false;
 	matrix[Collider::Type::SAVEPOINT][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::SAVEPOINT][Collider::Type::ENEMYWALL] = false;
 
 
 	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = true;
@@ -92,37 +91,21 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::ENEMY][Collider::Type::COIN] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::TP] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::ENEMY][Collider::Type::ENEMYWALL] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::ENEMY][Collider::Type::WIN] = false;
 	matrix[Collider::Type::ENEMY][Collider::Type::FIREBALL] = true;
-	matrix[Collider::Type::ENEMY][Collider::Type::ENEMYWALL] = true;
 	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = false;
 
 
 
-
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::DEATH] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::HEART] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::COIN] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::TP] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENDLEVEL] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::FIREBALL] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENEMYWALL] = false;
-
-
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::PLAYER] = true;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::DEATH] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::HEART] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::COIN] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::TP] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::SAVEPOINT] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::ENEMY] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::ENEMYWALL] = false;
-	matrix[Collider::Type::ENDLEVEL][Collider::Type::FIREBALL] = false;
-	matrix[Collider::Type::ENEMYWALL][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::WIN][Collider::Type::PLAYER] = true;
+	matrix[Collider::Type::WIN][Collider::Type::DEATH] = false;
+	matrix[Collider::Type::WIN][Collider::Type::HEART] = false;
+	matrix[Collider::Type::WIN][Collider::Type::COIN] = false;
+	matrix[Collider::Type::WIN][Collider::Type::TP] = false;
+	matrix[Collider::Type::WIN][Collider::Type::SAVEPOINT] = false;
+	matrix[Collider::Type::WIN][Collider::Type::ENEMY] = false;
+	matrix[Collider::Type::WIN][Collider::Type::FIREBALL] = false;
+	matrix[Collider::Type::WIN][Collider::Type::WIN] = false;
 
 
 	matrix[Collider::Type::FIREBALL][Collider::Type::PLAYER] = false;
@@ -132,8 +115,7 @@ Collisions::Collisions(Render* rend, Textures* tex) : Module()
 	matrix[Collider::Type::FIREBALL][Collider::Type::TP] = false;
 	matrix[Collider::Type::FIREBALL][Collider::Type::SAVEPOINT] = false;
 	matrix[Collider::Type::FIREBALL][Collider::Type::ENEMY] = true;
-	matrix[Collider::Type::FIREBALL][Collider::Type::ENEMYWALL] = false;
-	matrix[Collider::Type::FIREBALL][Collider::Type::ENDLEVEL] = false;
+	matrix[Collider::Type::FIREBALL][Collider::Type::WIN] = false;
 
 }
 
@@ -291,43 +273,43 @@ void Collisions::DebugDraw()
 
 			break;
 		case Collider::Type::PLAYER:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,64,64 }, { 0,0,255,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 0,0,255,170 }, true);
 			break;
 		case Collider::Type::DEATH:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 204,0,0,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 204,0,0,170 }, true);
 
 			break;
 		case Collider::Type::COIN:
 		{
 			SDL_Rect rec = { 0,0,32,32 };
 
-			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h}, { 255,204,0,255 }, true);
+			render->DrawRectangleScaled(1, {colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h}, { 255,204,0,170 }, true);
 			break;
 		}
 		case Collider::Type::HEART:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,102,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,102,170 }, true);
 
 			break;
 		case Collider::Type::TP:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 0,102,255,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 0,102,255,170 }, true);
 
 			break;
 		case Collider::Type::SAVEPOINT:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 51,102,255,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 51,102,255,170 }, true);
 
 			break;
 		case Collider::Type::ENEMY:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,0,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,0,0,170 }, true);
 
 			break;
 
 			break;
-		case Collider::Type::ENDLEVEL:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 102,255,51,255 }, true);
+		case Collider::Type::WIN:
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 102,255,51,170 }, true);
 
 			break;
 		case Collider::Type::FIREBALL:
-			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,102,0,255 }, true);
+			render->DrawRectangleScaled(1, { colliders[i]->rect.x,colliders[i]->rect.y,colliders[i]->rect.w,colliders[i]->rect.h }, { 255,102,0,170 }, true);
 
 			break;
 		}
