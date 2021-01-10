@@ -101,6 +101,7 @@ public:
     bool mapOpen = false;
     bool hitted = false;
     bool isDead = false;
+    bool floor = false;
 
     int tpCounter = 1;
 

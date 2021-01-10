@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check)
+SceneGameplay::SceneGameplay(AudioManager* manager, Window* window, EntityManager* eManager, Input* input, ModuleUI* ui, Collisions* coll, App* app, CheckPoints* check, Debug* debug)
 {
 	name = "GAMEPLAY";
 	btnResume = new GuiButton(6, { 1280 / 2 - 300 / 2, 155, 300, 80 }, "RESUME");
@@ -282,6 +282,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 		// Check if updated player position collides with next tile
 		// IMPROVEMENT: Just check adyacent tiles to player
 		if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
+		if (input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) DebugCheckPoints();
 
 		iPoint tempPlayerPosition = player->position;
 
@@ -300,7 +301,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 						player->vy = 0.0f;*/
 						int compY = player->position.y - tile.y;
 						int compX = player->position.x - tile.x;
-						bool floor = false;
+						player->floor = false;
 
 						if (std::abs(compY) < std::abs(compX))
 						{
@@ -323,9 +324,9 @@ bool SceneGameplay::Update(Input* input, float dt)
 							else
 							{
 								// Comparativa con jumping en player. nueva variable.
-
 								player->position.y = player->prevPos.y;
 								player->vy = 0;
+								player->floor = true;
 								player->jumps = 2;
 								//LOG("DOWN");
 							}
@@ -846,7 +847,6 @@ bool SceneGameplay::DrawTp(Render* render)
 				}
 				break;
 			}
-
 		}
 		if (player->onArea1 || player->onArea2 || player->onArea3)
 		{
@@ -890,5 +890,24 @@ bool SceneGameplay::CleanUp()
 
 	eManager->CleanUp();
 	return true;
+}
+
+void SceneGameplay::DebugCheckPoints()
+{
+	switch (debug->debugCheckPoints)
+	{
+	case 1:
+		player->position.x = 456;
+		player->position.y = 2176;
+	case 2:
+		player->position.x = 3697;
+		player->position.y = 1974;
+	case 3:
+		player->position.x = 960;
+		player->position.y = 550;
+	default:
+		break;
+	}
+
 }
 
