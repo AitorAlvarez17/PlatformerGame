@@ -12,7 +12,8 @@ enum class EntityType
     PLAYER,
     ENEMY,
     ITEM,   //coin o lo que sea, se cambaiara en el momento.
-    MAP,
+    DEATH,
+    TP,
     UNKNOWN
 };
 
