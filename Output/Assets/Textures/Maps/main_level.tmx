@@ -489,7 +489,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="55"/>
    <tile/>
    <tile/>
    <tile/>
@@ -4814,7 +4814,7 @@
    <tile gid="19"/>
   </data>
  </layer>
- <layer id="3" name="Collisions" width="60" height="40" visible="0">
+ <layer id="3" name="Collisions" width="60" height="40">
   <properties>
    <property name="Navigation" type="int" value="1"/>
    <property name="drawable" type="int" value="0"/>
@@ -5501,7 +5501,6 @@
    <tile/>
    <tile/>
    <tile gid="69"/>
-   <tile gid="69"/>
    <tile/>
    <tile/>
    <tile/>
@@ -5540,6 +5539,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile/>
    <tile gid="69"/>
    <tile/>
    <tile/>
@@ -5560,9 +5560,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="69"/>
    <tile gid="69"/>
-   <tile gid="69"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -6829,7 +6829,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="69"/>
+   <tile/>
    <tile gid="69"/>
    <tile/>
    <tile/>
@@ -6888,8 +6888,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="69"/>
-   <tile gid="69"/>
+   <tile/>
+   <tile/>
    <tile gid="69"/>
    <tile/>
    <tile/>

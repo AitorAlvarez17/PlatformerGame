@@ -80,7 +80,7 @@ bool Player::Update(Input* input, float dt)
 
 	cooldown += dt;
 	delayUi += dt;
-	firecooldown += dt;
+	fireCooldown += dt;
 
 
 	if (lifes == 0)
@@ -97,16 +97,16 @@ bool Player::Update(Input* input, float dt)
 		hitted = false;
 		hitCooldown = 0;
 	}
-	
+
 	if (cooldown > 3.0f)
 		cooldown = 3.0f;
 
-	if (firecooldown > 2.0f)
-		firecooldown = 2.0f;
+	if (fireCooldown > 2.0f)
+		fireCooldown = 2.0f;
 
 	if (delayUi > 1.0f)
 		delayUi = 1.0f;
-	
+
 	// if (input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) position.x += (PLAYER_MOVE_SPEED * dt);
 	//if (input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) position.y -= (PLAYER_JUMP_SPEED * dt);
 
@@ -126,12 +126,12 @@ void Player::Draw(Render* render)
 	if (isGoingRight == true)
 	{
 		if (actualAnimation == &runLeftAnim) { actualAnimation = &runRightAnim; }
-		render->DrawTextureScaled(2,texture, (int)position.x,(int)position.y, &rec);
+		render->DrawTextureScaled(2, texture, (int)position.x, (int)position.y, &rec);
 	}
 	else
 	{
 		if (actualAnimation == &runRightAnim) { actualAnimation = &runLeftAnim; }
-		render->DrawTextureScaled(2,texture, (int)position.x, (int)position.y, &rec);
+		render->DrawTextureScaled(2, texture, (int)position.x, (int)position.y, &rec);
 	}
 
 
@@ -157,8 +157,6 @@ void Player::Draw(Render* render)
 		render->camera.y = -(int)position.y + render->camera.h / 2 + 64;
 	}
 
-
-
 }
 
 void Player::OnCollision(Collider* c1, Collider* c2)
@@ -172,7 +170,6 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 
 	//aqui se meterán las comparaciones entre colliders. C1 siempre sera el collider del cpp en el que estas.
 
-
 }
 
 void Player::OnCollision(Collider* c1)
@@ -182,11 +179,12 @@ void Player::OnCollision(Collider* c1)
 	{
 		if (c1->type == Collider::Type::HEART)
 		{
+			aud->PlayFx(5, 0);
 			lifes++;
-
 		}
 		if (c1->type == Collider::Type::COIN)
 		{
+			aud->PlayFx(7, 0);
 			coins++;
 
 		}
@@ -215,7 +213,6 @@ void Player::OnCollision(Collider* c1)
 		if (c1->type == Collider::TP)
 		{
 			onColl = true;
-			LOG("tp checked");
 		}
 	}
 
@@ -237,7 +234,7 @@ void Player::HealAbility()
 
 void Player::FireballAbility()
 {
-	firecooldown = 0;
+	fireCooldown = 0;
 }
 
 void Player::SetTexture(SDL_Texture* tex)
@@ -247,22 +244,19 @@ void Player::SetTexture(SDL_Texture* tex)
 
 void Player::FixedUpdate(Input* input, float dt)
 {
-#define GRAVITY 9.0f
-#define PLAYER_MOVE_SPEED 256.0f
-#define PLAYER_JUMP_SPEED 350.0f
-
+#define GRAVITY 18
+#define PLAYER_MOVE_SPEED 256
+#define PLAYER_JUMP_SPEED 550
 
 	//Start Idle
 	UpdateAnim(currentAnim, IDLE);
 	if (godMode < 0)
 	{
 		//Calculate gravity acceleration
-		
 		position.y += (vy * dt);
-		if (floor == false)
-		{
-			vy = vy + GRAVITY;
-		}
+
+		if (floor == false) vy = vy + GRAVITY;
+		if (vy > 300) vy = 300;
 
 		//Get left / right input
 		if (input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
@@ -270,8 +264,6 @@ void Player::FixedUpdate(Input* input, float dt)
 			position.x -= PLAYER_MOVE_SPEED * dt;
 			isGoingRight = false;
 			UpdateAnim(currentAnim, WALK);
-			aud->PlayFx(4, 0);
-
 
 		}
 		if (input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
@@ -279,16 +271,15 @@ void Player::FixedUpdate(Input* input, float dt)
 			position.x += PLAYER_MOVE_SPEED * dt;
 			isGoingRight = true;
 			UpdateAnim(currentAnim, WALK);
-			aud->PlayFx(4, 0);
 
 		}
 		if (input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			if (jumps > 0)
 			{
-				floor = false;
 				jumps--;
-				vy += -PLAYER_JUMP_SPEED;
+				vy = vy - PLAYER_JUMP_SPEED;
+				floor = false;
 				UpdateAnim(currentAnim, JUMP);
 				aud->PlayFx(6, 0);
 
@@ -379,7 +370,7 @@ SDL_Rect Player::GetBounds()
 
 SDL_Rect Player::GetBoundsScaled()
 {
-	return { (int)position.x , (int)position.y , (int)width , (int)height};
+	return { (int)position.x , (int)position.y , (int)width , (int)height };
 }
 
 

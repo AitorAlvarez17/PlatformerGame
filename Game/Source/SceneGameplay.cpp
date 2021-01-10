@@ -130,7 +130,7 @@ bool SceneGameplay::Load(Textures* tex) /*EntityManager entityManager)*/
 
 	font1Tex = tex->Load(PATH("Assets/Textures/Fonts/", "font.png"));
 
-
+	debugCheckPoints = 1;
 	// Initialize player
 	player = eManager->CreatePlayer(iPoint(5 * 16, 17 * 16), aud);
 	player->position = iPoint(384, 2176);
@@ -297,7 +297,21 @@ bool SceneGameplay::Update(Input* input, float dt)
 		// Check if updated player position collides with next tile
 		// IMPROVEMENT: Just check adyacent tiles to player
 		if (input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) player->godMode *= -1;
-		if (input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) DebugCheckPoints();
+		if (input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+		{
+			debugCheckPoints++;
+			if (debugCheckPoints > 3)
+			{
+				debugCheckPoints = 1;
+			}
+			DebugCheckPoints(debugCheckPoints);
+		}
+		if (input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			player->position.x = 384;
+			player->position.y = 2176;
+		}
+
 
 		iPoint tempPlayerPosition = player->position;
 
@@ -388,7 +402,7 @@ bool SceneGameplay::Update(Input* input, float dt)
 		}
 		if (input->GetKey(SDL_SCANCODE_J) == KeyState::KEY_DOWN)
 		{
-			if (player->firecooldown == 2)
+			if (player->fireCooldown == 2)
 			{
 				player->FireballAbility();
 				fireball = eManager->CreateFireball(player->position, 5, player->isGoingRight);
@@ -466,13 +480,14 @@ bool SceneGameplay::Draw(Render* render)
 
 
 
-		DrawMenu(render);
 		DrawHealth(render);
 		DrawMoney(render);
 		DrawWand(render);
 		DrawTp(render);
 
 		render->DrawText(font1, "WELCOME TO TEMPLARIA!", 620, 2150, 2, false);
+
+		DrawMenu(render);
 
 	}
 	else if ( player->isDead == true)
@@ -616,13 +631,13 @@ bool SceneGameplay::DrawWand(Render* render)
 			render->DrawTexture(cd1, 511, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
 	}
-	if (player->firecooldown < 2) // HEAL
+	if (player->fireCooldown < 2) // HEAL
 	{
-		if (player->firecooldown < 1)
+		if (player->fireCooldown < 1)
 		{
 			render->DrawTexture(cd2, 610, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
-		else if (player->firecooldown < 2 && player->firecooldown > 1)
+		else if (player->fireCooldown < 2 && player->fireCooldown > 1)
 		{
 			render->DrawTexture(cd1, 610, 638, 0, 0, 0, 0, 0, SDL_FLIP_NONE);
 		}
@@ -713,6 +728,7 @@ bool SceneGameplay::DrawMenu(Render* render)
 {
 	if (menu)
 	{
+		render->DrawRectangle({ 0, 0, 1700, 1020 }, { 0, 0, 0, 200 });
 		if (settings)
 		{
 			//BG
@@ -725,11 +741,15 @@ bool SceneGameplay::DrawMenu(Render* render)
 			//SLIDERS AND CHECKBOX
 			render->DrawRectangle({ fullscreen->bounds.x - 2, fullscreen->bounds.y - 2, fullscreen->bounds.w + 4, fullscreen->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
 			fullscreen->Draw(render);
+			render->DrawText(font1, "FULLSCREEN", fullscreen->bounds.x - 50, fullscreen->bounds.y - 25, 2, true);
 			render->DrawRectangle({ Vsync->bounds.x - 2, Vsync->bounds.y - 2, Vsync->bounds.w + 4, Vsync->bounds.h + 4 }, { 0, 0, 0, 255 });//PURE UI
 			Vsync->Draw(render);
+			render->DrawText(font1, "VSYNC", Vsync->bounds.x, Vsync->bounds.y - 25, 2, true);
 			music->Draw(render);
+			render->DrawText(font1, "MUSIC", music->bounds.x + (music->bounds.w / 2) - 65, music->bounds.y - 50, 3, true);
 			render->DrawTexture(marginsSlidersUi, music->bounds.x - 20, music->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
 			fxVolume->Draw(render);
+			render->DrawText(font1, "FX", fxVolume->bounds.x + (fxVolume->bounds.w / 2) - 25, fxVolume->bounds.y - 47, 3, true);
 			render->DrawTexture(marginsSlidersUi, fxVolume->bounds.x - 20, fxVolume->bounds.y - 20, 0, 0, 0, 0, 0, SDL_FLIP_NONE);//PURE UI
 		}
 		else
@@ -914,21 +934,22 @@ bool SceneGameplay::CleanUp()
 	return true;
 }
 
-void SceneGameplay::DebugCheckPoints()
+void SceneGameplay::DebugCheckPoints(int debug)
 {
-	switch (debug->debugCheckPoints)
+	if (debug == 1)
 	{
-	case 1:
-		player->position.x = 456;
-		player->position.y = 2176;
-	case 2:
-		player->position.x = 3697;
-		player->position.y = 1974;
-	case 3:
-		player->position.x = 960;
-		player->position.y = 550;
-	default:
-		break;
+		player->position.x = tp->position.x;
+		player->position.y = tp->position.y;
+	}
+	else if (debug == 2)
+	{
+		player->position.x = tp2->position.x;
+		player->position.y = tp2->position.y;
+	}
+	else if (debug == 3)
+	{
+		player->position.x = tp3->position.x;
+		player->position.y = tp3->position.y;
 	}
 
 }
