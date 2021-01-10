@@ -153,42 +153,45 @@ void Player::OnCollision(Collider* c1, Collider* c2)
 void Player::OnCollision(Collider* c1)
 {
 	//aqui se compara con otro collider, siendo c1 el collider del otro objeto.
-	if (c1->type == Collider::Type::HEART)
+	if (godMode == -1)
 	{
-		lifes++;
+		if (c1->type == Collider::Type::HEART)
+		{
+			lifes++;
 
-	}
-	if (c1->type == Collider::Type::COIN)
-	{
-		coins++;
+		}
+		if (c1->type == Collider::Type::COIN)
+		{
+			coins++;
 
-	}
-	if (c1->type == Collider::Type::ENEMY)
-	{
+		}
+		if (c1->type == Collider::Type::ENEMY)
+		{
 
-		if(hitted == false)
-			lifes--;
+			if (hitted == false)
+				lifes--;
 
-		hitted = true;
+			hitted = true;
 
-	}
-	if (c1->type == Collider::Type::DEATH)
-	{
-		lifes = 0;
-		isDead = true;
+		}
+		if (c1->type == Collider::Type::DEATH)
+		{
+			lifes = 0;
+			isDead = true;
 
-	}
-	if (c1->type == Collider::SAVEPOINT)
-	{
-		//saveCoroutine = 0;
+		}
+		if (c1->type == Collider::SAVEPOINT)
+		{
+			//saveCoroutine = 0;
 
-		//app->audio->PlayFx(2, 0);
-		//active = false;
-	}
-	if (c1->type == Collider::TP)
-	{
-		onColl = true;
-		LOG("tp checked");
+			//app->audio->PlayFx(2, 0);
+			//active = false;
+		}
+		if (c1->type == Collider::TP)
+		{
+			onColl = true;
+			LOG("tp checked");
+		}
 	}
 
 
