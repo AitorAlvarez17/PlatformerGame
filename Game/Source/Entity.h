@@ -13,6 +13,7 @@ enum class EntityType
     ENEMY,
     ITEM,   //coin o lo que sea, se cambaiara en el momento.
     MAP,
+    TP,
     UNKNOWN
 };
 
